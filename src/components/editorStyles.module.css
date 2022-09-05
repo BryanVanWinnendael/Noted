@@ -1,0 +1,12 @@
+.editor {
+    cursor: text;
+    padding: 16px;
+    border-radius: 2px;
+    margin-bottom: 2em;
+    background: #fefefe;
+  }
+  
+.editor :global(.public-DraftEditor-content) {
+  min-height: 140px;
+}
+
