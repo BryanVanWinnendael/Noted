@@ -1,18 +1,16 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  future: {
-    // removeDeprecatedGapUtilities: true,
-    // purgeLayersByDefault: true,
-  },
-  purge: [],
+  content: ["./src/**/*.{html,js,tsx}"],
   theme: {
     extend: {
       colors: {
         'h_white': '#1a202c',
-        'perwinkle': '#CCCCFF',
-        'hoverInlineTool': '#f3f3f3'
+        'hoverInlineTool': '#f3f3f3',
+        'CornflowerBlue': '#6488ea',
+        'darkMode': '#1a202c',
+        'darkModeHover': '#262e3c',
       },
-    }
+    },
   },
-  variants: {},
   plugins: [],
 }

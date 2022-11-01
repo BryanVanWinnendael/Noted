@@ -5,29 +5,19 @@ var fs = require('fs')
 require('@electron/remote/main').initialize()
 
 function createWindow() {
-  // Create the browser window.
-
-  options = {
-    theme: 'appearance-based',
-    effect: 'blur',
-    useCustomWindowRefreshMethod: false,
-    disableOnBlur: false,
-    debug: false,
- }
-
   const win = new BrowserWindow({
     width: 800,
     height: 600,
     minHeight: 500,
     minWidth: 550,
     frame: false,
+    icon: path.join(__dirname, 'icon.ico'),
     webPreferences: {
       nodeIntegration: true,
 			enableRemoteModule: true,
 			contextIsolation: true,
       preload: path.join(__dirname, 'preload.js')
     },
-    
   })
 
   win.setMenu(null)
@@ -53,7 +43,7 @@ function createWindow() {
       
     var options = {
       type: 'warning',
-      buttons: ['&Yes', '&No'],
+      buttons: ['&Yes, close', '&No, don\'t close'],
       title: 'File not saved',
       normalizeAccessKeys: true,
       detail: 'Do you really want to close the application?',

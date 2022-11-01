@@ -1,29 +1,24 @@
-import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { useFile } from '../../contexts/FileContext'
-import { MyWindow, FileType, FileTypeContext } from '../../types/index'
-
-declare let window: MyWindow
+import { Fragment } from "react"
+import { Menu, Transition } from "@headlessui/react"
+import { useFile } from "contexts/FileContext"
+import { useScreen } from "contexts/SettingsScreenContext"
+import { FileTypeContext } from "types/index"
+import { useColorModeValue } from "@chakra-ui/react"
 
 const MenuBar = () => {
-  const ipcRenderer =  window.myApp.getIpcRenderer()
   const { OpenFile, SaveFile, NewFile } = useFile() as FileTypeContext
+  const { onOpen } = useScreen()
 
-  const clickOpenTools = () => {
-    ipcRenderer.invoke("dialog:openTools")
-  }
+  const bg_color = useColorModeValue("bg-white", "bg-darkMode")
+  const text_color = useColorModeValue("text-gray-700", "text-gray-300")
+  const bg_color_hover = useColorModeValue("hover:bg-gray-100", "hover:bg-darkModeHover")
+  const text_color_hover = useColorModeValue("hover:text-gray-900", "hover:text-gray-300")
+  const text_color_muted = useColorModeValue("text-gray-400", "text-gray-600")
 
   return (
-    <Menu as="div" className="flex bg-transparent">
-      <Menu.Button className="inline-flex justify-center w-full ml-2 focus:outline-none ">
-        <svg className='w-5 h-5 cursor-pointer'viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M1.5 3C1.22386 3 1 3.22386 1 3.5C1 3.77614 1.22386 4 1.5 4H13.5C13.7761 4 14 3.77614 14 3.5C14 3.22386 13.7761 3 13.5 3H1.5ZM1 7.5C1 7.22386 1.22386 7 1.5 7H13.5C13.7761 7 14 7.22386 14 7.5C14 7.77614 13.7761 8 13.5 8H1.5C1.22386 8 1 7.77614 1 7.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H13.5C13.7761 11 14 11.2239 14 11.5C14 11.7761 13.7761 12 13.5 12H1.5C1.22386 12 1 11.7761 1 11.5Z"
-              fill="currentColor"
-          />
-        </svg>
+    <Menu as="div" className="flex">
+      <Menu.Button className="inline-flex justify-center w-full ml-2 focus:outline-none">
+        <svg className="w-5 h-5 cursor-pointer hover:fill-CornflowerBlue" fill="gray" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z"/></svg>
       </Menu.Button>
         
       <Transition
@@ -35,18 +30,17 @@ const MenuBar = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="origin-top-left absolute left-0 mt-6 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className={`${bg_color} origin-top-left absolute left-0 mt-6 w-56 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}>
           <div className="py-1">
-
             <Menu.Item>
                 <div
                   onClick={OpenFile}
-                  className="flex px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  className={`${text_color} flex px-4 py-2 text-sm cursor-pointer text-gray-700 ${bg_color_hover} ${text_color_hover}`}
                 >
-                  <p className='w-full'>
+                  <p className="w-full">
                   Open File
                   </p>
-                  <div className='w-full flex justify-end text-gray-600 mr-5'>
+                  <div className={`w-full flex justify-end ${text_color_muted} mr-5`}>
                     <p>
                       Ctrl + O
                     </p>
@@ -57,12 +51,12 @@ const MenuBar = () => {
               <Menu.Item>
                 <div
                   onClick={SaveFile}
-                  className="flex px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  className={`${text_color} flex px-4 py-2 text-sm cursor-pointer text-gray-700 ${bg_color_hover} ${text_color_hover}`}
                 >
-                  <p className='w-full'>
+                  <p className="w-full">
                   Save File
                   </p>
-                  <div className='w-full flex justify-end text-gray-600 mr-5'>
+                  <div className={`w-full flex justify-end ${text_color_muted} mr-5`}>
                     <p>
                       Ctrl + S
                     </p>
@@ -73,27 +67,28 @@ const MenuBar = () => {
               <Menu.Item>
                 <div
                   onClick={NewFile}
-                  className="flex px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  className={`${text_color} flex px-4 py-2 text-sm cursor-pointer text-gray-700 ${bg_color_hover} ${text_color_hover}`}
                 >
-                  <p className='w-full'>
+                  <p className="w-full">
                   New File
                   </p>
-                  <div className='w-full flex justify-end text-gray-600 mr-5'>
+                  <div className={`w-full flex justify-end ${text_color_muted} mr-5`}>
                     <p>
                       Ctrl + N
                     </p>
                   </div>
                 </div>
               </Menu.Item>
-
-              {/* <Menu.Item>
+              <Menu.Item>
                 <div
-                  onClick={clickOpenTools}
-                  className="block px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  onClick={onOpen}
+                  className={`${text_color} flex px-4 py-2 text-sm cursor-pointer text-gray-700 ${bg_color_hover} ${text_color_hover}`}
                 >
-                  Dev Tools
+                  <p className="w-full">
+                    Settings
+                  </p>
                 </div>
-              </Menu.Item> */}
+              </Menu.Item>
           </div>
         </Menu.Items>
       </Transition>

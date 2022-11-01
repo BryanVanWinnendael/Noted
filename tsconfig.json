@@ -15,9 +15,17 @@
         "isolatedModules": true,
         "noEmit": false,
         "jsx": "react-jsx",
-        "baseUrl": "./",
+        "baseUrl": "./src",
         "paths": {
-            "*": ["types/*"]
+            "@assets": ["assets/*"],
+            "@components": ["components/*"],
+            "@contexts": ["contexts/*"],
+            "@hooks": ["hooks/*"],
+            "@plugins": ["plugins/*"],
+            "@styling": ["styling/*"],
+            "@types": ["types/*"],
+            "@utils": ["utils/*"],
+            "@screens": ["screens/*"]
         }
     },
     "include": ["src"]
