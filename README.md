@@ -1,5 +1,6 @@
-# Download 
-[download link](https://github.com/BryanVanWinnendael/MDEditor/releases/tag/v1)
+# Download
+
+[download link](https://github.com/BryanVanWinnendael/MDEditor/releases/tag/v2)
 
 # Getting Started with Create React App
 
