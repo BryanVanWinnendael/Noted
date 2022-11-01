@@ -26,7 +26,6 @@ import {
     const { KeyCommands, HandleKeys } = UseShortcuts()
     const { plugins, InlineToolbar, MentionSuggestions } = Plugins()
     const [openImage, setOpenImage] = useState<boolean>(false)
-   
   
     const [open, setOpen] = useState(false)
     const [suggestions, setSuggestions] = useState(mentions)

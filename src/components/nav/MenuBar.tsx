@@ -33,10 +33,10 @@ const MenuBar = () => {
         <Menu.Items className={`${bg_color} origin-top-left absolute left-0 mt-6 w-56 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}>
           <div className="py-1">
             <Menu.Item>
-                <div
-                  onClick={OpenFile}
-                  className={`${text_color} flex px-4 py-2 text-sm cursor-pointer text-gray-700 ${bg_color_hover} ${text_color_hover}`}
-                >
+              <div
+                onClick={OpenFile}
+                className={`${text_color} flex px-4 py-2 text-sm cursor-pointer text-gray-700 ${bg_color_hover} ${text_color_hover}`}
+              >
                   <p className="w-full">
                   Open File
                   </p>
@@ -46,23 +46,23 @@ const MenuBar = () => {
                     </p>
                   </div>
                 </div>
-              </Menu.Item>
+            </Menu.Item>
 
-              <Menu.Item>
-                <div
-                  onClick={SaveFile}
-                  className={`${text_color} flex px-4 py-2 text-sm cursor-pointer text-gray-700 ${bg_color_hover} ${text_color_hover}`}
-                >
-                  <p className="w-full">
-                  Save File
+            <Menu.Item>
+              <div
+                onClick={SaveFile}
+                className={`${text_color} flex px-4 py-2 text-sm cursor-pointer text-gray-700 ${bg_color_hover} ${text_color_hover}`}
+              >
+                <p className="w-full">
+                Save File
+                </p>
+                <div className={`w-full flex justify-end ${text_color_muted} mr-5`}>
+                  <p>
+                    Ctrl + S
                   </p>
-                  <div className={`w-full flex justify-end ${text_color_muted} mr-5`}>
-                    <p>
-                      Ctrl + S
-                    </p>
-                  </div>
                 </div>
-              </Menu.Item>
+              </div>
+            </Menu.Item>
                 
               <Menu.Item>
                 <div
