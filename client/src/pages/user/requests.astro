@@ -1,0 +1,39 @@
+---
+import Layout from "@layouts/Layout.astro"
+import AppLayout from "@layouts/AppLayout.astro"
+import { fetcher, getUser } from "@lib/utils"
+import ThemesList from "@components/ThemesList"
+import type { ThemeType } from "@lib/types"
+
+/* Get session cookie */
+const sessionCookie = Astro.cookies.get("session")?.value
+if (!sessionCookie) {
+  return Astro.redirect("/signin")
+}
+
+/* Verify session cookie and get user */
+const user = await getUser(sessionCookie)
+if (!user) {
+  return Astro.redirect("/signin")
+}
+
+const res: { [key: string]: ThemeType } = await fetcher(
+  "themes/requests/user",
+  "GET",
+  sessionCookie,
+)
+console.log(res)
+---
+
+<Layout title="Your requests">
+  <AppLayout>
+    <main class="w-full grow flex flex-col px-4">
+      <h1
+        class="text-xl sm:text-3xl max-w-xl text-zinc-100 w-full font-semibold mt-10 mb-6"
+      >
+        Your pending requests
+      </h1>
+      <ThemesList themes={res} client:idle />
+    </main>
+  </AppLayout>
+</Layout>

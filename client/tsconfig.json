@@ -1,32 +1,14 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "lib": ["dom", "dom.iterable", "esnext"],
-        "allowJs": true,
-        "skipLibCheck": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "noEmit": false,
-        "jsx": "react-jsx",
-        "baseUrl": "./src",
-        "paths": {
-            "@assets": ["assets/*"],
-            "@components": ["components/*"],
-            "@contexts": ["contexts/*"],
-            "@hooks": ["hooks/*"],
-            "@plugins": ["plugins/*"],
-            "@styling": ["styling/*"],
-            "@types": ["types/*"],
-            "@utils": ["utils/*"],
-            "@screens": ["screens/*"]
-        }
-    },
-    "include": ["src"]
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@lib/*": ["src/lib/*"],
+      "@hooks/*": ["src/hooks/*"],
+    }
+  }
 }
