@@ -8,7 +8,7 @@ const sessionCookie = Astro.cookies.get("session")?.value
 if (sessionCookie) {
   const user = await getUser(sessionCookie)
   if (user) {
-    return Astro.redirect("/dashboard/", 302)
+    return Astro.redirect("/", 302)
   }
 }
 ---

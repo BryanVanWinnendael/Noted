@@ -41,7 +41,6 @@ const ThemeForm = () => {
     setClientErrors()
     const data = new FormData(e.currentTarget as HTMLFormElement)
     const result = themeFormSchema.safeParse(data)
-    console.log(result)
 
     if (!result.success) {
       const errors = result.error.flatten() as Errors

@@ -49,7 +49,6 @@ export const POST: APIRoute = async ({ request, redirect, cookies }) => {
         )
       })
   } catch (error: any) {
-    console.log(error)
     return new Response(
       JSON.stringify({
         error: error.code,

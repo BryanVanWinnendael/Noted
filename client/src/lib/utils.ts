@@ -17,7 +17,6 @@ export const fetcher = async (
   body: any = null,
 ) => {
   const API_URL = import.meta.env.PUBLIC_API_URL + url
-  console.log(API_URL)
   if (method === "GET") {
     return fetch(API_URL, {
       method: method,
