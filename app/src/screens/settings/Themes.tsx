@@ -1,42 +1,43 @@
-import { Box, Text, useColorModeValue } from "@chakra-ui/react"
-import { utils } from "utils"
-import Card from "components/customTheme/card"
+import { Box, Text } from "@chakra-ui/react"
+import ThemeCard from "components/Custom-Theme/ThemeCard"
 import { useSettings } from "contexts/SettingsContext"
 import { AnimatePresence, motion } from "framer-motion"
-import { getStyle } from "styling"
+import useColors from "hooks/useColors"
 
 const Themes = () => {
+  const { getMutedTextColor } = useColors()
   const { customThemes } = useSettings()
   const themes = Object.keys(customThemes)
 
-  const bg_colorRight_chakra = useColorModeValue("#fff", "#242a36")
-  const style_bg = getStyle()?.secondaryBackgroundColor
-  const bg_color = style_bg ? utils.getLighterColor("0.02", style_bg): bg_colorRight_chakra
+  const muted_text_color = getMutedTextColor()
 
   return (
-    <Box m={2}>
-      <Text fontSize='3xl'>
-        Custom themes
+    <Box>
+      <Text fontSize="3xl">Custom themes</Text>
+      <Text color={muted_text_color}>
+        Manage your custom themes here
       </Text>
-      <Text color={utils.getMutedTextColor(utils.getTextColor(bg_color))}>Manage your custom themes here</Text>
       <AnimatePresence mode={"popLayout"}>
-        { themes.length > 0 ? 
-          themes.map((theme) => {
-            return (
-              <motion.li 
-                className="list-none mt-4"
-                key={theme}
-                layout
-                // initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.8, opacity: 0 }}
-                transition={{ type: "spring" }}
-              >
-                <Card name={theme} colors={customThemes[theme]} deletable={true}/>
-              </motion.li>
-            )
-          }) : "No themes"
-        } 
+        {themes.length > 0
+          ? themes.map((theme) => {
+              return (
+                <motion.li
+                  className="list-motion"
+                  key={theme}
+                  layout
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  transition={{ type: "spring" }}
+                >
+                  <ThemeCard
+                    name={theme}
+                    colors={customThemes[theme]}
+                    deletable={true}
+                  />
+                </motion.li>
+              )
+            })
+          : "No themes"}
       </AnimatePresence>
     </Box>
   )

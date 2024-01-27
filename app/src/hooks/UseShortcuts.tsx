@@ -1,54 +1,40 @@
-import { useCommands } from "contexts/CommandContext"
-import { useFile } from "contexts/FileContext"
-import { getDefaultKeyBinding, KeyBindingUtil } from "draft-js"
+import { useWidget } from 'contexts/WidgetContext'
+import { useWorkspace } from 'contexts/WorkspaceContext'
+import { useHotkeys } from 'react-hotkeys-hook'
 
-const UseShortcuts = () => {
-  const { SaveFile, OpenFile, NewFile } = useFile()
-  const { setCommandsOpen } = useCommands()
+const useShortcuts = () => {
+  const { setShowSidebar, showSidebar, setOpenFileInTab } = useWorkspace()
+  const { setWidgetPanel, widgetPanel } = useWidget()
 
-  const HandleKeys = (command: string) =>  {
-    if (command === "save-file") {
-      SaveFile()
-      return "handled"
-    }
-    else if (command === "open-file") {
-      OpenFile()
-      return "handled"
-    }
-    else if (command === "new-file") {
-      NewFile()
-      return "handled"
-    }
-    else if (command === "command-palette") {
-      setCommandsOpen(true)
-      return "handled"
-    }
-    return "not-handled"
+
+  const handleSidebar= () => {
+    setShowSidebar(!showSidebar)
   }
 
-  const KeyCommands = (e: any): string | null => {
-    const { hasCommandModifier } = KeyBindingUtil
+  const handleNewTabAndOpenFile = () => {
+    setOpenFileInTab(true)
+  }
+
+  const handleWidgetPanel = () => {
+    setWidgetPanel(!widgetPanel)
+  }
+
+  const useAddShortcuts = () => {
+    useHotkeys('ctrl+t', handleNewTabAndOpenFile, {
+      enableOnContentEditable: true
+    })
+    useHotkeys('ctrl+s', handleSidebar, {
+      enableOnContentEditable: true
+    })
+    useHotkeys('ctrl+w', handleWidgetPanel, {
+      enableOnContentEditable: true
+    })
+  }
+
+  return {
+    useAddShortcuts
+  }
   
-    if (e.keyCode === 83 /* `S` key */ && hasCommandModifier(e)) {
-      return "save-file"
-    }
-    else if(e.keyCode === 79 && hasCommandModifier(e)) { 
-      return "open-file"
-    }
-    else if(e.keyCode === 78 && hasCommandModifier(e)) { 
-      return "new-file"
-    }
-    else if(e.keyCode === 32 && hasCommandModifier(e)) { 
-      return "command-palette"
-    }
-    return getDefaultKeyBinding(e)
-  }
-
-  return { KeyCommands, HandleKeys }
 }
 
-export default UseShortcuts
-
-
-
-
+export default useShortcuts

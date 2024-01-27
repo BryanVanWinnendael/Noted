@@ -1,12 +1,12 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import "./index.css"
-import { FileProvider } from "contexts/FileContext"
+import { WorkspaceProvider } from "contexts/WorkspaceContext"
 import { SettingsProvider } from "contexts/SettingsContext"
-import { CommandsProvider } from "contexts/CommandContext"
+import { WidgetProvider } from "contexts/WidgetContext"
 import App from "./App"
 import { ChakraProvider, extendTheme } from "@chakra-ui/react"
-import type { ComponentStyleConfig } from "@chakra-ui/react";
+import type { ComponentStyleConfig } from "@chakra-ui/react"
 import "focus-visible/dist/focus-visible"
 import { EditorProvider } from "contexts/EditorContext"
 
@@ -19,7 +19,7 @@ const Link: ComponentStyleConfig = {
     _focusVisible: {
       color: "gray.100",
       background: "gray.700",
-      textDecoration:"underline",
+      textDecoration: "underline",
     },
   },
 }
@@ -35,15 +35,15 @@ const theme = extendTheme({
         picker: {
           popper: {
             maxWidth: "unset",
-            width: "unset"
-          }
-        }
-      }
+            width: "unset",
+          },
+        },
+      },
     },
     Link,
   },
   styles: {
-    global: {      
+    global: {
       ".js-focus-visible :focus:not([data-focus-visible-added])": {
         outline: "none",
         boxShadow: "none",
@@ -54,17 +54,21 @@ const theme = extendTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <CommandsProvider>
-        <SettingsProvider>
-          <FileProvider>
-            <EditorProvider>
-              <App/>
-            </EditorProvider>
-          </FileProvider>
-        </SettingsProvider>
-      </CommandsProvider>
-    </ChakraProvider>
+    <WidgetProvider>
+      <SettingsProvider>
+        <WorkspaceProvider>
+          <EditorProvider>
+            <ChakraProvider
+              theme={theme}
+              toastOptions={{ defaultOptions: { position: "bottom-right" } }}
+            >
+              <App />
+            </ChakraProvider>
+          </EditorProvider>
+        </WorkspaceProvider>
+      </SettingsProvider>
+    </WidgetProvider>
   </React.StrictMode>,
-  document.getElementById("root")
+
+  document.getElementById("root"),
 )

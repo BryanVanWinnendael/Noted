@@ -1,13 +1,16 @@
-import { EditorState } from "draft-js"
+import { Dayjs } from "dayjs"
+import EditorJS from "@editorjs/editorjs"
 
 export interface MyWindow extends Window {
   myApp: any
+  [key: string]: any
 }
 
-export interface FileType {
-  filePath: string 
-  content: string
-  fileName: string
+export interface WorkspaceType {
+  items: WorkspaceType[] | undefined
+  name: string
+  path: string
+  type: "file" | "folder"
 }
 
 export type BooleanObject = {
@@ -15,41 +18,54 @@ export type BooleanObject = {
 }
 
 export type StringObject = {
-  [key: number]: string 
+  [key: number]: string
 }
 
 export type StringNullObject = {
   [key: number]: string | null
 }
 
-export interface FileTypeContext {
-  file_path: StringNullObject
-  setFile_path: (file_path: StringNullObject) => void
-  file_content: StringObject
-  setFile_content: (file_content: StringObject) => void
-  file_name: StringObject
-  setFile_name: (file_name: StringObject) => void
-  SaveFile: () => void
-  saved: BooleanObject
-  setSaved: (saved: BooleanObject) => void
-  NewFile: () => void
-  setNew_file: (new_file: BooleanObject) => void
-  new_file: BooleanObject
-  OpenFile: () => void
-  currentTab: number
-  setCurrentTab: (currentTab: number) => void
+export interface ActiveFile {
+  path: string
+  data: any
+}
+
+export interface Tab {
+  [key: number]: {
+    path: string
+    saved: boolean
+  }
+}
+
+export interface WorkspaceTypeContext {
+  openWorkspace: () => void
+  workspace: WorkspaceType | undefined
+  openFile: (path: string) => void
+  activeFile: ActiveFile | undefined
+  saveFile: (data: any, path: string) => Promise<void>
+  isLoaded: boolean
   addTab: () => void
-  tabs: number[]
+  activeTab: number
+  tabs: Tab
+  handleChangeTab: (tab: number) => void
+  setTabs: (tabs: Tab) => void
+  setActiveFile: (file: ActiveFile) => void
   removeTab: (tab: number) => void
+  showSidebar: boolean
+  setShowSidebar: (show: boolean) => void
+  openFileInTab: boolean
+  setOpenFileInTab: (open: boolean) => void
+  openFileInNewTab: (filePath: string) => void
 }
 
 export interface Theme {
-  [key: string]: string
+  [key: string]: string | boolean | undefined
   backgroundColor: string
   secondaryBackgroundColor: string
   textColor: string
   iconColor: string
   accentColor: string
+  downloaded?: boolean
 }
 
 export interface HeaderColors {
@@ -61,53 +77,80 @@ export interface HeaderColors {
   h6: string
 }
 
+export type WidgetName = "calendar" | "todo" | "clock" | "info"
+
+export type GlassComponents = "navBar" | "settings" | "widgets" | "window"
+ 
+
+export type GlassSettings = {
+  [key in GlassComponents]: boolean
+}
+
+export type Settings =
+  | "check_updates"
+  | "header_colors"
+  | "header_colors_enabled"
+  | "glass_background"
+  | "glass_background_enabled"
+  | "header_colors"
+  | "custom_theme"
+  | "compact_mode"
+
 export interface SettingsTypeContext {
   isOpen: boolean
   onOpen: () => void
   onClose: () => void
-  sideToolbar: boolean
-  setSideToolbar: (sideToolbar: boolean) => void
-  setInlineToolbar: (inlineToolbar: boolean) => void
-  inlineToolbar: boolean
-  readThemeFile: () => void
-  theme: Theme | undefined
-  setTheme: (theme: Theme) => void
   saveThemeToFile: () => void
   exportTheme: () => void
   importTheme: () => void
   themePath: string
   removeThemePath: () => void
-  customHeadersEnabled: boolean
-  setCustomHeadersEnabled: (customHeaderEnabled: boolean) => void
-  setHeaderColors: (headerColors: HeaderColors| false) => void
   headerColors: HeaderColors | false
-  addThemeToEditor: (name: string, customTheme: Theme) => boolean
-  customThemes: { [key: string]: Theme}
+  headerColorsEnabled: boolean
+  addThemeToEditor: (name: string, customTheme: Theme) => Promise<boolean>
+  customThemes: { [key: string]: Theme }
   deleteCustomTheme: (name: string) => void
+  checkUpdates: boolean
+  handleAutoUpdate: () => void
+  updateAndRestart: () => void
+  checkUpdate: () => any
+  updateAvailable: boolean
+  glassBackground: GlassSettings
+  glassEnabled: boolean
+  saveSettings: (key: Settings, value: any) => void
+  initSettings: () => void
+  customTheme: Theme | undefined
+  compactMode: boolean
+  setCompactMode: (compact: boolean) => void
 }
 
-export interface CommandTypeContext {
-  commandsOpen: boolean
-  setCommandsOpen: (open: boolean) => void
+export interface EditorTypeContext {
+  editor: EditorJS
+  setEditor: (editor: EditorJS) => void
+  info: string
+  setInfo: (info: string) => void
 }
 
-export interface  CommandArgs {
-  fileContext: FileTypeContext
-  settingsContext: SettingsTypeContext
-  editorContext: EditorTypeContext
+export interface ToDo {
+  date: string | null
+  todo: string
 }
 
-export interface CommandCallback {
-  (fileContext: CommandArgs): void
-}
-
-export interface CommandsList {
-  name: string
-  shortcut?: string
-  callback: CommandCallback
-}
-
-export interface EditorTypeContext{
-  editor: EditorState
-  setEditor: (editor: EditorState) => void
+export interface WidgetTypeContext {
+  widgetPanel: boolean
+  setWidgetPanel: (widgetPanel: boolean) => void
+  selectedWidgets: WidgetName[]
+  setSelectedWidgets: (selectedWidgets: WidgetName[]) => void
+  isConnected: boolean
+  setIsConnected: (connect: boolean) => void
+  canConnect: () => boolean
+  selectedDate: Dayjs | undefined
+  setSelectedDate: (date: Dayjs | undefined) => void
+  getCompatibleWidget: (widget: WidgetName) => WidgetName | null
+  showDateViewer: boolean
+  setShowDateViewer: (show: boolean) => void
+  todos: ToDo[]
+  setTodos: (todos: ToDo[]) => void
+  intervalId: NodeJS.Timer | undefined
+  setIntervalId: (id: NodeJS.Timer) => void
 }

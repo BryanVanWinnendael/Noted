@@ -1,0 +1,75 @@
+import { Settings, WidgetName } from "types"
+
+export const DEFAULT_HEADER_COLORS = {
+  h1: "#6488ea",
+  h2: "#CCCCFF",
+  h3: "#2AAA8A",
+  h4: "#FFFF8F",
+  h5: "#FF5F1F",
+  h6: "#D22B2B",
+}
+
+export const THEME_LIGHT = {
+  backgroundColor: "#fff",
+  secondaryBackgroundColor: "#E7E7E7",
+  textColor: "#000",
+  iconColor: "#000",
+  accentColor: "#6488ea",
+}
+
+export const THEME_DARK = {
+  backgroundColor: "#1B1B1D",
+  secondaryBackgroundColor: "#2C2C2E",
+  textColor: "#fff",
+  iconColor: "#fff",
+  accentColor: "#6488ea",
+}
+
+export const THEME_DEEP_BLUE = {
+  backgroundColor: "#1A202C",
+  secondaryBackgroundColor: "#222731",
+  textColor: "#fff",
+  iconColor: "#fff",
+  accentColor: "#6488ea",
+}
+
+export const THEME_KEYS = [
+  "backgroundColor",
+  "secondaryBackgroundColor",
+  "textColor",
+  "iconColor",
+  "accentColor",
+]
+
+export const REQUIRED_SETTINGS_KEYS: Settings[] = [
+  "check_updates",
+  "header_colors",
+  "header_colors_enabled",
+  "glass_background",
+  "glass_background_enabled",
+  "custom_theme",
+  "compact_mode",
+]
+
+export const DEFAULT_UPDATE = true
+
+export const DEFAULT_HEADER_COLORS_ENABLED = false
+
+export const DEFAULT_GLASS = {
+  navBar: true,
+  settings: true,
+  widgets: true,
+  window: true,
+}
+
+export const DEFAULT_GLASS_ENABLED = false
+
+export const TOAST_ID = "update"
+
+export const CONNECTABLE_WIDGETS: WidgetName[][] = [
+  ["calendar", "todo"],
+  ["calendar", "clock"],
+  ["calendar", "info"],
+]
+
+export const DEFAULT_COMPACT_MODE = false

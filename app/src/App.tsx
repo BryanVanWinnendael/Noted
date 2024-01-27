@@ -1,62 +1,103 @@
-import Navbar from "components/nav/Navbar"
-import { useEffect, useRef } from "react"
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogOverlay, Box, useColorModeValue } from "@chakra-ui/react"
-import Settings from "screens/settings"
-import { getStyle } from "styling"
+import NavBar from "components/Nav-Bar"
+import { useCallback, useEffect } from "react"
+import { Box, Center, Spinner, Stack } from "@chakra-ui/react"
+import Settings from "screens/Settings"
 import { useSettings } from "contexts/SettingsContext"
-import MDEditor from "components/editor"
-import { useFile } from "contexts/FileContext"
-import { utils } from "utils"
-import { useCommands } from "contexts/CommandContext"
-import CommandPalette from "components/commandPalette"
+import { MyWindow } from "types"
+import { useToast } from "@chakra-ui/react"
+import UpdateToast from "components/UpdateToast"
+import Home from "screens/Home"
+import { useWorkspace } from "contexts/WorkspaceContext"
+import LoadInWorkspace from "components/LoadInWorkspace"
+import useColors from "hooks/useColors"
+import { TOAST_ID } from "utils/constants"
+import useShortcuts from "hooks/useShortcuts"
+import OpenFileInTab from "components/OpenFileInTab"
+import Compact from "components/Nav-Bar/Compact"
 
-const Render = () => {
-  const { currentTab, file_name } = useFile()
-  const { theme } = useSettings()
-  const bg_color_chakra = useColorModeValue("white", "#1A202C")
-  const bg_color = getStyle()?.backgroundColor || bg_color_chakra 
-  const { commandsOpen, setCommandsOpen } = useCommands()
-  const cancelRef = useRef()
+declare let window: MyWindow
+const ipcRenderer = window.myApp.getIpcRenderer()
+
+const App = () => {
+  const toast = useToast()
+  const { getAccentColor, getBackgroundColor } = useColors()
+  const { handleAutoUpdate, initSettings, glassBackground, compactMode } = useSettings()
+  const { workspace, isLoaded } = useWorkspace()
+  const { useAddShortcuts } = useShortcuts()
+
+  useAddShortcuts()
+
+  const accent_color = getAccentColor()
+
+  const bg_color = getBackgroundColor()
+
+  const handleElectronMessages = useCallback(() => {
+    window.electron?.ipcRenderer.on("loaded", (args: any) => {
+      switch (args) {
+        case "update downloaded":
+          if (toast.isActive(TOAST_ID)) return
+          toast({
+            id: TOAST_ID,
+            duration: null,
+            isClosable: true,
+            render: () => <UpdateToast />,
+          })
+          break
+        default:
+          break
+      }
+    })
+  }, [toast])
 
   useEffect (() => {
-    document.getElementsByTagName("html")[0].style.backgroundColor = bg_color
+    const isDefault = localStorage.getItem("chakra-ui-color-mode") === "light" || localStorage.getItem("chakra-ui-color-mode") === "dark" ? true : false
+    document.getElementsByTagName("html")[0].style.backgroundColor = isDefault ?  "transparent" :  bg_color
     document.getElementsByTagName("html")[0].style.color = "white"
-  }, [bg_color, theme])
+  }, [bg_color])
+
+
+  useEffect(() => {
+    handleElectronMessages()
+    handleAutoUpdate()
+  }, [handleAutoUpdate, handleElectronMessages])
+
+  useEffect(() => {
+    initSettings()
+  }, [initSettings, workspace?.path])
+
+  useEffect(() => {
+    if (!glassBackground.window) return
+    window.electron?.ipcRenderer.on('wallpaper', (arg: any) => {
+      const background = document.querySelector('#background') as HTMLImageElement
+      if (!background) return
+      background.src = `file://${arg.wallpaper}`
+      background.width = arg.width + 20
+      background.height = arg.height + 70
+      background.style.top = `${arg.top <= 30 ? '' : '-'}${Math.abs(arg.top - 30)}px`
+      background.style.left = `${arg.left < 0 ? '' : '-'}${Math.abs(arg.left)}px`
+    });
+
+    ipcRenderer.send('asynchronous-message', 'ping');
+  }, [glassBackground.window])
+
+  const renderWorkspace = () => {
+    if (!isLoaded)
+      return (
+        <Center w="full" h="full">
+          <Spinner color={accent_color} />
+        </Center>
+      )
+    return workspace ? <Home workspace={workspace} /> : <LoadInWorkspace />
+  }
 
   return (
-    <Box paddingBottom={5} bg={bg_color}>
-      <Navbar />
+    <Box w="full" h="100vh">
+      <img id="background" alt=""/>
       <Settings />
-        {Object.keys(file_name).map((key, index) => (
-          currentTab === index &&
-          <Box key={index} w="full" h="full" p={0} pt={14}>
-            <div className="flex h-full ml-5 mr-5 justify-center">
-              <MDEditor />
-            </div>
-          </Box>
-        ))}
-        <AlertDialog
-        motionPreset='slideInBottom'
-        leastDestructiveRef={cancelRef as any}
-        onClose={() => setCommandsOpen(false)}
-        isOpen={commandsOpen}
-        >
-          <AlertDialogOverlay />
-          <AlertDialogContent bg={bg_color} color={utils.getTextColor(bg_color)}>
-          <AlertDialogBody>
-              <CommandPalette />
-          </AlertDialogBody>
-          </AlertDialogContent>
-        </AlertDialog>
+      { !compactMode ? <NavBar /> : <Compact /> }
+      <Stack h="full">{renderWorkspace()}</Stack>
+      <OpenFileInTab />
     </Box>
-  )
-}
-
-function App() {
-  const { theme } = useSettings()
-
-  return (
-    theme ? <Render /> : <Render />
   )
 }
 

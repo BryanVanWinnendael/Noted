@@ -1,57 +1,83 @@
-import { Theme } from "types"
+import { MyWindow, Theme } from "types"
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import Card from "components/customTheme/card"
-import { Center, Spinner, Box, Text, useColorModeValue } from "@chakra-ui/react"
-import { getStyle } from "styling"
-import { utils } from "utils"
+import ThemeCard from "components/Custom-Theme/ThemeCard"
+import { Center, Spinner, Box, Text, Flex } from "@chakra-ui/react"
+import { ExternalLinkIcon } from "@chakra-ui/icons"
+import useColors from "hooks/useColors"
+
+declare let window: MyWindow
+
+const ipcRenderer = window.myApp.getIpcRenderer()
 
 const Market = () => {
+  const { getAccentColor, getMutedTextColor } = useColors()
   const serverUrl = process.env.REACT_APP_SERVER_URL
   const [loading, setLoading] = useState<boolean>(true)
-  const [themes, setThemes] = useState<{[key: string]: Theme}>({})
+  const [themes, setThemes] = useState<{ [key: string]: Theme }>({})
 
-  const bg_colorRight_chakra = useColorModeValue("#fff", "#242a36")
-  const style_bg = getStyle()?.secondaryBackgroundColor
-  const bg_color = style_bg ? utils.getLighterColor("0.02", style_bg): bg_colorRight_chakra
+  const accent_color = getAccentColor()
 
-  const accent_color = getStyle()?.accentColor || "#6488ea"
+  const muted_text_color = getMutedTextColor()
 
+  const handleLink = (e: any) => {
+    ipcRenderer.invoke("openBrowser", "https://write-noted.vercel.app/")
+  }
 
   useEffect(() => {
     setLoading(true)
     fetch(`${serverUrl}/api/themes`)
-    .then(res => res.json())
-    .then((data: {[key: string]: Theme}) => {
-      if (data) setThemes(data)
-      setLoading(false)
-    })
-    .catch(err => setLoading(false))
+      .then((res) => res.json())
+      .then((data: { [key: string]: Theme }) => {
+        if (data) setThemes(data)
+        setLoading(false)
+      })
+      .catch((err) => setLoading(false))
   }, [serverUrl])
 
   return (
-    <Box m={2}>
-      <Text fontSize='3xl'>
-        Market
+    <Box>
+      <Text fontSize="3xl">Market</Text>
+      <Text color={muted_text_color}>
+        Download custom themes
       </Text>
-      <Text color={utils.getMutedTextColor(utils.getTextColor(bg_color))}>Download custom themes</Text>
-      {!loading ? Object.keys(themes).length > 0 ? 
+      <Flex gap={1}>
+        <Text color={muted_text_color}>
+          or request your own theme to be uploaded
+        </Text>
+        <Text onClick={handleLink} cursor="pointer" color={accent_color}>
+          here <ExternalLinkIcon mx="2px" />
+        </Text>
+      </Flex>
+
+      {!loading ? (
+        Object.keys(themes).length > 0 ? (
           Object.keys(themes).map((theme: string) => {
             return (
-              <motion.li 
-                className="list-none mt-4"
+              <motion.li
+                className="list-motion"
                 key={theme}
                 layout
-                // initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ type: "spring" }}
               >
-                <Card name={theme} colors={themes[theme]} deletable={false}/>
+                <ThemeCard
+                  name={theme}
+                  colors={themes[theme]}
+                  deletable={false}
+                />
               </motion.li>
             )
-          }) : "No themes" : <Center h="full"><Spinner color={accent_color}/></Center>
-        } 
+          })
+        ) : (
+          "No themes"
+        )
+      ) : (
+        <Center h="full" mt={5}>
+          <Spinner color={accent_color} />
+        </Center>
+      )}
     </Box>
   )
 }

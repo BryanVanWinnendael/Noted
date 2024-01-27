@@ -1,126 +1,96 @@
-import {
-  useState,
-  useEffect,
-  useCallback,
-  useRef
-  } from "react"
-  import { useFile } from "contexts/FileContext"
-  import { useSettings } from "contexts/SettingsContext"
-  import { EditorState, convertFromRaw, convertToRaw } from "draft-js"
-  import Editor from "@draft-js-plugins/editor"
-  import Plugins from "plugins"
-  import "draft-js/dist/Draft.css"
-  import { mdToDraftjs, draftjsToMd } from "draftjs-md-converter"
-  import { blockRenderMap } from "styling/MDStyle"
-  import UseShortcuts from "hooks/UseShortcuts"
-  import AddImage from "plugins/AddImage"
-  import SideToolbar from "components/side-toolbar"
-  import { mentions, MentionSuggestionsBlock } from "plugins/Mentions"
-  import { defaultSuggestionsFilter } from "@draft-js-plugins/mention"
-  import { useEditor } from "contexts/EditorContext"
+import { Box, Flex, Text } from "@chakra-ui/react"
+import { EDITOR_JS_TOOLS } from "./tools"
+import { useWorkspace } from "contexts/WorkspaceContext"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { createReactEditorJS } from "react-editor-js"
+import EditorCore from "@editorjs/editorjs"
+import useColors from "hooks/useColors"
+import { utils } from "utils/index"
 
-  const MdEditor = () => {
-    const editorRef = useRef<any>(null)
-    const [loaded, setLoaded] = useState<boolean>(false)
-    const { file_content, setFile_content, file_path, setSaved, setNew_file, new_file, saved, currentTab } = useFile()
-    const { inlineToolbar } = useSettings()
-    const { editor, setEditor} = useEditor()
-    const [new_file_path, setNew_file_path] = useState<string | null>(null)
-    const { KeyCommands, HandleKeys } = UseShortcuts()
-    const { plugins, InlineToolbar, MentionSuggestions } = Plugins()
-    const [openImage, setOpenImage] = useState<boolean>(false)
-    const [open, setOpen] = useState(false)
-    const [suggestions, setSuggestions] = useState(mentions)
-  
-    const onOpenChange = useCallback((_open: boolean) => {
-      setOpen(_open)
-    }, [])
-  
-    const onSearchChange = useCallback(({ value }: { value: string }) => {
-      setSuggestions(defaultSuggestionsFilter(value, mentions))
-    }, [])
-  
-    const handleChange = (editorState: EditorState) => {
-      if (!loaded) return // handleChange can run before setEditorState
+const Editor = () => {
+  const { getTextColor, getBorderColor, getBackgroundColor } = useColors()
+  const ReactEditorJS = createReactEditorJS()
+  const editorCore = useRef<EditorCore | null>(null)
+  const { saveFile, activeTab, activeFile } = useWorkspace()
+  const [loaded, setLoaded] = useState(false)
+  const [editor, setEditor] = useState<any>(null)
 
-      const raw: any = convertToRaw(editorState.getCurrentContent())
-      const md = draftjsToMd(raw)
-  
-      if (md !== file_content[currentTab]) {
-        const newSaved = {...saved}
-        newSaved[currentTab] = false
-        setSaved(newSaved)
-      }
+  const text_color = getTextColor()
 
-      const newFile_content = {...file_content}
-      newFile_content[currentTab] = md
+  const border_color = getBorderColor()
 
-      setFile_content(newFile_content)
-      setEditor(editorState)
-    }
-  
-    useEffect(() => {
-      try{
-        if (new_file_path !== file_path[currentTab]) {
-          setNew_file_path(file_path[currentTab])
-          const rawData = mdToDraftjs(file_content[currentTab])
-          const contentState = convertFromRaw(rawData)
-          setEditor(EditorState.createWithContent(contentState))
-        } if (new_file[currentTab]) {
-          setEditor(EditorState.createEmpty())
-          const newNew_file = {...new_file}
-          newNew_file[currentTab] = false
-          setNew_file(newNew_file)
-        }
-      } catch (e) {
-        console.log(e)
-      }
-     
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [file_content, currentTab, file_content[currentTab]])
+  const bg_color = getBackgroundColor()
+  const lighter_bg_color = utils.getTextColor(bg_color) === "#fff" 
+    ? utils.getLighterColor("0.02", bg_color) 
+      : utils.getDarkerColor("0.02", bg_color)
 
-    useEffect(() => {
-      try{
-        const rawData = mdToDraftjs(file_content[currentTab])
-        const contentState = convertFromRaw(rawData)
-        setEditor(EditorState.createWithContent(contentState))
+  const handleInitialize = useCallback((instance: any) => {
+    instance._editorJS.isReady
+      .then(() => {
+        editorCore.current = instance
+        setEditor(instance)
         setLoaded(true)
-      } catch (e) {
-        console.log(e)
-      }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentTab])
-  
-    return (
-      <div className="max-w-md w-full mr-5 h-full">
-        <div>
-          <Editor
-            ref={editorRef}
-            handleKeyCommand={ HandleKeys }
-            keyBindingFn={ KeyCommands }
-            blockRenderMap={ blockRenderMap }
-            editorState={ editor }
-            onChange={ handleChange }
-            placeholder="Type here Markdown text..."
-            plugins={ plugins }
-          />
-          
-          {inlineToolbar && <InlineToolbar />}
+      })
+      .catch((err: any) => console.log("An error occured", err))
+  }, [])
 
-          <SideToolbar setOpenImage={setOpenImage}/>
-  
-          {openImage && <AddImage setOpenImage={setOpenImage} openImage={openImage}/>}
-  
-          <MentionSuggestions
-            open={open}
-            onOpenChange={onOpenChange}
-            suggestions={suggestions}
-            onSearchChange={onSearchChange}
-            entryComponent={MentionSuggestionsBlock}
-          />
-        </div>
-      </div>
-    )
-  }
-  
-  export default MdEditor
+  const handleReadFile = useCallback(async () => {
+    if (!editor || !loaded || !activeFile) return
+    try {
+      const jsonData: any = activeFile.data
+      if (jsonData) {
+        if (jsonData.blocks?.length !== 0) {
+          await editor.render(jsonData)
+        } else editor.clear()
+      } else editor.clear()
+    } catch (err) {
+      editor.clear()
+    }
+  }, [editor, loaded, activeFile])
+
+  const handleSave = useCallback(async () => {
+    if (!activeFile || !editorCore.current) return
+    const savedData = await editorCore.current.save()
+    const path = localStorage.getItem("active_file") || ""
+    await saveFile(savedData, path)
+  }, [activeFile, saveFile])
+
+  useEffect(() => {
+    handleReadFile()
+  }, [handleReadFile, activeTab])
+
+  return (
+    <Flex
+      color={text_color}
+      w="full"
+      h="full"
+      border="1px"
+      overflowY="scroll"
+      borderColor={border_color}
+      rounded="md"
+      maxHeight="100%"
+      overflowX="hidden"
+      bg={lighter_bg_color}
+      mb={2}
+    >
+      {activeFile ? (
+        <Box maxH="100%" w="full" h="full" m={0} pl={2}>
+          <ReactEditorJS
+            holder="noted"
+            onChange={handleSave}
+            onInitialize={handleInitialize}
+            tools={EDITOR_JS_TOOLS}
+          >
+            <Box id="noted" overflowY="scroll" height="100%"></Box>
+          </ReactEditorJS>
+        </Box>
+      ) : (
+        <Text color={text_color} fontSize="xl" fontWeight="bold" m="auto">
+          No file selected
+        </Text>
+      )}
+    </Flex>
+  )
+}
+
+export default Editor
