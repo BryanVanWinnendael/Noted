@@ -1,9 +1,7 @@
-import { Flex, Box, Text } from '@chakra-ui/react'
-import { useSettings } from 'contexts/SettingsContext'
-import useColors from 'hooks/useColors'
-import React from 'react'
-import { GlassComponents } from 'types/index'
-import CustomSwitch from './CustomSwitch'
+import { Flex, Box, Text } from "@chakra-ui/react"
+import { useSettings } from "contexts/SettingsContext"
+import useColors from "hooks/useColors"
+import CustomSwitch from "./CustomSwitch"
 
 const Compact = () => {
   const { saveSettings, compactMode } = useSettings()
@@ -20,7 +18,7 @@ const Compact = () => {
       <Box>
         <Text fontWeight="semibold">Compact mode</Text>
         <Text color={muted_text_color}>
-          Enable or disable glass effect for components
+          Enable or disable compact mode for the app
         </Text>
       </Box>
       <CustomSwitch

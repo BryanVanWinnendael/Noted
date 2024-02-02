@@ -1,7 +1,6 @@
-const { ipcMain, dialog } = require("electron")
+const { ipcMain } = require("electron")
 const fs = require("fs")
 const path = require("path")
-const FileTree = require("./fileTree")
 
 class Files {
   win = null
@@ -10,21 +9,6 @@ class Files {
   }
 
   handle() {
-    ipcMain.handle("folder:open-dialog", async (event) => {
-      const { canceled, filePaths } = await dialog.showOpenDialog(this.win, {
-        properties: ["openDirectory"],
-      })
-      if (!canceled && filePaths[0]) {
-        const fileTree = new FileTree(filePaths[0])
-
-        fileTree.build()
-        const fileTreeObject = this.fileTreeToObject(fileTree)
-        this.initNotedFolder(filePaths[0])
-        return fileTreeObject
-      }
-      return null
-    })
-
     ipcMain.handle("file:open", async (event, params) => {
       const filePath = params.file_path
       const fileContent = fs.readFileSync(filePath, "utf8")
@@ -41,15 +25,6 @@ class Files {
         return "success"
       }
       return "error"
-    })
-
-    ipcMain.handle("folder:open", async (event, params) => {
-      const folderPath = params.folder_path
-      const fileTree = new FileTree(folderPath)
-
-      fileTree.build()
-      const fileTreeObject = this.fileTreeToObject(fileTree)
-      return fileTreeObject
     })
 
     ipcMain.handle("file:settings-save", async (event, params) => {
@@ -70,29 +45,45 @@ class Files {
       const settings = fs.readFileSync(settingsPath, "utf8")
       return settings
     })
-  }
 
-  fileTreeToObject = (fileTree) => {
-    const fileTreeObject = {}
-    const folderName = path.basename(fileTree.path)
-    fileTreeObject.name = folderName
-    fileTreeObject.path = fileTree.path
-    fileTreeObject.items = []
-    fileTreeObject.type = fileTree.type
-    fileTree.items.forEach((item) => {
-      if (item.type === "folder") {
-        const folder = this.fileTreeToObject(item)
-        fileTreeObject.items.push(folder)
-      } else {
-        const file = {
-          name: item.name,
-          path: item.path,
-          type: item.type,
-        }
-        fileTreeObject.items.push(file)
+    ipcMain.handle("file:new", async (event, params) => {
+      const folder = params.folder
+      const fileName = params.file_name
+      const filePath = path.join(folder, fileName)
+
+      if (fs.existsSync(filePath)) {
+        throw new Error("File already exists")
       }
+
+      fs.writeFile(filePath, "", function (err) {
+        if (err) throw err
+      })
+
+      return filePath
     })
-    return fileTreeObject
+
+    ipcMain.handle("file:delete", async (event, params) => {
+      const filePath = params.file_path
+
+      if (!fs.existsSync(filePath)) {
+        throw new Error("File not found")
+      }
+
+      fs.unlinkSync(filePath)
+    })
+
+    ipcMain.handle("file:rename", async (event, params) => {
+      const oldPath = params.old_path
+      const newPath = params.new_path
+
+      if (fs.existsSync(newPath)) {
+        throw new Error("File already exists")
+      }
+
+      fs.renameSync(oldPath, newPath, function (err) {
+        if (err) throw err
+      })
+    })
   }
 
   initNotedFolder = (workspacePath) => {

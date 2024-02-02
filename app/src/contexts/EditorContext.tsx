@@ -14,13 +14,16 @@ type Props = {
 
 export const EditorProvider: React.FC<Props> = ({ children }: Props) => {
   const [editor, setEditor] = useState<EditorJS>({} as EditorJS)
-  const [info, setInfo] = useState<string>("")
+  const [blocks, setBlocks] = useState<any>([])
+  const [time, setTime] = useState<any>(0)
 
   const value: EditorTypeContext = {
     editor,
     setEditor,
-    setInfo,
-    info,
+    setBlocks,
+    blocks,
+    setTime,
+    time,
   }
 
   return (

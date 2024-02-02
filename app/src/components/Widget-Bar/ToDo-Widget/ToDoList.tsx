@@ -42,7 +42,7 @@ const ToDoList = () => {
     >
       {todos.map((todo, index) => {
         return (
-          <Flex gap={2} alignItems="center">
+          <Flex key={index} gap={2} alignItems="center">
             <CloseIcon
               onClick={() => handleDelete(index)}
               _hover={{ color: accent_color }}

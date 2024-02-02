@@ -1,15 +1,15 @@
 import { Settings } from "types"
 import { darken } from "polished"
 import {
+  DEFAULT_ACTIVE_THEME,
   DEFAULT_COMPACT_MODE,
+  DEFAULT_FONT,
   DEFAULT_GLASS,
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS,
   DEFAULT_HEADER_COLORS_ENABLED,
   DEFAULT_UPDATE,
   REQUIRED_SETTINGS_KEYS,
-  THEME_DARK,
-  THEME_KEYS,
 } from "./constants"
 
 const headerKeys = ["h1", "h2", "h3", "h4", "h5", "h6"]
@@ -28,17 +28,13 @@ const isColor = (key: any, color: any): any => {
 }
 
 const isGlassBackground = (key: any, bool: any): any => {
-  try {
-    if (typeof key !== "string" || !glassKeys.includes(key)) {
-      return DEFAULT_GLASS_ENABLED
-    }
-    if (typeof bool !== "boolean") {
-      return DEFAULT_GLASS_ENABLED
-    }
-    return bool
-  } catch {
+  if (typeof key !== "string" || !glassKeys.includes(key)) {
     return DEFAULT_GLASS_ENABLED
   }
+  if (typeof bool !== "boolean") {
+    return DEFAULT_GLASS_ENABLED
+  }
+  return bool
 }
 
 const update = (bool: any): any => {
@@ -90,25 +86,24 @@ const glassEnabled = (bool: any): any => {
 }
 
 const compactMode = (bool: any): any => {
-  console.log(bool)
   if (typeof bool !== "boolean") {
     return DEFAULT_COMPACT_MODE
   }
   return bool
 }
 
-const customTheme = (obj: any): any => {
-  if (
-    typeof obj !== "object" ||
-    obj === null ||
-    Object.keys(obj).length === 0
-  ) {
-    return THEME_DARK
+const isCustomThemeString = (theme: any): any => {
+  if (typeof theme !== "string") {
+    return DEFAULT_ACTIVE_THEME
   }
-  if (Object.keys(obj).every((key) => THEME_KEYS.includes(key))) {
-    return obj
+  return theme
+}
+
+const isFontFamily = (font: any): any => {
+  if (typeof font !== "string") {
+    return DEFAULT_FONT
   }
-  return THEME_DARK
+  return font
 }
 
 export const ensureKeys = (settings: { [key in any]: any }, keys: any[]) => {
@@ -145,11 +140,14 @@ const settingsChecker = (settings: { [key in Settings]: any }): {
       case "glass_background_enabled":
         filledSettings[key] = glassEnabled(value)
         break
-      case "custom_theme":
-        filledSettings[key] = customTheme(value)
-        break
       case "compact_mode":
         filledSettings[key] = compactMode(value)
+        break
+      case "active_theme":
+        filledSettings[key] = isCustomThemeString(value)
+        break
+      case "font_family":
+        filledSettings[key] = isFontFamily(value)
         break
       default:
         break

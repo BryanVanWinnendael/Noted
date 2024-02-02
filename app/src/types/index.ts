@@ -33,12 +33,18 @@ export interface ActiveFile {
 export interface Tab {
   [key: number]: {
     path: string
-    saved: boolean
   }
+}
+
+export interface ContextMenu {
+  path: string
+  type: "file" | "folder"
+  name: string
 }
 
 export interface WorkspaceTypeContext {
   openWorkspace: () => void
+  openFolder: (path: string, reset?: boolean) => void
   workspace: WorkspaceType | undefined
   openFile: (path: string) => void
   activeFile: ActiveFile | undefined
@@ -49,13 +55,25 @@ export interface WorkspaceTypeContext {
   tabs: Tab
   handleChangeTab: (tab: number) => void
   setTabs: (tabs: Tab) => void
-  setActiveFile: (file: ActiveFile) => void
+  setActiveFile: (file: ActiveFile | undefined) => void
   removeTab: (tab: number) => void
   showSidebar: boolean
   setShowSidebar: (show: boolean) => void
-  openFileInTab: boolean
-  setOpenFileInTab: (open: boolean) => void
+  setShowOpenFileInTab: (show: boolean) => void
+  showOpenFileInTab: boolean
+  setShowOpenNewFile: (show: boolean) => void
+  showOpenNewFile: boolean
   openFileInNewTab: (filePath: string) => void
+  makeNewFile: (fileName: string, folderPath: string) => Promise<boolean>
+  makeNewFolder: (folderName: string, folderPath: string) => Promise<boolean>
+  activeFolder: string | undefined
+  setActiveFolder: (folder: string) => void
+  deleteFile: (path: string) => Promise<boolean>
+  deleteFolder: (path: string) => Promise<boolean>
+  rename: (oldPath: string, newPath: string, type: string) => Promise<boolean>
+  showSwitcher: boolean
+  setShowSwitcher: (show: boolean) => void
+  closeWorkspace: () => void
 }
 
 export interface Theme {
@@ -80,7 +98,6 @@ export interface HeaderColors {
 export type WidgetName = "calendar" | "todo" | "clock" | "info"
 
 export type GlassComponents = "navBar" | "settings" | "widgets" | "window"
- 
 
 export type GlassSettings = {
   [key in GlassComponents]: boolean
@@ -93,8 +110,9 @@ export type Settings =
   | "glass_background"
   | "glass_background_enabled"
   | "header_colors"
-  | "custom_theme"
   | "compact_mode"
+  | "active_theme"
+  | "font_family"
 
 export interface SettingsTypeContext {
   isOpen: boolean
@@ -122,13 +140,18 @@ export interface SettingsTypeContext {
   customTheme: Theme | undefined
   compactMode: boolean
   setCompactMode: (compact: boolean) => void
+  setCustomTheme: (theme: Theme | undefined) => void
+  activeTheme: string
+  fontFamily: string
 }
 
 export interface EditorTypeContext {
   editor: EditorJS
   setEditor: (editor: EditorJS) => void
-  info: string
-  setInfo: (info: string) => void
+  blocks: any[]
+  setBlocks: (blocks: any[]) => void
+  time: number
+  setTime: (time: number) => void
 }
 
 export interface ToDo {

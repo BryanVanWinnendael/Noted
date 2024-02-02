@@ -13,6 +13,7 @@ import {
   SimpleGrid,
   Text,
   Tooltip,
+  useColorMode,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react"
@@ -37,6 +38,7 @@ const ThemeCard = ({
   const [sortedColors, setSortedColors] = useState<Theme>()
   const cancelRef = useRef()
   const toast = useToast()
+  const { colorMode, setColorMode } = useColorMode()
 
   const bg_color = getBackgroundColor()
 
@@ -46,6 +48,7 @@ const ThemeCard = ({
 
   const handleDelete = () => {
     deleteCustomTheme(name)
+    if (colorMode === name) setColorMode("light")
     onClose()
   }
 
@@ -100,7 +103,7 @@ const ThemeCard = ({
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent bg={bg_color} color={text_color}>
+          <AlertDialogContent bg={bg_color} color={text_color} shadow="md">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete Theme {name}
             </AlertDialogHeader>
@@ -116,6 +119,7 @@ const ThemeCard = ({
                 variant="outline"
                 ref={cancelRef as any}
                 onClick={onClose}
+                color={text_color}
               >
                 Cancel
               </Button>

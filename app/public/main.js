@@ -6,7 +6,8 @@ const { autoUpdater } = require("electron-updater")
 const Updates = require("./update")
 const Themes = require("./theme")
 const Files = require("./file")
-const wallpaper = require('wallpaper')
+const wallpaper = require("wallpaper")
+const Folders = require("./folder")
 //Basic flags
 autoUpdater.autoDownload = false
 autoUpdater.autoInstallOnAppQuit = false
@@ -14,7 +15,6 @@ autoUpdater.autoInstallOnAppQuit = false
 let win
 
 require("@electron/remote/main").initialize()
-
 
 function createWindow() {
   win = new BrowserWindow({
@@ -26,12 +26,11 @@ function createWindow() {
     icon: path.join(__dirname, "icon.ico"),
     webPreferences: {
       nodeIntegration: true,
-			enableRemoteModule: true,
-			contextIsolation: true,
+      enableRemoteModule: true,
+      contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
-      webSecurity: false
+      webSecurity: false,
     },
-    
   })
   win.webContents.openDevTools()
   win.setMenu(null)
@@ -50,22 +49,25 @@ function createWindow() {
   const files = new Files(win)
   files.handle()
 
-  ipcMain.on('asynchronous-message', async (event, arg) => {
+  const folders = new Folders(win)
+  folders.handle()
+
+  ipcMain.on("asynchronous-message", async (event, arg) => {
     const wallpaperString = await wallpaper.get()
     const screenConfig = {
       width: screen.getPrimaryDisplay().workAreaSize.width,
-      height: screen.getPrimaryDisplay().workAreaSize.height, 
+      height: screen.getPrimaryDisplay().workAreaSize.height,
       wallpaper: wallpaperString,
       top: win.getPosition()[1],
-      left: win.getPosition()[0]
+      left: win.getPosition()[0],
     }
-    event.sender.send('wallpaper', screenConfig);
-    win.on('move', () => {
+    event.sender.send("wallpaper", screenConfig)
+    win.on("move", () => {
       screenConfig.top = win.getPosition()[1]
       screenConfig.left = win.getPosition()[0]
-      event.sender.send('wallpaper', screenConfig);
+      event.sender.send("wallpaper", screenConfig)
     })
-  });
+  })
 
   ipcMain.handle("minimize-window", async (event) => {
     win.minimize()
@@ -93,15 +95,15 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow()
 
-  win.once('ready-to-show', () => {
+  win.once("ready-to-show", () => {
     win.show()
   })
 
-  app.on('activate', function () {
+  app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
 
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+app.on("window-all-closed", function () {
+  if (process.platform !== "darwin") app.quit()
 })

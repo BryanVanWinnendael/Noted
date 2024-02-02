@@ -26,7 +26,12 @@ type timerType = {
 }
 
 const TimerViewer = () => {
-  const { getAccentColor, getSecondaryBackgroundColor, getTextColor, getMutedTextColor } =  useColors()
+  const {
+    getAccentColor,
+    getSecondaryBackgroundColor,
+    getTextColor,
+    getMutedTextColor,
+  } = useColors()
   const { isConnected, selectedDate } = useWidget()
   const [timer, setTimer] = useState<timerType | undefined>()
   const [inputTimer, setInputTimer] = useState<timerType>({
@@ -177,22 +182,13 @@ const TimerViewer = () => {
         <AlertDialogContent bg={bg_color} color={utils.getTextColor(bg_color)}>
           <AlertDialogBody>
             <Flex>
-              <Text
-                color={muted_text_color}
-                w={100}
-              >
+              <Text color={muted_text_color} w={100}>
                 Hours
               </Text>
-              <Text
-                color={muted_text_color}
-                w={100}
-              >
+              <Text color={muted_text_color} w={100}>
                 Minutes
               </Text>
-              <Text
-                color={muted_text_color}
-                w={100}
-              >
+              <Text color={muted_text_color} w={100}>
                 Seconds
               </Text>
             </Flex>

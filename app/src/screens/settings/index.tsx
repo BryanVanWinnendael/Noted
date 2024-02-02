@@ -14,6 +14,8 @@ import Themes from "./Themes"
 import Market from "./Market"
 import General from "./General"
 import useColors from "hooks/useColors"
+import { useWorkspace } from "contexts/WorkspaceContext"
+import Shortcuts from "./Shortcuts"
 
 const SettingsScreen = () => {
   const {
@@ -24,6 +26,7 @@ const SettingsScreen = () => {
   } = useColors()
   const [section, setSection] = useState<string>("general")
   const { isOpen, onClose, glassBackground, glassEnabled } = useSettings()
+  const { workspace } = useWorkspace()
 
   const bg_colorLeft = getSecondaryBackgroundColor()
 
@@ -99,96 +102,130 @@ const SettingsScreen = () => {
               >
                 General
               </Box>
-              <Box
-                mb={1}
-                p={1}
-                pl={2}
-                rounded="md"
-                color={
-                  section === "editor"
-                    ? utils.getDarkerColor("0.1", accent_color)
-                    : text_color
-                }
-                bg={
-                  section === "editor"
-                    ? utils.getTransparent(0.2, accent_color)
-                    : ""
-                }
-                onClick={() => {
-                  setSection("editor")
-                }}
-                cursor="pointer"
-                _hover={{
-                  bg: utils.getDarkerColor(
-                    "0.03",
-                    section === "editor"
-                      ? utils.getTransparent(0.2, accent_color)
-                      : bg_colorLeft,
-                  ),
-                }}
-              >
-                Editor
-              </Box>
-              <Box
-                mb={1}
-                p={1}
-                pl={2}
-                rounded="md"
-                color={
-                  section === "themes"
-                    ? utils.getDarkerColor("0.1", accent_color)
-                    : text_color
-                }
-                bg={
-                  section === "themes"
-                    ? utils.getTransparent(0.2, accent_color)
-                    : ""
-                }
-                onClick={() => {
-                  setSection("themes")
-                }}
-                cursor="pointer"
-                _hover={{
-                  bg: utils.getDarkerColor(
-                    "0.03",
-                    section === "themes"
-                      ? utils.getTransparent(0.2, accent_color)
-                      : bg_colorLeft,
-                  ),
-                }}
-              >
-                Custom themes
-              </Box>
-              <Box
-                mb={1}
-                p={1}
-                pl={2}
-                rounded="md"
-                color={
-                  section === "market"
-                    ? utils.getDarkerColor("0.1", accent_color)
-                    : text_color
-                }
-                bg={
-                  section === "market"
-                    ? utils.getTransparent(0.2, accent_color)
-                    : ""
-                }
-                onClick={() => {
-                  setSection("market")
-                }}
-                cursor="pointer"
-                _hover={{
-                  bg: utils.getDarkerColor(
-                    "0.03",
-                    section === "market"
-                      ? utils.getTransparent(0.2, accent_color)
-                      : bg_colorLeft,
-                  ),
-                }}
-              >
-                Market
-              </Box>
+              {workspace && (
+                <>
+                  <Box
+                    mb={1}
+                    p={1}
+                    pl={2}
+                    rounded="md"
+                    color={
+                      section === "editor"
+                        ? utils.getDarkerColor("0.1", accent_color)
+                        : text_color
+                    }
+                    bg={
+                      section === "editor"
+                        ? utils.getTransparent(0.2, accent_color)
+                        : ""
+                    }
+                    onClick={() => {
+                      setSection("editor")
+                    }}
+                    cursor="pointer"
+                    _hover={{
+                      bg: utils.getDarkerColor(
+                        "0.03",
+                        section === "editor"
+                          ? utils.getTransparent(0.2, accent_color)
+                          : bg_colorLeft,
+                      ),
+                    }}
+                  >
+                    Editor
+                  </Box>
+                  <Box
+                    mb={1}
+                    p={1}
+                    pl={2}
+                    rounded="md"
+                    color={
+                      section === "shortcuts"
+                        ? utils.getDarkerColor("0.1", accent_color)
+                        : text_color
+                    }
+                    bg={
+                      section === "shortcuts"
+                        ? utils.getTransparent(0.2, accent_color)
+                        : ""
+                    }
+                    onClick={() => {
+                      setSection("shortcuts")
+                    }}
+                    cursor="pointer"
+                    _hover={{
+                      bg: utils.getDarkerColor(
+                        "0.03",
+                        section === "shortcuts"
+                          ? utils.getTransparent(0.2, accent_color)
+                          : bg_colorLeft,
+                      ),
+                    }}
+                  >
+                    Shortcuts
+                  </Box>
+                  <Box
+                    mb={1}
+                    p={1}
+                    pl={2}
+                    rounded="md"
+                    color={
+                      section === "themes"
+                        ? utils.getDarkerColor("0.1", accent_color)
+                        : text_color
+                    }
+                    bg={
+                      section === "themes"
+                        ? utils.getTransparent(0.2, accent_color)
+                        : ""
+                    }
+                    onClick={() => {
+                      setSection("themes")
+                    }}
+                    cursor="pointer"
+                    _hover={{
+                      bg: utils.getDarkerColor(
+                        "0.03",
+                        section === "themes"
+                          ? utils.getTransparent(0.2, accent_color)
+                          : bg_colorLeft,
+                      ),
+                    }}
+                  >
+                    Custom themes
+                  </Box>
+                  <Box
+                    mb={1}
+                    p={1}
+                    pl={2}
+                    rounded="md"
+                    color={
+                      section === "market"
+                        ? utils.getDarkerColor("0.1", accent_color)
+                        : text_color
+                    }
+                    bg={
+                      section === "market"
+                        ? utils.getTransparent(0.2, accent_color)
+                        : ""
+                    }
+                    onClick={() => {
+                      setSection("market")
+                    }}
+                    cursor="pointer"
+                    _hover={{
+                      bg: utils.getDarkerColor(
+                        "0.03",
+                        section === "market"
+                          ? utils.getTransparent(0.2, accent_color)
+                          : bg_colorLeft,
+                      ),
+                    }}
+                  >
+                    Market
+                  </Box>
+                </>
+              )}
             </Box>
           </Flex>
 
@@ -244,6 +281,7 @@ const SettingsScreen = () => {
                   editor: <Editor />,
                   themes: <Themes />,
                   market: <Market />,
+                  shortcuts: <Shortcuts />,
                 }[section]
               }
             </Box>

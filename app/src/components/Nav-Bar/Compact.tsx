@@ -1,17 +1,23 @@
-import { Box } from '@chakra-ui/react'
-import { useSettings } from 'contexts/SettingsContext'
-import useColors from 'hooks/useColors'
+import { Box } from "@chakra-ui/react"
+import { useSettings } from "contexts/SettingsContext"
+import useColors from "hooks/useColors"
+import { utils } from "utils/index"
 
 const Compact = () => {
-  const { getBackgroundColor } =
-  useColors()
-const { glassBackground, glassEnabled } = useSettings()
+  const { getBackgroundColor } = useColors()
+  const { glassBackground, glassEnabled } = useSettings()
 
-  const nav_bg_color = getBackgroundColor()
+  const bg_color = getBackgroundColor()
 
   const isGlassEnabled = glassEnabled && glassBackground.window
+
   return (
-    <Box bg={isGlassEnabled ? "transparent" : nav_bg_color } w="full" h={2} className='nav'/>
+    <Box
+      bg={isGlassEnabled ? utils.getGlassBackground(bg_color) : bg_color}
+      w="full"
+      h={2}
+      className="nav glass"
+    />
   )
 }
 

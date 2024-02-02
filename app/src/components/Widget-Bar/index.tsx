@@ -38,7 +38,6 @@ const Index = () => {
   const isGlassEnabled = glassEnabled && glassBackground.widgets
   const isGlassEnabledWindow = glassEnabled && glassBackground.window
 
-
   const getOffset = () => {
     const MAX_HEIGHT = 790
     if (windowHeight <= MAX_HEIGHT) {
@@ -61,6 +60,7 @@ const Index = () => {
       {selectedWidgets.map((widget, index) => {
         return (
           <Card
+            key={index}
             onClick={() => setSelectedPanel(index)}
             position="relative"
             top={index === 1 ? getOffset() : 0}

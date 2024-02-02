@@ -161,6 +161,7 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
         ".ce-toolbar__actions": {
           left: 0,
           width: "fit-content",
+          backgroundColor: "transparent",
         },
         ".cdx-checklist__item-checkbox-check": {
           backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
@@ -170,10 +171,29 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
           ".ce-popover": {
             left: "100% !important",
           },
+          ".codex-editor--narrow, .ce-block--focused": {
+            marginRight: 0,
+            paddingRight: 0,
+          },
         },
-        ".ce-header" : {
-          padding: 0
-        }
+        ".ce-header": {
+          padding: 0,
+        },
+        ".ce-paragraph[data-placeholder]:empty::before": {
+          opacity: "50%",
+        },
+        "@media (max-width: 650px)": {
+          ".ce-toolbar__plus": {
+            height: "24px",
+            width: "24px",
+            border: "none",
+          },
+          ".ce-toolbar__settings-btn": {
+            height: "24px",
+            width: "24px",
+            border: "none",
+          },
+        },
       }}
     >
       <BlockStyling>{children}</BlockStyling>

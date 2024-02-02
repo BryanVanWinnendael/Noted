@@ -3,12 +3,18 @@ import SimpleImage from "@editorjs/simple-image"
 import Checklist from "@editorjs/checklist"
 import List from "@editorjs/list"
 import Quote from "@editorjs/quote"
-import Paragraph from "@editorjs/paragraph"
+import editorjsCodeflask from "@calumk/editorjs-codeflask"
+import Delimiter from "@editorjs/delimiter"
+import editorjsParagraphLinebreakable from "@calumk/editorjs-paragraph-linebreakable"
+import Table from "@editorjs/table"
 
 export const EDITOR_JS_TOOLS = {
   paragraph: {
-    class: Paragraph,
+    class: editorjsParagraphLinebreakable,
     inlineToolbar: true,
+    config: {
+      placeholder: "Write your note here...",
+    },
   },
   header: {
     class: Header,
@@ -31,4 +37,7 @@ export const EDITOR_JS_TOOLS = {
     },
   },
   quote: Quote,
+  code: editorjsCodeflask,
+  delimiter: Delimiter,
+  table: Table,
 }

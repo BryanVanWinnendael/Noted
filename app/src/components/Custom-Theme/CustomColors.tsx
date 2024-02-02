@@ -11,7 +11,6 @@ import {
   TagCloseButton,
   TagLabel,
   Text,
-  useColorMode,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react"
@@ -24,13 +23,15 @@ import useColors from "hooks/useColors"
 import { THEME_DARK, THEME_KEYS } from "utils/constants"
 
 const CustomColors = () => {
-  const { getAccentColor, getSecondaryBackgroundColor, getTextColor, getMutedTextColor } =
-    useColors()
+  const {
+    getAccentColor,
+    getSecondaryBackgroundColor,
+    getTextColor,
+    getMutedTextColor,
+  } = useColors()
   const [colors, setColors] = useState<Theme | undefined>()
   const cancelRef = useRef()
-  const { setColorMode } = useColorMode()
   const {
-    saveSettings,
     saveThemeToFile,
     exportTheme,
     importTheme,
@@ -39,6 +40,8 @@ const CustomColors = () => {
     addThemeToEditor,
     customThemes,
     customTheme,
+    setCustomTheme,
+    saveSettings,
   } = useSettings()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [themeName, setThemeName] = useState<string>("")
@@ -60,13 +63,12 @@ const CustomColors = () => {
     newColors[key] = color
     setColors(newColors)
     localStorage.setItem("custom-theme-json", JSON.stringify(newColors))
-    saveSettings("custom_theme", newColors)
+    setCustomTheme(newColors)
   }
 
   const reset = () => {
     localStorage.setItem("custom-theme-json", JSON.stringify(THEME_DARK))
     setColors(THEME_DARK)
-    saveSettings("custom_theme", THEME_DARK)
   }
 
   const handleExport = () => {
@@ -96,13 +98,22 @@ const CustomColors = () => {
       status: "success",
       isClosable: true,
     })
+
     setThemeName("")
-    setColorMode("custom_theme")
+    saveSettings("active_theme", themeName)
+    close()
+  }
+
+  const close = () => {
+    setThemeName("")
     onClose()
   }
 
   useEffect(() => {
     if (customTheme) setColors(customTheme)
+    return () => {
+      setThemeName("")
+    }
   }, [customTheme])
 
   return (
@@ -110,7 +121,7 @@ const CustomColors = () => {
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef as any}
-        onClose={onClose}
+        onClose={close}
         isOpen={isOpen}
       >
         <AlertDialogOverlay />
@@ -171,18 +182,13 @@ const CustomColors = () => {
           Save
         </Button>
       </Flex>
-      <Text
-        mt={1}
-        color={muted_text_color}
-      >
+      <Text mt={1} color={muted_text_color}>
         Import/export a theme or save the theme to your editor themes
       </Text>
 
       {themePath && colors && (
         <Flex mt={4} gap={2}>
-          <Text color={muted_text_color}>
-            Theme path:
-          </Text>
+          <Text color={muted_text_color}>Theme path:</Text>
           <Tag
             size={"sm"}
             key={themePath}
@@ -203,10 +209,7 @@ const CustomColors = () => {
       {colors && (
         <Box>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               Background color:{" "}
             </Text>
             <Box mr={5}>
@@ -218,10 +221,7 @@ const CustomColors = () => {
             </Box>
           </Flex>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               Secondary background color:{" "}
             </Text>
             <Box mr={5}>
@@ -233,10 +233,7 @@ const CustomColors = () => {
             </Box>
           </Flex>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               Text color:{" "}
             </Text>
             <Box mr={5}>
@@ -248,10 +245,7 @@ const CustomColors = () => {
             </Box>
           </Flex>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               Icon color:{" "}
             </Text>
             <Box mr={5}>
@@ -263,10 +257,7 @@ const CustomColors = () => {
             </Box>
           </Flex>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               Accent color:{" "}
             </Text>
             <Box mr={5}>
@@ -308,10 +299,7 @@ const CustomColors = () => {
         </Button>
       </Flex>
       {themePath && (
-        <Text
-          mt={1}
-          color={muted_text_color}
-        >
+        <Text mt={1} color={muted_text_color}>
           Save the theme to the path above or reset the colors to default
         </Text>
       )}

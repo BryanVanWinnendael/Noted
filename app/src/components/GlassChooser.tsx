@@ -46,10 +46,7 @@ const GlassChooser = () => {
             mr={5}
             mt={2}
           >
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               Settings page
             </Text>
             <CustomSwitch
@@ -64,10 +61,7 @@ const GlassChooser = () => {
             mr={5}
             mt={2}
           >
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               Nav popup
             </Text>
             <CustomSwitch
@@ -82,10 +76,7 @@ const GlassChooser = () => {
             mr={5}
             mt={2}
           >
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               Widgets
             </Text>
             <CustomSwitch
@@ -100,10 +91,7 @@ const GlassChooser = () => {
             mr={5}
             mt={2}
           >
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               Window
             </Text>
             <CustomSwitch

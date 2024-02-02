@@ -40,7 +40,11 @@ const WidgetChooser = () => {
         name="clock"
       />
       <WidgetIcon
-        icon={<QuestionOutlineIcon color={utils.getDarkerColor("0.1", accent_color)} />}
+        icon={
+          <QuestionOutlineIcon
+            color={utils.getDarkerColor("0.1", accent_color)}
+          />
+        }
         name="info"
       />
     </Flex>

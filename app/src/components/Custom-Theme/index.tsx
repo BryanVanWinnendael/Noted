@@ -7,7 +7,7 @@ import useColors from "hooks/useColors"
 const Index = () => {
   const { getSecondaryBackgroundColor, getMutedTextColor } = useColors()
   const { setColorMode, colorMode } = useColorMode()
-  const { customThemes } = useSettings()
+  const { customThemes, saveSettings } = useSettings()
 
   const secondary_background_color = getSecondaryBackgroundColor()
   const bg_color = utils.getLighterColor("0.02", secondary_background_color)
@@ -17,6 +17,7 @@ const Index = () => {
   const changeTheme = (e: any) => {
     const theme = e.target.value || "light"
     setColorMode(theme)
+    saveSettings("active_theme", theme)
     if (customThemes && customThemes[theme])
       localStorage.setItem("theme-json", JSON.stringify(customThemes[theme]))
   }
@@ -26,9 +27,7 @@ const Index = () => {
       <Flex justifyContent="space-between" alignItems="center" mr={5} mb={4}>
         <Box>
           <Text fontWeight="semibold">Base color scheme</Text>
-          <Text color={muted_text_color}>
-            Choose default color scheme
-          </Text>
+          <Text color={muted_text_color}>Choose default color scheme</Text>
         </Box>
         <Select
           value={colorMode}

@@ -18,11 +18,14 @@ export default function ResizeHandle({
 
   return (
     <PanelResizeHandle id={id}>
-      <Flex 
-       onMouseEnter={() => setHover(true)}
+      <Flex
+        onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
-       h="full" justifyContent="center" alignItems="center" w={2}
-       py={5}
+        h="full"
+        justifyContent="center"
+        alignItems="center"
+        w={2}
+        py={5}
       >
         <Box
           w={1}
@@ -32,7 +35,6 @@ export default function ResizeHandle({
           rounded="sm"
         ></Box>
       </Flex>
-     
     </PanelResizeHandle>
   )
 }

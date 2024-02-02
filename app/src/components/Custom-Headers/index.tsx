@@ -5,7 +5,7 @@ import { useSettings } from "contexts/SettingsContext"
 import useColors from "hooks/useColors"
 
 const Index = () => {
-  const {  getMutedTextColor } = useColors()
+  const { getMutedTextColor } = useColors()
   const { headerColorsEnabled, saveSettings } = useSettings()
 
   const muted_text_color = getMutedTextColor()

@@ -38,9 +38,7 @@ const Market = () => {
   return (
     <Box>
       <Text fontSize="3xl">Market</Text>
-      <Text color={muted_text_color}>
-        Download custom themes
-      </Text>
+      <Text color={muted_text_color}>Download custom themes</Text>
       <Flex gap={1}>
         <Text color={muted_text_color}>
           or request your own theme to be uploaded

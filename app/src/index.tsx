@@ -9,6 +9,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react"
 import type { ComponentStyleConfig } from "@chakra-ui/react"
 import "focus-visible/dist/focus-visible"
 import { EditorProvider } from "contexts/EditorContext"
+import FontWrapper from "styling/FontWrapper"
 
 const Link: ComponentStyleConfig = {
   baseStyle: {
@@ -25,10 +26,6 @@ const Link: ComponentStyleConfig = {
 }
 
 const theme = extendTheme({
-  fonts: {
-    heading: `Poppins`,
-    body: `Poppins`,
-  },
   components: {
     Popover: {
       variants: {
@@ -62,7 +59,9 @@ ReactDOM.render(
               theme={theme}
               toastOptions={{ defaultOptions: { position: "bottom-right" } }}
             >
-              <App />
+              <FontWrapper>
+                <App />
+              </FontWrapper>
             </ChakraProvider>
           </EditorProvider>
         </WorkspaceProvider>

@@ -42,10 +42,7 @@ const CustomColors = () => {
       {colors && (
         <Box>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               H1:{" "}
             </Text>
             <Box mr={5}>
@@ -57,10 +54,7 @@ const CustomColors = () => {
             </Box>
           </Flex>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               H2:{" "}
             </Text>
             <Box mr={5}>
@@ -72,10 +66,7 @@ const CustomColors = () => {
             </Box>
           </Flex>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               H3:{" "}
             </Text>
             <Box mr={5}>
@@ -87,10 +78,7 @@ const CustomColors = () => {
             </Box>
           </Flex>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               H4:{" "}
             </Text>
             <Box mr={5}>
@@ -102,10 +90,7 @@ const CustomColors = () => {
             </Box>
           </Flex>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               H5:{" "}
             </Text>
             <Box mr={5}>
@@ -117,10 +102,7 @@ const CustomColors = () => {
             </Box>
           </Flex>
           <Flex gap={2} mb={2}>
-            <Text
-              w="100%"
-              color={muted_text_color}
-            >
+            <Text w="100%" color={muted_text_color}>
               H6:{" "}
             </Text>
             <Box mr={5}>

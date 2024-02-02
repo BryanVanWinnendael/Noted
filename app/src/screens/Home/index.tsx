@@ -29,24 +29,33 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
       h="full"
       px={2}
       className="glass"
-      bg={isGlassEnabled ? utils.getGlassBackground(bg_color) : bg_color }
+      bg={isGlassEnabled ? utils.getGlassBackground(bg_color) : bg_color}
     >
       <PanelGroup
         autoSaveId="example"
         direction="horizontal"
-        style={{ maxHeight: "100%", marginTop: compactMode ?  0 : "5px", paddingBottom: "5px"}}
-      > 
-        {
-          showSidebar && 
+        style={{
+          maxHeight: "100%",
+          marginTop: compactMode ? 0 : "5px",
+          paddingBottom: "5px",
+        }}
+      >
+        {showSidebar && (
           <>
             <Panel id="sidebar" order={1} minSize={13} maxSize={30}>
               <SideNav workspace={workspace} />
             </Panel>
             <ResizeHandle />
           </>
-        }
-        
-        <Panel id="editor" order={2} minSize={12} defaultSize={12} style={{ maxHeight: "100%" }}>
+        )}
+
+        <Panel
+          id="editor"
+          order={2}
+          minSize={12}
+          defaultSize={12}
+          style={{ maxHeight: "100%" }}
+        >
           <EditorWrapper>
             <Editor />
           </EditorWrapper>

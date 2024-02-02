@@ -1,14 +1,17 @@
 import { AddIcon } from "@chakra-ui/icons"
-import {
-  Flex,
-} from "@chakra-ui/react"
+import { Flex, Text, Tooltip } from "@chakra-ui/react"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import { AnimatePresence, motion } from "framer-motion"
 import useColors from "hooks/useColors"
 import { utils } from "utils"
 
 const Index = () => {
-  const { getAccentColor, getSecondaryBackgroundColor, getMutedTextColor } = useColors()
+  const {
+    getAccentColor,
+    getSecondaryBackgroundColor,
+    getMutedTextColor,
+    getTextColor,
+  } = useColors()
   const { activeTab, tabs, addTab, handleChangeTab, removeTab } = useWorkspace()
 
   const accent_color = getAccentColor()
@@ -17,6 +20,8 @@ const Index = () => {
   const bg_color = utils.getLighterColor("0.02", secondary_background_color)
 
   const muted_text_color = getMutedTextColor()
+
+  const text_color = getTextColor()
 
   const getFileName = (path: string) => {
     const full_name = path.split("\\")
@@ -58,10 +63,16 @@ const Index = () => {
             >
               <Flex
                 onClick={() => handleChangeTab(index)}
-                w="full"
+                w="90%"
                 alignItems="center"
               >
-                {getFileName(tabs[parseInt(key)].path)}
+                <Text
+                  overflow="hidden"
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                >
+                  {getFileName(tabs[parseInt(key)].path)}
+                </Text>
               </Flex>
               {activeTab === index && Object.keys(tabs).length > 1 && (
                 <Flex
@@ -89,17 +100,23 @@ const Index = () => {
           </motion.div>
         ))}
       </AnimatePresence>
-      {
-        Object.keys(tabs).length > 0 && 
-        <AddIcon
-          ml={2}
-          onClick={addTab}
-          cursor="pointer"
-          color={muted_text_color}
-          _hover={{ color: accent_color }}
-        />
-      }
-      
+      {Object.keys(tabs).length > 0 && (
+        <Tooltip
+          placement="bottom"
+          label={"Ctrl+T"}
+          bg={bg_color}
+          color={text_color}
+          rounded="md"
+        >
+          <AddIcon
+            ml={2}
+            onClick={addTab}
+            cursor="pointer"
+            color={muted_text_color}
+            _hover={{ color: accent_color }}
+          />
+        </Tooltip>
+      )}
     </Flex>
   )
 }

@@ -88,9 +88,18 @@ const fullParser = (object: any): any => {
     })
     return parsedObject
   } catch (e) {
-    console.log(e)
     return {}
   }
+}
+
+const getDateString = (date: number) => {
+  const d = new Date(date)
+  return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
+}
+
+const getTimeString = (date: number) => {
+  const d = new Date(date)
+  return `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
 }
 
 export const utils = {
@@ -102,4 +111,6 @@ export const utils = {
   getGlassBackground,
   getModalBackground,
   fullParser,
+  getDateString,
+  getTimeString,
 }

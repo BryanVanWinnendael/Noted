@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Settings",
+    "description": "Open the settings menu",
+    "hotkey": ["Ctrl", "P"]
+  },
+  {
+    "name": "New Workspace",
+    "description": "Open a new Workspace",
+    "hotkey": ["Ctrl", "O"]
+  },
+  {
+    "name": "Sidebar",
+    "description": "Open or close the sidebar",
+    "hotkey": ["Ctrl", "S"]
+  },
+  {
+    "name": "Widgets",
+    "description": "Open or close the widget menu",
+    "hotkey": ["Ctrl", "W"]
+  },
+  {
+    "name": "Open File in Tab",
+    "description": "Open a chosen File in a New Tab",
+    "hotkey": ["Ctrl", "T"]
+  },
+  {
+    "name": "Open File",
+    "description": "Open a chosen File",
+    "hotkey": ["Ctrl", "N"]
+  }
+]

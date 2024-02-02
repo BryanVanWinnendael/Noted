@@ -6,6 +6,7 @@ import { createReactEditorJS } from "react-editor-js"
 import EditorCore from "@editorjs/editorjs"
 import useColors from "hooks/useColors"
 import { utils } from "utils/index"
+import { useEditor } from "contexts/EditorContext"
 
 const Editor = () => {
   const { getTextColor, getBorderColor, getBackgroundColor } = useColors()
@@ -13,26 +14,67 @@ const Editor = () => {
   const editorCore = useRef<EditorCore | null>(null)
   const { saveFile, activeTab, activeFile } = useWorkspace()
   const [loaded, setLoaded] = useState(false)
-  const [editor, setEditor] = useState<any>(null)
+  const { setEditor, editor, setBlocks, setTime } = useEditor()
 
   const text_color = getTextColor()
 
   const border_color = getBorderColor()
 
   const bg_color = getBackgroundColor()
-  const lighter_bg_color = utils.getTextColor(bg_color) === "#fff" 
-    ? utils.getLighterColor("0.02", bg_color) 
+  const lighter_bg_color =
+    utils.getTextColor(bg_color) === "#fff"
+      ? utils.getLighterColor("0.02", bg_color)
       : utils.getDarkerColor("0.02", bg_color)
 
-  const handleInitialize = useCallback((instance: any) => {
-    instance._editorJS.isReady
-      .then(() => {
-        editorCore.current = instance
-        setEditor(instance)
-        setLoaded(true)
-      })
-      .catch((err: any) => console.log("An error occured", err))
+  const handleInitialize = useCallback(
+    (instance: any) => {
+      instance._editorJS.isReady
+        .then(() => {
+          editorCore.current = instance
+          setEditor(instance)
+          setLoaded(true)
+        })
+        .catch((err: any) => console.log("An error occured", err))
+    },
+    [setEditor],
+  )
+
+  const getOpenedFile = (path: string, openFiles: any[]) => {
+    const openedFile = openFiles.find((file) => file.path === path)
+    return openedFile
+  }
+
+  const saveToLocalStorage = useCallback(async (data: any) => {
+    const path = localStorage.getItem("active_file") || ""
+    const openArray = localStorage.getItem("open_files")
+    const openFiles = openArray ? JSON.parse(openArray) : []
+    const existingFile = getOpenedFile(path, openFiles)
+
+    if (existingFile) {
+      existingFile.data = data
+      const index = openFiles.findIndex((file: any) => file.path === path)
+      openFiles.splice(index, 1)
+      openFiles.unshift(existingFile)
+      localStorage.setItem("open_files", JSON.stringify(openFiles))
+    } else {
+      if (openFiles.length === 5) openFiles.shift()
+      // push it to the front of the array
+      openFiles.unshift({ path, data })
+      localStorage.setItem("open_files", JSON.stringify(openFiles))
+    }
   }, [])
+
+  const getData = useCallback(
+    async (editor: any) => {
+      const editorData = await editor.save()
+      const blocks = editorData.blocks
+      setBlocks(blocks)
+      const time = editorData.time || 0
+      setTime(time)
+      saveToLocalStorage(editorData)
+    },
+    [saveToLocalStorage, setBlocks, setTime],
+  )
 
   const handleReadFile = useCallback(async () => {
     if (!editor || !loaded || !activeFile) return
@@ -41,19 +83,21 @@ const Editor = () => {
       if (jsonData) {
         if (jsonData.blocks?.length !== 0) {
           await editor.render(jsonData)
+          await getData(editor)
         } else editor.clear()
       } else editor.clear()
     } catch (err) {
       editor.clear()
     }
-  }, [editor, loaded, activeFile])
+  }, [editor, loaded, activeFile, getData])
 
   const handleSave = useCallback(async () => {
     if (!activeFile || !editorCore.current) return
     const savedData = await editorCore.current.save()
     const path = localStorage.getItem("active_file") || ""
     await saveFile(savedData, path)
-  }, [activeFile, saveFile])
+    await getData(editorCore.current)
+  }, [activeFile, getData, saveFile])
 
   useEffect(() => {
     handleReadFile()

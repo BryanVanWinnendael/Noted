@@ -24,7 +24,7 @@ const Index = () => {
     getIconColor,
     getSecondaryBackgroundColor,
     getTextColor,
-    getMutedTextColor
+    getMutedTextColor,
   } = useColors()
   const {
     isConnected,

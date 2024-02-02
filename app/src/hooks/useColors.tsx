@@ -152,7 +152,6 @@ const useColors = () => {
     } else {
       return utils.getTextColor(bg_color)
     }
-    
   }
 
   const getBackgroundColorLighter = () => {
@@ -167,8 +166,7 @@ const useColors = () => {
 
   const getBorderColor = () => {
     const muted_color = getMutedTextColor()
-    const mulitplier = getTextColor() === "#fff" ? 0.2 : 0.8
-    return utils.getTransparent(mulitplier, muted_color)
+    return utils.getTransparent(0.2, muted_color)
   }
 
   return {
@@ -179,7 +177,9 @@ const useColors = () => {
     getAccentColor,
     getBorderColor,
     getMutedTextColor,
-    geTextColorFromBackgroundColor
+    geTextColorFromBackgroundColor,
+    getBackgroundColorLighter,
+    getSecondaryBackgroundColorLighter,
   }
 }
 

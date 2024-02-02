@@ -28,14 +28,14 @@ const UpdateToast = () => {
   }
 
   return (
-    <Box bg={bg_colorRight} rounded="md" p={2}>
+    <Box color={text_color} bg={bg_colorRight} rounded="md" p={2}>
       <Text fontSize="sm">A new update is avaible!</Text>
       <Text fontSize="sm">Do you want to restart now?</Text>
       <Flex mt={2} gap={2}>
         <Button
           bg={accent_color}
           _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
-          color={text_color}
+          color={utils.getTextColor(accent_color)}
           h={8}
           onClick={hanleUpdate}
         >
@@ -43,6 +43,7 @@ const UpdateToast = () => {
         </Button>
         <Button
           h={8}
+          color={text_color}
           _hover={{ opacity: 0.6 }}
           borderColor={accent_color}
           variant="outline"

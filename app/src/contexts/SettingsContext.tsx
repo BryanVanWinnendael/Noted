@@ -18,6 +18,7 @@ import { checker, ensureKeys } from "utils/checker"
 import { utils } from "utils"
 import {
   DEFAULT_COMPACT_MODE,
+  DEFAULT_FONT,
   DEFAULT_GLASS,
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS_ENABLED,
@@ -58,6 +59,8 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     DEFAULT_GLASS_ENABLED,
   )
   const [compactMode, setCompactMode] = useState<boolean>(DEFAULT_COMPACT_MODE)
+  const [activeTheme, setActiveTheme] = useState<string>("")
+  const [fontFamily, setFontFamily] = useState<string>(DEFAULT_FONT)
 
   const readThemeFile = useCallback(async () => {
     const theme_path = localStorage.getItem("theme-path") || ""
@@ -136,6 +139,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
         theme: JSON.stringify(theme),
         workspace_path,
       })
+      localStorage.setItem("theme-json", JSON.stringify(theme))
       return true
     } catch (err) {
       console.log(err)
@@ -151,11 +155,17 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       })
       const parsedData = utils.fullParser(data)
       setCustomThemes(parsedData)
+      if (activeTheme) {
+        const theme = parsedData[activeTheme]
+        if (theme) {
+          localStorage.setItem("theme-json", JSON.stringify(theme))
+        }
+      }
     } catch (err) {
       console.log(err)
       setCustomThemes({})
     }
-  }, [])
+  }, [activeTheme])
 
   const deleteCustomTheme = (name: string) => {
     try {
@@ -238,11 +248,14 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       case "glass_background_enabled":
         setGlassEnabled(value)
         break
-      case "custom_theme":
-        setCustomTheme(value)
-        break
       case "compact_mode":
         setCompactMode(value)
+        break
+      case "active_theme":
+        setActiveTheme(value)
+        break
+      case "font_family": 
+        setFontFamily(value)
         break
       default:
         break
@@ -255,8 +268,14 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     setHeaderColorsEnabled(settings["header_colors_enabled"])
     setGlassBackground(settings["glass_background"])
     setGlassEnabled(settings["glass_background_enabled"])
-    setCustomTheme(settings["custom_theme"])
     setCompactMode(settings["compact_mode"])
+    setActiveTheme(settings["active_theme"])
+    setFontFamily(settings["font_family"])
+  }
+
+  const resetCustomTheme = () => {
+    localStorage.setItem("custom-theme-json", JSON.stringify(THEME_DARK))
+    setCustomTheme(THEME_DARK)
   }
 
   const getSettings = useCallback(async () => {
@@ -266,10 +285,8 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
         workspace_path,
       })
       const settings = JSON.parse(settingsString)
-      console.log(settings)
 
       const cleanedSettings = checker.settingsChecker(settings)
-      console.log(cleanedSettings)
       setSettings(cleanedSettings)
       return cleanedSettings
     } catch (err) {
@@ -283,6 +300,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     getSettings()
     getCustomThemes()
     readThemeFile()
+    resetCustomTheme()
   }, [getCustomThemes, getSettings, readThemeFile])
 
   useEffect(() => {
@@ -314,7 +332,10 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     initSettings,
     customTheme,
     compactMode,
-    setCompactMode
+    setCompactMode,
+    setCustomTheme,
+    activeTheme,
+    fontFamily
   }
 
   return (

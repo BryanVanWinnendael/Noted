@@ -47,11 +47,14 @@ export const REQUIRED_SETTINGS_KEYS: Settings[] = [
   "header_colors_enabled",
   "glass_background",
   "glass_background_enabled",
-  "custom_theme",
   "compact_mode",
+  "active_theme",
+  "font_family",
 ]
 
 export const DEFAULT_UPDATE = true
+
+export const DEFAULT_ACTIVE_THEME = "light"
 
 export const DEFAULT_HEADER_COLORS_ENABLED = false
 
@@ -70,6 +73,28 @@ export const CONNECTABLE_WIDGETS: WidgetName[][] = [
   ["calendar", "todo"],
   ["calendar", "clock"],
   ["calendar", "info"],
+  ["info", "todo"],
 ]
 
 export const DEFAULT_COMPACT_MODE = false
+
+export const DEFAULT_FONT = "Montserrat"
+
+export const DEFAULT_FONTS = [
+  "Roboto",
+  "Syne",
+  "DM Sans Italic",
+  "DM Sans",
+  "Cormorant Italic",
+  "Cormorant",
+  "Sora",
+  "Vollkorn Italic",
+  "Vollkorn",
+  "Rubik Italic",
+  "Rubik",
+  "Archivo Narrow Italic",
+  "Archivo Narrow",
+  "Montserrat Italic",
+  "Poppins",
+  "Inter",
+]

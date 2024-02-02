@@ -1,33 +1,27 @@
 import {
   IconButton,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
   useDisclosure,
-  Box,
-  Popover,
-  Stack,
   Text,
-  PopoverBody,
   Tooltip,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
 } from "@chakra-ui/react"
 import { utils } from "utils"
 import { WidgetName } from "types"
 import { useWidget } from "contexts/WidgetContext"
 import useColors from "hooks/useColors"
+import { useSettings } from "contexts/SettingsContext"
 
 const WidgetIcon = ({ icon, name }: { icon: any; name: WidgetName }) => {
-  const { getAccentColor, getSecondaryBackgroundColor, getTextColor } =
+  const { getAccentColor, getTextColor, getBackgroundColor, getBorderColor } =
     useColors()
   const { onOpen, onClose, isOpen } = useDisclosure()
   const { selectedWidgets, setSelectedWidgets, setIsConnected } = useWidget()
+  const { glassBackground, glassEnabled } = useSettings()
 
   const accent_color = getAccentColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const bg_colorLeft = getSecondaryBackgroundColor()
 
   const text_color = getTextColor()
 
@@ -37,11 +31,12 @@ const WidgetIcon = ({ icon, name }: { icon: any; name: WidgetName }) => {
     }
   }
 
-  const getBorderColor = () => {
-    const color = utils.getTextColor(bg_color)
-    if (color === "#fff") return "rgb(220,220,220, 0.2)"
-    return "rgb(220,220,220, 0.8)"
-  }
+  const bg_color = getBackgroundColor()
+  const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
+
+  const border_color = getBorderColor()
+
+  const isGlassEnabled = glassEnabled && glassBackground.window
 
   const handleSelect = (nWidget: number) => {
     const isNameIncluded = selectedWidgets.includes(name)
@@ -75,66 +70,61 @@ const WidgetIcon = ({ icon, name }: { icon: any; name: WidgetName }) => {
   }
 
   return (
-    <Box zIndex={1000}>
-      <Popover
-        isOpen={isOpen}
-        onClose={onClose}
-        placement="bottom"
-        closeOnBlur={true}
+    <Menu isOpen={isOpen} onClose={onClose}>
+      <MenuButton onContextMenu={(e) => handleClick(e)}>
+        <Tooltip label={name} bg={bg_color} color={text_color} rounded="md">
+          <IconButton
+            _hover={{ opacity: 0.8 }}
+            _active={{ opacity: 0.8 }}
+            aria-label="open widget context"
+            bg={utils.getTransparent(0.2, accent_color)}
+            w={8}
+            h={8}
+            icon={icon}
+          />
+        </Tooltip>
+      </MenuButton>
+      <MenuList
+        w="fit-content"
+        className="glass"
+        border="1px"
+        borderColor={border_color}
+        bg={
+          isGlassEnabled
+            ? utils.getGlassBackground(bg_color_lighter)
+            : bg_color_lighter
+        }
+        rounded="md"
+        shadow="none"
+        zIndex={99999999}
+        px={2}
       >
-        <PopoverTrigger>
-          <Tooltip label={name} bg={bg_color} color={text_color} rounded="md">
-            <IconButton
-              onContextMenu={(e) => handleClick(e)}
-              _hover={{ opacity: 0.8 }}
-              _active={{ opacity: 0.8 }}
-              aria-label="delete theme"
-              bg={utils.getTransparent(0.2, accent_color)}
-              w={8}
-              h={8}
-              icon={icon}
-            />
-          </Tooltip>
-        </PopoverTrigger>
-        <PopoverContent border="none" bg={bg_color} w="fit-content">
-          <PopoverArrow bg={bg_color} />
-          <PopoverBody
-            border="1px"
-            borderColor={getBorderColor()}
-            p={1}
-            rounded="md"
-          >
-            <Stack p={1}>
-              <Box
-                onClick={() => handleSelect(1)}
-                p={1}
-                rounded="md"
-                color={text_color}
-                _hover={{
-                  bg: utils.getDarkerColor("0.03", bg_colorLeft),
-                }}
-                cursor="pointer"
-              >
-                <Text>Set as first widget</Text>
-              </Box>
-              <Box
-                onClick={() => handleSelect(2)}
-                p={1}
-                rounded="md"
-                color={text_color}
-                _hover={{
-                  bg: utils.getDarkerColor("0.03", bg_colorLeft),
-                }}
-                cursor="pointer"
-              >
-                <Text>Set as second widget</Text>
-              </Box>
-            </Stack>
-          </PopoverBody>
-          <PopoverArrow />
-        </PopoverContent>
-      </Popover>
-    </Box>
+        <MenuItem
+          m={0}
+          onClick={() => handleSelect(1)}
+          p={1}
+          bg="transparent"
+          color={text_color}
+          rounded="md"
+          px={2}
+          _hover={{ bg: utils.getDarkerColor("0.03", bg_color_lighter) }}
+        >
+          <Text>Set as first widget</Text>
+        </MenuItem>
+        <MenuItem
+          m={0}
+          onClick={() => handleSelect(2)}
+          p={1}
+          bg="transparent"
+          color={text_color}
+          rounded="md"
+          px={2}
+          _hover={{ bg: utils.getDarkerColor("0.03", bg_color_lighter) }}
+        >
+          <Text>Set as second widget</Text>
+        </MenuItem>
+      </MenuList>
+    </Menu>
   )
 }
 

@@ -7,6 +7,7 @@ import UpdateToast from "components//UpdateToast"
 import CustomSwitch from "components/CustomSwitch"
 import useColors from "hooks/useColors"
 import { TOAST_ID } from "utils/constants"
+import { useState } from "react"
 
 declare let window: MyWindow
 
@@ -19,10 +20,11 @@ const General = () => {
     getTextColor,
     getBorderColor,
     getIconColor,
-    getMutedTextColor
+    getMutedTextColor,
   } = useColors()
   const toast = useToast()
   const { saveSettings, checkUpdates, checkUpdate } = useSettings()
+  const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false)
 
   const text_color = getTextColor()
 
@@ -42,9 +44,10 @@ const General = () => {
   }
 
   const handleCheckUpdate = async () => {
+    setLoadingUpdates(true)
     const update = await checkUpdate()
     if (update) {
-      if (toast.isActive(TOAST_ID)) return
+      if (toast.isActive(TOAST_ID)) return setLoadingUpdates(false)
       toast({
         id: TOAST_ID,
         duration: null,
@@ -52,7 +55,7 @@ const General = () => {
         render: () => <UpdateToast />,
       })
     } else {
-      if (toast.isActive(TOAST_ID)) return
+      if (toast.isActive(TOAST_ID)) return setLoadingUpdates(false)
       toast({
         id: TOAST_ID,
         title: "No updates available",
@@ -75,6 +78,7 @@ const General = () => {
         ),
       })
     }
+    setLoadingUpdates(false)
   }
 
   const changeCheckUpdates = () => {
@@ -92,7 +96,7 @@ const General = () => {
             <Text fontWeight="semibold">Current version: V1.0</Text>
             <Text
               onClick={() =>
-                handleLink("https://github.com/BryanVanWinnendael/Noted")
+                handleLink("https://github.com/BryanVanWinnendael/Noted/releases/latest")
               }
               cursor="pointer"
               color={accent_color}
@@ -107,6 +111,7 @@ const General = () => {
             _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
             h={8}
             bg={accent_color}
+            isLoading={loadingUpdates}
           >
             Check for updates
           </Button>
@@ -128,9 +133,7 @@ const General = () => {
         <Flex alignItems="center" justify="space-between">
           <Box>
             <Text fontWeight="semibold">Help</Text>
-            <Text color={muted_text_color}>
-              Learn how to use Noted
-            </Text>
+            <Text color={muted_text_color}>Learn how to use Noted</Text>
           </Box>
 
           <Button

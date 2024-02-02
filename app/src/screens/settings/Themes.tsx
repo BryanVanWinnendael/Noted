@@ -14,9 +14,7 @@ const Themes = () => {
   return (
     <Box>
       <Text fontSize="3xl">Custom themes</Text>
-      <Text color={muted_text_color}>
-        Manage your custom themes here
-      </Text>
+      <Text color={muted_text_color}>Manage your custom themes here</Text>
       <AnimatePresence mode={"popLayout"}>
         {themes.length > 0
           ? themes.map((theme) => {
