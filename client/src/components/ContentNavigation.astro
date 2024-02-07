@@ -1,0 +1,184 @@
+---
+interface Nav {
+  title: string
+  url: string
+}
+
+interface Navigations {
+  [key: string]: {
+    previous: Nav | false
+    next: Nav | false
+  }
+}
+
+const NAVIGATIONS: Navigations = {
+  docs: {
+    previous: false,
+    next: {
+      title: "Writing Noted",
+      url: "/docs/writing-noted",
+    },
+  },
+  "writing-noted": {
+    previous: {
+      title: "Docs",
+      url: "/docs",
+    },
+    next: {
+      title: "Customize Noted",
+      url: "/docs/customize",
+    },
+  },
+  customize: {
+    previous: {
+      title: "Writing Noted",
+      url: "/docs/writing-noted",
+    },
+    next: {
+      title: "Themes",
+      url: "/docs/themes",
+    },
+  },
+  themes: {
+    previous: {
+      title: "Customize Noted",
+      url: "/docs/customize",
+    },
+    next: {
+      title: "Headers",
+      url: "/docs/headers",
+    },
+  },
+  headers: {
+    previous: {
+      title: "Themes",
+      url: "/docs/themes",
+    },
+    next: {
+      title: "Glass",
+      url: "/docs/glass",
+    },
+  },
+  glass: {
+    previous: {
+      title: "Headers",
+      url: "/docs/headers",
+    },
+    next: {
+      title: "More",
+      url: "/docs/more",
+    },
+  },
+  more: {
+    previous: {
+      title: "Glass",
+      url: "/docs/glass",
+    },
+    next: {
+      title: "Widgets",
+      url: "/docs/widgets",
+    },
+  },
+  widgets: {
+    previous: {
+      title: "More",
+      url: "/docs/more",
+    },
+    next: {
+      title: "Calendar",
+      url: "/docs/calendar",
+    },
+  },
+  calendar: {
+    previous: {
+      title: "Widgets",
+      url: "/docs/widgets",
+    },
+    next: {
+      title: "Clock",
+      url: "/docs/clock",
+    },
+  },
+  clock: {
+    previous: {
+      title: "Calendar",
+      url: "/docs/calendar",
+    },
+    next: {
+      title: "Info",
+      url: "/docs/info",
+    },
+  },
+  info: {
+    previous: {
+      title: "Clock",
+      url: "/docs/clock",
+    },
+    next: {
+      title: "ToDos",
+      url: "/docs/todos",
+    },
+  },
+  todos: {
+    previous: {
+      title: "Info",
+      url: "/docs/info",
+    },
+    next: {
+      title: "Shortcuts",
+      url: "/docs/shortcuts",
+    },
+  },
+  shortcuts: {
+    previous: {
+      title: "ToDos",
+      url: "/docs/todos",
+    },
+    next: false,
+  },
+}
+const currentPath = Astro.url.pathname.split("/").pop() || "docs"
+const navigation = NAVIGATIONS[currentPath]
+const previous_title =
+  (navigation.previous && navigation.previous.title) || false
+const next_title = (navigation.next && navigation.next.title) || false
+const previous_url = (navigation.previous && navigation.previous.url) || ""
+const next_url = (navigation.next && navigation.next.url) || ""
+---
+
+<dl class="flex pt-6 mt-6 border-t border-slate-200">
+  {
+    previous_title && (
+      <div class="mr-auto text-left">
+        <dt class="text-sm font-normal tracking-tight text-slate-600">
+          Previous
+        </dt>
+
+        <dd class="mt-1">
+          <a
+            href={previous_url}
+            class="text-base font-semibold text-slate-900 hover:underline"
+          >
+            {previous_title}
+          </a>
+        </dd>
+      </div>
+    )
+  }
+  {
+    next_title && (
+      <div class="ml-auto text-right">
+        <dt class="text-sm font-normal tracking-tight text-slate-600">Next</dt>
+
+        <dd class="mt-1">
+          <a
+            href={next_url}
+            class="text-base font-semibold text-slate-900 hover:underline"
+          >
+            {next_title}
+          </a>
+        </dd>
+      </div>
+    )
+  }
+</dl>
