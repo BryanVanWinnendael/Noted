@@ -12,6 +12,7 @@ import { useState } from "react"
 declare let window: MyWindow
 
 const ipcRenderer = window.myApp.getIpcRenderer()
+const VERSION = "v1.0.0"
 
 const General = () => {
   const {
@@ -93,10 +94,12 @@ const General = () => {
       <Stack mr={5} gap={3}>
         <Flex alignItems="center" justify="space-between">
           <Box>
-            <Text fontWeight="semibold">Current version: V1.0</Text>
+            <Text fontWeight="semibold">Current version: {VERSION}</Text>
             <Text
               onClick={() =>
-                handleLink("https://github.com/BryanVanWinnendael/Noted/releases/latest")
+                handleLink(
+                  "https://github.com/BryanVanWinnendael/Noted/releases/latest",
+                )
               }
               cursor="pointer"
               color={accent_color}

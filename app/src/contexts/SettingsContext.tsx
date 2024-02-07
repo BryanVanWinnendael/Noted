@@ -110,7 +110,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     try {
       const { filePath, data } = await ipcRenderer.invoke("theme:import")
       const parsedData = JSON.parse(data)
-      if (!ensureKeys(parsedData, THEME_KEYS)) return // TODO: Show error message
+      if (!ensureKeys(parsedData, THEME_KEYS)) return
       localStorage.setItem("custom-theme-json", data)
       localStorage.setItem("theme-path", filePath)
       setCustomTheme(parsedData)
@@ -254,7 +254,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       case "active_theme":
         setActiveTheme(value)
         break
-      case "font_family": 
+      case "font_family":
         setFontFamily(value)
         break
       default:
@@ -335,7 +335,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     setCompactMode,
     setCustomTheme,
     activeTheme,
-    fontFamily
+    fontFamily,
   }
 
   return (

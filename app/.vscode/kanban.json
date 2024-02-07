@@ -11,8 +11,8 @@
       "title": "To-Do",
       "tasks": [
         {
-          "text": "keep todos in file",
-          "id": "clrz9fpug000a4066o8r2m8ii"
+          "text": "icons for tree structure",
+          "id": "cls60jlkn000a4067sov3yaoi"
         },
         {
           "text": "ai writer?",
@@ -39,6 +39,10 @@
     {
       "title": "Done",
       "tasks": [
+        {
+          "text": "hover over text in code block choose lang",
+          "id": "cls5y7yld000a4067esqeu8t7"
+        },
         {
           "text": "custom font",
           "id": "cls36p6il000a4066y73ycbha"
@@ -78,5 +82,5 @@
   ],
   "autosave": true,
   "saveToFile": true,
-  "timestamp": 1706874597657
+  "timestamp": 1706961080799
 }

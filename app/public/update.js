@@ -1,4 +1,4 @@
-const { ipcMain } = require("electron")
+const { ipcMain, app } = require("electron")
 const { autoUpdater } = require("electron-updater")
 
 class Updates {
@@ -11,7 +11,11 @@ class Updates {
     ipcMain.handle("updates:check", async (event) => {
       try {
         const update = await autoUpdater.checkForUpdates()
-        return update
+        const curr_version = app.getVersion()
+        if (update.updateInfo.version !== curr_version) {
+          return update
+        }
+        return false
       } catch (error) {
         return error
       }

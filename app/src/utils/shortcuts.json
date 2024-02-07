@@ -10,6 +10,11 @@
     "hotkey": ["Ctrl", "O"]
   },
   {
+    "name": "Close Workspace",
+    "description": "Close the Current Workspace",
+    "hotkey": ["Ctrl", "R"]
+  },
+  {
     "name": "Sidebar",
     "description": "Open or close the sidebar",
     "hotkey": ["Ctrl", "S"]
@@ -28,5 +33,10 @@
     "name": "Open File",
     "description": "Open a chosen File",
     "hotkey": ["Ctrl", "N"]
+  },
+  {
+    "name": "File switcher",
+    "description": "Switch between recent opened files",
+    "hotkey": ["Ctrl", "Space"]
   }
 ]

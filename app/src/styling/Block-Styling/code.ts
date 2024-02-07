@@ -1,3 +1,5 @@
+import { utils } from "utils/index"
+
 export const codeStyle = (
   default_text_color: string,
   background_color: string,
@@ -49,5 +51,10 @@ export const codeStyle = (
       color: muted_text_color,
       borderColor: border_color,
     },
+    ".nice-select .option:hover, .nice-select .option.focus, .nice-select .option.selected.focus":
+      {
+        backgroundColor: utils.getDarkerColor("0.03", background_color),
+        color: muted_text_color,
+      },
   }
 }
