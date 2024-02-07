@@ -21,7 +21,7 @@ yarn eb
 ```
 
 ## .env
-
+/
 ```json
 REACT_APP_SERVER_URL=""
 ```
