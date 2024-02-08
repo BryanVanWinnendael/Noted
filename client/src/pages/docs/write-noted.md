@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/DocsLayout.astro
-title: Writing Noted
+title: Write Noted
 description: How do you write Noted notes?
 section: Getting Started
 order: 2
