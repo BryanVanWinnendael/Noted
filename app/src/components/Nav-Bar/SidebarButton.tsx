@@ -1,4 +1,4 @@
-import { Box, Icon, Tooltip } from "@chakra-ui/react"
+import { Box, Flex, Icon, Tooltip } from "@chakra-ui/react"
 import useColors from "hooks/useColors"
 import { utils } from "utils/index"
 import { useWorkspace } from "contexts/WorkspaceContext"
@@ -30,7 +30,13 @@ const SidebarButton = () => {
       color={text_color}
       rounded="md"
     >
-      <Box m={2}>
+      <Flex
+        justifyItems="center"
+        alignItems="center"
+        m={2}
+        w="fit-content"
+        h="fit-content"
+      >
         <Icon
           as={BsLayoutSidebarInset}
           cursor="pointer"
@@ -43,7 +49,7 @@ const SidebarButton = () => {
           color={muted_text_color}
           bg="transparent"
         />
-      </Box>
+      </Flex>
     </Tooltip>
   )
 }

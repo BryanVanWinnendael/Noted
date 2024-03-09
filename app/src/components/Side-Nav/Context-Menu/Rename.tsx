@@ -13,9 +13,10 @@ import useColors from "hooks/useColors"
 import { useEffect, useRef, useState } from "react"
 import { ContextMenu } from "types/index"
 import { utils } from "utils/index"
+import { BiRename } from "react-icons/bi"
 
 const Rename = ({ path, name, type }: ContextMenu) => {
-  const { getBackgroundColor, getTextColor } = useColors()
+  const { getBackgroundColor, getTextColor, getIconColor } = useColors()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { getAccentColor } = useColors()
   const cancelRef = useRef()
@@ -29,6 +30,8 @@ const Rename = ({ path, name, type }: ContextMenu) => {
   const text_color = getTextColor()
 
   const accent_color = getAccentColor()
+
+  const icon_color = getIconColor()
 
   const renameFile = async () => {
     const newPath = path.split(name)[0] + newName + ".noted"
@@ -117,7 +120,9 @@ const Rename = ({ path, name, type }: ContextMenu) => {
         rounded="md"
         px={2}
         _hover={{ bg: utils.getDarkerColor("0.03", bg_color_lighter) }}
+        gap={2}
       >
+        <BiRename color={icon_color} width={5} height={5} />
         <Text fontSize="sm">Rename</Text>
       </MenuItem>
     </>

@@ -21,9 +21,9 @@ const TimeViewer = () => {
     const resHour: string = updateTime(hour)
     const resMin: string = updateTime(min)
     const resSec: string = updateTime(sec)
-    var y = date.getFullYear()
-    var d = new Date()
-    var weekday = new Array(7)
+    const y = date.getFullYear()
+    const d = new Date()
+    const weekday = new Array(7)
     weekday[0] = "Sunday"
     weekday[1] = "Monday"
     weekday[2] = "Tuesday"
@@ -31,7 +31,7 @@ const TimeViewer = () => {
     weekday[4] = "Thursday"
     weekday[5] = "Friday"
     weekday[6] = "Saturday"
-    var n = weekday[d.getDay()]
+    const n = weekday[d.getDay()]
 
     const timeStr = String(resHour + " : " + resMin + " : " + resSec)
     setTime(timeStr)

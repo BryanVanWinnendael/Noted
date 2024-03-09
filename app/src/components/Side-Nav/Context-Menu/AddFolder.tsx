@@ -13,10 +13,12 @@ import useColors from "hooks/useColors"
 import { useRef, useState } from "react"
 import { ContextMenu } from "types/index"
 import { utils } from "utils/index"
+import { CgFolderAdd } from "react-icons/cg"
 
 const AddFolder = ({ path, name, type }: ContextMenu) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { getAccentColor, getBackgroundColor, getTextColor } = useColors()
+  const { getAccentColor, getBackgroundColor, getTextColor, getIconColor } =
+    useColors()
   const cancelRef = useRef()
   const [folderName, setFolderName] = useState<string>("")
   const [inValidName, setInValidName] = useState<boolean>(false)
@@ -28,6 +30,8 @@ const AddFolder = ({ path, name, type }: ContextMenu) => {
   const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
 
   const text_color = getTextColor()
+
+  const icon_color = getIconColor()
 
   const handleAddToFile = async () => {
     const folderPath = path.split("\\").slice(0, -1).join("\\")
@@ -114,7 +118,9 @@ const AddFolder = ({ path, name, type }: ContextMenu) => {
         rounded="md"
         px={2}
         _hover={{ bg: utils.getDarkerColor("0.03", bg_color_lighter) }}
+        gap={2}
       >
+        <CgFolderAdd color={icon_color} width={5} height={5} />
         <Text fontSize="sm">Add Folder</Text>
       </MenuItem>
     </>

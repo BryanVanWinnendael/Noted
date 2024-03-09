@@ -78,8 +78,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       localStorage.setItem("custom-theme-json", data)
       setCustomTheme(parsedData)
     } catch (err) {
-      console.log(err)
-      return
+      return console.log(err)
     }
   }, [])
 

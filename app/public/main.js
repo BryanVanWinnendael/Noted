@@ -32,7 +32,7 @@ function createWindow() {
       webSecurity: false,
     },
   })
-  win.webContents.openDevTools()
+  isDev && win.webContents.openDevTools()
   win.setMenu(null)
   win.loadURL(
     isDev
@@ -52,7 +52,7 @@ function createWindow() {
   const folders = new Folders(win)
   folders.handle()
 
-  ipcMain.on("asynchronous-message", async (event, arg) => {
+  ipcMain.on("asynchronous-message", async (event) => {
     const wallpaperString = await wallpaper.get()
     const screenConfig = {
       width: screen.getPrimaryDisplay().workAreaSize.width,
@@ -69,11 +69,11 @@ function createWindow() {
     })
   })
 
-  ipcMain.handle("minimize-window", async (event) => {
+  ipcMain.handle("minimize-window", async () => {
     win.minimize()
   })
 
-  ipcMain.handle("maximize-window", async (event) => {
+  ipcMain.handle("maximize-window", async () => {
     if (win.isMaximized()) {
       win.unmaximize()
     } else {
@@ -81,7 +81,7 @@ function createWindow() {
     }
   })
 
-  ipcMain.handle("close-window", async (event) => {
+  ipcMain.handle("close-window", async () => {
     if (process.platform !== "darwin") {
       app.quit()
     }

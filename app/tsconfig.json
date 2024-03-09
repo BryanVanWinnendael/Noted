@@ -27,5 +27,6 @@
       "screens/*": ["screens/*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "global.d.ts"]
+  "include": ["**/*.ts", "**/*.tsx", "global.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

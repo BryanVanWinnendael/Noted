@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import { EDITOR_JS_TOOLS } from "./tools"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import { useCallback, useEffect, useRef, useState } from "react"
@@ -7,14 +7,18 @@ import EditorCore from "@editorjs/editorjs"
 import useColors from "hooks/useColors"
 import { utils } from "utils/index"
 import { useEditor } from "contexts/EditorContext"
+import { useSlash } from "contexts/SlashContext"
 
-const Editor = () => {
+const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
+  const { setPosition, setSlashOpen, slashOpen } = useSlash()
   const { getTextColor, getBorderColor, getBackgroundColor } = useColors()
   const ReactEditorJS = createReactEditorJS()
   const editorCore = useRef<EditorCore | null>(null)
-  const { saveFile, activeTab, activeFile } = useWorkspace()
+  const { saveFile, readFile } = useWorkspace()
   const [loaded, setLoaded] = useState(false)
-  const { setEditor, editor, setBlocks, setTime } = useEditor()
+  const { setEditor, editor, setBlocks, setTime, setSplittedEditor } =
+    useEditor()
+  const boxRef = useRef<HTMLDivElement>(null)
 
   const text_color = getTextColor()
 
@@ -28,45 +32,48 @@ const Editor = () => {
 
   const handleInitialize = useCallback(
     (instance: any) => {
+      console.log("initialized")
       instance._editorJS.isReady
         .then(() => {
           editorCore.current = instance
-          setEditor(instance)
+          if (splitted) setSplittedEditor(instance)
+          else setEditor(instance)
           setLoaded(true)
         })
         .catch((err: any) => console.log("An error occured", err))
     },
-    [setEditor],
+    [setEditor, setSplittedEditor, splitted],
   )
 
-  const getOpenedFile = (path: string, openFiles: any[]) => {
-    const openedFile = openFiles.find((file) => file.path === path)
-    return openedFile
-  }
+  const saveToLocalStorage = useCallback(
+    async (data: any) => {
+      const pathKey = splitted ? "splitted_active_file" : "active_file"
+      const path = localStorage.getItem(pathKey) || ""
 
-  const saveToLocalStorage = useCallback(async (data: any) => {
-    const path = localStorage.getItem("active_file") || ""
-    const openArray = localStorage.getItem("open_files")
-    const openFiles = openArray ? JSON.parse(openArray) : []
-    const existingFile = getOpenedFile(path, openFiles)
+      const openFilesJSON = localStorage.getItem("open_files")
+      const openFiles: any[] = openFilesJSON ? JSON.parse(openFilesJSON) : []
+      const existingFileIndex = openFiles.findIndex(
+        (file) => file.path === path,
+      )
 
-    if (existingFile) {
-      existingFile.data = data
-      const index = openFiles.findIndex((file: any) => file.path === path)
-      openFiles.splice(index, 1)
-      openFiles.unshift(existingFile)
+      if (existingFileIndex !== -1) {
+        openFiles[existingFileIndex].data = data
+        openFiles.unshift(openFiles.splice(existingFileIndex, 1)[0]) // Move existing file to front
+      } else {
+        if (openFiles.length === 5) openFiles.pop() // Remove last file if max limit reached
+        openFiles.unshift({ path, data }) // Add new file to front
+      }
+
       localStorage.setItem("open_files", JSON.stringify(openFiles))
-    } else {
-      if (openFiles.length === 5) openFiles.shift()
-      // push it to the front of the array
-      openFiles.unshift({ path, data })
-      localStorage.setItem("open_files", JSON.stringify(openFiles))
-    }
-  }, [])
+    },
+    [splitted],
+  )
 
   const getData = useCallback(
-    async (editor: any) => {
-      const editorData = await editor.save()
+    // used for the info widget
+    async () => {
+      if (!editorCore.current) return
+      const editorData = await editorCore.current.save()
       const blocks = editorData.blocks
       setBlocks(blocks)
       const time = editorData.time || 0
@@ -76,35 +83,86 @@ const Editor = () => {
     [saveToLocalStorage, setBlocks, setTime],
   )
 
-  const handleReadFile = useCallback(async () => {
-    if (!editor || !loaded || !activeFile) return
+  const clearEditor = useCallback(() => {
     try {
-      const jsonData: any = activeFile.data
-      if (jsonData) {
-        if (jsonData.blocks?.length !== 0) {
-          await editor.render(jsonData)
-          await getData(editor)
-        } else editor.clear()
-      } else editor.clear()
-    } catch (err) {
-      editor.clear()
+      if (editorCore.current) editorCore.current.clear()
+    } catch (e) {
+      console.error(e)
     }
-  }, [editor, loaded, activeFile, getData])
+  }, [])
 
-  const handleSave = useCallback(async () => {
-    if (!activeFile || !editorCore.current) return
-    const savedData = await editorCore.current.save()
-    const path = localStorage.getItem("active_file") || ""
-    await saveFile(savedData, path)
-    await getData(editorCore.current)
-  }, [activeFile, getData, saveFile])
+  const renderEditor = useCallback(
+    async (jsonData: any) => {
+      console.log(editorCore.current)
+      if (!editorCore.current) return
+      await editorCore.current.render(jsonData)
+      console.log("rendered")
+      await getData()
+    },
+    [getData],
+  )
+
+  const handleReadFile = useCallback(async () => {
+    if (!editor || !loaded) return
+    try {
+      const data = await readFile(path)
+
+      if (data && data.blocks?.length !== 0) await renderEditor(data)
+      else clearEditor()
+    } catch (error) {
+      clearEditor()
+    }
+  }, [editor, loaded, readFile, path, renderEditor, clearEditor])
+
+  const checkSlashCommand = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+  ): void => {
+    if (event.key === "/") {
+      setSlashOpen(true)
+      setTimeout(() => {
+        const selection = window.getSelection()
+        if (selection) {
+          if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0)
+            const rect = range.getBoundingClientRect()
+            setPosition({ x: rect.x, y: rect.y })
+          } else {
+            const boxRect = boxRef.current?.getBoundingClientRect()
+            if (boxRect) {
+              setPosition({ x: boxRect.left, y: boxRect.top })
+            }
+          }
+        }
+      }, 0)
+    } else {
+      if (slashOpen) setSlashOpen(false)
+    }
+    setTimeout(() => {
+      handleSave()
+    }, 100)
+  }
+
+  const handleSave = async () => {
+    try {
+      if (!editorCore.current) return
+      const savedData = await editorCore.current.save()
+      let Spath
+      if (splitted) Spath = localStorage.getItem("splitted_active_file") || ""
+      else Spath = localStorage.getItem("active_file") || ""
+      await saveFile(savedData, Spath)
+      await getData()
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   useEffect(() => {
     handleReadFile()
-  }, [handleReadFile, activeTab])
+  }, [handleReadFile])
 
   return (
     <Flex
+      ml={splitted ? 2 : 0}
       color={text_color}
       w="full"
       h="full"
@@ -117,22 +175,22 @@ const Editor = () => {
       bg={lighter_bg_color}
       mb={2}
     >
-      {activeFile ? (
-        <Box maxH="100%" w="full" h="full" m={0} pl={2}>
-          <ReactEditorJS
-            holder="noted"
-            onChange={handleSave}
-            onInitialize={handleInitialize}
-            tools={EDITOR_JS_TOOLS}
-          >
-            <Box id="noted" overflowY="scroll" height="100%"></Box>
-          </ReactEditorJS>
-        </Box>
-      ) : (
-        <Text color={text_color} fontSize="xl" fontWeight="bold" m="auto">
-          No file selected
-        </Text>
-      )}
+      <Box maxH="100%" w="full" h="full" m={0} pl={2}>
+        <ReactEditorJS
+          holder={"noted" + path}
+          // onChange={handleSave}
+          onInitialize={handleInitialize}
+          tools={EDITOR_JS_TOOLS}
+        >
+          <Box
+            ref={boxRef}
+            onKeyDown={checkSlashCommand}
+            id={"noted" + path}
+            overflowY="scroll"
+            height="100%"
+          ></Box>
+        </ReactEditorJS>
+      </Box>
     </Flex>
   )
 }

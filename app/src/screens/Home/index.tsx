@@ -1,8 +1,8 @@
-import { Flex } from "@chakra-ui/react"
+import { Box, Flex } from "@chakra-ui/react"
 import Editor from "components/Editor"
 import WidgetBar from "components/Widget-Bar"
 import SideNav from "components/Side-Nav"
-import { WorkspaceType } from "types"
+import { ActiveTab, WorkspaceType } from "types"
 import { Panel, PanelGroup } from "react-resizable-panels"
 import ResizeHandle from "components/ResizableHandle"
 import { useWidget } from "contexts/WidgetContext"
@@ -11,16 +11,53 @@ import { useWorkspace } from "contexts/WorkspaceContext"
 import { useSettings } from "contexts/SettingsContext"
 import useColors from "hooks/useColors"
 import { utils } from "utils/index"
+import PdfViewer from "components/Pdf-Viewer"
+import NoFile from "components/NoFile"
+import { Allotment } from "allotment"
+import "allotment/dist/style.css"
+import { useCallback } from "react"
 
 const Index = ({ workspace }: { workspace: WorkspaceType }) => {
-  const { showSidebar } = useWorkspace()
+  const { showSidebar, tabs, activeTab } = useWorkspace()
+  const length_tabs = Object.keys(tabs).length
   const { widgetPanel } = useWidget()
   const { glassEnabled, glassBackground, compactMode } = useSettings()
   const { getBackgroundColor } = useColors()
-
   const bg_color = getBackgroundColor()
 
   const isGlassEnabled = glassEnabled && glassBackground.window
+
+  const openScreen = useCallback((tab: ActiveTab) => {
+    if (!tab.path) return <NoFile />
+
+    const path = tab.path
+    const extension = path.split(".").pop()
+
+    switch (extension) {
+      case "noted":
+        return <Editor path={path} />
+      case "pdf":
+        return <PdfViewer path={path} />
+      default:
+        return <NoFile />
+    }
+  }, [])
+
+  const openSplitScreen = useCallback((tab: ActiveTab) => {
+    if (!tab.splittedPath) return <NoFile />
+
+    const path = tab.splittedPath
+    const extension = path.split(".").pop()
+
+    switch (extension) {
+      case "noted":
+        return <Editor splitted={true} path={path} />
+      case "pdf":
+        return <PdfViewer splitted={true} path={path} />
+      default:
+        return <NoFile />
+    }
+  }, [])
 
   return (
     <Flex
@@ -32,6 +69,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
       bg={isGlassEnabled ? utils.getGlassBackground(bg_color) : bg_color}
     >
       <PanelGroup
+      id={"sidebar"}
         autoSaveId="example"
         direction="horizontal"
         style={{
@@ -57,7 +95,28 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
           style={{ maxHeight: "100%" }}
         >
           <EditorWrapper>
-            <Editor />
+            <>
+              {length_tabs > 0 ? (
+                Object.keys(tabs).map((key) => {
+                  const tab = tabs[parseInt(key)]
+                  const isActive = Number(key) === activeTab
+                  return (
+                    <Box
+                      display={isActive ? "block" : "none"}
+                      height="100%"
+                      id={key}
+                    >
+                      <Allotment>
+                        {openScreen(tab)}
+                        {tab.splittedPath && openSplitScreen(tab)}
+                      </Allotment>
+                    </Box>
+                  )
+                })
+              ) : (
+                <NoFile />
+              )}
+            </>
           </EditorWrapper>
         </Panel>
 

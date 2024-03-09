@@ -26,7 +26,11 @@ const Index = () => {
   const getFileName = (path: string) => {
     const full_name = path.split("\\")
     const name = full_name[full_name.length - 1].split(".noted")[0]
-    return name
+    return name || "New tab"
+  }
+
+  const handleRemoveTab = (index: number) => {
+    removeTab(index)
   }
 
   return (
@@ -78,7 +82,7 @@ const Index = () => {
                 <Flex
                   justifyContent="center"
                   alignItems="center"
-                  onClick={() => removeTab(index)}
+                  onClick={() => handleRemoveTab(index)}
                   fill={accent_color}
                   _hover={{ fill: accent_color }}
                   cursor="pointer"

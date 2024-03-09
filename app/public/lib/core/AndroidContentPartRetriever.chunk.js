@@ -1,0 +1,46 @@
+/** Notice * This file contains works from many authors under various (but compatible) licenses. Please see core.txt for more information. **/
+;(function () {
+  ;(window.wpCoreControlsBundle = window.wpCoreControlsBundle || []).push([
+    [1],
+    {
+      559: function (xa, ta, n) {
+        n.r(ta)
+        var qa = n(0),
+          na = n(310)
+        xa = n(555)
+        n = n(476)
+        var oa = window,
+          ia = (function (la) {
+            function ha(z, aa) {
+              var r = la.call(this, z, aa) || this
+              r.url = z
+              r.range = aa
+              r.request = new XMLHttpRequest()
+              r.request.open("GET", r.url, !0)
+              oa.Uint8Array && (r.request.responseType = "arraybuffer")
+              r.request.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+              r.status = na.a.NOT_STARTED
+              return r
+            }
+            Object(qa.c)(ha, la)
+            return ha
+          })(xa.ByteRangeRequest)
+        xa = (function (la) {
+          function ha(z, aa, r, h) {
+            z = la.call(this, z, aa, r, h) || this
+            z.ZC = ia
+            return z
+          }
+          Object(qa.c)(ha, la)
+          ha.prototype.kA = function (z, aa) {
+            return z + "/bytes=" + aa.start + "," + (aa.stop ? aa.stop : "")
+          }
+          return ha
+        })(xa["default"])
+        Object(n.a)(xa)
+        Object(n.b)(xa)
+        ta["default"] = xa
+      },
+    },
+  ])
+}).call(this || window)

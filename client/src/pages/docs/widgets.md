@@ -17,7 +17,7 @@ order: 1
 
 # Cross Workspace
 
-Note Widgets seamlessly function across all your workspaces, ensuring your personalized widgets stay exclusive to you.
+Noted Widgets seamlessly function across all your workspaces, ensuring your personalized widgets stay exclusive to you.
 
 &nbsp;
 

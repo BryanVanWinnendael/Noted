@@ -7,8 +7,9 @@ import ContextMenu from "./Context-Menu"
 
 const FileButton = ({ name, path }: { name: string; path: string }) => {
   const { getSecondaryBackgroundColor, getTextColor } = useColors()
-  const { openFile, activeFile, setActiveFolder } = useWorkspace()
+  const { setActiveFolder, activeTab, tabs, openFile } = useWorkspace()
   const [isOpen, setIsOpen] = useState<boolean | undefined>(false)
+  const tab = tabs[activeTab]
 
   const secondary_background_color = getSecondaryBackgroundColor()
   const bg_color = utils.getLighterColor("0.02", secondary_background_color)
@@ -22,15 +23,21 @@ const FileButton = ({ name, path }: { name: string; path: string }) => {
     openFile(filePath)
   }
 
+  const getFileName = (path: string) => {
+    const lastDotIndex = path.lastIndexOf(".")
+    if (lastDotIndex !== -1) {
+      return path.substring(0, lastDotIndex)
+    }
+    return path
+  }
+
   return (
     <Menu isOpen={isOpen} onClose={() => setIsOpen(false)}>
       <MenuButton
         p={1}
         pl={2}
         bg={
-          activeFile && activeFile.path === path
-            ? utils.getDarkerColor("0.03", bg_color)
-            : "none"
+          tab?.path === path ? utils.getDarkerColor("0.03", bg_color) : "none"
         }
         onClick={() => handleOpenFile(path)}
         onContextMenu={() => setIsOpen(true)}
@@ -49,7 +56,7 @@ const FileButton = ({ name, path }: { name: string; path: string }) => {
           fontSize="sm"
           ml="20px"
         >
-          {name.split(".noted")[0]}
+          {getFileName(name)}
         </Text>
       </MenuButton>
       <ContextMenu path={path} name={name} type="file" />
