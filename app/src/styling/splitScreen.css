@@ -1,0 +1,23 @@
+:root {
+  --separator-border: transparent !important;
+}
+
+.sash-module_sash__K-9lB {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px !important;
+}
+
+.sash-hover.sash-module_sash__K-9lB:before {
+  height: 100% !important;
+  max-height: 90% !important;
+}
+
+.sash-module_sash__K-9lB:before {
+  height: 1.25rem !important;
+  width: 0.25rem !important;
+  -webkit-transition: all 0.2s !important;
+  transition: all 0.2s !important;
+  border-radius: 0.125rem;
+}

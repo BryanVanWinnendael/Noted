@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import themes
 
+
 load_dotenv()
 app = FastAPI()
 
@@ -23,7 +24,6 @@ app.include_router(
     prefix="/api/themes",
     tags=["themes"],
 )
-
 
 @app.get("/")
 async def root():

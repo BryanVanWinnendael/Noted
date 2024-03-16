@@ -15,8 +15,11 @@ import DragAndDrop from "components/DragAndDrop"
 import GlassBackground from "components/GlassBackground"
 import UpdateWrapper from "components/UpdateWrapper"
 import OpenNewFile from "components/OpenNewFile"
+import { useSlash } from "contexts/SlashContext"
+import SlashCommands from "components/Slash-Commands"
 
 const App = () => {
+  const { slashOpen } = useSlash()
   const { getAccentColor, getBackgroundColor } = useColors()
   const { initSettings, compactMode, activeTheme } = useSettings()
   const { workspace, isLoaded, showSwitcher } = useWorkspace()
@@ -71,6 +74,7 @@ const App = () => {
           <OpenFileInTab />
           <OpenNewFile />
           {showSwitcher && <FileSwitcher />}
+          {slashOpen && <SlashCommands />}
         </>
       </DragAndDrop>
     </UpdateWrapper>

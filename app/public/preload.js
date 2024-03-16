@@ -1,9 +1,8 @@
 const { ipcRenderer, contextBridge } = require("electron")
 
 contextBridge.exposeInMainWorld("myApp", {
-  getIpcRenderer: () => {
-    return ipcRenderer
-  },
+  invoke: ipcRenderer.invoke,
+  send: ipcRenderer.send,
 })
 
 contextBridge.exposeInMainWorld("electron", {

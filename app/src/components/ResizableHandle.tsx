@@ -4,13 +4,7 @@ import { PanelResizeHandle } from "react-resizable-panels"
 import useColors from "hooks/useColors"
 import { useState } from "react"
 
-export default function ResizeHandle({
-  className = "",
-  id,
-}: {
-  className?: string
-  id?: string
-}) {
+export default function ResizeHandle({ id }: { id?: string }) {
   const { getMutedTextColor } = useColors()
   const [hover, setHover] = useState(false)
 

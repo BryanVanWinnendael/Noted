@@ -15,8 +15,7 @@ import ContextMenu from "./Context-Menu"
 const FolderButton = ({ path, name }: { path: string; name: string }) => {
   const { getSecondaryBackgroundColor, getTextColor, getIconColor } =
     useColors()
-  const { activeFile, setActiveFolder, activeFolder, setActiveFile } =
-    useWorkspace()
+  const { setActiveFolder, activeFolder } = useWorkspace()
   const [isOpen, setIsOpen] = useState<{ [key: string]: boolean }>({})
 
   const checkIfOpen = (path: string) => {
@@ -36,7 +35,6 @@ const FolderButton = ({ path, name }: { path: string; name: string }) => {
 
   const handleSetActiveFolder = (folderPath: string) => {
     setActiveFolder(folderPath)
-    setActiveFile(undefined)
   }
 
   return (
@@ -47,7 +45,7 @@ const FolderButton = ({ path, name }: { path: string; name: string }) => {
       <AccordionButton w="full" h="fit-content" p={1}>
         <MenuButton
           bg={
-            activeFolder && !activeFile && activeFolder === path
+            activeFolder && activeFolder === path
               ? utils.getDarkerColor("0.03", bg_color)
               : "none"
           }

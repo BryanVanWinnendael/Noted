@@ -15,10 +15,15 @@ import useColors from "hooks/useColors"
 import { useRef } from "react"
 import { ContextMenu } from "types/index"
 import { utils } from "utils/index"
+import { MdDeleteOutline } from "react-icons/md"
 
 const Delete = ({ path, name, type }: ContextMenu) => {
-  const { getTextColor, getSecondaryBackgroundColor, getBackgroundColor } =
-    useColors()
+  const {
+    getTextColor,
+    getSecondaryBackgroundColor,
+    getBackgroundColor,
+    getIconColor,
+  } = useColors()
   const cancelRef = useRef()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { deleteFile, deleteFolder } = useWorkspace()
@@ -29,6 +34,8 @@ const Delete = ({ path, name, type }: ContextMenu) => {
   const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
 
   const text_color = getTextColor()
+
+  const icon_color = getIconColor()
 
   const handleDelete = () => {
     switch (type) {
@@ -86,7 +93,9 @@ const Delete = ({ path, name, type }: ContextMenu) => {
         rounded="md"
         px={2}
         _hover={{ bg: utils.getDarkerColor("0.03", bg_color_lighter) }}
+        gap={2}
       >
+        <MdDeleteOutline color={icon_color} width={5} height={5} />
         <Text fontSize="sm">Delete</Text>
       </MenuItem>
     </>

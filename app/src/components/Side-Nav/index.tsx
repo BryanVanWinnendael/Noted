@@ -14,6 +14,8 @@ import Actions from "./Actions"
 import FolderButton from "./FolderButton"
 import FileButton from "./FileButton"
 
+const INCLUDED_EXTENSIONS = ["noted", "pdf"]
+
 const Index = ({ workspace }: { workspace: WorkspaceType }) => {
   const { getTextColor } = useColors()
   const [filterdWorkspace, setFilterdWorkspace] =
@@ -43,6 +45,12 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
     })
   }
 
+  const isIncluded = (name: string) => {
+    const extension = name.split(".").pop()
+    if (!extension) return false
+    return INCLUDED_EXTENSIONS.includes(extension)
+  }
+
   const filterFilesWithNoted = useCallback(
     (items: WorkspaceType[] | undefined): WorkspaceType[] | undefined => {
       if (!items) {
@@ -52,7 +60,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
       return items
         .filter(
           (item) =>
-            (item.type === "file" && item.name.includes(".noted")) ||
+            (item.type === "file" && isIncluded(item.name)) ||
             item.type === "folder",
         )
         .map((item) => {
@@ -77,7 +85,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
     <Box w="full" h="full">
       {compactMode && <CompactNavbar />}
       <Actions />
-      <Text pl={4} fontWeight="bold" fontSize="sm" color={text_color}>
+      <Text pl={4} fontWeight="bold" fontSize="sm" color={text_color} mb={2}>
         {workspace.name}
       </Text>
       {filterdWorkspace.items && (

@@ -4,9 +4,12 @@ import { useCallback, useEffect } from "react"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import BlockStyling from "styling/Block-Styling"
 import useColors from "hooks/useColors"
+import "styling/splitScreen.css"
+import { splitScreen } from "./SplitScreen"
 
 const EditorWrapper = ({ children }: { children: JSX.Element }) => {
-  const { activeFile } = useWorkspace()
+  const { activeTab, tabs } = useWorkspace()
+  const tab = tabs[activeTab]
 
   const {
     getBorderColor,
@@ -15,6 +18,7 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
     getAccentColor,
     getTextColor,
     getSecondaryBackgroundColor,
+    getMutedTextColor,
   } = useColors()
   const icon_color = getIconColor()
 
@@ -25,6 +29,8 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
   const text_color = getTextColor()
 
   const border_color = getBorderColor()
+
+  const muted_text_color = getMutedTextColor()
 
   const secondary_background_color = getSecondaryBackgroundColor()
   const bg_color_right = utils.getLighterColor(
@@ -64,18 +70,26 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
     }
   }, [setTooltipStyle])
 
+  const setSplitScreenColor = useCallback(() => {
+    const root = document.documentElement
+    const color = utils.getTransparent(0.2, muted_text_color)
+    root.style.setProperty("--focus-border", color)
+  }, [muted_text_color])
+
   useEffect(() => {
     const intervalId = setInterval(getTooltip, 1000)
     setTimeout(() => {
       clearInterval(intervalId)
     }, 5000)
-  }, [getTooltip, bg_color, text_color, activeFile?.path])
+    setSplitScreenColor()
+  }, [getTooltip, bg_color, text_color, setSplitScreenColor])
 
   return (
     <Box
       pb={2}
       h="full"
       css={{
+        ...splitScreen(muted_text_color),
         ".css-18m9o4h": {
           height: "100%",
         },

@@ -102,6 +102,25 @@ const getTimeString = (date: number) => {
   return `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
 }
 
+const saveToRecentOpened = (data: any, splitted: boolean | undefined) => {
+  const pathKey = splitted ? "splitted_active_file" : "active_file"
+  const path = localStorage.getItem(pathKey) || ""
+
+  const openFilesJSON = localStorage.getItem("open_files")
+  const openFiles: any[] = openFilesJSON ? JSON.parse(openFilesJSON) : []
+  const existingFileIndex = openFiles.findIndex((file) => file.path === path)
+
+  if (existingFileIndex !== -1) {
+    openFiles[existingFileIndex].data = data
+    openFiles.unshift(openFiles.splice(existingFileIndex, 1)[0]) // Move existing file to front
+  } else {
+    if (openFiles.length === 5) openFiles.pop() // Remove last file if max limit reached
+    openFiles.unshift({ path, data }) // Add new file to front
+  }
+
+  localStorage.setItem("open_files", JSON.stringify(openFiles))
+}
+
 export const utils = {
   contrast,
   getTextColor,
@@ -113,4 +132,5 @@ export const utils = {
   fullParser,
   getDateString,
   getTimeString,
+  saveToRecentOpened,
 }

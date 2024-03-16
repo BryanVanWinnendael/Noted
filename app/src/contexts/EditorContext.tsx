@@ -14,6 +14,7 @@ type Props = {
 
 export const EditorProvider: React.FC<Props> = ({ children }: Props) => {
   const [editor, setEditor] = useState<EditorJS>({} as EditorJS)
+  const [splittedEditor, setSplittedEditor] = useState<EditorJS>({} as EditorJS)
   const [blocks, setBlocks] = useState<any>([])
   const [time, setTime] = useState<any>(0)
 
@@ -24,6 +25,8 @@ export const EditorProvider: React.FC<Props> = ({ children }: Props) => {
     blocks,
     setTime,
     time,
+    splittedEditor,
+    setSplittedEditor,
   }
 
   return (

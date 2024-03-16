@@ -25,15 +25,13 @@ export type StringNullObject = {
   [key: number]: string | null
 }
 
-export interface ActiveFile {
+export interface ActiveTab {
   path: string
-  data: any
+  splittedPath?: string
 }
 
 export interface Tab {
-  [key: number]: {
-    path: string
-  }
+  [key: number]: ActiveTab
 }
 
 export interface ContextMenu {
@@ -42,12 +40,18 @@ export interface ContextMenu {
   name: string
 }
 
+export type OpenAvailbleTypes = "noted" | "pdf"
+
+export interface OpenTypes {
+  type: OpenAvailbleTypes
+  splittedType?: OpenAvailbleTypes
+}
+
 export interface WorkspaceTypeContext {
   openWorkspace: () => void
   openFolder: (path: string, reset?: boolean) => void
   workspace: WorkspaceType | undefined
   openFile: (path: string) => void
-  activeFile: ActiveFile | undefined
   saveFile: (data: any, path: string) => Promise<void>
   isLoaded: boolean
   addTab: () => void
@@ -55,7 +59,6 @@ export interface WorkspaceTypeContext {
   tabs: Tab
   handleChangeTab: (tab: number) => void
   setTabs: (tabs: Tab) => void
-  setActiveFile: (file: ActiveFile | undefined) => void
   removeTab: (tab: number) => void
   showSidebar: boolean
   setShowSidebar: (show: boolean) => void
@@ -74,6 +77,9 @@ export interface WorkspaceTypeContext {
   showSwitcher: boolean
   setShowSwitcher: (show: boolean) => void
   closeWorkspace: () => void
+  savePdfFile: (data: any, path: string) => void
+  split: (path: string) => Promise<void>
+  readFile: (path: string) => Promise<any>
 }
 
 export interface Theme {
@@ -113,6 +119,8 @@ export type Settings =
   | "compact_mode"
   | "active_theme"
   | "font_family"
+  | "translate_language"
+  | "extension_label"
 
 export interface SettingsTypeContext {
   isOpen: boolean
@@ -143,6 +151,8 @@ export interface SettingsTypeContext {
   setCustomTheme: (theme: Theme | undefined) => void
   activeTheme: string
   fontFamily: string
+  translateLanguage: string
+  extensionLabel: boolean
 }
 
 export interface EditorTypeContext {
@@ -152,6 +162,8 @@ export interface EditorTypeContext {
   setBlocks: (blocks: any[]) => void
   time: number
   setTime: (time: number) => void
+  splittedEditor: EditorJS
+  setSplittedEditor: (editor: EditorJS) => void
 }
 
 export interface ToDo {
@@ -176,4 +188,27 @@ export interface WidgetTypeContext {
   setTodos: (todos: ToDo[]) => void
   intervalId: NodeJS.Timer | undefined
   setIntervalId: (id: NodeJS.Timer) => void
+}
+
+export interface SlashTypeContext {
+  slashOpen: boolean
+  setSlashOpen: (open: boolean) => void
+  position: { x: number; y: number }
+  setPosition: (position: { x: number; y: number }) => void
+}
+
+export type CanvasTools = "none" | "pencil" | "text"
+
+export interface CanvasElement {
+  id: number
+  clientX: number
+  clientY: number
+  x: number
+  y: number
+  type: string
+  text?: string
+  points?: {
+    x: number
+    y: number
+  }[]
 }

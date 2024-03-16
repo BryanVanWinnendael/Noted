@@ -50,6 +50,8 @@ export const REQUIRED_SETTINGS_KEYS: Settings[] = [
   "compact_mode",
   "active_theme",
   "font_family",
+  "translate_language",
+  "extension_label",
 ]
 
 export const DEFAULT_UPDATE = true
@@ -98,3 +100,7 @@ export const DEFAULT_FONTS = [
   "Poppins",
   "Inter",
 ]
+
+export const DEFAULT_TRANSLATE_LANGUAGE = "en"
+
+export const DEFAULT_EXTENSION_LABEL = true

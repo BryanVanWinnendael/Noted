@@ -8,6 +8,7 @@ import { ContextMenu } from "types/index"
 import AddFile from "./AddFile"
 import AddFolder from "./AddFolder"
 import OpenFIleInTab from "./OpenFileInTab"
+import SplitFile from "./SplitFile"
 
 const Index = ({ path, name, type }: ContextMenu) => {
   const { getBackgroundColor, getBorderColor } = useColors()
@@ -44,6 +45,7 @@ const Index = ({ path, name, type }: ContextMenu) => {
         )}
         <Rename path={path} name={name} type={type} />
         <Delete path={path} name={name} type={type} />
+        <SplitFile path={path} name={name} type={type} />
       </MenuList>
     </>
   )

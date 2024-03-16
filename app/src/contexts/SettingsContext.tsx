@@ -18,10 +18,12 @@ import { checker, ensureKeys } from "utils/checker"
 import { utils } from "utils"
 import {
   DEFAULT_COMPACT_MODE,
+  DEFAULT_EXTENSION_LABEL,
   DEFAULT_FONT,
   DEFAULT_GLASS,
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS_ENABLED,
+  DEFAULT_TRANSLATE_LANGUAGE,
   DEFAULT_UPDATE,
   THEME_DARK,
   THEME_KEYS,
@@ -40,7 +42,7 @@ type Props = {
 }
 
 declare let window: MyWindow
-const ipcRenderer = window.myApp.getIpcRenderer()
+const invoke = window.myApp.invoke
 
 export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -61,6 +63,12 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const [compactMode, setCompactMode] = useState<boolean>(DEFAULT_COMPACT_MODE)
   const [activeTheme, setActiveTheme] = useState<string>("")
   const [fontFamily, setFontFamily] = useState<string>(DEFAULT_FONT)
+  const [translateLanguage, setTranslateLanguage] = useState<string>(
+    DEFAULT_TRANSLATE_LANGUAGE,
+  )
+  const [extensionLabel, setExtensionLabel] = useState<boolean>(
+    DEFAULT_EXTENSION_LABEL,
+  )
 
   const readThemeFile = useCallback(async () => {
     const theme_path = localStorage.getItem("theme-path") || ""
@@ -68,7 +76,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     if (!theme_path) return
 
     try {
-      const data: any = await ipcRenderer.invoke("theme:open-file", {
+      const data: any = await invoke("theme:open-file", {
         filePath: theme_path,
       })
 
@@ -78,14 +86,13 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       localStorage.setItem("custom-theme-json", data)
       setCustomTheme(parsedData)
     } catch (err) {
-      console.log(err)
-      return
+      return console.log(err)
     }
   }, [])
 
   const saveThemeToFile = async () => {
     try {
-      await ipcRenderer.invoke("theme:save-file", {
+      await invoke("theme:save-file", {
         file_path: themePath,
         file_content: JSON.stringify(customTheme),
       })
@@ -96,7 +103,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
 
   const exportTheme = async () => {
     try {
-      const { filePath } = await ipcRenderer.invoke("theme:export", {
+      const { filePath } = await invoke("theme:export", {
         file_content: JSON.stringify(customTheme),
       })
       localStorage.setItem("theme-path", filePath)
@@ -108,7 +115,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
 
   const importTheme = async () => {
     try {
-      const { filePath, data } = await ipcRenderer.invoke("theme:import")
+      const { filePath, data } = await invoke("theme:import")
       const parsedData = JSON.parse(data)
       if (!ensureKeys(parsedData, THEME_KEYS)) return
       localStorage.setItem("custom-theme-json", data)
@@ -134,7 +141,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       const newCustomThemes = { ...customThemes }
       newCustomThemes[name] = theme
       setCustomThemes(newCustomThemes)
-      await ipcRenderer.invoke("theme:settings-save", {
+      await invoke("theme:settings-save", {
         name,
         theme: JSON.stringify(theme),
         workspace_path,
@@ -150,7 +157,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const getCustomThemes = useCallback(async () => {
     try {
       const workspace_path = localStorage.getItem("workspace_path")
-      const data = await ipcRenderer.invoke("theme:settings-get", {
+      const data = await invoke("theme:settings-get", {
         workspace_path,
       })
       const parsedData = utils.fullParser(data)
@@ -173,7 +180,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       delete newCustomThemes[name]
       setCustomThemes(newCustomThemes)
       const workspace_path = localStorage.getItem("workspace_path")
-      ipcRenderer.invoke("theme:settings-delete", { name, workspace_path })
+      invoke("theme:settings-delete", { name, workspace_path })
     } catch (err) {
       console.log(err)
     }
@@ -181,7 +188,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
 
   const checkUpdate = async () => {
     try {
-      const res = await ipcRenderer.invoke("updates:check")
+      const res = await invoke("updates:check")
       if (res) setUpdateAvailable(true)
       return res
     } catch (err) {
@@ -191,7 +198,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
 
   const downloadUpdate = async () => {
     try {
-      const res = await ipcRenderer.invoke("updates:download")
+      const res = await invoke("updates:download")
       return res
     } catch (err) {
       console.log(err)
@@ -200,7 +207,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
 
   const updateAndRestart = async () => {
     try {
-      await ipcRenderer.invoke("updates:update-and-restart")
+      await invoke("updates:update-and-restart")
     } catch (err) {
       console.log(err)
     }
@@ -224,7 +231,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     const settings = await getSettings()
     if (!settings) return
     settings[key] = value
-    ipcRenderer.invoke("file:settings-save", {
+    invoke("file:settings-save", {
       settings: JSON.stringify(settings),
       workspace_path,
     })
@@ -257,6 +264,12 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       case "font_family":
         setFontFamily(value)
         break
+      case "translate_language":
+        setTranslateLanguage(value)
+        break
+      case "extension_label":
+        setExtensionLabel(value)
+        break
       default:
         break
     }
@@ -271,6 +284,8 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     setCompactMode(settings["compact_mode"])
     setActiveTheme(settings["active_theme"])
     setFontFamily(settings["font_family"])
+    setTranslateLanguage(settings["translate_language"])
+    setExtensionLabel(settings["extension_label"])
   }
 
   const resetCustomTheme = () => {
@@ -281,7 +296,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const getSettings = useCallback(async () => {
     try {
       const workspace_path = localStorage.getItem("workspace_path")
-      const settingsString = await ipcRenderer.invoke("file:settings-get", {
+      const settingsString = await invoke("file:settings-get", {
         workspace_path,
       })
       const settings = JSON.parse(settingsString)
@@ -336,6 +351,8 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     setCustomTheme,
     activeTheme,
     fontFamily,
+    translateLanguage,
+    extensionLabel,
   }
 
   return (
