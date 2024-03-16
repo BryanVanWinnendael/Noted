@@ -1,14 +1,17 @@
-import { Menu, MenuButton, Text } from "@chakra-ui/react"
+import { Flex, Menu, MenuButton, Text } from "@chakra-ui/react"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import useColors from "hooks/useColors"
 import { useState } from "react"
 import { utils } from "utils/index"
 import ContextMenu from "./Context-Menu"
+import { useSettings } from "contexts/SettingsContext"
 
 const FileButton = ({ name, path }: { name: string; path: string }) => {
   const { getSecondaryBackgroundColor, getTextColor } = useColors()
+  const { extensionLabel } = useSettings()
   const { setActiveFolder, activeTab, tabs, openFile } = useWorkspace()
   const [isOpen, setIsOpen] = useState<boolean | undefined>(false)
+  const extension = path.split(".").pop()
   const tab = tabs[activeTab]
 
   const secondary_background_color = getSecondaryBackgroundColor()
@@ -48,16 +51,27 @@ const FileButton = ({ name, path }: { name: string; path: string }) => {
         h="fit-content"
         cursor="pointer"
       >
-        <Text
-          textAlign="left"
-          overflow="hidden"
-          whiteSpace="nowrap"
-          textOverflow="ellipsis"
-          fontSize="sm"
-          ml="20px"
-        >
-          {getFileName(name)}
-        </Text>
+        <Flex gap={2} alignItems="center">
+          <Text
+            textAlign="left"
+            overflow="hidden"
+            whiteSpace="nowrap"
+            textOverflow="ellipsis"
+            fontSize="sm"
+            ml="20px"
+          >
+            {getFileName(name)}
+          </Text>
+          {extensionLabel && (
+            <Flex
+              px={2}
+              rounded="md"
+              bg={utils.getTransparent(0.6, secondary_background_color)}
+            >
+              {extension}
+            </Flex>
+          )}
+        </Flex>
       </MenuButton>
       <ContextMenu path={path} name={name} type="file" />
     </Menu>

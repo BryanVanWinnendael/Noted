@@ -69,7 +69,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
       bg={isGlassEnabled ? utils.getGlassBackground(bg_color) : bg_color}
     >
       <PanelGroup
-      id={"sidebar"}
+        id={"sidebar"}
         autoSaveId="example"
         direction="horizontal"
         style={{

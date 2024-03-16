@@ -5,8 +5,9 @@ const Cursor = () => {
     <motion.svg
       viewBox="8 4 8 16"
       xmlns="http://www.w3.org/2000/svg"
-      className="cursor inline-block w-1"
-      style={{ marginBottom: "4px" }}
+      style={{ marginBottom: "4px", display: "inline-block" }}
+      width={1}
+      height={2}
       animate={{
         opacity: [0, 1, 0],
         transition: { duration: 0.5, repeat: Infinity },

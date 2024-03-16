@@ -8,11 +8,11 @@ import useColors from "hooks/useColors"
 
 declare let window: MyWindow
 
-const ipcRenderer = window.myApp.getIpcRenderer()
+const invoke = window.myApp.invoke
 
 const Market = () => {
   const { getAccentColor, getMutedTextColor } = useColors()
-  const serverUrl = process.env.REACT_APP_SERVER_URL
+  const serverUrl = import.meta.env.VITE_SERVER_URL
   const [loading, setLoading] = useState<boolean>(true)
   const [themes, setThemes] = useState<{ [key: string]: Theme }>({})
 
@@ -20,8 +20,8 @@ const Market = () => {
 
   const muted_text_color = getMutedTextColor()
 
-  const handleLink = (e: any) => {
-    ipcRenderer.invoke("openBrowser", "https://write-noted.vercel.app/")
+  const handleLink = () => {
+    invoke("openBrowser", "https://write-noted.vercel.app/")
   }
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Market = () => {
         if (data) setThemes(data)
         setLoading(false)
       })
-      .catch((err) => setLoading(false))
+      .catch(() => setLoading(false))
   }, [serverUrl])
 
   return (

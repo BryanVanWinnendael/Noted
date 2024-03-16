@@ -1,4 +1,4 @@
-import { Text } from "@chakra-ui/react"
+import { Flex, Text } from "@chakra-ui/react"
 import { useSettings } from "contexts/SettingsContext"
 import { useSlash } from "contexts/SlashContext"
 import { motion } from "framer-motion"
@@ -6,6 +6,9 @@ import useColors from "hooks/useColors"
 import { useEffect, useRef, useState } from "react"
 import { utils } from "utils/index"
 import Rewriter from "./Rewriter"
+import Translater from "./Translater"
+import { BsTranslate } from "react-icons/bs"
+import { MdOutlineWrapText } from "react-icons/md"
 
 type openType = "rewriter" | "translator" | false
 
@@ -14,7 +17,8 @@ const SlashCommands = () => {
   const boxRef = useRef<HTMLDivElement>(null)
   const topP = position.y + 25
   const LeftP = position.x
-  const { getBackgroundColor, getBorderColor, getTextColor } = useColors()
+  const { getBackgroundColor, getBorderColor, getTextColor, getIconColor } =
+    useColors()
   const { glassBackground, glassEnabled } = useSettings()
   const [open, setOpen] = useState<openType>(false)
 
@@ -24,37 +28,43 @@ const SlashCommands = () => {
 
   const text_color = getTextColor()
 
+  const icon_color = getIconColor()
+
   const isGlassEnabled = glassEnabled && glassBackground.navBar
 
   const renderText = () => {
     return (
       <>
-        <Text
+        <Flex
           onClick={() => setOpen("rewriter")}
           cursor="pointer"
+          px={4}
+          p={2}
+          alignItems="center"
+          _hover={{ bg: utils.getDarkerColor("0.03", bg_color) }}
+          rounded="md"
           w="full"
           bg="transparent"
-          px={4}
-          rounded="md"
-          p={2}
-          color={text_color}
-          _hover={{ bg: utils.getDarkerColor("0.03", bg_color) }}
+          gap={1}
         >
-          Rewrite text
-        </Text>
-        <Text
+          <MdOutlineWrapText color={icon_color} />
+          <Text color={text_color}>Rewrite text</Text>
+        </Flex>
+        <Flex
           onClick={() => setOpen("translator")}
           cursor="pointer"
-          w="full"
-          bg="transparent"
           px={4}
           p={2}
-          color={text_color}
+          alignItems="center"
           _hover={{ bg: utils.getDarkerColor("0.03", bg_color) }}
           rounded="md"
+          w="full"
+          bg="transparent"
+          gap={1}
         >
-          Translate text
-        </Text>
+          <BsTranslate color={icon_color} />
+          <Text color={text_color}>Translate text</Text>
+        </Flex>
       </>
     )
   }
@@ -64,7 +74,7 @@ const SlashCommands = () => {
       case "rewriter":
         return <Rewriter />
       case "translator":
-        return <Text>translator</Text>
+        return <Translater />
       default:
         return renderText()
     }

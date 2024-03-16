@@ -3,14 +3,18 @@ import { darken } from "polished"
 import {
   DEFAULT_ACTIVE_THEME,
   DEFAULT_COMPACT_MODE,
+  DEFAULT_EXTENSION_LABEL,
   DEFAULT_FONT,
   DEFAULT_GLASS,
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS,
   DEFAULT_HEADER_COLORS_ENABLED,
+  DEFAULT_TRANSLATE_LANGUAGE,
   DEFAULT_UPDATE,
   REQUIRED_SETTINGS_KEYS,
 } from "./constants"
+
+import languages from "./languages.json"
 
 const headerKeys = ["h1", "h2", "h3", "h4", "h5", "h6"]
 const glassKeys = ["navBar", "settings", "widgets", "window"]
@@ -67,7 +71,7 @@ const glassBackground = (obj: any): any => {
   }
   const key_array = Object.keys(obj)
   let allGlassBackground = true
-  key_array.forEach((val, key) => {
+  key_array.forEach((val) => {
     if (!isGlassBackground(val, obj[val])) {
       allGlassBackground = false
     }
@@ -104,6 +108,21 @@ const isFontFamily = (font: any): any => {
     return DEFAULT_FONT
   }
   return font
+}
+
+const checkLanguage = (lang: any): any => {
+  const langArray = Object.keys(languages.translation)
+  if (langArray.includes(lang)) {
+    return lang
+  }
+  return DEFAULT_TRANSLATE_LANGUAGE
+}
+
+const checkExtensionLabel = (label: any): any => {
+  if (typeof label !== "boolean") {
+    return DEFAULT_EXTENSION_LABEL
+  }
+  return label
 }
 
 export const ensureKeys = (settings: { [key in any]: any }, keys: any[]) => {
@@ -148,6 +167,12 @@ const settingsChecker = (settings: { [key in Settings]: any }): {
         break
       case "font_family":
         filledSettings[key] = isFontFamily(value)
+        break
+      case "translate_language":
+        filledSettings[key] = checkLanguage(value)
+        break
+      case "extension_label":
+        filledSettings[key] = checkExtensionLabel(value)
         break
       default:
         break

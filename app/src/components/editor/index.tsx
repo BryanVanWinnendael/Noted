@@ -32,7 +32,6 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
 
   const handleInitialize = useCallback(
     (instance: any) => {
-      console.log("initialized")
       instance._editorJS.isReady
         .then(() => {
           editorCore.current = instance
@@ -46,25 +45,8 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
   )
 
   const saveToLocalStorage = useCallback(
-    async (data: any) => {
-      const pathKey = splitted ? "splitted_active_file" : "active_file"
-      const path = localStorage.getItem(pathKey) || ""
-
-      const openFilesJSON = localStorage.getItem("open_files")
-      const openFiles: any[] = openFilesJSON ? JSON.parse(openFilesJSON) : []
-      const existingFileIndex = openFiles.findIndex(
-        (file) => file.path === path,
-      )
-
-      if (existingFileIndex !== -1) {
-        openFiles[existingFileIndex].data = data
-        openFiles.unshift(openFiles.splice(existingFileIndex, 1)[0]) // Move existing file to front
-      } else {
-        if (openFiles.length === 5) openFiles.pop() // Remove last file if max limit reached
-        openFiles.unshift({ path, data }) // Add new file to front
-      }
-
-      localStorage.setItem("open_files", JSON.stringify(openFiles))
+    (data: any) => {
+      utils.saveToRecentOpened(data, splitted)
     },
     [splitted],
   )
@@ -93,10 +75,8 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
 
   const renderEditor = useCallback(
     async (jsonData: any) => {
-      console.log(editorCore.current)
       if (!editorCore.current) return
       await editorCore.current.render(jsonData)
-      console.log("rendered")
       await getData()
     },
     [getData],
@@ -117,7 +97,7 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
   const checkSlashCommand = (
     event: React.KeyboardEvent<HTMLDivElement>,
   ): void => {
-    if (event.key === "/") {
+    if (event.key === "\\") {
       setSlashOpen(true)
       setTimeout(() => {
         const selection = window.getSelection()
@@ -178,7 +158,6 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
       <Box maxH="100%" w="full" h="full" m={0} pl={2}>
         <ReactEditorJS
           holder={"noted" + path}
-          // onChange={handleSave}
           onInitialize={handleInitialize}
           tools={EDITOR_JS_TOOLS}
         >

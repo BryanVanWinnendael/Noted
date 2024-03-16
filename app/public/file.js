@@ -27,6 +27,18 @@ class Files {
       return "error"
     })
 
+    ipcMain.handle("file:save-pdf", async (event, params) => {
+      if (params.file_path) {
+        const content = params.file_content
+        const buffer = Buffer.from(content)
+        fs.writeFile(params.file_path, buffer, function (err) {
+          if (err) throw err
+        })
+        return "success"
+      }
+      return "error"
+    })
+
     ipcMain.handle("file:settings-save", async (event, params) => {
       const workspacePath = params.workspace_path
       const settingsPath = path.join(workspacePath, ".noted/settings.json")

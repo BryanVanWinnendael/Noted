@@ -128,3 +128,11 @@ ul {
 .Resizer.disabled:hover {
   border-color: transparent;
 }
+
+.cursor-text {
+  cursor: url("assets/text.svg"), auto;
+}
+
+.cursor-pencil {
+  cursor: url("assets/pencil.svg"), auto;
+}

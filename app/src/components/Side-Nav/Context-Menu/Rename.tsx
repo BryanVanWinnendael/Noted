@@ -34,7 +34,13 @@ const Rename = ({ path, name, type }: ContextMenu) => {
   const icon_color = getIconColor()
 
   const renameFile = async () => {
-    const newPath = path.split(name)[0] + newName + ".noted"
+    let newPath = ""
+    if (name.includes(".noted")) {
+      newPath = path.split(name)[0] + newName + ".noted"
+    } else if (name.includes(".pdf")) {
+      newPath = path.split(name)[0] + newName + ".pdf"
+    }
+
     const res = await rename(path, newPath, type)
 
     if (!res) {
@@ -68,7 +74,11 @@ const Rename = ({ path, name, type }: ContextMenu) => {
 
   useEffect(() => {
     return () => {
-      setNewName(name.split(".noted")[0])
+      if (name.includes(".noted")) {
+        setNewName(name.split(".noted")[0])
+      } else if (name.includes(".pdf")) {
+        setNewName(name.split(".pdf")[0])
+      }
     }
   }, [name])
 

@@ -119,6 +119,8 @@ export type Settings =
   | "compact_mode"
   | "active_theme"
   | "font_family"
+  | "translate_language"
+  | "extension_label"
 
 export interface SettingsTypeContext {
   isOpen: boolean
@@ -149,6 +151,8 @@ export interface SettingsTypeContext {
   setCustomTheme: (theme: Theme | undefined) => void
   activeTheme: string
   fontFamily: string
+  translateLanguage: string
+  extensionLabel: boolean
 }
 
 export interface EditorTypeContext {
@@ -193,15 +197,18 @@ export interface SlashTypeContext {
   setPosition: (position: { x: number; y: number }) => void
 }
 
-export type CanvasTools = "none" | "drawing" | "text"
+export type CanvasTools = "none" | "pencil" | "text"
 
 export interface CanvasElement {
-  id: number;
-  clientX: number;
-  clientY: number;
+  id: number
+  clientX: number
+  clientY: number
   x: number
-  y: number;
-  type: string;
-  text?: string;
- 
+  y: number
+  type: string
+  text?: string
+  points?: {
+    x: number
+    y: number
+  }[]
 }

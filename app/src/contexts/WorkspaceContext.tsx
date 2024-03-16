@@ -21,7 +21,7 @@ type Props = {
 
 declare let window: MyWindow
 
-const ipcRenderer = window.myApp.getIpcRenderer()
+const invoke = window.myApp.invoke
 
 export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const [workspace, setWorkspace] = useState<WorkspaceType | undefined>()
@@ -59,7 +59,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
   const getFile = async (filePath: string) => {
     try {
-      const openedFile = await ipcRenderer.invoke("file:open", {
+      const openedFile = await invoke("file:open", {
         file_path: filePath,
       })
       const json_content = openedFile["fileContent"]
@@ -85,8 +85,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
   const openWorkspace = async () => {
     try {
-      const openedWorkspace: WorkspaceType =
-        await ipcRenderer.invoke("folder:open-dialog")
+      const openedWorkspace: WorkspaceType = await invoke("folder:open-dialog")
       if (!openedWorkspace) return
       resetWorkspace()
       localStorage.setItem("workspace_path", openedWorkspace.path)
@@ -155,7 +154,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
   const saveFile = async (data: any, path: string) => {
     try {
-      await ipcRenderer.invoke("file:save", {
+      await invoke("file:save", {
         file_path: path,
         file_content: JSON.stringify(data),
       })
@@ -166,7 +165,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
   const savePdfFile = async (data: any, path: string) => {
     try {
-      await ipcRenderer.invoke("file:save", {
+      await invoke("file:save-pdf", {
         file_path: path,
         file_content: data,
       })
@@ -178,10 +177,9 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const openFolder = useCallback(
     async (folderPath: string, reset?: boolean) => {
       try {
-        const openedWorkspace: WorkspaceType = await ipcRenderer.invoke(
-          "folder:open",
-          { folder_path: folderPath },
-        )
+        const openedWorkspace: WorkspaceType = await invoke("folder:open", {
+          folder_path: folderPath,
+        })
         console.log(openedWorkspace.path)
         if (reset) resetWorkspace()
         localStorage.setItem("workspace_path", openedWorkspace.path)
@@ -209,7 +207,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
       if (!folder_path) new_folder_path = workspacePath || ""
       else new_folder_path = folder_path
 
-      await ipcRenderer.invoke("file:new", {
+      await invoke("file:new", {
         folder: new_folder_path,
         file_name: fileName,
       })
@@ -230,48 +228,38 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
       if (!folder_path) new_folder_path = workspacePath || ""
       else new_folder_path = folder_path
 
-      await ipcRenderer.invoke("folder:new", {
+      await invoke("folder:new", {
         folder: new_folder_path,
         folder_name: folderName,
       })
 
       handleOpenedWorkspace()
       setActiveFolder(`${new_folder_path}\\${folderName}`)
-      // setActiveFile(undefined)
       return true
     } catch (err) {
       return false
     }
   }
 
-  // const getTabIndexFromDeletedFile = (filePath: string) => {
-  //   let index = 0
-  //   Object.keys(tabs).forEach((key: any) => {
-  //     if (tabs[key].path === filePath) {
-  //       index = parseInt(key)
-  //     }
-  //   })
-  //   return index
-  // }
-
-  // const resetActiveTab = () => {
-  //   const active_tab = tabs[activeTab]
-  //   active_tab["path"] = "New Tab"
-  //   // setActiveFile(undefined)
-  // }
+  const resetActiveTab = () => {
+    const active_tab = tabs[activeTab]
+    active_tab["path"] = "New Tab"
+    const newTabs = { ...tabs }
+    newTabs[activeTab] = active_tab
+    setTabs(newTabs)
+  }
 
   const deleteFile = async (filePath: string) => {
     try {
-      await ipcRenderer.invoke("file:delete", {
+      await invoke("file:delete", {
         file_path: filePath,
       })
       handleOpenedWorkspace()
-      // if (activeFile?.path === filePath) {
-      //   resetActiveTab()
-      // } else {
-      //   const index = getTabIndexFromDeletedFile(filePath)
-      //   removeTab(index)
-      // }
+      const activeFile = localStorage.getItem("active_file")
+      if (activeFile === filePath) {
+        localStorage.setItem("active_file", "")
+        resetActiveTab()
+      }
       return true
     } catch (err) {
       return false
@@ -280,12 +268,17 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
   const deleteFolder = async (folderPath: string) => {
     try {
-      await ipcRenderer.invoke("folder:delete", {
+      await invoke("folder:delete", {
         folder_path: folderPath,
       })
       handleOpenedWorkspace()
-      setActiveFolder(undefined)
-      // setActiveFile(undefined)
+      if (activeFolder === folderPath) setActiveFolder(undefined)
+      const active_file = localStorage.getItem("active_file")
+      if (active_file?.includes(folderPath)) {
+        localStorage.setItem("active_file", "")
+        resetActiveTab()
+      }
+
       return true
     } catch (err) {
       return false
@@ -294,15 +287,15 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
   const renameFile = async (oldPath: string, newPath: string) => {
     try {
-      await ipcRenderer.invoke("file:rename", {
+      await invoke("file:rename", {
         old_path: oldPath,
         new_path: newPath,
       })
       handleOpenedWorkspace()
-
-      // if (activeFile?.path === oldPath) {
-      //   openFile(newPath)
-      // }
+      const activeFile = localStorage.getItem("active_file")
+      if (activeFile === oldPath) {
+        openFile(newPath)
+      }
       return true
     } catch (err) {
       return false
@@ -311,7 +304,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
   const renameFolder = async (oldPath: string, newPath: string) => {
     try {
-      await ipcRenderer.invoke("folder:rename", {
+      await invoke("folder:rename", {
         old_path: oldPath,
         new_path: newPath,
       })

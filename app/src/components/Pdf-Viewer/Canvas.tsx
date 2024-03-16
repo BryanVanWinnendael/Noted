@@ -1,213 +1,229 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { drawElement, getMouseCoordinates, useHistory } from "./utils";
-import rough from "roughjs/bundled/rough.esm";
-import { Box } from "@chakra-ui/react";
-import { CanvasElement } from "types/index";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react"
+import {
+  adjustElementCoordinates,
+  adjustmentRequired,
+  drawElement,
+  getMouseCoordinates,
+  useHistory,
+} from "./utils"
+import { Box } from "@chakra-ui/react"
+import { CanvasElement, CanvasTools } from "types/index"
 
 interface CanvasProps {
-  pdfRef: (ref: HTMLCanvasElement) => void;
-  tool: string;
+  pdfRef: (ref: HTMLCanvasElement) => void
+  tool: CanvasTools
 }
 
 const Canvas = ({ pdfRef, tool }: CanvasProps) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const copyCanvasRef = useRef<HTMLCanvasElement>(null);
-  const [elements, setElements, undo, redo] = useHistory([]);
-  const [action, setAction] = useState<string>("none");
-  const [selectedElement, setSelectedElement] = useState<CanvasElement | null>(null);
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [lastX, setLastX] = useState<number | null>(null);
-  const [lastY, setLastY] = useState<number | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const copyCanvasRef = useRef<HTMLCanvasElement>(null)
+  const [elements, setElements, undo, redo] = useHistory([])
+  const [action, setAction] = useState<string>("none")
+  const [selectedElement, setSelectedElement] = useState<CanvasElement | null>(
+    null,
+  )
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   const copyPdf = useCallback(() => {
-    const canvas = canvasRef.current;
-    const offScreenCanvas = copyCanvasRef.current;
-    if (!canvas || !offScreenCanvas) return;
-    offScreenCanvas.width = canvas.width;
-    offScreenCanvas.height = canvas.height;
-    const offScreenContext = offScreenCanvas.getContext("2d");
-    if (!offScreenContext) return;
-    offScreenContext.drawImage(canvas, 0, 0);
-  },[])
+    try {
+      const canvas = canvasRef.current
+      const offScreenCanvas = copyCanvasRef.current
+      if (!canvas || !offScreenCanvas) return
+      offScreenCanvas.width = canvas.width | 400
+      offScreenCanvas.height = canvas.height | 400
+      const offScreenContext = offScreenCanvas.getContext("2d")
+      if (!offScreenContext || !canvas.width || !canvas.height) return
+      offScreenContext.drawImage(canvas, 0, 0)
+    } catch (error) {
+      console.error("Error copying pdf", error)
+    }
+  }, [])
 
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    if (tool === "drawing") return handleDrawing(event);
-    if (action === "writing") return;
-    if (tool === "text") return handleText(event);
-   
-  };
+    if (action === "writing" || (action === "none" && tool === "none")) return
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    switch (tool) {
-      case "text":
-        return handleMouseMoveText();
-      case "drawing":
-        return handleMouseMoveDrawing(event);
-      default:
-        return;
+    const { clientX, clientY, x, y } = getMouseCoordinates(event)
+    const id = elements.length
+    let element: CanvasElement = {
+      id,
+      clientX: x,
+      clientY: y,
+      x: clientX,
+      y: clientY,
+      type: tool,
     }
-  };
-
-  const handleMouseUp = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    setLastX(null);
-    setLastY(null);
-    const { clientX, clientY } = getMouseCoordinates(event);
-    if (selectedElement) {
-      if (
-        selectedElement.type === "text" &&
-        clientX === selectedElement.clientX &&
-        clientY === selectedElement.clientY
-      ) {
-        setAction("writing");
-        return;
+    if (tool === "pencil")
+      element = {
+        id,
+        clientX: x,
+        clientY: y,
+        x: clientX,
+        y: clientY,
+        type: tool,
       }
-    }
-
-    if (action === "writing") return;
-
-    setAction("none");
-    setSelectedElement(null);
-  };
-
-  const handleText = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const { clientX, clientY, x, y } = getMouseCoordinates(event);
-    const id = elements.length;
-    const element: CanvasElement = { id, clientX, clientY, x, y, type: tool };
-    setElements((prevState: CanvasElement[]) => [...prevState, element]);
-    setSelectedElement(element);
-    setAction(tool === "text" ? "writing" : "drawing");
+    if (tool === "text")
+      element = { id, x, y, clientX, clientY, type: tool, text: "" }
+    setElements((prevState: CanvasElement[]) => [...prevState, element])
+    setSelectedElement(element)
+    setAction(tool === "text" ? "writing" : "drawing")
   }
 
-  const handleDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    const canvas = event.currentTarget;
-    const rect = canvas.getBoundingClientRect();
-    const offsetX = event.clientX - rect.left;
-    const offsetY = event.clientY - rect.top;
+  const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    if (action === "drawing") {
+      handleMouseMoveDrawing(event)
+    } else if (action === "writing") {
+      handleMouseMoveText()
+    }
+  }
 
-    const x = (offsetX / canvas.clientWidth) * canvas.width;
-    const y = (offsetY / canvas.clientHeight) * canvas.height;
+  const handleMouseUp = () => {
+    if (selectedElement) {
+      if (selectedElement.type === "text") {
+        setAction("writing")
+        return
+      }
 
-    setLastX(x);
-    setLastY(y);
+      const index = selectedElement.id
+      const { id, type } = elements[index]
+      if (
+        (action === "drawing" || action === "resizing") &&
+        adjustmentRequired(type)
+      ) {
+        const { x1, y1, x2, y2 } = adjustElementCoordinates(elements[index])
+        updateElement(id, x1, y1, x2, y2, type, "")
+      }
+    }
 
-    const context = canvas.getContext("2d")!;
-    context.beginPath();
-    context.moveTo(x, y);
-  };
+    if (action === "writing") return
 
-  const handleMouseMoveDrawing = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!tool || lastX === null || lastY === null) return;
+    setAction("none")
+    setSelectedElement(null)
+  }
 
-    const canvas = event.currentTarget;
-    const rect = canvas.getBoundingClientRect();
-    const offsetX = event.clientX - rect.left;
-    const offsetY = event.clientY - rect.top;
+  const handleMouseMoveDrawing = (
+    event: React.MouseEvent<HTMLCanvasElement>,
+  ) => {
+    const { x: clientX, y: clientY } = getMouseCoordinates(event)
 
-    const x = (offsetX / canvas.clientWidth) * canvas.width;
-    const y = (offsetY / canvas.clientHeight) * canvas.height;
-
-    const context = canvas.getContext("2d")!;
-    context.lineTo(x, y);
-    context.stroke();
-
-    setLastX(x);
-    setLastY(y);
-  };
+    const index = elements.length - 1
+    const { clientX: x, clientY: y } = elements[index]
+    const offset = 10
+    updateElement(index, x, y, clientX, clientY + offset, tool, "")
+  }
 
   const handleMouseMoveText = () => {
-    if (!selectedElement) return;
-  };
+    if (!selectedElement) return
+  }
 
-  const updateElement = (id: number, clientX: number, clientY: number, x: number, y: number, type: string, options: any) => {
-    const elementsCopy = [...elements];
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    elementsCopy[id] = {
-      id,
-      clientX,
-      clientY,
-      x,
-      y,
-      type,
-      text: options?.text,
-    };
-    setElements(elementsCopy, true);
-  };
+  const updateElement = (
+    id: number,
+    clientX: number,
+    clientY: number,
+    x: number,
+    y: number,
+    type: string,
+    options: any,
+  ) => {
+    const elementsCopy = [...elements]
+    const canvas = canvasRef.current
+    if (!canvas) return
+    if (type === "text") {
+      elementsCopy[id] = {
+        id,
+        clientX,
+        clientY,
+        x,
+        y,
+        type,
+        text: options?.text,
+      }
+    } else if (type === "pencil") {
+      const prevPoints = elementsCopy[id].points || []
+      elementsCopy[id].points = [...prevPoints, { x, y }]
+    }
+    setElements(elementsCopy, true)
+  }
 
   const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-    if (!selectedElement) return;
-    const { id, clientX, clientY, x, y, type } = selectedElement;
-    setAction("none");
-    setSelectedElement(null);
-    updateElement(id, clientX, clientY, x, y, type, { text: event.target.value });
-  };
+    if (!selectedElement) return
+    const { id, clientX, clientY, x, y, type } = selectedElement
+    setAction("none")
+    setSelectedElement(null)
+    updateElement(id, clientX, clientY, x, y, type, {
+      text: event.target.value,
+    })
+  }
 
   const drawCanvas = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    if (!context) return;
-    const roughCanvas = rough.canvas(canvas);
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const context = canvas.getContext("2d")
+    if (!context) return
+    context.clearRect(0, 0, canvas.width, canvas.height)
 
-    context.save();
-    const copyCanvas = copyCanvasRef.current;
-    if (!copyCanvas) return;
+    context.save()
+    const copyCanvas = copyCanvasRef.current
+    if (!copyCanvas) return
+    try {
+      context.drawImage(copyCanvas, 0, 0)
+      elements.forEach((element: CanvasElement) => {
+        if (action === "writing" && selectedElement?.id === element.id) return
+        try {
+          drawElement(context, element)
+        } catch (error) {
+          console.error("Error drawing element", error)
+        }
+      })
+    } catch (error) {
+      console.error("Error drawing canvas", error)
+    }
 
-    context.drawImage(copyCanvas, 0, 0);
-    elements.forEach((element: CanvasElement) => {
-      if (action === "writing" && selectedElement?.id === element.id) return;
-      try {
-        drawElement(roughCanvas, context, element);
-      } catch (error) {
-        console.error("Error drawing element", error);
-      }
-     
-    });
-    context.restore();
-  }, [action, elements, selectedElement?.id]);
+    context.restore()
+  }, [action, elements, selectedElement?.id])
 
   useEffect(() => {
     if (canvasRef.current) {
-      pdfRef(canvasRef.current);
-      copyPdf();
+      pdfRef(canvasRef.current)
+      copyPdf()
     }
-  }, [pdfRef, copyPdf]);
+  }, [pdfRef, copyPdf])
 
   useLayoutEffect(() => {
-    drawCanvas();
-  }, [drawCanvas]);
+    drawCanvas()
+  }, [drawCanvas])
 
   useEffect(() => {
     const undoRedoFunction = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key === "z") {
-        if (event.shiftKey) redo();
-        else undo();
+        if (event.shiftKey) redo()
+        else undo()
       }
-    };
+    }
 
-    document.addEventListener("keydown", undoRedoFunction);
+    document.addEventListener("keydown", undoRedoFunction)
     return () => {
-      document.removeEventListener("keydown", undoRedoFunction);
-    };
-  }, [undo, redo]);
+      document.removeEventListener("keydown", undoRedoFunction)
+    }
+  }, [undo, redo])
 
   useEffect(() => {
-    const textArea = textAreaRef.current;
+    const textArea = textAreaRef.current
     if (action === "writing") {
       setTimeout(() => {
-        textArea?.focus();
-        if (textArea) textArea.value = selectedElement?.text ?? '';
-      }, 0);
+        textArea?.focus()
+        if (textArea) textArea.value = selectedElement?.text ?? ""
+      }, 0)
     }
-  }, [action, selectedElement]);
+  }, [action, selectedElement])
 
   return (
-    <Box
-      w="100%"
-      h="100%"
-    >
+    <Box w="100%" h="100%">
       {action === "writing" ? (
         <textarea
           ref={textAreaRef}
@@ -242,7 +258,7 @@ const Canvas = ({ pdfRef, tool }: CanvasProps) => {
         ref={canvasRef}
       />
     </Box>
-  );
-};
+  )
+}
 
-export default Canvas;
+export default Canvas

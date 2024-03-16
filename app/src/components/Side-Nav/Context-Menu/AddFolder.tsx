@@ -15,7 +15,7 @@ import { ContextMenu } from "types/index"
 import { utils } from "utils/index"
 import { CgFolderAdd } from "react-icons/cg"
 
-const AddFolder = ({ path, name, type }: ContextMenu) => {
+const AddFolder = ({ path, type }: ContextMenu) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { getAccentColor, getBackgroundColor, getTextColor, getIconColor } =
     useColors()

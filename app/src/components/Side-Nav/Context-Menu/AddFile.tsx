@@ -15,7 +15,7 @@ import { ContextMenu } from "types/index"
 import { utils } from "utils/index"
 import { CgFileAdd } from "react-icons/cg"
 
-const AddFile = ({ path, name, type }: ContextMenu) => {
+const AddFile = ({ path, type }: ContextMenu) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { getAccentColor, getBackgroundColor, getTextColor, getIconColor } =
     useColors()

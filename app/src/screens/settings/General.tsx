@@ -11,7 +11,7 @@ import { useState } from "react"
 
 declare let window: MyWindow
 
-const ipcRenderer = window.myApp.getIpcRenderer()
+const invoke = window.myApp.invoke
 const VERSION = "v1.0.0"
 
 const General = () => {
@@ -41,7 +41,7 @@ const General = () => {
   const accent_color = getAccentColor()
 
   const handleLink = (link: string) => {
-    ipcRenderer.invoke("openBrowser", link)
+    invoke("openBrowser", link)
   }
 
   const handleCheckUpdate = async () => {

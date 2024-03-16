@@ -19,7 +19,7 @@ const NavBar = () => {
     getTextColor,
     getMutedTextColor,
   } = useColors()
-  const ipcRenderer = window.myApp.getIpcRenderer()
+  const invoke = window.myApp.invoke
   const { setWidgetPanel, widgetPanel } = useWidget()
   const { glassBackground, glassEnabled } = useSettings()
   const { workspace } = useWorkspace()
@@ -38,15 +38,15 @@ const NavBar = () => {
   const isGlassEnabled = (glassEnabled && glassBackground.window) || !workspace
 
   const clickedClose = () => {
-    ipcRenderer.invoke("close-window")
+    invoke("close-window")
   }
 
   const clickedMinimize = () => {
-    ipcRenderer.invoke("minimize-window")
+    invoke("minimize-window")
   }
 
   const clickedMaximize = () => {
-    ipcRenderer.invoke("maximize-window")
+    invoke("maximize-window")
   }
 
   return (

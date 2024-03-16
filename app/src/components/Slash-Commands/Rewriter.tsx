@@ -1,11 +1,12 @@
-import { Box, Button, Textarea } from "@chakra-ui/react"
+import { Box, Button, Flex, Textarea } from "@chakra-ui/react"
 import useColors from "hooks/useColors"
 import { useState } from "react"
 import { utils } from "utils/index"
 import RewrittenText from "./RewrittenText"
+import { Spinner } from "@chakra-ui/react"
 
 const rewriteText = async (text: string): Promise<{ text: string }> => {
-  const url = process.env.REACT_APP_REWRITER_URL + "/api/rewrite"
+  const url = import.meta.env.VITE_REWRITER_URL + "/api/rewrite"
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -30,12 +31,13 @@ const Rewriter = () => {
     setLoading(true)
     rewriteText(text).then((res) => {
       setRewrittenText(res.text)
+      setLoading(false)
     })
   }
 
   return (
-    <Box>
-      {!loading ? (
+    <Box minW={100} p={2}>
+      {!rewrittenText && !loading ? (
         <>
           <Textarea
             borderColor={border_color}
@@ -58,6 +60,10 @@ const Rewriter = () => {
             Rewrite
           </Button>
         </>
+      ) : loading ? (
+        <Flex justifyContent="center" alignItems="center" h="full" w="full">
+          <Spinner />{" "}
+        </Flex>
       ) : (
         <RewrittenText text={rewrittenText} />
       )}

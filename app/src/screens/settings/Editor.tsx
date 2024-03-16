@@ -16,10 +16,12 @@ import CustomTheme from "components/Custom-Theme"
 import CustomHeaders from "components/Custom-Headers"
 import { FaPalette } from "react-icons/fa"
 import GlassChooser from "components/GlassChooser"
-import { GiCrackedGlass } from "react-icons/gi"
+// import { GiCrackedGlass } from "react-icons/gi"
 import useColors from "hooks/useColors"
 import Compact from "components/Compact"
 import FontChooser from "components/FontChooser"
+import TranslateSeting from "components/TranslateSetting"
+import ExtensionLabel from "components/ExtensionLabel"
 
 const Editor = () => {
   const { getSecondaryBackgroundColor, getAccentColor } = useColors()
@@ -154,7 +156,7 @@ const Editor = () => {
                 flex="1"
                 textAlign="left"
               >
-                <GiCrackedGlass width="2rem" height="2rem" />
+                {/* <GiCrackedGlass width="2rem" height="2rem" /> */}
                 <Text fontSize="xl">Glassy</Text>
               </Flex>
               <AccordionIcon />
@@ -164,12 +166,14 @@ const Editor = () => {
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
+        <ExtensionLabel />
       </Stack>
 
       <Text fontSize="3xl">Settings</Text>
       <Divider mb={4} />
       <Compact />
       <FontChooser />
+      <TranslateSeting />
     </Box>
   )
 }

@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import { MyWindow } from "types/index"
 
 declare let window: MyWindow
-const ipcRenderer = window.myApp.getIpcRenderer()
+const send = window.myApp.send
 
 const GlassBackground = () => {
   const { glassBackground, glassEnabled } = useSettings()
@@ -25,7 +25,7 @@ const GlassBackground = () => {
           arg.left,
         )}px`
       })
-      ipcRenderer.send("asynchronous-message", "ping")
+      send("asynchronous-message", "ping")
     }
   }, [glassBackground.window, glassEnabled])
 
