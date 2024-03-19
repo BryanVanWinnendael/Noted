@@ -7,6 +7,7 @@ import {
   Input,
   useDisclosure,
   Text,
+  Tooltip,
 } from "@chakra-ui/react"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import useColors from "hooks/useColors"
@@ -16,7 +17,7 @@ import { utils } from "utils/index"
 
 const AddFile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { getSecondaryBackgroundColor, getIconColor, getAccentColor } =
+  const { getSecondaryBackgroundColor, getIconColor, getAccentColor, getTextColor } =
     useColors()
   const cancelRef = useRef()
   const [fileName, setFileName] = useState<string>("")
@@ -26,6 +27,8 @@ const AddFile = () => {
   const accent_color = getAccentColor()
 
   const icon_color = getIconColor()
+
+  const text_color = getTextColor()
 
   const secondary_background_color = getSecondaryBackgroundColor()
   const bg_color = utils.getLighterColor("0.02", secondary_background_color)
@@ -85,16 +88,24 @@ const AddFile = () => {
           </AlertDialogBody>
         </AlertDialogContent>
       </AlertDialog>
+      <Tooltip
+      placement="bottom"
+      label={"Create file"}
+      bg={bg_color}
+      color={text_color}
+      rounded="md"
+    >
       <IconButton
-        onClick={onOpen}
-        _hover={{ bg: utils.getDarkerColor("0.03", bg_color) }}
-        color={icon_color}
-        bg="none"
-        w={7}
-        h={7}
-        aria-label="create file"
-        icon={<TbFilePlus />}
-      />
+          onClick={onOpen}
+          _hover={{ bg: utils.getDarkerColor("0.03", bg_color) }}
+          color={icon_color}
+          bg="none"
+          w={7}
+          h={7}
+          aria-label="create file"
+          icon={<TbFilePlus />}
+        />
+    </Tooltip>
     </>
   )
 }

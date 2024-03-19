@@ -42,7 +42,7 @@ type Props = {
 }
 
 declare let window: MyWindow
-const invoke = window.myApp.invoke
+const invoke = window.electron.invoke
 
 export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()

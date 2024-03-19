@@ -16,6 +16,7 @@ import NoFile from "components/NoFile"
 import { Allotment } from "allotment"
 import "allotment/dist/style.css"
 import { useCallback } from "react"
+import ExcalidrawEditor from "components/Excalidraw-Editor"
 
 const Index = ({ workspace }: { workspace: WorkspaceType }) => {
   const { showSidebar, tabs, activeTab } = useWorkspace()
@@ -38,6 +39,8 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
         return <Editor path={path} />
       case "pdf":
         return <PdfViewer path={path} />
+      case "excalidraw":
+        return <ExcalidrawEditor path={path} />
       default:
         return <NoFile />
     }
@@ -51,9 +54,17 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
 
     switch (extension) {
       case "noted":
-        return <Editor splitted={true} path={path} />
+        return <Box pl={2} maxHeight="100%" h="full">
+          <Editor splitted={true} path={path} />
+        </Box>
       case "pdf":
-        return <PdfViewer splitted={true} path={path} />
+        return  <Box pl={2} maxHeight="100%" h="full">
+          <PdfViewer splitted={true} path={path} />
+          </Box>
+      case "excalidraw":
+        return <Box pl={2} maxHeight="100%" h="full">
+          <ExcalidrawEditor path={path}/>
+        </Box>
       default:
         return <NoFile />
     }

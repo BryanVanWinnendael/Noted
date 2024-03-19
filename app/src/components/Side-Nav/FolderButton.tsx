@@ -5,6 +5,7 @@ import {
   Flex,
   AccordionIcon,
   Text,
+  Tooltip,
 } from "@chakra-ui/react"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import useColors from "hooks/useColors"
@@ -43,6 +44,13 @@ const FolderButton = ({ path, name }: { path: string; name: string }) => {
       onClose={() => setIsOpen({ ...isOpen, [path]: false })}
     >
       <AccordionButton w="full" h="fit-content" p={1}>
+      <Tooltip
+          placement="bottom"
+          label={name}
+          bg={bg_color}
+          color={text_color}
+          rounded="md"
+        >
         <MenuButton
           bg={
             activeFolder && activeFolder === path
@@ -71,6 +79,7 @@ const FolderButton = ({ path, name }: { path: string; name: string }) => {
             </Text>
           </Flex>
         </MenuButton>
+        </Tooltip>
       </AccordionButton>
       <ContextMenu path={path} name={name} type="folder" />
     </Menu>

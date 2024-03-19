@@ -136,7 +136,7 @@ const Index = () => {
 
           <Grid templateColumns="repeat(7, minmax(0, 1fr))">
             {generateDate(today.month(), today.year()).map(
-              ({ date, currentMonth, today }, index) => {
+              ({ date, today }, index) => {
                 return (
                   <Center key={index} h={8} w={8} borderTop="1px">
                     <Text

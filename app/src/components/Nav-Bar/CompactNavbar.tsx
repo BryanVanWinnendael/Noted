@@ -4,24 +4,24 @@ import { MyWindow } from "types/index"
 import MenuBar from "./MenuBar"
 
 declare let window: MyWindow
+const invoke = window.electron.invoke
 const CompactNavbar = () => {
   const { getAccentColor, getMutedTextColor } = useColors()
-  const ipcRenderer = window.myApp.getIpcRenderer()
 
   const muted_text_color = getMutedTextColor()
 
   const accent_color = getAccentColor()
 
   const clickedClose = () => {
-    ipcRenderer.invoke("close-window")
+    invoke("close-window")
   }
 
   const clickedMinimize = () => {
-    ipcRenderer.invoke("minimize-window")
+    invoke("minimize-window")
   }
 
   const clickedMaximize = () => {
-    ipcRenderer.invoke("maximize-window")
+    invoke("maximize-window")
   }
 
   return (

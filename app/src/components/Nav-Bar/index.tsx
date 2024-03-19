@@ -19,7 +19,7 @@ const NavBar = () => {
     getTextColor,
     getMutedTextColor,
   } = useColors()
-  const invoke = window.myApp.invoke
+  const invoke = window.electron.invoke
   const { setWidgetPanel, widgetPanel } = useWidget()
   const { glassBackground, glassEnabled } = useSettings()
   const { workspace } = useWorkspace()

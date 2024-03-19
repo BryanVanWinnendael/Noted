@@ -200,7 +200,6 @@ const Index = ({ splitted, path }: { splitted?: boolean; path: string }) => {
   return (
     <Flex
       ref={divRef}
-      ml={splitted ? 2 : 0}
       color={text_color}
       w="full"
       h="full"

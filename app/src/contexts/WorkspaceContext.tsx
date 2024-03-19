@@ -21,7 +21,7 @@ type Props = {
 
 declare let window: MyWindow
 
-const invoke = window.myApp.invoke
+const invoke = window.electron.invoke
 
 export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const [workspace, setWorkspace] = useState<WorkspaceType | undefined>()
@@ -76,7 +76,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
   const readFile = async (filePath: string) => {
     const extension = filePath.split(".").pop()
-    if (extension === "noted") {
+    if (extension === "noted" || extension === "excalidraw") {
       return getFile(filePath)
     }
 

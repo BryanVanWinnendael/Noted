@@ -34,7 +34,6 @@ const Index = ({ children }: { children: JSX.Element }) => {
           border_color,
         ),
         ...tableStyle(
-          text_color,
           background_color,
           secondary_background_color,
           muted_text_color,

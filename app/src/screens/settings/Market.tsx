@@ -8,7 +8,7 @@ import useColors from "hooks/useColors"
 
 declare let window: MyWindow
 
-const invoke = window.myApp.invoke
+const invoke = window.electron.invoke
 
 const Market = () => {
   const { getAccentColor, getMutedTextColor } = useColors()

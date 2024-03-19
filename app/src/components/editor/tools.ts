@@ -7,6 +7,7 @@ import editorjsCodeflask from "@calumk/editorjs-codeflask"
 import Delimiter from "@editorjs/delimiter"
 import editorjsParagraphLinebreakable from "@calumk/editorjs-paragraph-linebreakable"
 import Table from "@editorjs/table"
+import TextAlign from "@canburaks/text-align-editorjs"
 
 export const EDITOR_JS_TOOLS = {
   paragraph: {
@@ -40,4 +41,5 @@ export const EDITOR_JS_TOOLS = {
   code: editorjsCodeflask,
   delimiter: Delimiter,
   table: Table,
+  textAlign: TextAlign,
 }

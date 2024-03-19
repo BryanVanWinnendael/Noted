@@ -142,7 +142,6 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
 
   return (
     <Flex
-      ml={splitted ? 2 : 0}
       color={text_color}
       w="full"
       h="full"

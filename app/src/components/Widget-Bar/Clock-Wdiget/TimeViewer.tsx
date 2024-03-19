@@ -49,7 +49,7 @@ const TimeViewer = () => {
 
   useEffect(() => {
     return () => {
-      if (intervalId) clearInterval(intervalId)
+      if (intervalId) clearInterval(intervalId as any)
     }
   }, [intervalId])
 

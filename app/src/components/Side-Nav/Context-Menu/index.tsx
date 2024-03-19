@@ -9,6 +9,7 @@ import AddFile from "./AddFile"
 import AddFolder from "./AddFolder"
 import OpenFIleInTab from "./OpenFileInTab"
 import SplitFile from "./SplitFile"
+import AddExcalidraw from "./AddExcalidraw"
 
 const Index = ({ path, name, type }: ContextMenu) => {
   const { getBackgroundColor, getBorderColor } = useColors()
@@ -39,6 +40,7 @@ const Index = ({ path, name, type }: ContextMenu) => {
         px={2}
       >
         <AddFile path={path} name={name} type={type} />
+        <AddExcalidraw path={path} name={name} type={type} />
         <AddFolder path={path} name={name} type={type} />
         {type === "file" && (
           <OpenFIleInTab path={path} name={name} type={type} />

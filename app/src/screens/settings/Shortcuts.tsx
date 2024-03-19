@@ -26,7 +26,7 @@ const Shortcuts = () => {
       </Text>
       <Stack mr={5} gap={3}>
         {shortcuts.map((shortcut: ShortcutType, index: number) => (
-          <Flex alignItems="center" justify="space-between">
+          <Flex alignItems="center" justify="space-between" key={index}>
             <Box>
               <Text fontWeight="semibold">{shortcut.name}</Text>
               <Text color={muted_text_color}>{shortcut.description}</Text>

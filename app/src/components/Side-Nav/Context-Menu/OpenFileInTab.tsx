@@ -5,7 +5,7 @@ import { ContextMenu } from "types/index"
 import { utils } from "utils/index"
 import { CgTab } from "react-icons/cg"
 
-const OpenFIleInTab = ({ path, name, type }: ContextMenu) => {
+const OpenFIleInTab = ({ path }: ContextMenu) => {
   const { getBackgroundColor, getTextColor, getIconColor } = useColors()
   const { openFileInNewTab } = useWorkspace()
 

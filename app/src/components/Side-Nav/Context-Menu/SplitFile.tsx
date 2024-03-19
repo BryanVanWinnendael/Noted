@@ -5,7 +5,7 @@ import { ContextMenu } from "types/index"
 import { utils } from "utils/index"
 import { BsReverseLayoutSidebarInsetReverse } from "react-icons/bs"
 
-const SplitFile = ({ path, name, type }: ContextMenu) => {
+const SplitFile = ({ path }: ContextMenu) => {
   const { getTextColor, getBackgroundColor, getIconColor } = useColors()
   const { split } = useWorkspace()
 

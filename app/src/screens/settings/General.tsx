@@ -11,8 +11,8 @@ import { useState } from "react"
 
 declare let window: MyWindow
 
-const invoke = window.myApp.invoke
-const VERSION = "v1.0.0"
+const invoke = window.electron.invoke
+const VERSION = "v1.1.0"
 
 const General = () => {
   const {
