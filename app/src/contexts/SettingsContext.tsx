@@ -6,6 +6,7 @@ import {
   HeaderColors,
   GlassSettings,
   Settings,
+  BackgroundImages,
 } from "types"
 import {
   createContext,
@@ -17,6 +18,8 @@ import {
 import { checker, ensureKeys } from "utils/checker"
 import { utils } from "utils"
 import {
+  DEFAULT_BACKGROUND_IMAGE,
+  DEFAULT_BLUR,
   DEFAULT_COMPACT_MODE,
   DEFAULT_EXTENSION_LABEL,
   DEFAULT_FONT,
@@ -69,6 +72,9 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const [extensionLabel, setExtensionLabel] = useState<boolean>(
     DEFAULT_EXTENSION_LABEL,
   )
+  const [backgroundImage, setBackgroundImage] = useState<BackgroundImages>(DEFAULT_BACKGROUND_IMAGE)
+  const [blur, setBlur] = useState<number>(DEFAULT_BLUR)
+  const [appSettings, setAppSettings] = useState<{ [key in Settings]: any }>({} as any)
 
   const readThemeFile = useCallback(async () => {
     const theme_path = localStorage.getItem("theme-path") || ""
@@ -228,13 +234,13 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
 
   const saveSettings = async (key: Settings, value: any) => {
     const workspace_path = localStorage.getItem("workspace_path")
-    const settings = await getSettings()
-    if (!settings) return
-    settings[key] = value
+    
+    appSettings[key] = value
     invoke("file:settings-save", {
-      settings: JSON.stringify(settings),
+      settings: JSON.stringify(appSettings),
       workspace_path,
     })
+
     setSetting(key, value)
   }
 
@@ -270,6 +276,12 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       case "extension_label":
         setExtensionLabel(value)
         break
+      case "background_image":
+        setBackgroundImage(value)
+        break
+      case "blur":
+        setBlur(value)
+        break
       default:
         break
     }
@@ -286,6 +298,8 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     setFontFamily(settings["font_family"])
     setTranslateLanguage(settings["translate_language"])
     setExtensionLabel(settings["extension_label"])
+    setBackgroundImage(settings["background_image"])
+    setBlur(settings["blur"])
   }
 
   const resetCustomTheme = () => {
@@ -302,10 +316,12 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       const settings = JSON.parse(settingsString)
 
       const cleanedSettings = checker.settingsChecker(settings)
+      setAppSettings(cleanedSettings)
       setSettings(cleanedSettings)
       return cleanedSettings
     } catch (err) {
       const cleanedSettings = checker.settingsChecker({} as any)
+      setAppSettings(cleanedSettings)
       setSettings(cleanedSettings)
       return cleanedSettings
     }
@@ -353,6 +369,8 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     fontFamily,
     translateLanguage,
     extensionLabel,
+    backgroundImage,
+    blur
   }
 
   return (

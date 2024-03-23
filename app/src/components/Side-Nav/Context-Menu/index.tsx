@@ -1,4 +1,4 @@
-import { MenuList } from "@chakra-ui/react"
+import { Divider, MenuList } from "@chakra-ui/react"
 import { useSettings } from "contexts/SettingsContext"
 import useColors from "hooks/useColors"
 import { utils } from "utils/index"
@@ -23,33 +23,38 @@ const Index = ({ path, name, type }: ContextMenu) => {
   const isGlassEnabled = glassEnabled && glassBackground.window
 
   return (
-    <>
-      <MenuList
-        w="fit-content"
-        className="glass"
-        border="1px"
-        borderColor={border_color}
-        bg={
-          isGlassEnabled
-            ? utils.getGlassBackground(bg_color_lighter)
-            : bg_color_lighter
-        }
-        rounded="md"
-        shadow="none"
-        zIndex={99999999}
-        px={2}
-      >
-        <AddFile path={path} name={name} type={type} />
-        <AddExcalidraw path={path} name={name} type={type} />
-        <AddFolder path={path} name={name} type={type} />
-        {type === "file" && (
+    <MenuList
+      w="fit-content"
+      className="glass"
+      border="1px"
+      borderColor={border_color}
+      bg={
+        isGlassEnabled
+          ? utils.getGlassBackground(bg_color_lighter)
+          : bg_color_lighter
+      }
+      rounded="md"
+      shadow="none"
+      zIndex={999999999999}
+      p={1}
+    >
+      <AddFile path={path} name={name} type={type} />
+      <AddExcalidraw path={path} name={name} type={type} />
+      <AddFolder path={path} name={name} type={type} />
+      <Divider />
+
+      {type === "file" && (
+        <>
           <OpenFIleInTab path={path} name={name} type={type} />
-        )}
-        <Rename path={path} name={name} type={type} />
-        <Delete path={path} name={name} type={type} />
-        <SplitFile path={path} name={name} type={type} />
-      </MenuList>
-    </>
+          <SplitFile path={path} name={name} type={type} />
+          <Divider />
+        </>
+      )}
+      
+
+      <Rename path={path} name={name} type={type} />
+      <Delete path={path} name={name} type={type} />
+    </MenuList>
   )
 }
 

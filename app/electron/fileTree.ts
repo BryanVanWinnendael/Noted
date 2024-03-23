@@ -8,6 +8,7 @@ interface FileInfo {
   name: string | null
   type: "folder" | "file"
   items: FileInfo[]
+  id: string
 }
 
 class FileTree {
@@ -15,12 +16,14 @@ class FileTree {
   name: string | null
   type: "folder"
   items: FileInfo[]
+  id: string
 
   constructor(path: string, name: string | null = null) {
     this.path = path
     this.name = name
     this.type = "folder"
     this.items = []
+    this.id = path
   }
 
   build = () => {
@@ -33,7 +36,6 @@ class FileTree {
     fs.readdirSync(path).forEach((file: string) => {
       if (EXCLUDED_FOLDERS.includes(file)) return
       const fileInfo: FileInfo = new FileTree(`${path}\\${file}`, file)
-      console.log(fileInfo.type)
 
       const stat: fs.Stats = fs.statSync(fileInfo.path)
       const isFolder: boolean = stat.isDirectory()

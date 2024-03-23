@@ -16,13 +16,13 @@ import General from "./General"
 import useColors from "hooks/useColors"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import Shortcuts from "./Shortcuts"
+import Background from "./Background"
 
 const SettingsScreen = () => {
   const {
     getSecondaryBackgroundColor,
     getAccentColor,
     getTextColor,
-    getBackgroundColor,
   } = useColors()
   const [section, setSection] = useState<string>("general")
   const { isOpen, onClose, glassBackground, glassEnabled } = useSettings()
@@ -42,8 +42,6 @@ const SettingsScreen = () => {
 
   const isGlassEnabled = glassEnabled && glassBackground.settings
 
-  const bg_color = getBackgroundColor()
-
   const finalRef = useRef(null)
 
   return (
@@ -53,9 +51,9 @@ const SettingsScreen = () => {
       isOpen={isOpen}
       onClose={onClose}
     >
-      <ModalOverlay bg={utils.getModalBackground(bg_color)} />
+      <ModalOverlay bg="transparent" />
       <ModalContent h="80vh" ml={5} mr={5} bg={"transparent"}>
-        <Grid templateColumns="0.5fr 1fr" w="full" h="full">
+        <Grid templateColumns="0.5fr 1fr" w="full" h="full" maxW="full">
           <Flex
             className="glass"
             border="1px"
@@ -133,6 +131,36 @@ const SettingsScreen = () => {
                     }}
                   >
                     Editor
+                  </Box>
+                  <Box
+                    mb={1}
+                    p={1}
+                    pl={2}
+                    rounded="md"
+                    color={
+                      section === "background"
+                        ? utils.getDarkerColor("0.1", accent_color)
+                        : text_color
+                    }
+                    bg={
+                      section === "background"
+                        ? utils.getTransparent(0.2, accent_color)
+                        : ""
+                    }
+                    onClick={() => {
+                      setSection("background")
+                    }}
+                    cursor="pointer"
+                    _hover={{
+                      bg: utils.getDarkerColor(
+                        "0.03",
+                        section === "background"
+                          ? utils.getTransparent(0.2, accent_color)
+                          : bg_colorLeft,
+                      ),
+                    }}
+                  >
+                    Background
                   </Box>
                   <Box
                     mb={1}
@@ -245,6 +273,8 @@ const SettingsScreen = () => {
             roundedBottomRight="md"
             roundedTopLeft={0}
             roundedBottomLeft={0}
+            maxW="full"
+            overflowX="auto"
           >
             <Flex justifyContent="flex-end">
               <Box
@@ -268,6 +298,7 @@ const SettingsScreen = () => {
               </Box>
             </Flex>
             <Box
+              maxW="full"
               minHeight="70vh"
               ml={5}
               maxH="70vh"
@@ -279,6 +310,7 @@ const SettingsScreen = () => {
                 {
                   general: <General />,
                   editor: <Editor />,
+                  background: <Background />,
                   themes: <Themes />,
                   market: <Market />,
                   shortcuts: <Shortcuts />,

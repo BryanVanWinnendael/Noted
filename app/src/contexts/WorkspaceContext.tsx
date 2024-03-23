@@ -180,7 +180,6 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
         const openedWorkspace: WorkspaceType = await invoke("folder:open", {
           folder_path: folderPath,
         })
-        console.log(openedWorkspace.path)
         if (reset) resetWorkspace()
         localStorage.setItem("workspace_path", openedWorkspace.path)
         setWorkspace(openedWorkspace)

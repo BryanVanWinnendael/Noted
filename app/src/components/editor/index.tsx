@@ -8,6 +8,7 @@ import useColors from "hooks/useColors"
 import { utils } from "utils/index"
 import { useEditor } from "contexts/EditorContext"
 import { useSlash } from "contexts/SlashContext"
+import { useSettings } from "contexts/SettingsContext"
 
 const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
   const { setPosition, setSlashOpen, slashOpen } = useSlash()
@@ -18,7 +19,10 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
   const [loaded, setLoaded] = useState(false)
   const { setEditor, editor, setBlocks, setTime, setSplittedEditor } =
     useEditor()
+  const { glassBackground, glassEnabled } = useSettings()
   const boxRef = useRef<HTMLDivElement>(null)
+
+  const isGlassEnabled = glassEnabled && glassBackground.editor
 
   const text_color = getTextColor()
 
@@ -151,10 +155,16 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
       rounded="md"
       maxHeight="100%"
       overflowX="hidden"
-      bg={lighter_bg_color}
+      className="glass"
+      backdropFilter={`blur(100px)`}
+      bg={isGlassEnabled ? utils.getGlassBackground(lighter_bg_color) : lighter_bg_color}
+      style={{
+        backdropFilter: isGlassEnabled ? `blur(10px)` : 'none', // Apply backdrop filter only when glass effect is enabled
+      }}
       mb={2}
     >
-      <Box maxH="100%" w="full" h="full" m={0} pl={2}>
+      <Box 
+      bg="transparent" maxH="100%" w="full" h="full" m={0} pl={2}>
         <ReactEditorJS
           holder={"noted" + path}
           onInitialize={handleInitialize}

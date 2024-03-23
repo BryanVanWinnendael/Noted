@@ -111,7 +111,6 @@ const Index = ({ path }: {path: string}) => {
     w="full"
     h="full"
     border="1px"
-    overflowY="scroll"
     borderColor={border_color}
     rounded="md"
     maxHeight="100%"

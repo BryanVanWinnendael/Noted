@@ -87,7 +87,9 @@ const OpenFileInTab = () => {
   const getFilename = (path: string) => {
     const splitted_path = path.split("\\")
     const filename = splitted_path[splitted_path.length - 1]
-    const splitted = filename.split(".noted")[0]
+    const extensionSplit = filename.split(".")
+    const extension = extensionSplit[extensionSplit.length - 1]
+    const splitted = filename.split("."+extension)[0]
     return splitted
   }
 

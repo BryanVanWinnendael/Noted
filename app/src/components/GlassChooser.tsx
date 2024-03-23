@@ -62,6 +62,21 @@ const GlassChooser = () => {
             mt={2}
           >
             <Text w="100%" color={muted_text_color}>
+              Editor
+            </Text>
+            <CustomSwitch
+              isChecked={glassBackground.editor}
+              onChange={() => handleChangeToggle("editor")}
+              id="glassEnabledEditor"
+            />
+          </Flex>
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            mr={5}
+            mt={2}
+          >
+            <Text w="100%" color={muted_text_color}>
               Nav popup
             </Text>
             <CustomSwitch

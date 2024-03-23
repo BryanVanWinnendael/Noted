@@ -2,6 +2,8 @@ import { Settings } from "types"
 import { darken } from "polished"
 import {
   DEFAULT_ACTIVE_THEME,
+  DEFAULT_BACKGROUND_IMAGE,
+  DEFAULT_BLUR,
   DEFAULT_COMPACT_MODE,
   DEFAULT_EXTENSION_LABEL,
   DEFAULT_FONT,
@@ -125,6 +127,20 @@ const checkExtensionLabel = (label: any): any => {
   return label
 }
 
+const checkBackgroundImage = (image: any): any => {
+  if (typeof image !== "string") {
+    return DEFAULT_BACKGROUND_IMAGE
+  }
+  return image
+}
+
+const checkBlur = (blur: any): any => {
+  if (typeof blur !== "number") {
+    return DEFAULT_BLUR
+  }
+  return blur
+}
+
 export const ensureKeys = (settings: { [key in any]: any }, keys: any[]) => {
   const filteredObject = Object.fromEntries(
     Object.entries(settings).filter(([key]) => keys.includes(key as Settings)),
@@ -173,6 +189,12 @@ const settingsChecker = (settings: { [key in Settings]: any }): {
         break
       case "extension_label":
         filledSettings[key] = checkExtensionLabel(value)
+        break
+      case "background_image":
+        filledSettings[key] = checkBackgroundImage(value)
+        break
+      case "blur":
+        filledSettings[key] = checkBlur(value)
         break
       default:
         break

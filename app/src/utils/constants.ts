@@ -52,6 +52,8 @@ export const REQUIRED_SETTINGS_KEYS: Settings[] = [
   "font_family",
   "translate_language",
   "extension_label",
+  "background_image",
+  "blur",
 ]
 
 export const DEFAULT_UPDATE = true
@@ -65,6 +67,7 @@ export const DEFAULT_GLASS = {
   settings: true,
   widgets: true,
   window: true,
+  editor: true,
 }
 
 export const DEFAULT_GLASS_ENABLED = false
@@ -104,3 +107,7 @@ export const DEFAULT_FONTS = [
 export const DEFAULT_TRANSLATE_LANGUAGE = "en"
 
 export const DEFAULT_EXTENSION_LABEL = true
+
+export const DEFAULT_BACKGROUND_IMAGE = "default"
+
+export const DEFAULT_BLUR = 6.8

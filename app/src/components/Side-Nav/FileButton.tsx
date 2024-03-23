@@ -6,7 +6,7 @@ import { utils } from "utils/index"
 import ContextMenu from "./Context-Menu"
 import { useSettings } from "contexts/SettingsContext"
 
-const FileButton = ({ name, path }: { name: string; path: string }) => {
+const FileButton = ({ path, name }: { path: string; name: string }) => {
   const { getSecondaryBackgroundColor, getTextColor, getBackgroundColor } = useColors()
   const { extensionLabel } = useSettings()
   const { setActiveFolder, activeTab, tabs, openFile } = useWorkspace()
@@ -39,7 +39,7 @@ const FileButton = ({ name, path }: { name: string; path: string }) => {
   const extension = name.split(".").pop()
 
   return (
-    <Menu isOpen={isOpen} onClose={() => setIsOpen(false)}>
+    <Menu isOpen={isOpen} onClose={() => setIsOpen(false)} id={path}>
       <Tooltip
           placement="bottom"
           label={getFileName(name)}

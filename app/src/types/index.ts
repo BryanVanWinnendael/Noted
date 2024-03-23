@@ -11,6 +11,7 @@ export interface WorkspaceType {
   name: string
   path: string
   type: "file" | "folder"
+  id: string
 }
 
 export type BooleanObject = {
@@ -103,7 +104,27 @@ export interface HeaderColors {
 
 export type WidgetName = "calendar" | "todo" | "clock" | "info"
 
-export type GlassComponents = "navBar" | "settings" | "widgets" | "window"
+export type GlassComponents =
+  | "navBar"
+  | "settings"
+  | "widgets"
+  | "window"
+  | "editor"
+
+export type BackgroundColors =
+  | "default"
+  | "pastel"
+  | "mist"
+  | "papercut"
+  | "waves"
+  | "purple"
+export type BackgroundAcrylic = "bubble" | "red" | "blue" | "dark" | "light"
+export type BackgroundCities = "jp" | "in" | "ny" | "kr" | "ph"
+
+export type BackgroundImages =
+  | BackgroundColors
+  | BackgroundCities
+  | BackgroundAcrylic
 
 export type GlassSettings = {
   [key in GlassComponents]: boolean
@@ -121,6 +142,8 @@ export type Settings =
   | "font_family"
   | "translate_language"
   | "extension_label"
+  | "background_image"
+  | "blur"
 
 export interface SettingsTypeContext {
   isOpen: boolean
@@ -153,6 +176,8 @@ export interface SettingsTypeContext {
   fontFamily: string
   translateLanguage: string
   extensionLabel: boolean
+  backgroundImage: BackgroundImages
+  blur: number
 }
 
 export interface EditorTypeContext {

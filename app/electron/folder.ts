@@ -41,6 +41,7 @@ class Folders {
 
         fileTree.build()
         const fileTreeObject = this.fileTreeToObject(fileTree)
+        console.log(fileTreeObject)
         return fileTreeObject
       },
     )
@@ -95,6 +96,7 @@ class Folders {
     fileTreeObject.path = fileTree.path
     fileTreeObject.items = []
     fileTreeObject.type = fileTree.type
+    fileTreeObject.id = fileTree.path
     fileTree.items.forEach((item) => {
       if (item.type === "folder") {
         const folder = this.fileTreeToObject(item)
@@ -104,6 +106,7 @@ class Folders {
           name: item.name,
           path: item.path,
           type: item.type,
+          id: item.path,
         }
         fileTreeObject.items.push(file)
       }

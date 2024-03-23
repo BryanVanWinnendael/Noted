@@ -9,8 +9,6 @@ import { useWidget } from "contexts/WidgetContext"
 import EditorWrapper from "styling/EditorWrapper"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
-import { utils } from "utils/index"
 import PdfViewer from "components/Pdf-Viewer"
 import NoFile from "components/NoFile"
 import { Allotment } from "allotment"
@@ -22,11 +20,8 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
   const { showSidebar, tabs, activeTab } = useWorkspace()
   const length_tabs = Object.keys(tabs).length
   const { widgetPanel } = useWidget()
-  const { glassEnabled, glassBackground, compactMode } = useSettings()
-  const { getBackgroundColor } = useColors()
-  const bg_color = getBackgroundColor()
+  const { compactMode } = useSettings()
 
-  const isGlassEnabled = glassEnabled && glassBackground.window
 
   const openScreen = useCallback((tab: ActiveTab) => {
     if (!tab.path) return <NoFile />
@@ -76,8 +71,6 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
       pt={compactMode ? 0 : 9}
       h="full"
       px={2}
-      className="glass"
-      bg={isGlassEnabled ? utils.getGlassBackground(bg_color) : bg_color}
     >
       <PanelGroup
         id={"sidebar"}
@@ -87,6 +80,8 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
           maxHeight: "100%",
           marginTop: compactMode ? 0 : "5px",
           paddingBottom: "5px",
+          backgroundColor: "transparent",
+          zIndex: 9
         }}
       >
         {showSidebar && (
@@ -103,7 +98,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
           order={2}
           minSize={12}
           defaultSize={12}
-          style={{ maxHeight: "100%" }}
+          style={{ maxHeight: "100%", backgroundColor: "transparent"}}
         >
           <EditorWrapper>
             <>

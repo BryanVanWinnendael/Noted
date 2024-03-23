@@ -1,6 +1,6 @@
 import NavBar from "components/Nav-Bar"
 import { useCallback, useEffect } from "react"
-import { Center, Spinner, Stack, useColorMode } from "@chakra-ui/react"
+import { Box, Center, Spinner, Stack, useColorMode } from "@chakra-ui/react"
 import Settings from "screens/Settings"
 import { useSettings } from "contexts/SettingsContext"
 import Home from "screens/Home"
@@ -17,11 +17,12 @@ import UpdateWrapper from "components/UpdateWrapper"
 import OpenNewFile from "components/OpenNewFile"
 import { useSlash } from "contexts/SlashContext"
 import SlashCommands from "components/Slash-Commands"
+import { backgrounds } from "utils/images"
 
 const App = () => {
   const { slashOpen } = useSlash()
   const { getAccentColor, getBackgroundColor } = useColors()
-  const { initSettings, compactMode, activeTheme } = useSettings()
+  const { initSettings, compactMode, activeTheme, glassEnabled, backgroundImage, blur } = useSettings()
   const { workspace, isLoaded, showSwitcher } = useWorkspace()
   const { useAddShortcuts } = useShortcuts()
   const { setColorMode } = useColorMode()
@@ -63,19 +64,36 @@ const App = () => {
     return workspace ? <Home workspace={workspace} /> : <LoadInWorkspace />
   }
 
+
   return (
     <UpdateWrapper>
       <DragAndDrop>
-        <>
-          <GlassBackground />
+        <Box
+          position="relative"
+        >
+           <Box
+            position="absolute"
+            bg={backgrounds[backgroundImage]?.image ? `url(${backgrounds[backgroundImage]?.image})` : "transparent"} 
+            backgroundSize="cover" backgroundRepeat="no-repeat"
+            w="100vw" 
+            h="100vh"
+            filter={`blur(${blur}px)`}
+            />
+          {glassEnabled && <GlassBackground />}
           <Settings />
           {!compactMode ? <NavBar /> : <Compact />}
-          <Stack h="full">{renderWorkspace()}</Stack>
+         
+            <Stack 
+              w="100vw"
+              h="100vh"
+              >
+                {renderWorkspace()}
+            </Stack>
           <OpenFileInTab />
           <OpenNewFile />
           {showSwitcher && <FileSwitcher />}
           {slashOpen && <SlashCommands />}
-        </>
+        </Box>
       </DragAndDrop>
     </UpdateWrapper>
   )
