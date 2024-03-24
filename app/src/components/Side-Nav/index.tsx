@@ -27,7 +27,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
     <Box w="full" h="full">
       {compactMode && <CompactNavbar />}
       <Actions />
-      <Text pl={4} fontWeight="bold" fontSize="sm" color={text_color} mb={2}>
+      <Text pl={4} fontWeight="bold" fontSize="md" color={text_color} my={2} >
         {workspace.name}
       </Text>
       {

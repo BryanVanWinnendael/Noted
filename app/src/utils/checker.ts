@@ -5,12 +5,14 @@ import {
   DEFAULT_BACKGROUND_IMAGE,
   DEFAULT_BLUR,
   DEFAULT_COMPACT_MODE,
+  DEFAULT_EDITOR_TITLE,
   DEFAULT_EXTENSION_LABEL,
   DEFAULT_FONT,
   DEFAULT_GLASS,
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS,
   DEFAULT_HEADER_COLORS_ENABLED,
+  DEFAULT_SCROLLBAR,
   DEFAULT_TRANSLATE_LANGUAGE,
   DEFAULT_UPDATE,
   REQUIRED_SETTINGS_KEYS,
@@ -19,7 +21,7 @@ import {
 import languages from "./languages.json"
 
 const headerKeys = ["h1", "h2", "h3", "h4", "h5", "h6"]
-const glassKeys = ["navBar", "settings", "widgets", "window"]
+const glassKeys = ["navBar", "settings", "widgets", "window", "editor"]
 
 const isColor = (key: any, color: any): any => {
   try {
@@ -141,6 +143,33 @@ const checkBlur = (blur: any): any => {
   return blur
 }
 
+const checkCustomBackground = (background: any): any => {
+  if (typeof background !== "string") {
+    return ""
+  }
+  return background
+}
+
+const checkEditorTitle = (title: any): any => {
+  if (typeof title !== "boolean") {
+    return DEFAULT_EDITOR_TITLE
+  }
+  return title
+}
+
+const checkScrollbar = (scrollbar: any): any => {
+  if (typeof scrollbar !== "object" || scrollbar === null) {
+    return DEFAULT_SCROLLBAR
+  }
+  if (
+    typeof scrollbar.color !== "string" ||
+    typeof scrollbar.opacity !== "number"
+  ) {
+    DEFAULT_SCROLLBAR
+  }
+  return scrollbar
+}
+
 export const ensureKeys = (settings: { [key in any]: any }, keys: any[]) => {
   const filteredObject = Object.fromEntries(
     Object.entries(settings).filter(([key]) => keys.includes(key as Settings)),
@@ -195,6 +224,15 @@ const settingsChecker = (settings: { [key in Settings]: any }): {
         break
       case "blur":
         filledSettings[key] = checkBlur(value)
+        break
+      case "custom_background":
+        filledSettings[key] = checkCustomBackground(value)
+        break
+      case "editor_title":
+        filledSettings[key] = checkEditorTitle(value)
+        break
+      case "scrollbar":
+        filledSettings[key] = checkScrollbar(value)
         break
       default:
         break

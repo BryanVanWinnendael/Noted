@@ -50,6 +50,7 @@ const SettingsScreen = () => {
       finalFocusRef={finalRef}
       isOpen={isOpen}
       onClose={onClose}
+      scrollBehavior="inside"
     >
       <ModalOverlay bg="transparent" />
       <ModalContent h="80vh" ml={5} mr={5} bg={"transparent"}>
@@ -274,7 +275,7 @@ const SettingsScreen = () => {
             roundedTopLeft={0}
             roundedBottomLeft={0}
             maxW="full"
-            overflowX="auto"
+            overflow="hidden"
           >
             <Flex justifyContent="flex-end">
               <Box

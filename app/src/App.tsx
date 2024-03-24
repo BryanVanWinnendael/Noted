@@ -18,11 +18,12 @@ import OpenNewFile from "components/OpenNewFile"
 import { useSlash } from "contexts/SlashContext"
 import SlashCommands from "components/Slash-Commands"
 import { backgrounds } from "utils/images"
+import { utils } from "./utils"
 
 const App = () => {
   const { slashOpen } = useSlash()
   const { getAccentColor, getBackgroundColor } = useColors()
-  const { initSettings, compactMode, activeTheme, glassEnabled, backgroundImage, blur } = useSettings()
+  const { initSettings, compactMode, activeTheme, glassEnabled, backgroundImage, blur, customBackground, scrollbar } = useSettings()
   const { workspace, isLoaded, showSwitcher } = useWorkspace()
   const { useAddShortcuts } = useShortcuts()
   const { setColorMode } = useColorMode()
@@ -37,22 +38,49 @@ const App = () => {
     setColorMode(activeTheme)
   }, [activeTheme, setColorMode])
 
+  const getBackground = () => {
+    if (backgroundImage === "custom") return customBackground
+    return backgrounds[backgroundImage]?.image ? `url(${backgrounds[backgroundImage]?.image})` : "transparent"
+  }
+
   useEffect(() => {
-    const isDefault =
-      localStorage.getItem("chakra-ui-color-mode") === "light" ||
-      localStorage.getItem("chakra-ui-color-mode") === "dark"
-        ? true
-        : false
-    document.getElementsByTagName("html")[0].style.backgroundColor = isDefault
-      ? "transparent"
-      : bg_color
-    document.getElementsByTagName("html")[0].style.color = "white"
+    document.getElementsByTagName("html")[0].style.backgroundColor = bg_color
   }, [bg_color])
 
   useEffect(() => {
     initSettings()
     setChakraColorMode()
   }, [initSettings, setChakraColorMode, workspace?.path])
+
+  useEffect(() => {
+    const styleId = 'custom-scrollbar-styles';
+
+    // Remove existing styles if present
+    const existingStyle = document.getElementById(styleId);
+    if (existingStyle) {
+      existingStyle.parentNode?.removeChild(existingStyle);
+    }
+    
+    const style = document.createElement('style');
+    const color = utils.getTransparent(scrollbar.opacity, scrollbar.color)
+    style.id = styleId;
+    style.innerHTML = `
+      body {
+        /* Other styles for body */
+
+        /* Custom scrollbar styles */
+        ::-webkit-scrollbar-thumb {
+          border-radius: 10px;
+          background-color: ${color} !important;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+          background-color: #c71010 !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  },[scrollbar.color, scrollbar.opacity])
 
   const renderWorkspace = () => {
     if (!isLoaded)
@@ -64,21 +92,28 @@ const App = () => {
     return workspace ? <Home workspace={workspace} /> : <LoadInWorkspace />
   }
 
-
   return (
     <UpdateWrapper>
       <DragAndDrop>
         <Box
           position="relative"
         >
-           <Box
+          {
+            backgroundImage === "custom" ? 
+            <img 
+            style={{filter: `blur(${blur}px)`}}
+            src={getBackground()} alt="background" className="absolute w-full h-full object-cover" />
+            : 
+            <Box
             position="absolute"
-            bg={backgrounds[backgroundImage]?.image ? `url(${backgrounds[backgroundImage]?.image})` : "transparent"} 
+            bg={getBackground()} 
             backgroundSize="cover" backgroundRepeat="no-repeat"
             w="100vw" 
             h="100vh"
             filter={`blur(${blur}px)`}
             />
+          }
+
           {glassEnabled && <GlassBackground />}
           <Settings />
           {!compactMode ? <NavBar /> : <Compact />}

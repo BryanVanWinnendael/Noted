@@ -1,22 +1,18 @@
 import { BackgroundImages } from "types"
 
-import JPBackground from "assets/images/jp.png"
-import INBackground from "assets/images/in.png"
-import NYBackground from "assets/images/ny.png"
-import KRBackground from "assets/images/kr.png"
-import PHBackground from "assets/images/ph.png"
+import JPBackground from "assets/images/jp.jpg"
+import INBackground from "assets/images/in.jpg"
+import NYBackground from "assets/images/ny.jpg"
+import KRBackground from "assets/images/kr.jpg"
+import PHBackground from "assets/images/ph.jpg"
 
-import PastelBackground from "assets/images/pastel.png"
 import MistBackground from "assets/images/mist.png"
-import PapercutBackground from "assets/images/papercut.png"
-import WavesBackground from "assets/images/waves.png"
-import Purplebackground from "assets/images/purple.png"
-
-import BubbleBackground from "assets/images/bubble.png"
-import RedBackground from "assets/images/red.png"
-import BlueBackground from "assets/images/blue.png"
-import DarkBackground from "assets/images/dark.png"
-import LightBackground from "assets/images/light.png"
+import PapercutBackground from "assets/images/papercut.jpg"
+import BubbleBackground from "assets/images/bubble.jpg"
+import RedBackground from "assets/images/red.jpg"
+import BlueBackground from "assets/images/blue.jpg"
+import DarkBackground from "assets/images/dark.jpg"
+import LightBackground from "assets/images/light.jpg"
 
 type BackgroundImagesObject = {
   [key in BackgroundImages]?: {
@@ -29,26 +25,6 @@ export const backgroundColors: BackgroundImagesObject = {
   default: {
     name: "Default",
     image: "",
-  },
-  pastel: {
-    name: "Pastel",
-    image: PastelBackground,
-  },
-  mist: {
-    name: "Mist",
-    image: MistBackground,
-  },
-  papercut: {
-    name: "Papercut",
-    image: PapercutBackground,
-  },
-  waves: {
-    name: "Waves",
-    image: WavesBackground,
-  },
-  purple: {
-    name: "Purple",
-    image: Purplebackground,
   },
 }
 
@@ -95,6 +71,14 @@ export const backgroundAcrylic: BackgroundImagesObject = {
   light: {
     name: "Light",
     image: LightBackground,
+  },
+  mist: {
+    name: "Mist",
+    image: MistBackground,
+  },
+  papercut: {
+    name: "Papercut",
+    image: PapercutBackground,
   },
 }
 

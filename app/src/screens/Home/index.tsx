@@ -58,7 +58,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
           </Box>
       case "excalidraw":
         return <Box pl={2} maxHeight="100%" h="full">
-          <ExcalidrawEditor path={path}/>
+          <ExcalidrawEditor path={path} splitted={true}/>
         </Box>
       default:
         return <NoFile />

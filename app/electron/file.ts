@@ -1,4 +1,4 @@
-import { ipcMain } from "electron"
+import { OpenDialogReturnValue, dialog, ipcMain } from "electron"
 import fs from "fs"
 import path from "path"
 
@@ -108,6 +108,50 @@ class Files {
       } catch (e) {
         throw new Error("Error renaming file")
       }
+    })
+
+    ipcMain.handle("file:import-background", async (_, params) => {
+      const workspacePath = params.workspace_path
+
+      const { canceled, filePaths }: OpenDialogReturnValue =
+        await dialog.showOpenDialog(this.win!, {
+          filters: [{ name: "Images", extensions: ["jpg", "png", "jpeg"] }],
+        })
+      if (!canceled && filePaths && filePaths[0]) {
+        // copy the image to the noted folder
+        const notedFolderPath = path.join(workspacePath, ".noted/backgrounds")
+        if (!fs.existsSync(notedFolderPath)) {
+          fs.mkdirSync(notedFolderPath)
+        }
+        // get filename
+        const fileName = path.basename(filePaths[0])
+        const backgroundPath = path.join(notedFolderPath, fileName)
+        fs.copyFileSync(filePaths[0], backgroundPath)
+        return backgroundPath
+      }
+      return null
+    })
+
+    ipcMain.handle("file:get-imported-background", async (_, params) => {
+      const workspacePath = params.workspace_path
+      const notedFolderPath = path.join(workspacePath, ".noted/backgrounds")
+      if (!fs.existsSync(notedFolderPath)) {
+        return []
+      }
+      const files = fs.readdirSync(notedFolderPath)
+      return files.map((file) => {
+        return path.join(notedFolderPath, file)
+      })
+    })
+
+    ipcMain.handle("file:delete-imported-background", async (_, params) => {
+      const workspacePath = params.workspace_path
+      const backgroundPath = params.background_path
+      const notedFolderPath = path.join(workspacePath, ".noted/backgrounds")
+      if (!fs.existsSync(notedFolderPath)) {
+        return
+      }
+      fs.unlinkSync(backgroundPath)
     })
   }
 }

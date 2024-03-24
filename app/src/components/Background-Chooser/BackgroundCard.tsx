@@ -29,12 +29,9 @@ const BackgroundCard = ({ image, name, select }: { image?: string, name: string,
       w={200}
       h={100}
       transition="all 0.3s"
-      background={`url(${image})`}
+      background={image &&`url(${image})`}
       backgroundRepeat="no-repeat"
       backgroundSize="cover"
-      _hover={{
-        scale: 1.05,
-      }}
       position="relative"
       display="flex" 
       justifyContent="center"

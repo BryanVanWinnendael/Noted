@@ -7,6 +7,7 @@ import {
   GlassSettings,
   Settings,
   BackgroundImages,
+  Scrollbar,
 } from "types"
 import {
   createContext,
@@ -26,6 +27,7 @@ import {
   DEFAULT_GLASS,
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS_ENABLED,
+  DEFAULT_SCROLLBAR,
   DEFAULT_TRANSLATE_LANGUAGE,
   DEFAULT_UPDATE,
   THEME_DARK,
@@ -75,6 +77,9 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const [backgroundImage, setBackgroundImage] = useState<BackgroundImages>(DEFAULT_BACKGROUND_IMAGE)
   const [blur, setBlur] = useState<number>(DEFAULT_BLUR)
   const [appSettings, setAppSettings] = useState<{ [key in Settings]: any }>({} as any)
+  const [customBackground, setCustomBackground] = useState<string>("")
+  const [editorTitle, setEditorTitle] = useState<boolean>(true)
+  const [scrollbar, setScrollbar] = useState<Scrollbar>(DEFAULT_SCROLLBAR)
 
   const readThemeFile = useCallback(async () => {
     const theme_path = localStorage.getItem("theme-path") || ""
@@ -282,6 +287,15 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       case "blur":
         setBlur(value)
         break
+      case "custom_background":
+        setCustomBackground(value)
+        break
+      case "editor_title":
+        setEditorTitle(value)
+        break
+      case "scrollbar":
+        setScrollbar(value)
+        break
       default:
         break
     }
@@ -300,6 +314,9 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     setExtensionLabel(settings["extension_label"])
     setBackgroundImage(settings["background_image"])
     setBlur(settings["blur"])
+    setCustomBackground(settings["custom_background"])
+    setEditorTitle(settings["editor_title"])
+    setScrollbar(settings["scrollbar"])
   }
 
   const resetCustomTheme = () => {
@@ -370,7 +387,10 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     translateLanguage,
     extensionLabel,
     backgroundImage,
-    blur
+    blur,
+    customBackground,
+    editorTitle,
+    scrollbar
   }
 
   return (

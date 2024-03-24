@@ -81,6 +81,9 @@ export interface WorkspaceTypeContext {
   savePdfFile: (data: any, path: string) => void
   split: (path: string) => Promise<void>
   readFile: (path: string) => Promise<any>
+  importBackground: () => Promise<void>
+  backgrounds: string[]
+  deleteImportedBackground: (path: string) => void
 }
 
 export interface Theme {
@@ -111,14 +114,16 @@ export type GlassComponents =
   | "window"
   | "editor"
 
-export type BackgroundColors =
-  | "default"
-  | "pastel"
+export type BackgroundColors = "default" | "custom"
+
+export type BackgroundAcrylic =
+  | "bubble"
+  | "red"
+  | "blue"
+  | "dark"
+  | "light"
   | "mist"
   | "papercut"
-  | "waves"
-  | "purple"
-export type BackgroundAcrylic = "bubble" | "red" | "blue" | "dark" | "light"
 export type BackgroundCities = "jp" | "in" | "ny" | "kr" | "ph"
 
 export type BackgroundImages =
@@ -128,6 +133,11 @@ export type BackgroundImages =
 
 export type GlassSettings = {
   [key in GlassComponents]: boolean
+}
+
+export interface Scrollbar {
+  color: string
+  opacity: number
 }
 
 export type Settings =
@@ -144,6 +154,9 @@ export type Settings =
   | "extension_label"
   | "background_image"
   | "blur"
+  | "custom_background"
+  | "editor_title"
+  | "scrollbar"
 
 export interface SettingsTypeContext {
   isOpen: boolean
@@ -178,6 +191,9 @@ export interface SettingsTypeContext {
   extensionLabel: boolean
   backgroundImage: BackgroundImages
   blur: number
+  customBackground: string
+  editorTitle: boolean
+  scrollbar: Scrollbar
 }
 
 export interface EditorTypeContext {

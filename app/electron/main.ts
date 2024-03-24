@@ -29,8 +29,6 @@ let win: BrowserWindow | null
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"]
 
-// const isDev = !app.isPackaged
-
 function createWindow() {
   win = new BrowserWindow({
     width: 800,
@@ -47,7 +45,7 @@ function createWindow() {
     },
   })
 
-  win.webContents.openDevTools()
+  !app.isPackaged && win.webContents.openDevTools()
   win.setMenu(null)
 
   const updater = new Updates(win)

@@ -33,6 +33,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const [showOpenNewFile, setShowOpenNewFile] = useState<boolean>(false)
   const [activeFolder, setActiveFolder] = useState<string | undefined>()
   const [showSwitcher, setShowSwitcher] = useState<boolean>(false)
+  const [backgrounds, setBackgrounds] = useState<string[]>([])
 
   const resetWorkspace = () => {
     setWorkspace(undefined)
@@ -190,12 +191,47 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     [],
   )
 
+  const importBackground = async () => {
+    const workspacePath = localStorage.getItem("workspace_path")
+    if (!workspacePath) return
+    const newBackgroundPath = await invoke("file:import-background", {
+      workspace_path: workspacePath,
+    })
+
+    setBackgrounds([...backgrounds, newBackgroundPath])
+  }
+
+  const getImportedBackground = async () => {
+    const workspacePath = localStorage.getItem("workspace_path")
+    if (!workspacePath) return
+    const backgroundPaths = await invoke("file:get-imported-background", {
+      workspace_path: workspacePath,
+    })
+    
+    setBackgrounds(backgroundPaths)
+  }
+
+  const deleteImportedBackground = async (backgroundPath: string) => {
+    const workspacePath = localStorage.getItem("workspace_path")
+    if (!workspacePath) return
+    await invoke("file:delete-imported-background", {
+      workspace_path: workspacePath,
+      background_path: backgroundPath,
+    })
+
+    const newBackgrounds = backgrounds.filter(
+      (background) => background !== backgroundPath,
+    )
+    setBackgrounds(newBackgrounds)
+  }
+
   const handleOpenedWorkspace = useCallback(async () => {
     const workspacePath = localStorage.getItem("workspace_path")
     if (workspacePath) {
       openFolder(workspacePath)
     }
     setIsLoaded(true)
+    getImportedBackground()
   }, [openFolder])
 
   const makeNewFile = async (fileName: string, folder_path: string) => {
@@ -379,6 +415,9 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     savePdfFile,
     split,
     readFile,
+    importBackground,
+    backgrounds,
+    deleteImportedBackground
   }
 
   return (

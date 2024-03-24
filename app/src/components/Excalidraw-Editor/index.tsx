@@ -7,7 +7,7 @@ import { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import SaveButton from "./SaveButton"
 
-const Index = ({ path }: {path: string}) => {
+const Index = ({ path, splitted }: { path: string, splitted?: boolean }) => {
   const { saveFile, readFile } = useWorkspace()
   const { getTextColor, getBorderColor, getBackgroundColor } = useColors()
   const [data, setData] = useState(null)
@@ -101,9 +101,14 @@ const Index = ({ path }: {path: string}) => {
         });
       }
     };
-  
+
+    const openedFile = {
+      path,
+      data: null,
+    }
+    utils.saveToRecentOpened(openedFile, splitted)
     fetchDataAndUpdateScene();
-  }, [bg_color, excalidrawAPI, path, readFile]);
+  }, [bg_color, excalidrawAPI, path, readFile, splitted]);
 
   return (
     <Flex

@@ -54,6 +54,9 @@ export const REQUIRED_SETTINGS_KEYS: Settings[] = [
   "extension_label",
   "background_image",
   "blur",
+  "custom_background",
+  "editor_title",
+  "scrollbar",
 ]
 
 export const DEFAULT_UPDATE = true
@@ -111,3 +114,10 @@ export const DEFAULT_EXTENSION_LABEL = true
 export const DEFAULT_BACKGROUND_IMAGE = "default"
 
 export const DEFAULT_BLUR = 6.8
+
+export const DEFAULT_EDITOR_TITLE = true
+
+export const DEFAULT_SCROLLBAR = {
+  color: "#a7a7a7",
+  opacity: 0.5,
+}
