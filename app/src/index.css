@@ -33,6 +33,17 @@ body {
   background: transparent;
 }
 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .nav {
   -webkit-app-region: drag;
   -webkit-user-select: none;

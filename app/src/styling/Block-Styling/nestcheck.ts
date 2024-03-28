@@ -1,4 +1,3 @@
-// .cdx-settings-button:hover
 import { utils } from "utils/index"
 
 export const nestedStyle = (

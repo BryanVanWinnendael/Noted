@@ -79,8 +79,6 @@ const App = () => {
     style.id = styleId
     style.innerHTML = `
       body {
-        /* Other styles for body */
-
         /* Custom scrollbar styles */
         ::-webkit-scrollbar-thumb {
           border-radius: 10px;
@@ -88,7 +86,7 @@ const App = () => {
         }
 
         ::-webkit-scrollbar-thumb:hover {
-          background-color: #c71010 !important;
+          background-color: ${color} !important;
         }
       }
     `

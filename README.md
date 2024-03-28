@@ -1,4 +1,5 @@
 # Noted
+
 <div>
   <a href="https://github.com/BryanVanWinnendael/noted/releases/latest">
       <img src="https://img.shields.io/github/downloads/BryanVanWinnendael/noted/total" alt="latest download">
@@ -16,22 +17,24 @@ Noted is a desktop application where you can write block styled notes. It is ins
 To setup the full application follow the steps for each service.
 
 Functionalities:
-  - Blocks
-    - Paragraph
-    - Heading
-    - Checklist
-    - List
-    - Quote
-    - Codeblock
-    - Delimiter
-    - Table
-  - Themes
-  - Colored Headers
-  - Glass Application
-  - Fonts
-  - Widgets
-  - Shortcuts
+
+- Blocks
+  - Paragraph
+  - Heading
+  - Checklist
+  - List
+  - Quote
+  - Codeblock
+  - Delimiter
+  - Table
   - ...
+- Themes
+- Colored Headers
+- Glass Application
+- Fonts
+- Widgets
+- Shortcuts
+- ...
 
 To see the full list you can read the [Documentation](https://write-noted.vercel.app/docs).
 
