@@ -12,8 +12,11 @@ const Index = () => {
   const { actionbarOpacity } = useSettings()
 
   const background_color = getSecondaryBackgroundColor()
-  const transparent_bg_color = utils.getTransparent(actionbarOpacity, background_color)
-  
+  const transparent_bg_color = utils.getTransparent(
+    actionbarOpacity,
+    background_color,
+  )
+
   return (
     <Center p={1} bg={transparent_bg_color} rounded="md" h="fit-content">
       <WorkspaceFile />

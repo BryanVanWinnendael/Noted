@@ -1,4 +1,13 @@
-import { Box, Button, Flex, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Text } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Flex,
+  Slider,
+  SliderFilledTrack,
+  SliderThumb,
+  SliderTrack,
+  Text,
+} from "@chakra-ui/react"
 import { useSettings } from "contexts/SettingsContext"
 import useColors from "hooks/useColors"
 import { utils } from "utils/index"
@@ -26,20 +35,28 @@ const BlurChooser = () => {
       </Box>
 
       <Flex w="50%" gap={2} alignItems="center">
-        <Slider value={blurValue} aria-label='slider-ex-1' defaultValue={36} onChange={(val) => handleChange(val)}>
+        <Slider
+          value={blurValue}
+          aria-label="slider-ex-1"
+          defaultValue={36}
+          onChange={(val) => handleChange(val)}
+        >
           <SliderTrack>
             <SliderFilledTrack />
           </SliderTrack>
           <SliderThumb />
         </Slider>
         <Button
-        color={utils.getTextColor(accent_color)}
-        _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
-        h={8}
-        bg={accent_color}
-         onClick={() => handleChange(0)}>Reset</Button>
+          color={utils.getTextColor(accent_color)}
+          _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
+          h={8}
+          bg={accent_color}
+          onClick={() => handleChange(0)}
+        >
+          Reset
+        </Button>
       </Flex>
-    </Flex> 
+    </Flex>
   )
 }
 

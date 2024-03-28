@@ -5,12 +5,17 @@ import { useState } from "react"
 import { utils } from "utils/index"
 import ContextMenu from "./Context-Menu"
 import { useSettings } from "contexts/SettingsContext"
-import { PiNoteDuotone } from "react-icons/pi";
-import { FaRegFilePdf } from "react-icons/fa";
-import { MdOutlineDraw } from "react-icons/md";
+import { PiNoteDuotone } from "react-icons/pi"
+import { FaRegFilePdf } from "react-icons/fa"
+import { MdOutlineDraw } from "react-icons/md"
 
 const FileButton = ({ path, name }: { path: string; name: string }) => {
-  const { getSecondaryBackgroundColor, getTextColor, getBackgroundColor, getIconColor } = useColors()
+  const {
+    getSecondaryBackgroundColor,
+    getTextColor,
+    getBackgroundColor,
+    getIconColor,
+  } = useColors()
   const { extensionLabel, sidebarIcons } = useSettings()
   const { setActiveFolder, activeTab, tabs, openFile } = useWorkspace()
   const isActive = tabs[activeTab]?.path === path
@@ -57,28 +62,27 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
   return (
     <Menu isOpen={isOpen} onClose={() => setIsOpen(false)} id={path}>
       <Tooltip
-          placement="bottom"
-          label={getFileName(name)}
-          bg={bg_color}
-          color={text_color}
-          rounded="md"
-        >
-      <MenuButton
-        p={1}
-        bg={
-          tab?.path === path ? utils.getDarkerColor("0.03", bg_color) : "none"
-        }
-        onClick={() => handleOpenFile(path)}
-        onContextMenu={() => setIsOpen(true)}
+        placement="bottom"
+        label={getFileName(name)}
+        bg={bg_color}
         color={text_color}
-        _hover={{ bg: utils.getDarkerColor("0.03", bg_color) }}
         rounded="md"
-        w="full"
-        h="fit-content"
-        cursor="pointer"
       >
-        
-          <Flex gap={2} alignItems="center" >
+        <MenuButton
+          p={1}
+          bg={
+            tab?.path === path ? utils.getDarkerColor("0.03", bg_color) : "none"
+          }
+          onClick={() => handleOpenFile(path)}
+          onContextMenu={() => setIsOpen(true)}
+          color={text_color}
+          _hover={{ bg: utils.getDarkerColor("0.03", bg_color) }}
+          rounded="md"
+          w="full"
+          h="fit-content"
+          cursor="pointer"
+        >
+          <Flex gap={2} alignItems="center">
             {sidebarIcons && getIcon()}
             <Text
               textAlign="left"
@@ -86,7 +90,6 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
               whiteSpace="nowrap"
               textOverflow="ellipsis"
               fontSize="sm"
-             
             >
               {getFileName(name)}
             </Text>
@@ -94,13 +97,16 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
               <Flex
                 px={2}
                 rounded="md"
-                bg={utils.getTransparent(0.6, isActive ? primary_bg_color : secondary_background_color)}
+                bg={utils.getTransparent(
+                  0.6,
+                  isActive ? primary_bg_color : secondary_background_color,
+                )}
               >
                 {extension}
               </Flex>
             )}
           </Flex>
-      </MenuButton>
+        </MenuButton>
       </Tooltip>
 
       <ContextMenu path={path} name={name} type="file" />

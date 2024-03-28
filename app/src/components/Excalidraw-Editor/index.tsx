@@ -7,11 +7,12 @@ import { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import SaveButton from "./SaveButton"
 
-const Index = ({ path, splitted }: { path: string, splitted?: boolean }) => {
+const Index = ({ path, splitted }: { path: string; splitted?: boolean }) => {
   const { saveFile, readFile } = useWorkspace()
   const { getTextColor, getBorderColor, getBackgroundColor } = useColors()
   const [data, setData] = useState(null)
-  const [excalidrawAPI, setExcalidrawAPI] = useState<ExcalidrawImperativeAPI | null>(null);
+  const [excalidrawAPI, setExcalidrawAPI] =
+    useState<ExcalidrawImperativeAPI | null>(null)
 
   const text_color = getTextColor()
 
@@ -29,7 +30,7 @@ const Index = ({ path, splitted }: { path: string, splitted?: boolean }) => {
       export: false,
       saveToActiveFile: false,
     },
-  };
+  }
 
   const saveData = useCallback(async () => {
     const elements = excalidrawAPI?.getSceneElements()
@@ -39,8 +40,8 @@ const Index = ({ path, splitted }: { path: string, splitted?: boolean }) => {
       elements,
       appState: {
         theme,
-        viewBackgroundColor: bg
-      }
+        viewBackgroundColor: bg,
+      },
     }
     await saveFile(data, path)
     excalidrawAPI?.setToast({
@@ -52,86 +53,84 @@ const Index = ({ path, splitted }: { path: string, splitted?: boolean }) => {
 
   useEffect(() => {
     const handleKeyDown = async (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.altKey && event.key === 's' ) {
-        event.preventDefault();
+      if (event.ctrlKey && event.altKey && event.key === "s") {
+        event.preventDefault()
         saveData()
       }
-    };
+    }
 
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown)
 
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [saveData]); 
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [saveData])
 
   useEffect(() => {
     const fetchDataAndUpdateScene = async () => {
-      let file = null;
+      let file = null
       try {
-        file = await readFile(path);
+        file = await readFile(path)
       } catch (error) {
-        console.error("Error reading file:", error);
-        return;
+        console.error("Error reading file:", error)
+        return
       }
-  
+
       if (!file || !file.elements) {
-        const isDark = utils.getTextColor(bg_color) === "#fff";
+        const isDark = utils.getTextColor(bg_color) === "#fff"
         const initialData: any = {
           elements: [],
           appState: {
             theme: isDark ? "dark" : "light",
-            viewBackgroundColor: "#ffffff"
-          }
-        };
+            viewBackgroundColor: "#ffffff",
+          },
+        }
         setData({
           ...initialData,
-          scrollToContent: true
-        });
+          scrollToContent: true,
+        })
         if (excalidrawAPI) {
-          excalidrawAPI.updateScene(initialData);
+          excalidrawAPI.updateScene(initialData)
         }
       } else {
         if (excalidrawAPI) {
-          excalidrawAPI.updateScene(file);
+          excalidrawAPI.updateScene(file)
         }
         setData({
           ...file,
-          scrollToContent: true
-        });
+          scrollToContent: true,
+        })
       }
-    };
+    }
 
     const openedFile = {
       path,
       data: null,
     }
     utils.saveToRecentOpened(openedFile, splitted)
-    fetchDataAndUpdateScene();
-  }, [bg_color, excalidrawAPI, path, readFile, splitted]);
+    fetchDataAndUpdateScene()
+  }, [bg_color, excalidrawAPI, path, readFile, splitted])
 
   return (
     <Flex
-    color={text_color}
-    w="full"
-    h="full"
-    border="1px"
-    borderColor={border_color}
-    rounded="md"
-    maxHeight="100%"
-    overflowX="hidden"
-    bg={lighter_bg_color}
-  >
-    {
-      data &&
-      <Excalidraw
-      renderTopRightUI={() => <SaveButton callback={saveData}/>}
-      excalidrawAPI={(api)=> setExcalidrawAPI(api)}
-      initialData={data}
-      UIOptions={UIOptions as any}
-    />
-    }
-   
+      color={text_color}
+      w="full"
+      h="full"
+      border="1px"
+      borderColor={border_color}
+      rounded="md"
+      maxHeight="100%"
+      overflowX="hidden"
+      bg={lighter_bg_color}
+    >
+      {data && (
+        <Excalidraw
+          renderTopRightUI={() => <SaveButton callback={saveData} />}
+          excalidrawAPI={(api) => setExcalidrawAPI(api)}
+          initialData={data}
+          UIOptions={UIOptions as any}
+        />
+      )}
     </Flex>
   )
 }

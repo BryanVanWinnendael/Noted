@@ -20,11 +20,8 @@ import Background from "./Background"
 import Sidebar from "./Sidebar"
 
 const SettingsScreen = () => {
-  const {
-    getSecondaryBackgroundColor,
-    getAccentColor,
-    getTextColor,
-  } = useColors()
+  const { getSecondaryBackgroundColor, getAccentColor, getTextColor } =
+    useColors()
   const [section, setSection] = useState<string>("general")
   const { isOpen, onClose, glassBackground, glassEnabled } = useSettings()
   const { workspace } = useWorkspace()

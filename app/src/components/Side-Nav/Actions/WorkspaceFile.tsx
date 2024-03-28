@@ -1,20 +1,17 @@
-import {
-  IconButton,
-  Tooltip,
-} from "@chakra-ui/react"
+import { IconButton, Tooltip } from "@chakra-ui/react"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import useColors from "hooks/useColors"
-import { RiHomeLine } from "react-icons/ri";
+import { RiHomeLine } from "react-icons/ri"
 import { utils } from "utils/index"
 
 const WorkspaceFile = () => {
   const { getSecondaryBackgroundColor, getIconColor, getTextColor } =
     useColors()
   const { openWorkspaceFile } = useWorkspace()
-  const workspace_path= localStorage.getItem('workspace_path')
-  const workspace_name = workspace_path?.split('\\').pop() + ".home.noted"
+  const workspace_path = localStorage.getItem("workspace_path")
+  const workspace_name = workspace_path?.split("\\").pop() + ".home.noted"
   const workspace_file = workspace_path + "\\" + workspace_name
-  const active_file = localStorage.getItem('active_file')
+  const active_file = localStorage.getItem("active_file")
   const isOpened = active_file === workspace_file
 
   const icon_color = getIconColor()
@@ -29,11 +26,11 @@ const WorkspaceFile = () => {
 
   return (
     <Tooltip
-    placement="bottom"
-    label={"Open Workspace File"}
-    bg={bg_color}
-    color={text_color}
-    rounded="md"
+      placement="bottom"
+      label={"Open Workspace File"}
+      bg={bg_color}
+      color={text_color}
+      rounded="md"
     >
       <IconButton
         onClick={handleOpen}

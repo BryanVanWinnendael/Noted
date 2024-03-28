@@ -78,16 +78,28 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const [extensionLabel, setExtensionLabel] = useState<boolean>(
     DEFAULT_EXTENSION_LABEL,
   )
-  const [backgroundImage, setBackgroundImage] = useState<BackgroundImages>(DEFAULT_BACKGROUND_IMAGE)
+  const [backgroundImage, setBackgroundImage] = useState<BackgroundImages>(
+    DEFAULT_BACKGROUND_IMAGE,
+  )
   const [blur, setBlur] = useState<number>(DEFAULT_BLUR)
-  const [appSettings, setAppSettings] = useState<{ [key in Settings]: any }>({} as any)
+  const [appSettings, setAppSettings] = useState<{ [key in Settings]: any }>(
+    {} as any,
+  )
   const [customBackground, setCustomBackground] = useState<string>("")
   const [editorTitle, setEditorTitle] = useState<boolean>(true)
   const [scrollbar, setScrollbar] = useState<Scrollbar>(DEFAULT_SCROLLBAR)
-  const [sidebarIcons, setSidebarIcons] = useState<boolean>(DEFAULT_SIDEBAR_ICONS)
-  const [wallpaperBrightness, setWallpaperBrightness] = useState<number>(DEFAULT_WALLPAPER_BRIGHTNESS)
-  const [sidebarOpacity, setSidebarOpacity] = useState<number>(DEFAULT_SIDEBAR_OPACITY)
-  const [actionbarOpacity, setActionbarOpacity] = useState<number>(DEFAULT_ACTION_BAR_OPACITY)
+  const [sidebarIcons, setSidebarIcons] = useState<boolean>(
+    DEFAULT_SIDEBAR_ICONS,
+  )
+  const [wallpaperBrightness, setWallpaperBrightness] = useState<number>(
+    DEFAULT_WALLPAPER_BRIGHTNESS,
+  )
+  const [sidebarOpacity, setSidebarOpacity] = useState<number>(
+    DEFAULT_SIDEBAR_OPACITY,
+  )
+  const [actionbarOpacity, setActionbarOpacity] = useState<number>(
+    DEFAULT_ACTION_BAR_OPACITY,
+  )
 
   const readThemeFile = useCallback(async () => {
     const theme_path = localStorage.getItem("theme-path") || ""
@@ -247,7 +259,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
 
   const saveSettings = async (key: Settings, value: any) => {
     const workspace_path = localStorage.getItem("workspace_path")
-    
+
     appSettings[key] = value
     invoke("file:settings-save", {
       settings: JSON.stringify(appSettings),
@@ -418,7 +430,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     sidebarIcons,
     wallpaperBrightness,
     sidebarOpacity,
-    actionbarOpacity
+    actionbarOpacity,
   }
 
   return (

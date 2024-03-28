@@ -10,7 +10,7 @@ const Background = () => {
       <BlurChooser />
       <WallpaperBrightness />
       <Divider my={4} />
-      <BackgroundChooser  />
+      <BackgroundChooser />
     </Box>
   )
 }

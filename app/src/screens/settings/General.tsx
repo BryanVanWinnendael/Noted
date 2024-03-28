@@ -123,16 +123,14 @@ const General = () => {
         <Flex alignItems="center" justify="space-between">
           <Box>
             <Text fontWeight="semibold">What's new</Text>
-            <Text
-              color={muted_text_color}
-            >
+            <Text color={muted_text_color}>
               Read What's new in {APP_VERSION}
             </Text>
           </Box>
 
           <Button
             color={utils.getTextColor(accent_color)}
-            onClick={()=> setNewVersion(true)}
+            onClick={() => setNewVersion(true)}
             _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
             h={8}
             bg={accent_color}

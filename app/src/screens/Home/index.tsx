@@ -22,7 +22,6 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
   const { widgetPanel } = useWidget()
   const { compactMode } = useSettings()
 
-
   const openScreen = useCallback((tab: ActiveTab) => {
     if (!tab.path) return <NoFile />
 
@@ -49,29 +48,30 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
 
     switch (extension) {
       case "noted":
-        return <Box pl={2} maxHeight="100%" h="full">
-          <Editor splitted={true} path={path} />
-        </Box>
-      case "pdf":
-        return  <Box pl={2} maxHeight="100%" h="full">
-          <PdfViewer splitted={true} path={path} />
+        return (
+          <Box pl={2} maxHeight="100%" h="full">
+            <Editor splitted={true} path={path} />
           </Box>
+        )
+      case "pdf":
+        return (
+          <Box pl={2} maxHeight="100%" h="full">
+            <PdfViewer splitted={true} path={path} />
+          </Box>
+        )
       case "excalidraw":
-        return <Box pl={2} maxHeight="100%" h="full">
-          <ExcalidrawEditor path={path} splitted={true}/>
-        </Box>
+        return (
+          <Box pl={2} maxHeight="100%" h="full">
+            <ExcalidrawEditor path={path} splitted={true} />
+          </Box>
+        )
       default:
         return <NoFile />
     }
   }, [])
 
   return (
-    <Flex
-      w="full"
-      pt={compactMode ? 0 : 9}
-      h="full"
-      px={2}
-    >
+    <Flex w="full" pt={compactMode ? 0 : 9} h="full" px={2}>
       <PanelGroup
         id={"sidebar"}
         autoSaveId="example"
@@ -81,7 +81,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
           marginTop: compactMode ? 0 : "5px",
           paddingBottom: "5px",
           backgroundColor: "transparent",
-          zIndex: 9
+          zIndex: 9,
         }}
       >
         {showSidebar && (
@@ -98,7 +98,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
           order={2}
           minSize={12}
           defaultSize={12}
-          style={{ maxHeight: "100%", backgroundColor: "transparent"}}
+          style={{ maxHeight: "100%", backgroundColor: "transparent" }}
         >
           <EditorWrapper>
             <>

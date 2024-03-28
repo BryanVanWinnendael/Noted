@@ -75,4 +75,4 @@ ReactDOM.render(
   document.getElementById("root"),
 )
 
-postMessage({ payload: 'removeLoading' }, '*')
+postMessage({ payload: "removeLoading" }, "*")

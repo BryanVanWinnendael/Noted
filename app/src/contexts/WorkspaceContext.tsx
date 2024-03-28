@@ -209,7 +209,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     const backgroundPaths = await invoke("file:get-imported-background", {
       workspace_path: workspacePath,
     })
-    
+
     setBackgrounds(backgroundPaths)
   }
 
@@ -446,7 +446,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     deleteImportedBackground,
     newVersion,
     setNewVersion,
-    openWorkspaceFile
+    openWorkspaceFile,
   }
 
   return (

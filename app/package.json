@@ -1,5 +1,5 @@
 {
-  "name": "noted",
+  "name": "Noted",
   "private": true,
   "version": "1.2.0",
   "repository": "https://github.com/BryanVanWinnendael/Noted",
@@ -12,7 +12,8 @@
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "es": "concurrently -k \"cross-env BROWSER=none npm run dev\""
+    "es": "concurrently -k \"cross-env BROWSER=none npm run dev\"",
+    "format": "prettier . --write"
   },
   "dependencies": {
     "@bomdi/codebox": "^2.0.0",

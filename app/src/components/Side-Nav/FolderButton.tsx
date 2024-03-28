@@ -1,23 +1,26 @@
-import {
-  Menu,
-  MenuButton,
-  Flex,
-  Text,
-  Tooltip,
-  Icon,
-} from "@chakra-ui/react"
+import { Menu, MenuButton, Flex, Text, Tooltip, Icon } from "@chakra-ui/react"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import useColors from "hooks/useColors"
 import { useState } from "react"
 import { utils } from "utils/index"
 import ContextMenu from "./Context-Menu"
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io"
 import { motion } from "framer-motion"
-import { FaRegFolder } from "react-icons/fa";
-import { FaRegFolderOpen } from "react-icons/fa";
+import { FaRegFolder } from "react-icons/fa"
+import { FaRegFolderOpen } from "react-icons/fa"
 import { useSettings } from "contexts/SettingsContext"
 
-const FolderButton = ({ path, name, onClick, expanded }: { path: string; name: string, onClick: () => void, expanded: boolean }) => {
+const FolderButton = ({
+  path,
+  name,
+  onClick,
+  expanded,
+}: {
+  path: string
+  name: string
+  onClick: () => void
+  expanded: boolean
+}) => {
   const { getSecondaryBackgroundColor, getTextColor, getIconColor } =
     useColors()
   const { setActiveFolder } = useWorkspace()
@@ -41,20 +44,16 @@ const FolderButton = ({ path, name, onClick, expanded }: { path: string; name: s
   }
 
   return (
-    <Menu
-      id={path}
-      isOpen={isOpen}
-      onClose={() => setIsOpen(false)}
-    >
+    <Menu id={path} isOpen={isOpen} onClose={() => setIsOpen(false)}>
       <Tooltip
-          placement="bottom"
-          label={name}
-          bg={bg_color}
-          color={text_color}
-          rounded="md"
-        >
+        placement="bottom"
+        label={name}
+        bg={bg_color}
+        color={text_color}
+        rounded="md"
+      >
         <MenuButton
-          w="full" 
+          w="full"
           h="fit-content"
           onContextMenu={() => setIsOpen(true)}
           onClick={handleClick}
@@ -64,15 +63,22 @@ const FolderButton = ({ path, name, onClick, expanded }: { path: string; name: s
           p={1}
         >
           <Flex gap={1} alignItems="center">
-            {sidebarIcons ? 
-              <Icon w={4} h={4} as={expanded ? FaRegFolderOpen : FaRegFolder} color={icon_color} />
-            :
-              <motion.span animate={{ rotate: expanded ? 90 : 0 }} className="flex justify-center items-center">
+            {sidebarIcons ? (
+              <Icon
+                w={4}
+                h={4}
+                as={expanded ? FaRegFolderOpen : FaRegFolder}
+                color={icon_color}
+              />
+            ) : (
+              <motion.span
+                animate={{ rotate: expanded ? 90 : 0 }}
+                className="flex justify-center items-center"
+              >
                 <Icon as={IoIosArrowForward} color={icon_color} />
               </motion.span>
-            }
-            
-            
+            )}
+
             <Text
               overflow="hidden"
               whiteSpace="nowrap"
@@ -83,7 +89,7 @@ const FolderButton = ({ path, name, onClick, expanded }: { path: string; name: s
             </Text>
           </Flex>
         </MenuButton>
-        </Tooltip>
+      </Tooltip>
       <ContextMenu path={path} name={name} type="folder" />
     </Menu>
   )

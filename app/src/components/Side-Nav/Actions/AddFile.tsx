@@ -17,8 +17,12 @@ import { utils } from "utils/index"
 
 const AddFile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { getSecondaryBackgroundColor, getIconColor, getAccentColor, getTextColor } =
-    useColors()
+  const {
+    getSecondaryBackgroundColor,
+    getIconColor,
+    getAccentColor,
+    getTextColor,
+  } = useColors()
   const cancelRef = useRef()
   const [fileName, setFileName] = useState<string>("")
   const [inValidName, setInValidName] = useState<boolean>(false)
@@ -89,13 +93,13 @@ const AddFile = () => {
         </AlertDialogContent>
       </AlertDialog>
       <Tooltip
-      placement="bottom"
-      label={"Create file"}
-      bg={bg_color}
-      color={text_color}
-      rounded="md"
-    >
-      <IconButton
+        placement="bottom"
+        label={"Create file"}
+        bg={bg_color}
+        color={text_color}
+        rounded="md"
+      >
+        <IconButton
           onClick={onOpen}
           _hover={{ bg: utils.getDarkerColor("0.03", bg_color) }}
           color={icon_color}
@@ -105,7 +109,7 @@ const AddFile = () => {
           aria-label="create file"
           icon={<TbFilePlus />}
         />
-    </Tooltip>
+      </Tooltip>
     </>
   )
 }

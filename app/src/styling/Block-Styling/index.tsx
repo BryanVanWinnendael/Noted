@@ -17,7 +17,7 @@ const Index = ({ children }: { children: JSX.Element }) => {
     getMutedTextColor,
     getBorderColor,
     getAccentColor,
-    getIconColor
+    getIconColor,
   } = useColors()
 
   const text_color = getTextColor()
@@ -34,13 +34,9 @@ const Index = ({ children }: { children: JSX.Element }) => {
       css={{
         ...soundStyle(border_color),
         ...latexStyle(icon_color, muted_text_color),
-        ...nestedStyle(
-          secondary_background_color,
-          accent_color),
+        ...nestedStyle(secondary_background_color, accent_color),
         ...headerStyle(headerColorsEnabled, headerColors, text_color),
-        ...codeStyle(
-          background_color,
-        ),
+        ...codeStyle(background_color),
         ...tableStyle(
           background_color,
           secondary_background_color,

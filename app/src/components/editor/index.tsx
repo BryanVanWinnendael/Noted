@@ -22,8 +22,8 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
   const { glassBackground, glassEnabled, editorTitle } = useSettings()
   const boxRef = useRef<HTMLDivElement>(null)
   const filename = path.split("\\").pop()?.split(".noted")[0] || "Untitled"
-  const workspace_path = localStorage.getItem('workspace_path')
-  const homeName = workspace_path?.split('\\').pop() + ".home"
+  const workspace_path = localStorage.getItem("workspace_path")
+  const homeName = workspace_path?.split("\\").pop() + ".home"
 
   const isGlassEnabled = glassEnabled && glassBackground.editor
 
@@ -160,33 +160,43 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
       backdropFilter={`blur(100px)`}
       shadow="lg"
       flexDirection="column"
-      bg={isGlassEnabled ? utils.getGlassBackground(lighter_bg_color) : lighter_bg_color}
+      bg={
+        isGlassEnabled
+          ? utils.getGlassBackground(lighter_bg_color)
+          : lighter_bg_color
+      }
       style={{
-        backdropFilter: isGlassEnabled ? `blur(10px)` : 'none', // Apply backdrop filter only when glass effect is enabled
+        backdropFilter: isGlassEnabled ? `blur(10px)` : "none", // Apply backdrop filter only when glass effect is enabled
       }}
       mb={2}
     >
-      {
-        editorTitle && <Box p={1} w="full" borderBottom="1px" borderColor={border_color}>
-        <Text opacity={0.6} color={text_color} textAlign="center" pl="4rem" fontSize="md">{
-          filename === homeName ? "Home" : filename
-        }</Text>
-      </Box>
-      }
-        <ReactEditorJS
-          holder={"noted" + path}
-          onInitialize={handleInitialize}
-          tools={EDITOR_JS_TOOLS}
-          placeholder="Write your note here..."
-        >
-          <Box
+      {editorTitle && (
+        <Box p={1} w="full" borderBottom="1px" borderColor={border_color}>
+          <Text
+            opacity={0.6}
+            color={text_color}
+            textAlign="center"
+            pl="4rem"
+            fontSize="md"
+          >
+            {filename === homeName ? "Home" : filename}
+          </Text>
+        </Box>
+      )}
+      <ReactEditorJS
+        holder={"noted" + path}
+        onInitialize={handleInitialize}
+        tools={EDITOR_JS_TOOLS}
+        placeholder="Write your note here..."
+      >
+        <Box
           overflowY="scroll"
-            ref={boxRef}
-            onKeyDown={checkSlashCommand}
-            id={"noted" + path}
-            height="100%"
-          ></Box>
-        </ReactEditorJS>
+          ref={boxRef}
+          onKeyDown={checkSlashCommand}
+          id={"noted" + path}
+          height="100%"
+        ></Box>
+      </ReactEditorJS>
     </Flex>
   )
 }

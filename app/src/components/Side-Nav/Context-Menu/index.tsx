@@ -50,7 +50,6 @@ const Index = ({ path, name, type }: ContextMenu) => {
           <Divider />
         </>
       )}
-      
 
       <Rename path={path} name={name} type={type} />
       <Delete path={path} name={name} type={type} />

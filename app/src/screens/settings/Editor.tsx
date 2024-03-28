@@ -23,8 +23,8 @@ import FontChooser from "components/FontChooser"
 import TranslateSeting from "components/TranslateSetting"
 import EditorTitle from "components/EditorTitle"
 import Scrollbar from "components/Scrollbar"
-import { CgScrollV } from "react-icons/cg";
-import { LuHeading } from "react-icons/lu";
+import { CgScrollV } from "react-icons/cg"
+import { LuHeading } from "react-icons/lu"
 
 const Editor = () => {
   const { getSecondaryBackgroundColor, getAccentColor } = useColors()
@@ -70,7 +70,7 @@ const Editor = () => {
                 flex="1"
                 textAlign="left"
               >
-                <Icon as={FaPalette} w={7} h={7}/>
+                <Icon as={FaPalette} w={7} h={7} />
                 <Text fontSize="xl">Theme</Text>
               </Flex>
               <AccordionIcon />
@@ -110,8 +110,8 @@ const Editor = () => {
                 as="span"
                 flex="1"
                 textAlign="left"
-              > 
-                <Icon as={LuHeading} w={7} h={7}/>
+              >
+                <Icon as={LuHeading} w={7} h={7} />
                 <Text fontSize="xl">Headers</Text>
               </Flex>
               <AccordionIcon />
@@ -150,7 +150,7 @@ const Editor = () => {
                 flex="1"
                 textAlign="left"
               >
-                <Icon as={GiCrackedGlass} w={7} h={7}/>
+                <Icon as={GiCrackedGlass} w={7} h={7} />
                 <Text fontSize="xl">Glassy</Text>
               </Flex>
               <AccordionIcon />
@@ -190,7 +190,7 @@ const Editor = () => {
                 flex="1"
                 textAlign="left"
               >
-                <Icon as={CgScrollV} w={7} h={7}/>
+                <Icon as={CgScrollV} w={7} h={7} />
                 <Text fontSize="xl">Scrollbar</Text>
               </Flex>
               <AccordionIcon />

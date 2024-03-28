@@ -12,13 +12,17 @@ import {
 import { useWorkspace } from "contexts/WorkspaceContext"
 import useColors from "hooks/useColors"
 import { useRef, useState } from "react"
-import { MdOutlineDraw } from "react-icons/md";
+import { MdOutlineDraw } from "react-icons/md"
 import { utils } from "utils/index"
 
 const AddFile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { getSecondaryBackgroundColor, getIconColor, getAccentColor, getTextColor } =
-    useColors()
+  const {
+    getSecondaryBackgroundColor,
+    getIconColor,
+    getAccentColor,
+    getTextColor,
+  } = useColors()
   const cancelRef = useRef()
   const [fileName, setFileName] = useState<string>("")
   const [inValidName, setInValidName] = useState<boolean>(false)
@@ -89,22 +93,22 @@ const AddFile = () => {
         </AlertDialogContent>
       </AlertDialog>
       <Tooltip
-      placement="bottom"
-      label={"Create excalidraw file"}
-      bg={bg_color}
-      color={text_color}
-      rounded="md"
-    >
-      <IconButton
-        onClick={onOpen}
-        _hover={{ bg: utils.getDarkerColor("0.03", bg_color) }}
-        color={icon_color}
-        bg="none"
-        w={7}
-        h={7}
-        aria-label="create file"
-        icon={<MdOutlineDraw />}
-      />
+        placement="bottom"
+        label={"Create excalidraw file"}
+        bg={bg_color}
+        color={text_color}
+        rounded="md"
+      >
+        <IconButton
+          onClick={onOpen}
+          _hover={{ bg: utils.getDarkerColor("0.03", bg_color) }}
+          color={icon_color}
+          bg="none"
+          w={7}
+          h={7}
+          aria-label="create file"
+          icon={<MdOutlineDraw />}
+        />
       </Tooltip>
     </>
   )

@@ -28,20 +28,23 @@ const Color = () => {
 
       <Flex w="full" justifyContent="flex-end">
         <Flex gap={2} alignItems="center">
-        <ColorPicker
-                  keyType="scrollbar"
-                  onChange={handleChange}
-                  givenColor={color}
-                />
+          <ColorPicker
+            keyType="scrollbar"
+            onChange={handleChange}
+            givenColor={color}
+          />
           <Button
-          color={utils.getTextColor(accent_color)}
-          _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
-          h={8}
-          bg={accent_color}
-          onClick={() => handleChange("", DEFAULT_SCROLLBAR.color)}>Reset</Button>
+            color={utils.getTextColor(accent_color)}
+            _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
+            h={8}
+            bg={accent_color}
+            onClick={() => handleChange("", DEFAULT_SCROLLBAR.color)}
+          >
+            Reset
+          </Button>
         </Flex>
       </Flex>
-    </Flex> 
+    </Flex>
   )
 }
 
