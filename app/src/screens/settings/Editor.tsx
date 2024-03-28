@@ -21,21 +21,18 @@ import useColors from "hooks/useColors"
 import Compact from "components/Compact"
 import FontChooser from "components/FontChooser"
 import TranslateSeting from "components/TranslateSetting"
-import ExtensionLabel from "components/ExtensionLabel"
 import EditorTitle from "components/EditorTitle"
 import Scrollbar from "components/Scrollbar"
 import { CgScrollV } from "react-icons/cg";
 import { LuHeading } from "react-icons/lu";
 
 const Editor = () => {
-  const { getSecondaryBackgroundColor, getAccentColor, getIconColor } = useColors()
+  const { getSecondaryBackgroundColor, getAccentColor } = useColors()
 
   const secondary_background_color = getSecondaryBackgroundColor()
   const bg_color = utils.getLighterColor("0.02", secondary_background_color)
 
   const accent_color = getAccentColor()
-
-  const icon_color = getIconColor()
 
   return (
     <Box>
@@ -73,7 +70,7 @@ const Editor = () => {
                 flex="1"
                 textAlign="left"
               >
-                <Icon as={FaPalette} w={7} h={7} color={icon_color}/>
+                <Icon as={FaPalette} w={7} h={7}/>
                 <Text fontSize="xl">Theme</Text>
               </Flex>
               <AccordionIcon />
@@ -100,7 +97,6 @@ const Editor = () => {
               border={0}
               _hover={{
                 fill: utils.getTextColor(utils.getDarkerColor("0.1", bg_color)),
-
                 bg: utils.getDarkerColor("0.03", bg_color),
                 color: utils.getTextColor(
                   utils.getDarkerColor("0.1", bg_color),
@@ -115,7 +111,7 @@ const Editor = () => {
                 flex="1"
                 textAlign="left"
               > 
-                <Icon as={LuHeading} w={7} h={7} color={icon_color}/>
+                <Icon as={LuHeading} w={7} h={7}/>
                 <Text fontSize="xl">Headers</Text>
               </Flex>
               <AccordionIcon />
@@ -154,7 +150,7 @@ const Editor = () => {
                 flex="1"
                 textAlign="left"
               >
-                <Icon as={GiCrackedGlass} w={7} h={7} color={icon_color}/>
+                <Icon as={GiCrackedGlass} w={7} h={7}/>
                 <Text fontSize="xl">Glassy</Text>
               </Flex>
               <AccordionIcon />
@@ -194,7 +190,7 @@ const Editor = () => {
                 flex="1"
                 textAlign="left"
               >
-                <Icon as={CgScrollV} w={7} h={7} color={icon_color}/>
+                <Icon as={CgScrollV} w={7} h={7}/>
                 <Text fontSize="xl">Scrollbar</Text>
               </Flex>
               <AccordionIcon />
@@ -204,7 +200,6 @@ const Editor = () => {
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
-        <ExtensionLabel />
         <EditorTitle />
       </Stack>
 

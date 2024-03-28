@@ -3,30 +3,30 @@ import { useSettings } from "contexts/SettingsContext"
 import useColors from "hooks/useColors"
 import { utils } from "utils/index"
 
-const BlurChooser = () => {
-  const { saveSettings, blur } = useSettings()
+const SidebarOpacity = () => {
+  const { saveSettings, sidebarOpacity } = useSettings()
   const { getMutedTextColor, getAccentColor } = useColors()
 
   const muted_text_color = getMutedTextColor()
 
   const accent_color = getAccentColor()
 
-  const blurValue = blur * 10
+  const opacityValue = sidebarOpacity * 100
 
   const handleChange = (value: number) => {
-    const blur = value / 10
-    saveSettings("blur", blur)
+    const opacity = value / 100
+    saveSettings("sidebar_opacity", opacity)
   }
 
   return (
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
-        <Text fontWeight="semibold">Blur</Text>
-        <Text color={muted_text_color}>Choose the blur for the background</Text>
+        <Text fontWeight="semibold">Sidebar opacity</Text>
+        <Text color={muted_text_color}>Choose the opacity for the sidebar</Text>
       </Box>
 
       <Flex w="50%" gap={2} alignItems="center">
-        <Slider value={blurValue} aria-label='slider-ex-1' defaultValue={36} onChange={(val) => handleChange(val)}>
+        <Slider value={opacityValue} aria-label='slider-ex-1' defaultValue={36} onChange={(val) => handleChange(val)}>
           <SliderTrack>
             <SliderFilledTrack />
           </SliderTrack>
@@ -43,4 +43,4 @@ const BlurChooser = () => {
   )
 }
 
-export default BlurChooser
+export default SidebarOpacity

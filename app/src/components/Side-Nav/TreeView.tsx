@@ -11,6 +11,8 @@ interface TreeViewProps {
 
 const TreeView: React.FC<TreeViewProps> = ({ items }) => {
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const workspace_path = localStorage.getItem('workspace_path')
+  const homeName = workspace_path?.split('\\').pop() + ".home"
 
   const toggleItem = (itemId: string) => {
     setExpandedItems(prevState =>
@@ -19,6 +21,14 @@ const TreeView: React.FC<TreeViewProps> = ({ items }) => {
         : [...prevState, itemId]
     );
   };
+
+  const getFileName = (path: string) => {
+    const lastDotIndex = path.lastIndexOf(".")
+    if (lastDotIndex !== -1) {
+      return path.substring(0, lastDotIndex)
+    }
+    return path
+  }
 
   const renderTreeItem = (item: WorkspaceType) => {
     const isExpanded = expandedItems.includes(item.id);
@@ -33,7 +43,7 @@ const TreeView: React.FC<TreeViewProps> = ({ items }) => {
             expanded={isExpanded}
           />
         ) : (
-          <FileButton name={item.name} path={item.path} />
+          getFileName(item.name) !== homeName && <FileButton name={item.name} path={item.path} />
         )}
         {item.type === 'folder' && (
           <AnimatePresence>
@@ -61,9 +71,9 @@ const TreeView: React.FC<TreeViewProps> = ({ items }) => {
 
   return (
     <Box
+      pb={24}
       w="full"
       h="full"
-      pb={24}
       overflowY="hidden"
       _hover={{
         overflowY: 'scroll',

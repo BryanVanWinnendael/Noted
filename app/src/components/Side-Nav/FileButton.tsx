@@ -1,14 +1,17 @@
-import { Flex, Menu, MenuButton, Text, Tooltip } from "@chakra-ui/react"
+import { Flex, Icon, Menu, MenuButton, Text, Tooltip } from "@chakra-ui/react"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import useColors from "hooks/useColors"
 import { useState } from "react"
 import { utils } from "utils/index"
 import ContextMenu from "./Context-Menu"
 import { useSettings } from "contexts/SettingsContext"
+import { PiNoteDuotone } from "react-icons/pi";
+import { FaRegFilePdf } from "react-icons/fa";
+import { MdOutlineDraw } from "react-icons/md";
 
 const FileButton = ({ path, name }: { path: string; name: string }) => {
-  const { getSecondaryBackgroundColor, getTextColor, getBackgroundColor } = useColors()
-  const { extensionLabel } = useSettings()
+  const { getSecondaryBackgroundColor, getTextColor, getBackgroundColor, getIconColor } = useColors()
+  const { extensionLabel, sidebarIcons } = useSettings()
   const { setActiveFolder, activeTab, tabs, openFile } = useWorkspace()
   const isActive = tabs[activeTab]?.path === path
   const [isOpen, setIsOpen] = useState<boolean | undefined>(false)
@@ -20,6 +23,8 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
   const bg_color = utils.getLighterColor("0.02", secondary_background_color)
 
   const text_color = getTextColor()
+
+  const icon_color = getIconColor()
 
   const handleOpenFile = (filePath: string) => {
     const folderPath = filePath.split("\\")
@@ -37,6 +42,17 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
   }
 
   const extension = name.split(".").pop()
+
+  const getIcon = () => {
+    switch (extension) {
+      case "pdf":
+        return <Icon w={4} h={4} as={FaRegFilePdf} color={icon_color} />
+      case "excalidraw":
+        return <Icon w={4} h={4} as={MdOutlineDraw} color={icon_color} />
+      default:
+        return <Icon w={4} h={4} as={PiNoteDuotone} color={icon_color} />
+    }
+  }
 
   return (
     <Menu isOpen={isOpen} onClose={() => setIsOpen(false)} id={path}>
@@ -62,14 +78,15 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
         cursor="pointer"
       >
         
-          <Flex gap={2} alignItems="center">
+          <Flex gap={2} alignItems="center" >
+            {sidebarIcons && getIcon()}
             <Text
               textAlign="left"
               overflow="hidden"
               whiteSpace="nowrap"
               textOverflow="ellipsis"
               fontSize="sm"
-              ml="20px"
+             
             >
               {getFileName(name)}
             </Text>

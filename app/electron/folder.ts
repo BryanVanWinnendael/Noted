@@ -41,7 +41,6 @@ class Folders {
 
         fileTree.build()
         const fileTreeObject = this.fileTreeToObject(fileTree)
-        console.log(fileTreeObject)
         return fileTreeObject
       },
     )

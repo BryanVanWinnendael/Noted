@@ -17,6 +17,7 @@ import useColors from "hooks/useColors"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import Shortcuts from "./Shortcuts"
 import Background from "./Background"
+import Sidebar from "./Sidebar"
 
 const SettingsScreen = () => {
   const {
@@ -132,6 +133,36 @@ const SettingsScreen = () => {
                     }}
                   >
                     Editor
+                  </Box>
+                  <Box
+                    mb={1}
+                    p={1}
+                    pl={2}
+                    rounded="md"
+                    color={
+                      section === "sidebar"
+                        ? utils.getDarkerColor("0.1", accent_color)
+                        : text_color
+                    }
+                    bg={
+                      section === "sidebar"
+                        ? utils.getTransparent(0.2, accent_color)
+                        : ""
+                    }
+                    onClick={() => {
+                      setSection("sidebar")
+                    }}
+                    cursor="pointer"
+                    _hover={{
+                      bg: utils.getDarkerColor(
+                        "0.03",
+                        section === "sidebar"
+                          ? utils.getTransparent(0.2, accent_color)
+                          : bg_colorLeft,
+                      ),
+                    }}
+                  >
+                    Sidebar
                   </Box>
                   <Box
                     mb={1}
@@ -311,6 +342,7 @@ const SettingsScreen = () => {
                 {
                   general: <General />,
                   editor: <Editor />,
+                  sidebar: <Sidebar />,
                   background: <Background />,
                   themes: <Themes />,
                   market: <Market />,

@@ -19,6 +19,7 @@ import {
 import { checker, ensureKeys } from "utils/checker"
 import { utils } from "utils"
 import {
+  DEFAULT_ACTION_BAR_OPACITY,
   DEFAULT_BACKGROUND_IMAGE,
   DEFAULT_BLUR,
   DEFAULT_COMPACT_MODE,
@@ -28,8 +29,11 @@ import {
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS_ENABLED,
   DEFAULT_SCROLLBAR,
+  DEFAULT_SIDEBAR_ICONS,
+  DEFAULT_SIDEBAR_OPACITY,
   DEFAULT_TRANSLATE_LANGUAGE,
   DEFAULT_UPDATE,
+  DEFAULT_WALLPAPER_BRIGHTNESS,
   THEME_DARK,
   THEME_KEYS,
 } from "utils/constants"
@@ -80,6 +84,10 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const [customBackground, setCustomBackground] = useState<string>("")
   const [editorTitle, setEditorTitle] = useState<boolean>(true)
   const [scrollbar, setScrollbar] = useState<Scrollbar>(DEFAULT_SCROLLBAR)
+  const [sidebarIcons, setSidebarIcons] = useState<boolean>(DEFAULT_SIDEBAR_ICONS)
+  const [wallpaperBrightness, setWallpaperBrightness] = useState<number>(DEFAULT_WALLPAPER_BRIGHTNESS)
+  const [sidebarOpacity, setSidebarOpacity] = useState<number>(DEFAULT_SIDEBAR_OPACITY)
+  const [actionbarOpacity, setActionbarOpacity] = useState<number>(DEFAULT_ACTION_BAR_OPACITY)
 
   const readThemeFile = useCallback(async () => {
     const theme_path = localStorage.getItem("theme-path") || ""
@@ -296,6 +304,18 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       case "scrollbar":
         setScrollbar(value)
         break
+      case "sidebar_icons":
+        setSidebarIcons(value)
+        break
+      case "wallpaper_brightness":
+        setWallpaperBrightness(value)
+        break
+      case "sidebar_opacity":
+        setSidebarOpacity(value)
+        break
+      case "action_bar_opacity":
+        setActionbarOpacity(value)
+        break
       default:
         break
     }
@@ -317,6 +337,10 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     setCustomBackground(settings["custom_background"])
     setEditorTitle(settings["editor_title"])
     setScrollbar(settings["scrollbar"])
+    setSidebarIcons(settings["sidebar_icons"])
+    setWallpaperBrightness(settings["wallpaper_brightness"])
+    setSidebarOpacity(settings["sidebar_opacity"])
+    setActionbarOpacity(settings["action_bar_opacity"])
   }
 
   const resetCustomTheme = () => {
@@ -390,7 +414,11 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     blur,
     customBackground,
     editorTitle,
-    scrollbar
+    scrollbar,
+    sidebarIcons,
+    wallpaperBrightness,
+    sidebarOpacity,
+    actionbarOpacity
   }
 
   return (

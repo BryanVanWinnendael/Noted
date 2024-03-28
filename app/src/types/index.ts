@@ -84,6 +84,9 @@ export interface WorkspaceTypeContext {
   importBackground: () => Promise<void>
   backgrounds: string[]
   deleteImportedBackground: (path: string) => void
+  newVersion: boolean
+  setNewVersion: (newVersion: boolean) => void
+  openWorkspaceFile: () => Promise<void>
 }
 
 export interface Theme {
@@ -157,6 +160,10 @@ export type Settings =
   | "custom_background"
   | "editor_title"
   | "scrollbar"
+  | "sidebar_icons"
+  | "wallpaper_brightness"
+  | "action_bar_opacity"
+  | "sidebar_opacity"
 
 export interface SettingsTypeContext {
   isOpen: boolean
@@ -194,6 +201,10 @@ export interface SettingsTypeContext {
   customBackground: string
   editorTitle: boolean
   scrollbar: Scrollbar
+  sidebarIcons: boolean
+  wallpaperBrightness: number
+  actionbarOpacity: number
+  sidebarOpacity: number
 }
 
 export interface EditorTypeContext {

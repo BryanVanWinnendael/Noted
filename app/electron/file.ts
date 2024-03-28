@@ -1,6 +1,7 @@
 import { OpenDialogReturnValue, dialog, ipcMain } from "electron"
 import fs from "fs"
 import path from "path"
+import defaultHomeFile from "./default_home_text.json"
 
 class Files {
   win = null
@@ -152,6 +153,18 @@ class Files {
         return
       }
       fs.unlinkSync(backgroundPath)
+    })
+
+    ipcMain.handle("file:open-workspace-file", async (_, params) => {
+      const name = params.name + ".home.noted"
+      const workspacePath = params.workspace_path
+      const filePath = path.join(workspacePath, name)
+      if (!fs.existsSync(filePath)) {
+        fs.writeFileSync(filePath, JSON.stringify(defaultHomeFile))
+      }
+
+      const fileContent = fs.readFileSync(filePath, "utf8")
+      return { filePath, fileContent }
     })
   }
 }

@@ -57,6 +57,10 @@ export const REQUIRED_SETTINGS_KEYS: Settings[] = [
   "custom_background",
   "editor_title",
   "scrollbar",
+  "sidebar_icons",
+  "wallpaper_brightness",
+  "action_bar_opacity",
+  "sidebar_opacity",
 ]
 
 export const DEFAULT_UPDATE = true
@@ -113,7 +117,7 @@ export const DEFAULT_EXTENSION_LABEL = true
 
 export const DEFAULT_BACKGROUND_IMAGE = "default"
 
-export const DEFAULT_BLUR = 6.8
+export const DEFAULT_BLUR = 0
 
 export const DEFAULT_EDITOR_TITLE = true
 
@@ -121,3 +125,13 @@ export const DEFAULT_SCROLLBAR = {
   color: "#a7a7a7",
   opacity: 0.5,
 }
+
+export const DEFAULT_SIDEBAR_ICONS = false
+
+export const DEFAULT_WALLPAPER_BRIGHTNESS = 1
+
+export const DEFAULT_ACTION_BAR_OPACITY = 0.8
+
+export const DEFAULT_SIDEBAR_OPACITY = 0
+
+export const APP_VERSION = import.meta.env.VITE_APP_VERSION

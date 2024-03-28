@@ -6,6 +6,7 @@ import {
   useState,
 } from "react"
 import { WorkspaceTypeContext, MyWindow, WorkspaceType, Tab } from "types"
+import { APP_VERSION } from "utils/constants"
 
 const WorkspaceContext = createContext<WorkspaceTypeContext>(
   {} as WorkspaceTypeContext,
@@ -34,6 +35,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const [activeFolder, setActiveFolder] = useState<string | undefined>()
   const [showSwitcher, setShowSwitcher] = useState<boolean>(false)
   const [backgrounds, setBackgrounds] = useState<string[]>([])
+  const [newVersion, setNewVersion] = useState<boolean>(false)
 
   const resetWorkspace = () => {
     setWorkspace(undefined)
@@ -377,9 +379,33 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     }
   }
 
+  const checkVersion = async () => {
+    const version = localStorage.getItem("version")
+    if (!version) {
+      localStorage.setItem("version", APP_VERSION)
+    } else {
+      if (version !== APP_VERSION) {
+        setNewVersion(true)
+      }
+    }
+  }
+
+  const openWorkspaceFile = async () => {
+    const workspacePath = localStorage.getItem("workspace_path")
+    const workspaceName = workspacePath?.split("\\").pop()
+
+    const openedFile = await invoke("file:open-workspace-file", {
+      name: workspaceName,
+      workspace_path: workspacePath,
+    })
+
+    openFile(openedFile["filePath"])
+  }
+
   useEffect(() => {
     handleOpenedWorkspace()
     localStorage.setItem("open_files", JSON.stringify([]))
+    checkVersion()
   }, [handleOpenedWorkspace])
 
   const value: WorkspaceTypeContext = {
@@ -417,7 +443,10 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     readFile,
     importBackground,
     backgrounds,
-    deleteImportedBackground
+    deleteImportedBackground,
+    newVersion,
+    setNewVersion,
+    openWorkspaceFile
   }
 
   return (

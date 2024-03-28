@@ -1,5 +1,4 @@
 import { IpcRendererEvent, contextBridge, ipcRenderer } from "electron"
-
 // Expose the Electron API to the renderer process
 contextBridge.exposeInMainWorld("electron", {
   invoke: ipcRenderer.invoke,
@@ -19,7 +18,7 @@ contextBridge.exposeInMainWorld("electron", {
     },
     once(channel: string, func: (...args: any[]) => void) {
       ipcRenderer.once(channel, (_event: IpcRendererEvent, ...args: any[]) =>
-        func(...args)
+        func(...args),
       )
     },
   },
@@ -27,7 +26,7 @@ contextBridge.exposeInMainWorld("electron", {
 
 // --------- Preload scripts loading ---------
 function domReady(
-  condition: DocumentReadyState[] = ["complete", "interactive"]
+  condition: DocumentReadyState[] = ["complete", "interactive"],
 ) {
   return new Promise((resolve) => {
     if (condition.includes(document.readyState)) {
@@ -55,6 +54,22 @@ const safeDOM = {
   },
 }
 
+const getColors = () => {
+  const theme = localStorage.getItem("chakra-ui-color-mode")
+  let colors
+  if (theme === "custom_theme") {
+    colors = JSON.parse(localStorage.getItem("custom-theme-json") || "")
+  } else if (theme === "light") {
+    colors = "#fff"
+  } else {
+    colors = JSON.parse(localStorage.getItem("theme-json") || "")
+  }
+  if (!colors) {
+    return "#fff"
+  }
+  return colors["backgroundColor"]
+}
+
 /**
  * https://tobiasahlin.com/spinkit
  * https://connoratherton.com/loaders
@@ -62,6 +77,7 @@ const safeDOM = {
  * https://matejkustec.github.io/SpinThatShit
  */
 function useLoading() {
+  const bg = getColors()
   const className = `loaders-css__square-spin`
   const styleContent = `
 @keyframes square-spin {
@@ -74,7 +90,9 @@ function useLoading() {
   animation-fill-mode: both;
   width: 50px;
   height: 50px;
-  background: #fff;
+  background-image: url(./icon.ico);
+  background-size: cover;
+  background-repeat: no-repeat;
   animation: square-spin 3s 0s cubic-bezier(0.09, 0.57, 0.49, 0.9) infinite;
 }
 .app-loading-wrap {
@@ -86,7 +104,7 @@ function useLoading() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #282c34;
+  background: ${bg};
   z-index: 9;
 }
     `

@@ -1,0 +1,35 @@
+{
+  "time": 1711640577334,
+  "blocks": [
+    {
+      "id": "N7PFL_-2VQ",
+      "type": "header",
+      "data": { "text": "Home&nbsp;", "level": 1 }
+    },
+    {
+      "id": "rfKOLkMw4m",
+      "type": "paragraph",
+      "data": {
+        "text": "This is your noted <b><mark class=\"cdx-marker\">home file</mark></b>. This file you can acces with a click of a button find in the <b><mark class=\"cdx-marker\">actionbar.</mark></b><div><b><mark class=\"cdx-marker\"><br></mark></b></div>"
+      }
+    },
+    {
+      "id": "sl3Fkr82yd",
+      "type": "header",
+      "data": { "text": "Todo", "level": 4 }
+    },
+    {
+      "id": "-IDfh7gOBF",
+      "type": "checklist",
+      "data": {
+        "items": [
+          { "text": "Create a noted file", "checked": false },
+          { "text": "Create a folder", "checked": false },
+          { "text": "Customize the app", "checked": false },
+          { "text": "Read the home file", "checked": true }
+        ]
+      }
+    }
+  ],
+  "version": "2.29.0"
+}

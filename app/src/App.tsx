@@ -19,12 +19,13 @@ import { useSlash } from "contexts/SlashContext"
 import SlashCommands from "components/Slash-Commands"
 import { backgrounds } from "utils/images"
 import { utils } from "./utils"
+import WhatsNew from "components/Whats-New"
 
 const App = () => {
   const { slashOpen } = useSlash()
   const { getAccentColor, getBackgroundColor } = useColors()
-  const { initSettings, compactMode, activeTheme, glassEnabled, backgroundImage, blur, customBackground, scrollbar } = useSettings()
-  const { workspace, isLoaded, showSwitcher } = useWorkspace()
+  const { initSettings, compactMode, activeTheme, glassEnabled, backgroundImage, blur, customBackground, scrollbar, wallpaperBrightness } = useSettings()
+  const { workspace, isLoaded, showSwitcher, newVersion } = useWorkspace()
   const { useAddShortcuts } = useShortcuts()
   const { setColorMode } = useColorMode()
 
@@ -99,9 +100,12 @@ const App = () => {
           position="relative"
         >
           {
+            newVersion && <WhatsNew />
+          }
+          {
             backgroundImage === "custom" ? 
             <img 
-            style={{filter: `blur(${blur}px)`}}
+            style={{filter: `blur(${blur}px) brightness(${wallpaperBrightness})`}}
             src={getBackground()} alt="background" className="absolute w-full h-full object-cover" />
             : 
             <Box
@@ -110,7 +114,7 @@ const App = () => {
             backgroundSize="cover" backgroundRepeat="no-repeat"
             w="100vw" 
             h="100vh"
-            filter={`blur(${blur}px)`}
+            filter={`blur(${blur}px) brightness(${wallpaperBrightness})`}
             />
           }
 

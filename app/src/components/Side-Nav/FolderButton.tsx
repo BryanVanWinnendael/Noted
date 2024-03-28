@@ -13,11 +13,15 @@ import { utils } from "utils/index"
 import ContextMenu from "./Context-Menu"
 import { IoIosArrowForward } from "react-icons/io";
 import { motion } from "framer-motion"
+import { FaRegFolder } from "react-icons/fa";
+import { FaRegFolderOpen } from "react-icons/fa";
+import { useSettings } from "contexts/SettingsContext"
 
 const FolderButton = ({ path, name, onClick, expanded }: { path: string; name: string, onClick: () => void, expanded: boolean }) => {
   const { getSecondaryBackgroundColor, getTextColor, getIconColor } =
     useColors()
   const { setActiveFolder } = useWorkspace()
+  const { sidebarIcons } = useSettings()
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const icon_color = getIconColor()
@@ -60,9 +64,15 @@ const FolderButton = ({ path, name, onClick, expanded }: { path: string; name: s
           p={1}
         >
           <Flex gap={1} alignItems="center">
-            <motion.span animate={{ rotate: expanded ? 90 : 0 }} className="flex justify-center items-center">
-            <Icon as={IoIosArrowForward} color={icon_color} />
-            </motion.span>
+            {sidebarIcons ? 
+              <Icon w={4} h={4} as={expanded ? FaRegFolderOpen : FaRegFolder} color={icon_color} />
+            :
+              <motion.span animate={{ rotate: expanded ? 90 : 0 }} className="flex justify-center items-center">
+                <Icon as={IoIosArrowForward} color={icon_color} />
+              </motion.span>
+            }
+            
+            
             <Text
               overflow="hidden"
               whiteSpace="nowrap"

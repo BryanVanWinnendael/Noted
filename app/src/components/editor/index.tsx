@@ -22,6 +22,8 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
   const { glassBackground, glassEnabled, editorTitle } = useSettings()
   const boxRef = useRef<HTMLDivElement>(null)
   const filename = path.split("\\").pop()?.split(".noted")[0] || "Untitled"
+  const workspace_path = localStorage.getItem('workspace_path')
+  const homeName = workspace_path?.split('\\').pop() + ".home"
 
   const isGlassEnabled = glassEnabled && glassBackground.editor
 
@@ -166,13 +168,16 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
     >
       {
         editorTitle && <Box p={1} w="full" borderBottom="1px" borderColor={border_color}>
-        <Text opacity={0.6} color={text_color} textAlign="center" pl="4rem" fontSize="md">{filename}</Text>
+        <Text opacity={0.6} color={text_color} textAlign="center" pl="4rem" fontSize="md">{
+          filename === homeName ? "Home" : filename
+        }</Text>
       </Box>
       }
         <ReactEditorJS
           holder={"noted" + path}
           onInitialize={handleInitialize}
           tools={EDITOR_JS_TOOLS}
+          placeholder="Write your note here..."
         >
           <Box
           overflowY="scroll"
