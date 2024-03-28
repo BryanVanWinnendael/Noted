@@ -11,4 +11,6 @@ order: 1
 - [Themes](/docs/themes)
 - [Headers](/docs/headers)
 - [Glass Application](/docs/glass)
+- [Backgrounds](/docs/backgrounds)
+- [Sidebar](/docs/sidebar)
 - [More](/docs/more)

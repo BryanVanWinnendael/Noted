@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/DocsLayout.astro
 title: Write Noted
-description: How do you write Noted notes?
+description: How do you write Noted files?
 section: Getting Started
 order: 2
 ---
@@ -15,32 +15,54 @@ Noted employs block styling within its editor, empowering users to effortlessly 
 - Checklist
 - List
 - Quote
-- CodeFlask (codeblock)
+- Codeblock
 - Delimiter
 - Table
+- Text marker
+- Nestes checklist
+- LaTex
+- Audio player
 
 &nbsp;
 
-## CodeFlask (codeblock)
+## Codeblock
 
 Suported languages are:
 
-- atom
-- bash
-- clike
-- css
-- html
-- iecst
-- javascript
-- json
-- markdown
-- mathml
-- plain
-- python
-- rss
-- shell
-- ssml
-- svg
+- Apache
+- Bash
+- C#
+- C++
+- CSS
+- CoffeeScript
+- Diff
+- Go
+- HTML, XML
+- HTTP
+- JSON
+- Java
+- JavaScript
+- Kotlin
+- Less
+- Lua
+- MakeFile
+- Markdown
+- Nginx
+- Objective-C
+- PHP
+- Perl
+- Properties
+- Python
+- Ruby
+- Rust
+- SCSS
+- SQL
+- Shell Session
+- Swift
+- TOML, also INI
+- TypeScript
+- YAML
+- Plaintext
 
 &nbsp;
 
@@ -54,3 +76,16 @@ Suported headers are:
 - Heading 4
 - Heading 5
 - Heading 6
+
+# Noted home file
+
+Each workspace has a default Noted home file. You can access this file easily with a click of a button.
+![home](../../assets/images/home/home.svg)
+
+# Noted actions
+
+In a Noted file you can perform an action by typing "\\". Here you can rewrite or translate a given text.
+![action](../../assets/images/action/action.png)
+
+You can choose the language the text gets translated to in the settings page.
+![action1](../../assets/images/action/translate.png)
