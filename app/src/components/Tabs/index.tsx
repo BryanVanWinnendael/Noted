@@ -13,6 +13,8 @@ const Index = () => {
     getTextColor,
   } = useColors()
   const { activeTab, tabs, addTab, handleChangeTab, removeTab } = useWorkspace()
+  const workspace_path = localStorage.getItem('workspace_path')
+  const homeName = workspace_path?.split('\\').pop() + ".home"
 
   const accent_color = getAccentColor()
 
@@ -24,9 +26,12 @@ const Index = () => {
   const text_color = getTextColor()
 
   const getFileName = (path: string) => {
+    const extension = path.split(".")[path.split(".").length - 1]
+
     const full_name = path.split("\\")
-    const name = full_name[full_name.length - 1].split(".noted")[0]
-    return name || "New tab"
+    const name = full_name[full_name.length - 1].split("."+extension)[0]
+    if (name === homeName) return "Home"
+    return name
   }
 
   const handleRemoveTab = (index: number) => {
@@ -37,12 +42,20 @@ const Index = () => {
     <Flex w="full" alignItems="center">
       <AnimatePresence mode="popLayout">
         {Object.keys(tabs).map((key, index) => (
+          
           <motion.div
             className="tab-motion"
             layout
             animate={{ scale: 1 }}
             key={index}
           >
+            <Tooltip
+            placement="bottom"
+            label={getFileName(tabs[parseInt(key)].path)}
+            bg={bg_color}
+            color={text_color}
+            rounded="md"
+            >
             <Flex
               cursor="pointer"
               justifyContent="space-between"
@@ -101,6 +114,8 @@ const Index = () => {
                 </Flex>
               )}
             </Flex>
+          </Tooltip>
+
           </motion.div>
         ))}
       </AnimatePresence>

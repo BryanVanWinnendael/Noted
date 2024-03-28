@@ -6,6 +6,8 @@ import {
   HeaderColors,
   GlassSettings,
   Settings,
+  BackgroundImages,
+  Scrollbar,
 } from "types"
 import {
   createContext,
@@ -17,14 +19,21 @@ import {
 import { checker, ensureKeys } from "utils/checker"
 import { utils } from "utils"
 import {
+  DEFAULT_ACTION_BAR_OPACITY,
+  DEFAULT_BACKGROUND_IMAGE,
+  DEFAULT_BLUR,
   DEFAULT_COMPACT_MODE,
   DEFAULT_EXTENSION_LABEL,
   DEFAULT_FONT,
   DEFAULT_GLASS,
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS_ENABLED,
+  DEFAULT_SCROLLBAR,
+  DEFAULT_SIDEBAR_ICONS,
+  DEFAULT_SIDEBAR_OPACITY,
   DEFAULT_TRANSLATE_LANGUAGE,
   DEFAULT_UPDATE,
+  DEFAULT_WALLPAPER_BRIGHTNESS,
   THEME_DARK,
   THEME_KEYS,
 } from "utils/constants"
@@ -42,7 +51,7 @@ type Props = {
 }
 
 declare let window: MyWindow
-const invoke = window.myApp.invoke
+const invoke = window.electron.invoke
 
 export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -69,6 +78,16 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const [extensionLabel, setExtensionLabel] = useState<boolean>(
     DEFAULT_EXTENSION_LABEL,
   )
+  const [backgroundImage, setBackgroundImage] = useState<BackgroundImages>(DEFAULT_BACKGROUND_IMAGE)
+  const [blur, setBlur] = useState<number>(DEFAULT_BLUR)
+  const [appSettings, setAppSettings] = useState<{ [key in Settings]: any }>({} as any)
+  const [customBackground, setCustomBackground] = useState<string>("")
+  const [editorTitle, setEditorTitle] = useState<boolean>(true)
+  const [scrollbar, setScrollbar] = useState<Scrollbar>(DEFAULT_SCROLLBAR)
+  const [sidebarIcons, setSidebarIcons] = useState<boolean>(DEFAULT_SIDEBAR_ICONS)
+  const [wallpaperBrightness, setWallpaperBrightness] = useState<number>(DEFAULT_WALLPAPER_BRIGHTNESS)
+  const [sidebarOpacity, setSidebarOpacity] = useState<number>(DEFAULT_SIDEBAR_OPACITY)
+  const [actionbarOpacity, setActionbarOpacity] = useState<number>(DEFAULT_ACTION_BAR_OPACITY)
 
   const readThemeFile = useCallback(async () => {
     const theme_path = localStorage.getItem("theme-path") || ""
@@ -228,13 +247,13 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
 
   const saveSettings = async (key: Settings, value: any) => {
     const workspace_path = localStorage.getItem("workspace_path")
-    const settings = await getSettings()
-    if (!settings) return
-    settings[key] = value
+    
+    appSettings[key] = value
     invoke("file:settings-save", {
-      settings: JSON.stringify(settings),
+      settings: JSON.stringify(appSettings),
       workspace_path,
     })
+
     setSetting(key, value)
   }
 
@@ -270,6 +289,33 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       case "extension_label":
         setExtensionLabel(value)
         break
+      case "background_image":
+        setBackgroundImage(value)
+        break
+      case "blur":
+        setBlur(value)
+        break
+      case "custom_background":
+        setCustomBackground(value)
+        break
+      case "editor_title":
+        setEditorTitle(value)
+        break
+      case "scrollbar":
+        setScrollbar(value)
+        break
+      case "sidebar_icons":
+        setSidebarIcons(value)
+        break
+      case "wallpaper_brightness":
+        setWallpaperBrightness(value)
+        break
+      case "sidebar_opacity":
+        setSidebarOpacity(value)
+        break
+      case "action_bar_opacity":
+        setActionbarOpacity(value)
+        break
       default:
         break
     }
@@ -286,6 +332,15 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     setFontFamily(settings["font_family"])
     setTranslateLanguage(settings["translate_language"])
     setExtensionLabel(settings["extension_label"])
+    setBackgroundImage(settings["background_image"])
+    setBlur(settings["blur"])
+    setCustomBackground(settings["custom_background"])
+    setEditorTitle(settings["editor_title"])
+    setScrollbar(settings["scrollbar"])
+    setSidebarIcons(settings["sidebar_icons"])
+    setWallpaperBrightness(settings["wallpaper_brightness"])
+    setSidebarOpacity(settings["sidebar_opacity"])
+    setActionbarOpacity(settings["action_bar_opacity"])
   }
 
   const resetCustomTheme = () => {
@@ -302,10 +357,12 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       const settings = JSON.parse(settingsString)
 
       const cleanedSettings = checker.settingsChecker(settings)
+      setAppSettings(cleanedSettings)
       setSettings(cleanedSettings)
       return cleanedSettings
     } catch (err) {
       const cleanedSettings = checker.settingsChecker({} as any)
+      setAppSettings(cleanedSettings)
       setSettings(cleanedSettings)
       return cleanedSettings
     }
@@ -353,6 +410,15 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     fontFamily,
     translateLanguage,
     extensionLabel,
+    backgroundImage,
+    blur,
+    customBackground,
+    editorTitle,
+    scrollbar,
+    sidebarIcons,
+    wallpaperBrightness,
+    sidebarOpacity,
+    actionbarOpacity
   }
 
   return (

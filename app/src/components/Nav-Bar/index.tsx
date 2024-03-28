@@ -6,7 +6,6 @@ import { utils } from "utils"
 import { useWidget } from "contexts/WidgetContext"
 import useColors from "hooks/useColors"
 import SidebarButton from "./SidebarButton"
-import { useSettings } from "contexts/SettingsContext"
 import { useWorkspace } from "contexts/WorkspaceContext"
 
 declare let window: MyWindow
@@ -14,14 +13,12 @@ declare let window: MyWindow
 const NavBar = () => {
   const {
     getSecondaryBackgroundColor,
-    getBackgroundColor,
     getAccentColor,
     getTextColor,
     getMutedTextColor,
   } = useColors()
-  const invoke = window.myApp.invoke
+  const invoke = window.electron.invoke
   const { setWidgetPanel, widgetPanel } = useWidget()
-  const { glassBackground, glassEnabled } = useSettings()
   const { workspace } = useWorkspace()
 
   const secondary_background_color = getSecondaryBackgroundColor()
@@ -29,13 +26,9 @@ const NavBar = () => {
 
   const muted_text_color = getMutedTextColor()
 
-  const nav_bg_color = getBackgroundColor()
-
   const accent_color = getAccentColor()
 
   const text_color = getTextColor()
-
-  const isGlassEnabled = (glassEnabled && glassBackground.window) || !workspace
 
   const clickedClose = () => {
     invoke("close-window")
@@ -51,7 +44,6 @@ const NavBar = () => {
 
   return (
     <Grid
-      bg={isGlassEnabled ? "transparent" : nav_bg_color}
       gridTemplateColumns="auto 1fr auto"
       w="full"
       position="fixed"

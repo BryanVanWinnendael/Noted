@@ -1,107 +1,54 @@
 import { WorkspaceType } from "types"
 import {
-  Accordion,
-  AccordionItem,
-  AccordionPanel,
   Box,
   Text,
 } from "@chakra-ui/react"
-import { useCallback, useEffect, useMemo, useState } from "react"
 import useColors from "hooks/useColors"
 import { useSettings } from "contexts/SettingsContext"
 import CompactNavbar from "components/Nav-Bar/CompactNavbar"
 import Actions from "./Actions"
-import FolderButton from "./FolderButton"
-import FileButton from "./FileButton"
+import TreeView from "./TreeView"
+import { utils } from "utils/index"
 
-const INCLUDED_EXTENSIONS = ["noted", "pdf"]
 
 const Index = ({ workspace }: { workspace: WorkspaceType }) => {
-  const { getTextColor } = useColors()
-  const [filterdWorkspace, setFilterdWorkspace] =
-    useState<WorkspaceType>(workspace)
+  const { getTextColor, getSecondaryBackgroundColor } = useColors()
   const { compactMode } = useSettings()
+  const { sidebarOpacity } = useSettings()
+
+  const background_color = getSecondaryBackgroundColor()
+  const transparent_bg_color = utils.getTransparent(sidebarOpacity, background_color)
 
   const text_color = getTextColor()
 
-  const makeTree = (folder: WorkspaceType[]) => {
-    if (!folder) {
-      return <></>
-    }
-
-    return folder.map((item) => {
-      if (item.type === "folder" && item.items) {
-        return (
-          <AccordionItem key={item.name} border="none" w="full">
-            <FolderButton path={item.path} name={item.name} />
-            <AccordionPanel pb={1} w="full">
-              {makeTree(item.items)}
-            </AccordionPanel>
-          </AccordionItem>
-        )
-      } else {
-        return <FileButton key={item.name} path={item.path} name={item.name} />
-      }
-    })
-  }
-
-  const isIncluded = (name: string) => {
-    const extension = name.split(".").pop()
-    if (!extension) return false
-    return INCLUDED_EXTENSIONS.includes(extension)
-  }
-
-  const filterFilesWithNoted = useCallback(
-    (items: WorkspaceType[] | undefined): WorkspaceType[] | undefined => {
-      if (!items) {
-        return undefined
-      }
-
-      return items
-        .filter(
-          (item) =>
-            (item.type === "file" && isIncluded(item.name)) ||
-            item.type === "folder",
-        )
-        .map((item) => {
-          if (item.type === "folder" && item.items) {
-            return { ...item, items: filterFilesWithNoted(item.items) }
-          }
-          return item
-        })
-    },
-    [],
-  )
-
-  const memoizedFilteredWorkspace = useMemo(() => {
-    return { ...workspace, items: filterFilesWithNoted(workspace.items) }
-  }, [workspace, filterFilesWithNoted])
-
-  useEffect(() => {
-    setFilterdWorkspace(memoizedFilteredWorkspace)
-  }, [memoizedFilteredWorkspace])
+  const sortedItems = workspace.items?.sort((a, b) => {
+    if (a.type === "folder" && b.type === "file") return -1
+    if (a.type === "file" && b.type === "folder") return 1
+    return 0
+  })
 
   return (
-    <Box w="full" h="full">
+    <Box w="full" h="full" pb={compactMode ? "5.3rem" : "3.3rem"}>
       {compactMode && <CompactNavbar />}
       <Actions />
-      <Text pl={4} fontWeight="bold" fontSize="sm" color={text_color} mb={2}>
-        {workspace.name}
-      </Text>
-      {filterdWorkspace.items && (
-        <Accordion
-          allowMultiple
-          defaultIndex={[0]}
-          w="full"
-          px={2}
-          overflowY="hidden"
-          _hover={{ overflowY: "scroll" }}
-          h="full"
-          pb={24}
-        >
-          {makeTree(filterdWorkspace.items)}
-        </Accordion>
-      )}
+      <Box
+        mt={2}
+        p={1}
+        h="full"
+        overflowY="hidden"
+        bg={transparent_bg_color} 
+        rounded="md" 
+      >
+        <Text pl={4} fontWeight="bold" fontSize="md" color={text_color} pt={2} my={2} >
+          {workspace.name}
+        </Text>
+        {
+          sortedItems && (
+            <TreeView items={sortedItems} />
+          )
+        }
+      </Box>
+     
     </Box>
   )
 }

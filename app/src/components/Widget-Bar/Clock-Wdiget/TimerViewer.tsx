@@ -53,7 +53,7 @@ const TimerViewer = () => {
     min: 0,
     max: 60,
     precision: 0,
-    onChange: (valueString: string, valueNumber: number) => {
+    onChange: (_, valueNumber: number) => {
       setInputTimer({ ...inputTimer, hours: valueNumber })
     },
   })
@@ -65,7 +65,7 @@ const TimerViewer = () => {
     min: 0,
     max: 60,
     precision: 0,
-    onChange: (valueString: string, valueNumber: number) => {
+    onChange: (_, valueNumber: number) => {
       setInputTimer({ ...inputTimer, minutes: valueNumber })
     },
   })
@@ -77,7 +77,7 @@ const TimerViewer = () => {
     min: 1,
     max: 60,
     precision: 0,
-    onChange: (valueString: string, valueNumber: number) => {
+    onChange: (_, valueNumber: number) => {
       setInputTimer({ ...inputTimer, seconds: valueNumber })
     },
   })

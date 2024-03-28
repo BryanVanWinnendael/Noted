@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import { MyWindow } from "types/index"
 
 declare let window: MyWindow
-const send = window.myApp.send
+const send = window.electron.send
 
 const GlassBackground = () => {
   const { glassBackground, glassEnabled } = useSettings()

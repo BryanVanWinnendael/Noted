@@ -1,7 +1,6 @@
 import { utils } from "utils/index"
 
 export const tableStyle = (
-  default_text_color: string,
   background_color: string,
   secondary_background_color: string,
   muted_text_color: string,

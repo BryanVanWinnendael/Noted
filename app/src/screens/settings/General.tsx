@@ -6,13 +6,13 @@ import { useSettings } from "contexts/SettingsContext"
 import UpdateToast from "components//UpdateToast"
 import CustomSwitch from "components/CustomSwitch"
 import useColors from "hooks/useColors"
-import { TOAST_ID } from "utils/constants"
+import { APP_VERSION, TOAST_ID } from "utils/constants"
 import { useState } from "react"
+import { useWorkspace } from "contexts/WorkspaceContext"
 
 declare let window: MyWindow
 
-const invoke = window.myApp.invoke
-const VERSION = "v1.0.0"
+const invoke = window.electron.invoke
 
 const General = () => {
   const {
@@ -26,6 +26,7 @@ const General = () => {
   const toast = useToast()
   const { saveSettings, checkUpdates, checkUpdate } = useSettings()
   const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false)
+  const { setNewVersion } = useWorkspace()
 
   const text_color = getTextColor()
 
@@ -94,7 +95,7 @@ const General = () => {
       <Stack mr={5} gap={3}>
         <Flex alignItems="center" justify="space-between">
           <Box>
-            <Text fontWeight="semibold">Current version: {VERSION}</Text>
+            <Text fontWeight="semibold">Current version: {APP_VERSION}</Text>
             <Text
               onClick={() =>
                 handleLink(
@@ -117,6 +118,26 @@ const General = () => {
             isLoading={loadingUpdates}
           >
             Check for updates
+          </Button>
+        </Flex>
+        <Flex alignItems="center" justify="space-between">
+          <Box>
+            <Text fontWeight="semibold">What's new</Text>
+            <Text
+              color={muted_text_color}
+            >
+              Read What's new in {APP_VERSION}
+            </Text>
+          </Box>
+
+          <Button
+            color={utils.getTextColor(accent_color)}
+            onClick={()=> setNewVersion(true)}
+            _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
+            h={8}
+            bg={accent_color}
+          >
+            Read
           </Button>
         </Flex>
         <Flex alignItems="center" justify="space-between">

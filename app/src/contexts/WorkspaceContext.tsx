@@ -6,6 +6,7 @@ import {
   useState,
 } from "react"
 import { WorkspaceTypeContext, MyWindow, WorkspaceType, Tab } from "types"
+import { APP_VERSION } from "utils/constants"
 
 const WorkspaceContext = createContext<WorkspaceTypeContext>(
   {} as WorkspaceTypeContext,
@@ -21,7 +22,7 @@ type Props = {
 
 declare let window: MyWindow
 
-const invoke = window.myApp.invoke
+const invoke = window.electron.invoke
 
 export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const [workspace, setWorkspace] = useState<WorkspaceType | undefined>()
@@ -33,6 +34,8 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const [showOpenNewFile, setShowOpenNewFile] = useState<boolean>(false)
   const [activeFolder, setActiveFolder] = useState<string | undefined>()
   const [showSwitcher, setShowSwitcher] = useState<boolean>(false)
+  const [backgrounds, setBackgrounds] = useState<string[]>([])
+  const [newVersion, setNewVersion] = useState<boolean>(false)
 
   const resetWorkspace = () => {
     setWorkspace(undefined)
@@ -76,7 +79,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
   const readFile = async (filePath: string) => {
     const extension = filePath.split(".").pop()
-    if (extension === "noted") {
+    if (extension === "noted" || extension === "excalidraw") {
       return getFile(filePath)
     }
 
@@ -180,7 +183,6 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
         const openedWorkspace: WorkspaceType = await invoke("folder:open", {
           folder_path: folderPath,
         })
-        console.log(openedWorkspace.path)
         if (reset) resetWorkspace()
         localStorage.setItem("workspace_path", openedWorkspace.path)
         setWorkspace(openedWorkspace)
@@ -191,12 +193,47 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     [],
   )
 
+  const importBackground = async () => {
+    const workspacePath = localStorage.getItem("workspace_path")
+    if (!workspacePath) return
+    const newBackgroundPath = await invoke("file:import-background", {
+      workspace_path: workspacePath,
+    })
+
+    setBackgrounds([...backgrounds, newBackgroundPath])
+  }
+
+  const getImportedBackground = async () => {
+    const workspacePath = localStorage.getItem("workspace_path")
+    if (!workspacePath) return
+    const backgroundPaths = await invoke("file:get-imported-background", {
+      workspace_path: workspacePath,
+    })
+    
+    setBackgrounds(backgroundPaths)
+  }
+
+  const deleteImportedBackground = async (backgroundPath: string) => {
+    const workspacePath = localStorage.getItem("workspace_path")
+    if (!workspacePath) return
+    await invoke("file:delete-imported-background", {
+      workspace_path: workspacePath,
+      background_path: backgroundPath,
+    })
+
+    const newBackgrounds = backgrounds.filter(
+      (background) => background !== backgroundPath,
+    )
+    setBackgrounds(newBackgrounds)
+  }
+
   const handleOpenedWorkspace = useCallback(async () => {
     const workspacePath = localStorage.getItem("workspace_path")
     if (workspacePath) {
       openFolder(workspacePath)
     }
     setIsLoaded(true)
+    getImportedBackground()
   }, [openFolder])
 
   const makeNewFile = async (fileName: string, folder_path: string) => {
@@ -342,9 +379,33 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     }
   }
 
+  const checkVersion = async () => {
+    const version = localStorage.getItem("version")
+    if (!version) {
+      localStorage.setItem("version", APP_VERSION)
+    } else {
+      if (version !== APP_VERSION) {
+        setNewVersion(true)
+      }
+    }
+  }
+
+  const openWorkspaceFile = async () => {
+    const workspacePath = localStorage.getItem("workspace_path")
+    const workspaceName = workspacePath?.split("\\").pop()
+
+    const openedFile = await invoke("file:open-workspace-file", {
+      name: workspaceName,
+      workspace_path: workspacePath,
+    })
+
+    openFile(openedFile["filePath"])
+  }
+
   useEffect(() => {
     handleOpenedWorkspace()
     localStorage.setItem("open_files", JSON.stringify([]))
+    checkVersion()
   }, [handleOpenedWorkspace])
 
   const value: WorkspaceTypeContext = {
@@ -380,6 +441,12 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     savePdfFile,
     split,
     readFile,
+    importBackground,
+    backgrounds,
+    deleteImportedBackground,
+    newVersion,
+    setNewVersion,
+    openWorkspaceFile
   }
 
   return (

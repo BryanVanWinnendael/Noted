@@ -1,16 +1,12 @@
 import { Box } from "@chakra-ui/react"
 import { utils } from "utils"
 import { useCallback, useEffect } from "react"
-import { useWorkspace } from "contexts/WorkspaceContext"
 import BlockStyling from "styling/Block-Styling"
 import useColors from "hooks/useColors"
 import "styling/splitScreen.css"
 import { splitScreen } from "./SplitScreen"
 
 const EditorWrapper = ({ children }: { children: JSX.Element }) => {
-  const { activeTab, tabs } = useWorkspace()
-  const tab = tabs[activeTab]
-
   const {
     getBorderColor,
     getIconColor,

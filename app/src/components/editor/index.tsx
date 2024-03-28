@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react"
+import { Box, Flex, Text } from "@chakra-ui/react"
 import { EDITOR_JS_TOOLS } from "./tools"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import { useCallback, useEffect, useRef, useState } from "react"
@@ -8,6 +8,7 @@ import useColors from "hooks/useColors"
 import { utils } from "utils/index"
 import { useEditor } from "contexts/EditorContext"
 import { useSlash } from "contexts/SlashContext"
+import { useSettings } from "contexts/SettingsContext"
 
 const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
   const { setPosition, setSlashOpen, slashOpen } = useSlash()
@@ -18,7 +19,13 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
   const [loaded, setLoaded] = useState(false)
   const { setEditor, editor, setBlocks, setTime, setSplittedEditor } =
     useEditor()
+  const { glassBackground, glassEnabled, editorTitle } = useSettings()
   const boxRef = useRef<HTMLDivElement>(null)
+  const filename = path.split("\\").pop()?.split(".noted")[0] || "Untitled"
+  const workspace_path = localStorage.getItem('workspace_path')
+  const homeName = workspace_path?.split('\\').pop() + ".home"
+
+  const isGlassEnabled = glassEnabled && glassBackground.editor
 
   const text_color = getTextColor()
 
@@ -142,34 +149,44 @@ const Editor = ({ splitted, path }: { splitted?: boolean; path: string }) => {
 
   return (
     <Flex
-      ml={splitted ? 2 : 0}
       color={text_color}
       w="full"
       h="full"
       border="1px"
-      overflowY="scroll"
       borderColor={border_color}
       rounded="md"
       maxHeight="100%"
-      overflowX="hidden"
-      bg={lighter_bg_color}
+      className="glass"
+      backdropFilter={`blur(100px)`}
+      shadow="lg"
+      flexDirection="column"
+      bg={isGlassEnabled ? utils.getGlassBackground(lighter_bg_color) : lighter_bg_color}
+      style={{
+        backdropFilter: isGlassEnabled ? `blur(10px)` : 'none', // Apply backdrop filter only when glass effect is enabled
+      }}
       mb={2}
     >
-      <Box maxH="100%" w="full" h="full" m={0} pl={2}>
+      {
+        editorTitle && <Box p={1} w="full" borderBottom="1px" borderColor={border_color}>
+        <Text opacity={0.6} color={text_color} textAlign="center" pl="4rem" fontSize="md">{
+          filename === homeName ? "Home" : filename
+        }</Text>
+      </Box>
+      }
         <ReactEditorJS
           holder={"noted" + path}
           onInitialize={handleInitialize}
           tools={EDITOR_JS_TOOLS}
+          placeholder="Write your note here..."
         >
           <Box
+          overflowY="scroll"
             ref={boxRef}
             onKeyDown={checkSlashCommand}
             id={"noted" + path}
-            overflowY="scroll"
             height="100%"
           ></Box>
         </ReactEditorJS>
-      </Box>
     </Flex>
   )
 }

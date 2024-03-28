@@ -9,23 +9,19 @@ import { useWidget } from "contexts/WidgetContext"
 import EditorWrapper from "styling/EditorWrapper"
 import { useWorkspace } from "contexts/WorkspaceContext"
 import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
-import { utils } from "utils/index"
 import PdfViewer from "components/Pdf-Viewer"
 import NoFile from "components/NoFile"
 import { Allotment } from "allotment"
 import "allotment/dist/style.css"
 import { useCallback } from "react"
+import ExcalidrawEditor from "components/Excalidraw-Editor"
 
 const Index = ({ workspace }: { workspace: WorkspaceType }) => {
   const { showSidebar, tabs, activeTab } = useWorkspace()
   const length_tabs = Object.keys(tabs).length
   const { widgetPanel } = useWidget()
-  const { glassEnabled, glassBackground, compactMode } = useSettings()
-  const { getBackgroundColor } = useColors()
-  const bg_color = getBackgroundColor()
+  const { compactMode } = useSettings()
 
-  const isGlassEnabled = glassEnabled && glassBackground.window
 
   const openScreen = useCallback((tab: ActiveTab) => {
     if (!tab.path) return <NoFile />
@@ -38,6 +34,8 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
         return <Editor path={path} />
       case "pdf":
         return <PdfViewer path={path} />
+      case "excalidraw":
+        return <ExcalidrawEditor path={path} />
       default:
         return <NoFile />
     }
@@ -51,9 +49,17 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
 
     switch (extension) {
       case "noted":
-        return <Editor splitted={true} path={path} />
+        return <Box pl={2} maxHeight="100%" h="full">
+          <Editor splitted={true} path={path} />
+        </Box>
       case "pdf":
-        return <PdfViewer splitted={true} path={path} />
+        return  <Box pl={2} maxHeight="100%" h="full">
+          <PdfViewer splitted={true} path={path} />
+          </Box>
+      case "excalidraw":
+        return <Box pl={2} maxHeight="100%" h="full">
+          <ExcalidrawEditor path={path} splitted={true}/>
+        </Box>
       default:
         return <NoFile />
     }
@@ -65,8 +71,6 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
       pt={compactMode ? 0 : 9}
       h="full"
       px={2}
-      className="glass"
-      bg={isGlassEnabled ? utils.getGlassBackground(bg_color) : bg_color}
     >
       <PanelGroup
         id={"sidebar"}
@@ -76,6 +80,8 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
           maxHeight: "100%",
           marginTop: compactMode ? 0 : "5px",
           paddingBottom: "5px",
+          backgroundColor: "transparent",
+          zIndex: 9
         }}
       >
         {showSidebar && (
@@ -92,7 +98,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
           order={2}
           minSize={12}
           defaultSize={12}
-          style={{ maxHeight: "100%" }}
+          style={{ maxHeight: "100%", backgroundColor: "transparent"}}
         >
           <EditorWrapper>
             <>

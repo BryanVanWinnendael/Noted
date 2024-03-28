@@ -16,7 +16,7 @@ const Compact = () => {
       bg={isGlassEnabled ? utils.getGlassBackground(bg_color) : bg_color}
       w="full"
       h={2}
-      className="nav glass"
+      className="nav"
     />
   )
 }

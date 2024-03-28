@@ -11,6 +11,7 @@ export interface WorkspaceType {
   name: string
   path: string
   type: "file" | "folder"
+  id: string
 }
 
 export type BooleanObject = {
@@ -80,6 +81,12 @@ export interface WorkspaceTypeContext {
   savePdfFile: (data: any, path: string) => void
   split: (path: string) => Promise<void>
   readFile: (path: string) => Promise<any>
+  importBackground: () => Promise<void>
+  backgrounds: string[]
+  deleteImportedBackground: (path: string) => void
+  newVersion: boolean
+  setNewVersion: (newVersion: boolean) => void
+  openWorkspaceFile: () => Promise<void>
 }
 
 export interface Theme {
@@ -103,10 +110,37 @@ export interface HeaderColors {
 
 export type WidgetName = "calendar" | "todo" | "clock" | "info"
 
-export type GlassComponents = "navBar" | "settings" | "widgets" | "window"
+export type GlassComponents =
+  | "navBar"
+  | "settings"
+  | "widgets"
+  | "window"
+  | "editor"
+
+export type BackgroundColors = "default" | "custom"
+
+export type BackgroundAcrylic =
+  | "bubble"
+  | "red"
+  | "blue"
+  | "dark"
+  | "light"
+  | "mist"
+  | "papercut"
+export type BackgroundCities = "jp" | "in" | "ny" | "kr" | "ph"
+
+export type BackgroundImages =
+  | BackgroundColors
+  | BackgroundCities
+  | BackgroundAcrylic
 
 export type GlassSettings = {
   [key in GlassComponents]: boolean
+}
+
+export interface Scrollbar {
+  color: string
+  opacity: number
 }
 
 export type Settings =
@@ -121,6 +155,15 @@ export type Settings =
   | "font_family"
   | "translate_language"
   | "extension_label"
+  | "background_image"
+  | "blur"
+  | "custom_background"
+  | "editor_title"
+  | "scrollbar"
+  | "sidebar_icons"
+  | "wallpaper_brightness"
+  | "action_bar_opacity"
+  | "sidebar_opacity"
 
 export interface SettingsTypeContext {
   isOpen: boolean
@@ -153,6 +196,15 @@ export interface SettingsTypeContext {
   fontFamily: string
   translateLanguage: string
   extensionLabel: boolean
+  backgroundImage: BackgroundImages
+  blur: number
+  customBackground: string
+  editorTitle: boolean
+  scrollbar: Scrollbar
+  sidebarIcons: boolean
+  wallpaperBrightness: number
+  actionbarOpacity: number
+  sidebarOpacity: number
 }
 
 export interface EditorTypeContext {
