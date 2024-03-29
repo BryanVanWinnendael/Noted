@@ -22,4 +22,6 @@ ORIGIN=*
 
 ## Build production
 
+```bash
 docker compose up -d
+```

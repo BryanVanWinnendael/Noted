@@ -27,4 +27,6 @@ To get the rapid api key vist [rapidapi](https://rapidapi.com/microsoft-azure-or
 
 ## Build production
 
+```bash
 docker compose up -d
+```
