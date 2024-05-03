@@ -13,6 +13,8 @@ import {
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS,
   DEFAULT_HEADER_COLORS_ENABLED,
+  DEFAULT_MATERIAL,
+  DEFAULT_MATERIALS,
   DEFAULT_SCROLLBAR,
   DEFAULT_SIDEBAR_ICONS,
   DEFAULT_SIDEBAR_OPACITY,
@@ -25,7 +27,14 @@ import {
 import languages from "./languages.json"
 
 const headerKeys = ["h1", "h2", "h3", "h4", "h5", "h6"]
-const glassKeys = ["navBar", "settings", "widgets", "window", "editor"]
+const glassKeys = [
+  "navBar",
+  "settings",
+  "widgets",
+  "window",
+  "editor",
+  "contextMenu",
+]
 
 const isColor = (key: any, color: any): any => {
   try {
@@ -202,6 +211,13 @@ const checkSidebarOpacity = (opacity: any): any => {
   return opacity
 }
 
+const checkMaterial = (material: any): any => {
+  if (typeof material !== "string" || !DEFAULT_MATERIALS.includes(material)) {
+    return DEFAULT_MATERIAL
+  }
+  return material
+}
+
 export const ensureKeys = (settings: { [key in any]: any }, keys: any[]) => {
   const filteredObject = Object.fromEntries(
     Object.entries(settings).filter(([key]) => keys.includes(key as Settings)),
@@ -277,6 +293,9 @@ const settingsChecker = (settings: { [key in Settings]: any }): {
         break
       case "sidebar_opacity":
         filledSettings[key] = checkSidebarOpacity(value)
+        break
+      case "material":
+        filledSettings[key] = checkMaterial(value)
         break
       default:
         break

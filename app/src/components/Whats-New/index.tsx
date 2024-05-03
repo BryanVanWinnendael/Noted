@@ -27,16 +27,17 @@ type Update = {
 
 const Index = () => {
   const { getBackgroundColor, getTextColor, getAccentColor } = useColors()
-  const { setNewVersion } = useWorkspace()
+  const { setNewVersion, setShowConfetti } = useWorkspace()
   const [isOpen, setIsOpen] = useState(true)
   const pages: Update[] = updates
   const [page, setPage] = useState(0)
-
+  setShowConfetti(false)
   const bg_color = getBackgroundColor()
   const text_color = getTextColor()
   const accent_color = getAccentColor()
 
   const handleClose = () => {
+    setShowConfetti(true)
     setIsOpen(false)
     setNewVersion(false)
     localStorage.setItem("version", APP_VERSION)
@@ -100,6 +101,7 @@ const Index = () => {
                 </Button>
               </GridItem>
             )}
+
             {page === pages.length - 1 && (
               <GridItem mt={4} w="full" rowStart={2} colSpan={2}>
                 <Button

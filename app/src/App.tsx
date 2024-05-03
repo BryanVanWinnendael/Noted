@@ -1,6 +1,13 @@
 import NavBar from "components/Nav-Bar"
 import { useCallback, useEffect } from "react"
-import { Box, Center, Spinner, Stack, useColorMode } from "@chakra-ui/react"
+import {
+  Box,
+  Center,
+  Flex,
+  Spinner,
+  Stack,
+  useColorMode,
+} from "@chakra-ui/react"
 import Settings from "screens/Settings"
 import { useSettings } from "contexts/SettingsContext"
 import Home from "screens/Home"
@@ -12,7 +19,6 @@ import OpenFileInTab from "components/OpenFileInTab"
 import Compact from "components/Nav-Bar/Compact"
 import FileSwitcher from "components/File-Switcher"
 import DragAndDrop from "components/DragAndDrop"
-import GlassBackground from "components/GlassBackground"
 import UpdateWrapper from "components/UpdateWrapper"
 import OpenNewFile from "components/OpenNewFile"
 import { useSlash } from "contexts/SlashContext"
@@ -20,6 +26,7 @@ import SlashCommands from "components/Slash-Commands"
 import { backgrounds } from "utils/images"
 import { utils } from "./utils"
 import WhatsNew from "components/Whats-New"
+import ConfettiExplosion from "react-confetti-explosion"
 
 const App = () => {
   const { slashOpen } = useSlash()
@@ -31,11 +38,13 @@ const App = () => {
     glassEnabled,
     backgroundImage,
     blur,
+    glassBackground,
     customBackground,
     scrollbar,
     wallpaperBrightness,
   } = useSettings()
-  const { workspace, isLoaded, showSwitcher, newVersion } = useWorkspace()
+  const { workspace, isLoaded, showSwitcher, newVersion, showConfetti } =
+    useWorkspace()
   const { useAddShortcuts } = useShortcuts()
   const { setColorMode } = useColorMode()
 
@@ -57,14 +66,19 @@ const App = () => {
   }
 
   useEffect(() => {
-    document.getElementsByTagName("html")[0].style.backgroundColor = bg_color
-  }, [bg_color])
+    if (glassEnabled && glassBackground.window)
+      document.getElementsByTagName("html")[0].style.backgroundColor =
+        "transparent"
+    else
+      document.getElementsByTagName("html")[0].style.backgroundColor = bg_color
+  }, [bg_color, glassBackground.window, glassEnabled])
 
   useEffect(() => {
     initSettings()
     setChakraColorMode()
   }, [initSettings, setChakraColorMode, workspace?.path])
 
+  // Styles for custom scrollbar
   useEffect(() => {
     const styleId = "custom-scrollbar-styles"
 
@@ -106,7 +120,16 @@ const App = () => {
   return (
     <UpdateWrapper>
       <DragAndDrop>
-        <Box position="relative">
+        <Box>
+          {showConfetti && (
+            <Flex justifyContent="center" w="100%">
+              <ConfettiExplosion
+                zIndex={99999999}
+                particleCount={250}
+                width={1600}
+              />
+            </Flex>
+          )}
           {newVersion && <WhatsNew />}
           {backgroundImage === "custom" ? (
             <img
@@ -129,7 +152,6 @@ const App = () => {
             />
           )}
 
-          {glassEnabled && <GlassBackground />}
           <Settings />
           {!compactMode ? <NavBar /> : <Compact />}
 

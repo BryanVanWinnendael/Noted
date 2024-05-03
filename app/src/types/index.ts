@@ -41,6 +41,8 @@ export interface ContextMenu {
   name: string
 }
 
+export type Material = "acrylic" | "mica"
+
 export type OpenAvailbleTypes = "noted" | "pdf"
 
 export interface OpenTypes {
@@ -87,6 +89,8 @@ export interface WorkspaceTypeContext {
   newVersion: boolean
   setNewVersion: (newVersion: boolean) => void
   openWorkspaceFile: () => Promise<void>
+  showConfetti: boolean
+  setShowConfetti: (show: boolean) => void
 }
 
 export interface Theme {
@@ -116,6 +120,7 @@ export type GlassComponents =
   | "widgets"
   | "window"
   | "editor"
+  | "contextMenu"
 
 export type BackgroundColors = "default" | "custom"
 
@@ -164,6 +169,7 @@ export type Settings =
   | "wallpaper_brightness"
   | "action_bar_opacity"
   | "sidebar_opacity"
+  | "material"
 
 export interface SettingsTypeContext {
   isOpen: boolean
@@ -205,6 +211,7 @@ export interface SettingsTypeContext {
   wallpaperBrightness: number
   actionbarOpacity: number
   sidebarOpacity: number
+  material: Material
 }
 
 export interface EditorTypeContext {

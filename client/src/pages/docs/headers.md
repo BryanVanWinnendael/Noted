@@ -6,6 +6,6 @@ section: Customize
 order: 3
 ---
 
-![headers settings](../../assets/images/headers/headers.svg)
+![headers settings](../../assets/images/headers/headers.png)
 
-![headers text](../../assets/images/headers/headers_text.svg)
+![headers text](../../assets/images/headers/headers_text.png)

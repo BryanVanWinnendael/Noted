@@ -6,7 +6,7 @@ section: Widgets
 order: 2
 ---
 
-![info widget](../../assets/images/widgets/info.svg)
+![info widget](../../assets/images/widgets/info.png)
 
 &nbsp;
 
@@ -15,11 +15,11 @@ order: 2
 ## Calendar
 
 When integrating with the Calendar widget, you unlock the capability to view all todos organized by date groups.
-![info calendar](../../assets/images/widgets/info_calendar.svg)
+![info calendar](../../assets/images/widgets/info_calendar.png)
 
 &nbsp;
 
 ## ToDos
 
 When integrating with the ToDos widget, you unlock the capability to view all todos organized by date groups.
-![info todo](../../assets/images/widgets/info_todo.svg)
+![info todo](../../assets/images/widgets/info_todo.png)

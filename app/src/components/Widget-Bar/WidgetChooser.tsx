@@ -21,7 +21,7 @@ const WidgetChooser = () => {
       opacity={10}
       p={2}
       rounded="lg"
-      bg={utils.getTransparent(0.5, bg_color)}
+      bg={bg_color}
       gap={2}
       overflowX="auto"
     >

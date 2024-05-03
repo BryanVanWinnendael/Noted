@@ -31,7 +31,7 @@ const Index = ({ children }: { children: JSX.Element }) => {
   return (
     <Box
       h="100%"
-      css={{
+      __css={{
         ...soundStyle(border_color),
         ...latexStyle(icon_color, muted_text_color),
         ...nestedStyle(secondary_background_color, accent_color),

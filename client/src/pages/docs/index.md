@@ -21,10 +21,10 @@ And just like that, your Noted workspace is ready to go! It's as easy as creatin
 
 ### Use the action menu
 
-![action menu](../../assets/images/index/file_action.svg)
+![action menu](../../assets/images/index/file_action.png)
 
 &nbsp;
 
 ### Right click a folder/file
 
-![right click](../../assets/images/index/file_right_click.svg)
+![right click](../../assets/images/index/file_right_click.png)

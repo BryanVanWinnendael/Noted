@@ -34,5 +34,5 @@
     target: ["AppImage"],
     artifactName: "${productName}-Setup-${version}.${ext}",
   },
-  icon: "icon.ico",
+  icon: "public/icon.ico",
 }

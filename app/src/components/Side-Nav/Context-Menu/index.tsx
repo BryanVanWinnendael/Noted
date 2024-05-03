@@ -20,7 +20,7 @@ const Index = ({ path, name, type }: ContextMenu) => {
 
   const border_color = getBorderColor()
 
-  const isGlassEnabled = glassEnabled && glassBackground.window
+  const isGlassEnabled = glassEnabled && glassBackground.contextMenu
 
   return (
     <MenuList

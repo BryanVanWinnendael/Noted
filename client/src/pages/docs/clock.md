@@ -6,7 +6,7 @@ section: Widgets
 order: 2
 ---
 
-![calendar widget](../../assets/images/widgets/clock.svg)
+![calendar widget](../../assets/images/widgets/clock.png)
 
 &nbsp;
 
@@ -15,4 +15,4 @@ order: 2
 ## Calendar
 
 When linking to the Calendar widget, you gain the ability to set a timer countdown until a chosen date.
-![clock calendar](../../assets/images/widgets/clock_calendar.svg)
+![clock calendar](../../assets/images/widgets/clock_calendar.png)

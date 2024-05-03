@@ -6,10 +6,10 @@ section: Customize
 order: 4
 ---
 
-![glass](../../assets/images/glass/glass.svg)
+![glass](../../assets/images/glass/glass.png)
 
-![glass editor](../../assets/images/glass/glass_editor.svg)
+![glass editor](../../assets/images/glass/glass_editor.png)
 
-![glass widgets](../../assets/images/glass/glass_widgets.svg)
+![glass widgets](../../assets/images/glass/glass_widgets.png)
 
-![glass menu](../../assets/images/glass/glass_menu.svg)
+![glass menu](../../assets/images/glass/glass_menu.png)

@@ -36,7 +36,7 @@ const WidgetIcon = ({ icon, name }: { icon: any; name: WidgetName }) => {
 
   const border_color = getBorderColor()
 
-  const isGlassEnabled = glassEnabled && glassBackground.window
+  const isGlassEnabled = glassEnabled && glassBackground.contextMenu
 
   const handleSelect = (nWidget: number) => {
     const isNameIncluded = selectedWidgets.includes(name)

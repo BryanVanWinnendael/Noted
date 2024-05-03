@@ -8,6 +8,7 @@ import {
   Settings,
   BackgroundImages,
   Scrollbar,
+  Material,
 } from "types"
 import {
   createContext,
@@ -28,6 +29,7 @@ import {
   DEFAULT_GLASS,
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS_ENABLED,
+  DEFAULT_MATERIAL,
   DEFAULT_SCROLLBAR,
   DEFAULT_SIDEBAR_ICONS,
   DEFAULT_SIDEBAR_OPACITY,
@@ -100,6 +102,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const [actionbarOpacity, setActionbarOpacity] = useState<number>(
     DEFAULT_ACTION_BAR_OPACITY,
   )
+  const [material, setMaterial] = useState<Material>(DEFAULT_MATERIAL)
 
   const readThemeFile = useCallback(async () => {
     const theme_path = localStorage.getItem("theme-path") || ""
@@ -328,6 +331,9 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       case "action_bar_opacity":
         setActionbarOpacity(value)
         break
+      case "material":
+        setMaterial(value)
+        break
       default:
         break
     }
@@ -353,6 +359,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     setWallpaperBrightness(settings["wallpaper_brightness"])
     setSidebarOpacity(settings["sidebar_opacity"])
     setActionbarOpacity(settings["action_bar_opacity"])
+    setMaterial(settings["material"])
   }
 
   const resetCustomTheme = () => {
@@ -380,12 +387,17 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     }
   }, [])
 
+  const setAppMaterial = useCallback(async () => {
+    await invoke("change-material", material)
+  }, [material])
+
   const initSettings = useCallback(() => {
     getSettings()
     getCustomThemes()
     readThemeFile()
     resetCustomTheme()
-  }, [getCustomThemes, getSettings, readThemeFile])
+    setAppMaterial()
+  }, [getCustomThemes, getSettings, readThemeFile, setAppMaterial])
 
   useEffect(() => {
     initSettings()
@@ -431,6 +443,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     wallpaperBrightness,
     sidebarOpacity,
     actionbarOpacity,
+    material,
   }
 
   return (

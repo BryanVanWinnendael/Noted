@@ -8,32 +8,32 @@ order: 2
 
 ### Light
 
-![light](../../assets/images/theme/light.svg)
+![light](../../assets/images/theme/light.png)
 
 &nbsp;
 
 ### Dark
 
-![dark](../../assets/images/theme/dark.svg)
+![dark](../../assets/images/theme/dark.png)
 
 &nbsp;
 
 ### Deep Blue
 
-![blue](../../assets/images/theme/blue.svg)
+![blue](../../assets/images/theme/blue.png)
 
 &nbsp;
 
 ### Custom
 
-![custom](../../assets/images/theme/custom.svg)
+![custom](../../assets/images/theme/custom.png)
 
 &nbsp;
 
 ## Market
 
 In the market, you can add themes created by the community to your workspace.
-![market](../../assets/images/theme/market.svg)
+![market](../../assets/images/theme/market.png)
 
 &nbsp;
 

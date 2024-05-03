@@ -4,12 +4,14 @@ import useColors from "hooks/useColors"
 import { IoIosAdd } from "react-icons/io"
 
 const ImportBackground = () => {
-  const { getBorderColor, getIconColor } = useColors()
+  const { getBorderColor, getIconColor, getBackgroundColor } = useColors()
   const { importBackground } = useWorkspace()
 
   const icon_color = getIconColor()
 
   const border_color = getBorderColor()
+
+  const background_color = getBackgroundColor()
 
   const handleClick = () => {
     importBackground()
@@ -33,6 +35,7 @@ const ImportBackground = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
+        bg={background_color}
       >
         <Box
           transition="all 0.3s"

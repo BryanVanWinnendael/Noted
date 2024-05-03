@@ -80,7 +80,7 @@ Suported headers are:
 # Noted home file
 
 Each workspace has a default Noted home file. You can access this file easily with a click of a button.
-![home](../../assets/images/home/home.svg)
+![home](../../assets/images/home/home.png)
 
 # Noted actions
 

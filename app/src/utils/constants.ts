@@ -61,6 +61,7 @@ export const REQUIRED_SETTINGS_KEYS: Settings[] = [
   "wallpaper_brightness",
   "action_bar_opacity",
   "sidebar_opacity",
+  "material",
 ]
 
 export const DEFAULT_UPDATE = true
@@ -75,6 +76,7 @@ export const DEFAULT_GLASS = {
   widgets: true,
   window: true,
   editor: true,
+  contextMenu: true,
 }
 
 export const DEFAULT_GLASS_ENABLED = false
@@ -135,3 +137,7 @@ export const DEFAULT_ACTION_BAR_OPACITY = 0.8
 export const DEFAULT_SIDEBAR_OPACITY = 0
 
 export const APP_VERSION = import.meta.env.VITE_APP_VERSION
+
+export const DEFAULT_MATERIAL = "mica"
+
+export const DEFAULT_MATERIALS = ["acrylic"]

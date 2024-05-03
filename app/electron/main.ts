@@ -4,8 +4,6 @@ import Updates from "./update"
 import Files from "./file"
 import Folders from "./folder"
 import Themes from "./theme"
-import { getWallpaper } from "wallpaper"
-import { screen } from "electron"
 import { autoUpdater } from "electron-updater"
 
 autoUpdater.autoDownload = false
@@ -43,6 +41,7 @@ function createWindow() {
       preload: path.join(__dirname, "preload.js"),
       webSecurity: false,
     },
+    backgroundMaterial: "acrylic",
   })
 
   !app.isPackaged && win.webContents.openDevTools()
@@ -60,6 +59,15 @@ function createWindow() {
   const folders = new Folders(win)
   folders.handle()
 
+  ipcMain.handle("change-material", async (_, material) => {
+    win?.setBackgroundMaterial(material)
+  })
+
+  win.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url) // Open URL in user's browser.
+    return { action: "deny" } // Prevent the app from opening the URL.
+  })
+
   ipcMain.handle("minimize-window", async () => {
     win?.minimize()
   })
@@ -75,28 +83,6 @@ function createWindow() {
   ipcMain.handle("close-window", async () => {
     if (process.platform !== "darwin") {
       app.quit()
-    }
-  })
-
-  ipcMain.on("asynchronous-message", async (event) => {
-    try {
-      const wallpaperString = await getWallpaper()
-
-      const screenConfig = {
-        width: screen.getPrimaryDisplay().workAreaSize.width,
-        height: screen.getPrimaryDisplay().workAreaSize.height,
-        wallpaper: wallpaperString,
-        top: win?.getPosition()[1],
-        left: win?.getPosition()[0],
-      }
-      event.sender.send("wallpaper", screenConfig)
-      win?.on("move", () => {
-        screenConfig.top = win?.getPosition()[1]
-        screenConfig.left = win?.getPosition()[0]
-        event.sender.send("wallpaper", screenConfig)
-      })
-    } catch (error) {
-      console.error(error)
     }
   })
 

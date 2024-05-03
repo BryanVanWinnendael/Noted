@@ -13,6 +13,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #242b38;
   user-select: none;
+  background: transparent !important;
 }
 
 .select-text-disable {

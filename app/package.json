@@ -1,13 +1,14 @@
 {
   "name": "Noted",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.5",
   "repository": "https://github.com/BryanVanWinnendael/Noted",
   "publish": {
     "provider": "github",
     "releaseType": "release"
   },
   "scripts": {
+    "start": "electron .",
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -64,6 +65,7 @@
     "polished": "^4.2.2",
     "react": "^18.2.0",
     "react-colorful": "^5.6.1",
+    "react-confetti-explosion": "^2.1.2",
     "react-dom": "^18.2.0",
     "react-editor-js": "^2.1.0",
     "react-fast-accordion": "^2.0.10",
@@ -72,7 +74,6 @@
     "react-resizable-panels": "^1.0.8",
     "roughjs": "^4.6.6",
     "typescript": "^4.7.3",
-    "wallpaper": "^7.2.0",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
@@ -87,7 +88,7 @@
     "autoprefixer": "^10.4.18",
     "concurrently": "^5.3.0",
     "cross-env": "^7.0.3",
-    "electron": "^26.1.0",
+    "electron": "^30.0.2",
     "electron-builder": "^24.6.4",
     "eslint": "^8.48.0",
     "eslint-plugin-react-hooks": "^4.6.0",

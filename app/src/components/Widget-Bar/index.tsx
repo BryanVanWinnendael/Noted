@@ -25,7 +25,7 @@ const WIDGETS: WIDGET = {
 }
 
 const Index = () => {
-  const { getBorderColor, getBackgroundColor, getTextColor } = useColors()
+  const { getBorderColor, getBackgroundColor } = useColors()
   const [selectedPanel, setSelectedPanel] = useState<number>(1)
   const { selectedWidgets } = useWidget()
   const { glassBackground, glassEnabled } = useSettings()
@@ -33,10 +33,7 @@ const Index = () => {
 
   const bg_color = getBackgroundColor()
 
-  const text_color = getTextColor()
-
   const isGlassEnabled = glassEnabled && glassBackground.widgets
-  const isGlassEnabledWindow = glassEnabled && glassBackground.window
 
   const getOffset = () => {
     const MAX_HEIGHT = 790
@@ -55,7 +52,7 @@ const Index = () => {
   }, [])
 
   return (
-    <Stack bg={isGlassEnabledWindow ? "" : bg_color} gap={2} color={text_color}>
+    <Stack>
       <WidgetChooser />
       {selectedWidgets.map((widget, index) => {
         return (

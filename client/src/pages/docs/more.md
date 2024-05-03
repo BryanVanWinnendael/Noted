@@ -10,16 +10,16 @@ order: 7
 
 When Compact Mode is enabled, the navigation bar aligns with your editor, providing a more immersive full-screen experience when collapsing the sidebar.
 
-![compact](../../assets/images/more/compact.svg)
+![compact](../../assets/images/more/compact.png)
 
-![compact editor](../../assets/images/more/compact_editor.svg)
+![compact editor](../../assets/images/more/compact_editor.png)
 
 &nbsp;
 
 # Font
 
 You can change the font used by your workspace.
-![font](../../assets/images/more/font.svg)
+![font](../../assets/images/more/font.png)
 
 # Editor title
 

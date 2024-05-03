@@ -8,4 +8,4 @@ order: 5
 
 ![split1](../../assets/images/split/split1.png)
 
-![split2](../../assets/images/split/split2.svg)
+![split2](../../assets/images/split/split2.png)

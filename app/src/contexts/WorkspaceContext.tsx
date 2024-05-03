@@ -36,6 +36,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const [showSwitcher, setShowSwitcher] = useState<boolean>(false)
   const [backgrounds, setBackgrounds] = useState<string[]>([])
   const [newVersion, setNewVersion] = useState<boolean>(false)
+  const [showConfetti, setShowConfetti] = useState<boolean>(false)
 
   const resetWorkspace = () => {
     setWorkspace(undefined)
@@ -447,6 +448,8 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     newVersion,
     setNewVersion,
     openWorkspaceFile,
+    setShowConfetti,
+    showConfetti,
   }
 
   return (
