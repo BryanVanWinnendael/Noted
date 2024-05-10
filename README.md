@@ -38,6 +38,7 @@ Functionalities:
 
 To see the full list you can read the [Documentation](https://write-noted.vercel.app/docs).
 
-![dark theme](./client/src/assets/images/theme/dark.png)
-![headers](./client/src/assets/images/headers/headers_text.png)
-![market](./client/src/assets/images/theme/market.png)
+![heading](./assets/heading.png)
+![backgrounds](./assets/backgrounds.png)
+![glass](./assets/glass.png)
+![market](./assets/glass.png)
