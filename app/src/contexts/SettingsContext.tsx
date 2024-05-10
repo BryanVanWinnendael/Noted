@@ -64,8 +64,9 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const [headerColorsEnabled, setHeaderColorsEnabled] = useState<boolean>(
     DEFAULT_HEADER_COLORS_ENABLED,
   )
-  const [checkUpdates, setCheckUpdates] = useState<boolean>(DEFAULT_UPDATE)
-  const [updateAvailable, setUpdateAvailable] = useState<boolean>(false)
+  const [checkUpdates, setCheckUpdates] = useState<boolean | null>(
+    DEFAULT_UPDATE,
+  )
   const [glassBackground, setGlassBackground] =
     useState<GlassSettings>(DEFAULT_GLASS)
   const [glassEnabled, setGlassEnabled] = useState<boolean>(
@@ -223,19 +224,10 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const checkUpdate = async () => {
     try {
       const res = await invoke("updates:check")
-      if (res) setUpdateAvailable(true)
+
       return res
     } catch (err) {
       return false
-    }
-  }
-
-  const downloadUpdate = async () => {
-    try {
-      const res = await invoke("updates:download")
-      return res
-    } catch (err) {
-      console.log(err)
     }
   }
 
@@ -246,19 +238,6 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
       console.log(err)
     }
   }
-
-  const handleAutoUpdate = useCallback(async () => {
-    try {
-      if (checkUpdates || localStorage.getItem("checkUpdates") === "true") {
-        const res = await checkUpdate()
-        if (res) {
-          await downloadUpdate()
-        }
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }, [checkUpdates])
 
   const saveSettings = async (key: Settings, value: any) => {
     const workspace_path = localStorage.getItem("workspace_path")
@@ -418,10 +397,8 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     customThemes,
     deleteCustomTheme,
     checkUpdates,
-    handleAutoUpdate,
     updateAndRestart,
     checkUpdate,
-    updateAvailable,
     glassBackground,
     glassEnabled,
     saveSettings,

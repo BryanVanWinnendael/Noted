@@ -185,11 +185,9 @@ export interface SettingsTypeContext {
   addThemeToEditor: (name: string, customTheme: Theme) => Promise<boolean>
   customThemes: { [key: string]: Theme }
   deleteCustomTheme: (name: string) => void
-  checkUpdates: boolean
-  handleAutoUpdate: () => void
+  checkUpdates: boolean | null
   updateAndRestart: () => void
   checkUpdate: () => any
-  updateAvailable: boolean
   glassBackground: GlassSettings
   glassEnabled: boolean
   saveSettings: (key: Settings, value: any) => void

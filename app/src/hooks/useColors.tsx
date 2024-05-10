@@ -6,6 +6,8 @@ import { THEME_DARK, THEME_DEEP_BLUE, THEME_LIGHT } from "utils/constants"
 const useColors = () => {
   const getBackgroundColor = () => {
     const active_theme = localStorage.getItem("chakra-ui-color-mode")
+    let custom_theme_json
+    let custom_theme
     switch (active_theme) {
       case "light":
         return THEME_LIGHT.backgroundColor
@@ -14,14 +16,14 @@ const useColors = () => {
       case "deep_blue":
         return THEME_DEEP_BLUE.backgroundColor
       case "custom_theme":
-        const custom_theme_json = localStorage.getItem("custom-theme-json")
+        custom_theme_json = localStorage.getItem("custom-theme-json")
         if (custom_theme_json) {
           const theme = JSON.parse(custom_theme_json)
           return theme.backgroundColor
         }
         return THEME_LIGHT.backgroundColor
       default:
-        const custom_theme = localStorage.getItem("theme-json")
+        custom_theme = localStorage.getItem("theme-json")
         if (custom_theme) {
           const theme = JSON.parse(custom_theme)
           return theme.backgroundColor
@@ -32,6 +34,8 @@ const useColors = () => {
 
   const getSecondaryBackgroundColor = () => {
     const active_theme = localStorage.getItem("chakra-ui-color-mode")
+    let custom_theme_json
+    let custom_theme
     switch (active_theme) {
       case "light":
         return THEME_LIGHT.secondaryBackgroundColor
@@ -40,14 +44,14 @@ const useColors = () => {
       case "deep_blue":
         return THEME_DEEP_BLUE.secondaryBackgroundColor
       case "custom_theme":
-        const custom_theme_json = localStorage.getItem("custom-theme-json")
+        custom_theme_json = localStorage.getItem("custom-theme-json")
         if (custom_theme_json) {
           const theme = JSON.parse(custom_theme_json)
           return theme.secondaryBackgroundColor
         }
         return THEME_LIGHT.secondaryBackgroundColor
       default:
-        const custom_theme = localStorage.getItem("theme-json")
+        custom_theme = localStorage.getItem("theme-json")
         if (custom_theme) {
           const theme = JSON.parse(custom_theme)
           return theme.secondaryBackgroundColor
@@ -58,6 +62,8 @@ const useColors = () => {
 
   const getTextColor = () => {
     const active_theme = localStorage.getItem("chakra-ui-color-mode")
+    let custom_theme_json
+    let custom_theme
     switch (active_theme) {
       case "light":
         return THEME_LIGHT.textColor
@@ -66,14 +72,14 @@ const useColors = () => {
       case "deep_blue":
         return THEME_DEEP_BLUE.textColor
       case "custom_theme":
-        const custom_theme_json = localStorage.getItem("custom-theme-json")
+        custom_theme_json = localStorage.getItem("custom-theme-json")
         if (custom_theme_json) {
           const theme = JSON.parse(custom_theme_json)
           return theme.textColor
         }
         return THEME_LIGHT.textColor
       default:
-        const custom_theme = localStorage.getItem("theme-json")
+        custom_theme = localStorage.getItem("theme-json")
         if (custom_theme) {
           const theme = JSON.parse(custom_theme)
           return theme.textColor
@@ -84,6 +90,8 @@ const useColors = () => {
 
   const getIconColor = () => {
     const active_theme = localStorage.getItem("chakra-ui-color-mode")
+    let custom_theme_json
+    let custom_theme
     switch (active_theme) {
       case "light":
         return THEME_LIGHT.iconColor
@@ -92,14 +100,14 @@ const useColors = () => {
       case "deep_blue":
         return THEME_DEEP_BLUE.iconColor
       case "custom_theme":
-        const custom_theme_json = localStorage.getItem("custom-theme-json")
+        custom_theme_json = localStorage.getItem("custom-theme-json")
         if (custom_theme_json) {
           const theme = JSON.parse(custom_theme_json)
           return theme.iconColor
         }
         return THEME_LIGHT.iconColor
       default:
-        const custom_theme = localStorage.getItem("theme-json")
+        custom_theme = localStorage.getItem("theme-json")
         if (custom_theme) {
           const theme = JSON.parse(custom_theme)
           return theme.iconColor
@@ -110,6 +118,8 @@ const useColors = () => {
 
   const getAccentColor = () => {
     const active_theme = localStorage.getItem("chakra-ui-color-mode")
+    let custom_theme_json
+    let custom_theme
     switch (active_theme) {
       case "light":
         return THEME_LIGHT.accentColor
@@ -118,14 +128,14 @@ const useColors = () => {
       case "deep_blue":
         return THEME_DEEP_BLUE.accentColor
       case "custom_theme":
-        const custom_theme_json = localStorage.getItem("custom-theme-json")
+        custom_theme_json = localStorage.getItem("custom-theme-json")
         if (custom_theme_json) {
           const theme = JSON.parse(custom_theme_json)
           return theme.accentColor
         }
         return THEME_LIGHT.accentColor
       default:
-        const custom_theme = localStorage.getItem("theme-json")
+        custom_theme = localStorage.getItem("theme-json")
         if (custom_theme) {
           const theme = JSON.parse(custom_theme)
           return theme.accentColor

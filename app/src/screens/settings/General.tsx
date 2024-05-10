@@ -1,86 +1,32 @@
-import { Box, Button, Flex, Stack, Text, useToast } from "@chakra-ui/react"
+import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react"
 import { utils } from "utils"
-import { ExternalLinkIcon, WarningIcon } from "@chakra-ui/icons"
+import { ExternalLinkIcon } from "@chakra-ui/icons"
 import { MyWindow } from "types"
 import { useSettings } from "contexts/SettingsContext"
-import UpdateToast from "components//UpdateToast"
 import CustomSwitch from "components/CustomSwitch"
 import useColors from "hooks/useColors"
-import { APP_VERSION, TOAST_ID } from "utils/constants"
-import { useState } from "react"
+import { APP_VERSION } from "utils/constants"
 import { useWorkspace } from "contexts/WorkspaceContext"
+import useUpdate from "hooks/useUpdate"
 
 declare let window: MyWindow
 
 const invoke = window.electron.invoke
 
 const General = () => {
-  const {
-    getSecondaryBackgroundColor,
-    getAccentColor,
-    getTextColor,
-    getBorderColor,
-    getIconColor,
-    getMutedTextColor,
-  } = useColors()
-  const toast = useToast()
-  const { saveSettings, checkUpdates, checkUpdate } = useSettings()
-  const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false)
+  const { handleCheckUpdate, loadingUpdates } = useUpdate()
+  const { getAccentColor, getTextColor, getMutedTextColor } = useColors()
+  const { saveSettings, checkUpdates } = useSettings()
   const { setNewVersion } = useWorkspace()
 
   const text_color = getTextColor()
 
-  const border_color = getBorderColor()
-
-  const icon_color = getIconColor()
-
   const muted_text_color = getMutedTextColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
 
   const accent_color = getAccentColor()
 
   const handleLink = (link: string) => {
     invoke("openBrowser", link)
-  }
-
-  const handleCheckUpdate = async () => {
-    setLoadingUpdates(true)
-    const update = await checkUpdate()
-    if (update) {
-      if (toast.isActive(TOAST_ID)) return setLoadingUpdates(false)
-      toast({
-        id: TOAST_ID,
-        duration: null,
-        isClosable: true,
-        render: () => <UpdateToast />,
-      })
-    } else {
-      if (toast.isActive(TOAST_ID)) return setLoadingUpdates(false)
-      toast({
-        id: TOAST_ID,
-        title: "No updates available",
-        status: "info",
-        duration: 3000,
-        isClosable: true,
-        render: () => (
-          <Flex
-            border="1px"
-            borderColor={border_color}
-            alignItems="center"
-            bg={bg_color}
-            color={text_color}
-            p={3}
-            rounded="md"
-          >
-            <WarningIcon color={icon_color} mr={3} />
-            <Text>No updates available</Text>
-          </Flex>
-        ),
-      })
-    }
-    setLoadingUpdates(false)
   }
 
   const changeCheckUpdates = () => {
@@ -147,7 +93,7 @@ const General = () => {
           </Box>
 
           <CustomSwitch
-            isChecked={checkUpdates}
+            isChecked={checkUpdates ?? true}
             onChange={changeCheckUpdates}
             id="checkUpdates"
           />

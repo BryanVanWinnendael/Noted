@@ -1,5 +1,5 @@
 import NavBar from "components/Nav-Bar"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import {
   Box,
   Center,
@@ -7,6 +7,7 @@ import {
   Spinner,
   Stack,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react"
 import Settings from "screens/Settings"
 import { useSettings } from "contexts/SettingsContext"
@@ -19,7 +20,6 @@ import OpenFileInTab from "components/OpenFileInTab"
 import Compact from "components/Nav-Bar/Compact"
 import FileSwitcher from "components/File-Switcher"
 import DragAndDrop from "components/DragAndDrop"
-import UpdateWrapper from "components/UpdateWrapper"
 import OpenNewFile from "components/OpenNewFile"
 import { useSlash } from "contexts/SlashContext"
 import SlashCommands from "components/Slash-Commands"
@@ -27,8 +27,11 @@ import { backgrounds } from "utils/images"
 import { utils } from "./utils"
 import WhatsNew from "components/Whats-New"
 import ConfettiExplosion from "react-confetti-explosion"
+import UpdateToast from "components/UpdateToast"
+import { TOAST_ID } from "utils/constants"
 
 const App = () => {
+  const [loaded, setLoaded] = useState<boolean>(false)
   const { slashOpen } = useSlash()
   const { getAccentColor, getBackgroundColor } = useColors()
   const {
@@ -42,11 +45,15 @@ const App = () => {
     customBackground,
     scrollbar,
     wallpaperBrightness,
+    checkUpdates,
   } = useSettings()
   const { workspace, isLoaded, showSwitcher, newVersion, showConfetti } =
     useWorkspace()
   const { useAddShortcuts } = useShortcuts()
   const { setColorMode } = useColorMode()
+
+  const toast = useToast()
+  const { checkUpdate } = useSettings()
 
   useAddShortcuts()
 
@@ -65,6 +72,19 @@ const App = () => {
       : "transparent"
   }
 
+  const handleCheckUpdate = async () => {
+    const update = await checkUpdate()
+    if (update) {
+      if (toast.isActive(TOAST_ID)) return
+      toast({
+        id: TOAST_ID,
+        duration: null,
+        isClosable: true,
+        render: () => <UpdateToast />,
+      })
+    }
+  }
+
   useEffect(() => {
     if (glassEnabled && glassBackground.window)
       document.getElementsByTagName("html")[0].style.backgroundColor =
@@ -76,7 +96,15 @@ const App = () => {
   useEffect(() => {
     initSettings()
     setChakraColorMode()
+    setLoaded(true)
   }, [initSettings, setChakraColorMode, workspace?.path])
+
+  useEffect(() => {
+    if (checkUpdates && loaded) {
+      handleCheckUpdate()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded, checkUpdates])
 
   // Styles for custom scrollbar
   useEffect(() => {
@@ -118,53 +146,51 @@ const App = () => {
   }
 
   return (
-    <UpdateWrapper>
-      <DragAndDrop>
-        <Box>
-          {showConfetti && (
-            <Flex justifyContent="center" w="100%">
-              <ConfettiExplosion
-                zIndex={99999999}
-                particleCount={250}
-                width={1600}
-              />
-            </Flex>
-          )}
-          {newVersion && <WhatsNew />}
-          {backgroundImage === "custom" ? (
-            <img
-              style={{
-                filter: `blur(${blur}px) brightness(${wallpaperBrightness})`,
-              }}
-              src={getBackground()}
-              alt="background"
-              className="absolute w-full h-full object-cover"
+    <DragAndDrop>
+      <Box>
+        {showConfetti && (
+          <Flex justifyContent="center" w="100%">
+            <ConfettiExplosion
+              zIndex={99999999}
+              particleCount={250}
+              width={1600}
             />
-          ) : (
-            <Box
-              position="absolute"
-              bg={getBackground()}
-              backgroundSize="cover"
-              backgroundRepeat="no-repeat"
-              w="100vw"
-              h="100vh"
-              filter={`blur(${blur}px) brightness(${wallpaperBrightness})`}
-            />
-          )}
+          </Flex>
+        )}
+        {newVersion && <WhatsNew />}
+        {backgroundImage === "custom" ? (
+          <img
+            style={{
+              filter: `blur(${blur}px) brightness(${wallpaperBrightness})`,
+            }}
+            src={getBackground()}
+            alt="background"
+            className="absolute w-full h-full object-cover"
+          />
+        ) : (
+          <Box
+            position="absolute"
+            bg={getBackground()}
+            backgroundSize="cover"
+            backgroundRepeat="no-repeat"
+            w="100vw"
+            h="100vh"
+            filter={`blur(${blur}px) brightness(${wallpaperBrightness})`}
+          />
+        )}
 
-          <Settings />
-          {!compactMode ? <NavBar /> : <Compact />}
+        <Settings />
+        {!compactMode ? <NavBar /> : <Compact />}
 
-          <Stack w="100vw" h="100vh">
-            {renderWorkspace()}
-          </Stack>
-          <OpenFileInTab />
-          <OpenNewFile />
-          {showSwitcher && <FileSwitcher />}
-          {slashOpen && <SlashCommands />}
-        </Box>
-      </DragAndDrop>
-    </UpdateWrapper>
+        <Stack w="100vw" h="100vh">
+          {renderWorkspace()}
+        </Stack>
+        <OpenFileInTab />
+        <OpenNewFile />
+        {showSwitcher && <FileSwitcher />}
+        {slashOpen && <SlashCommands />}
+      </Box>
+    </DragAndDrop>
   )
 }
 

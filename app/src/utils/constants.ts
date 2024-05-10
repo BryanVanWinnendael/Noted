@@ -64,7 +64,7 @@ export const REQUIRED_SETTINGS_KEYS: Settings[] = [
   "material",
 ]
 
-export const DEFAULT_UPDATE = true
+export const DEFAULT_UPDATE = null
 
 export const DEFAULT_ACTIVE_THEME = "light"
 

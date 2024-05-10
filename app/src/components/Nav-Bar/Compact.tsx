@@ -1,7 +1,6 @@
 import { Box } from "@chakra-ui/react"
 import { useSettings } from "contexts/SettingsContext"
 import useColors from "hooks/useColors"
-import { utils } from "utils/index"
 
 const Compact = () => {
   const { getBackgroundColor } = useColors()
@@ -13,7 +12,7 @@ const Compact = () => {
 
   return (
     <Box
-      bg={isGlassEnabled ? utils.getGlassBackground(bg_color) : bg_color}
+      bg={isGlassEnabled ? "transparent" : bg_color}
       w="full"
       h={2}
       className="nav"
