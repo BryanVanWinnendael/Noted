@@ -1,25 +1,34 @@
-import { Flex, Box, Text, Stack } from "@chakra-ui/react"
-import CustomSwitch from "components/CustomSwitch"
-import { useSettings } from "contexts/SettingsContext"
-import { GlassComponents } from "types"
-import useColors from "hooks/useColors"
-import MaterialChooser from "./MaterialChooser"
+import { Flex, Box, Text, Stack, Tooltip } from "@chakra-ui/react";
+import CustomSwitch from "components/CustomSwitch";
+import { useSettings } from "contexts/SettingsContext";
+import { GlassComponents } from "types";
+import useColors from "hooks/useColors";
+import MaterialChooser from "./MaterialChooser";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import { FaInfoCircle } from "react-icons/fa";
 
 const Index = () => {
-  const { glassBackground, saveSettings, glassEnabled } = useSettings()
-  const { getMutedTextColor } = useColors()
+  const { platform } = useWorkspace();
+  const { glassBackground, saveSettings, glassEnabled } = useSettings();
+  const { getMutedTextColor, getIconColor, getBackgroundColor, getTextColor } =
+    useColors();
 
-  const muted_text_color = getMutedTextColor()
+  const isLinux = platform === "linux";
+
+  const muted_text_color = getMutedTextColor();
+  const icon_color = getIconColor();
+  const bg_color = getBackgroundColor();
+  const text_color = getTextColor();
 
   const handleChangeToggle = (component: GlassComponents) => {
-    const flag: boolean = !glassBackground[component]
-    const new_object = { ...glassBackground, [component]: flag }
-    saveSettings("glass_background", new_object)
-  }
+    const flag: boolean = !glassBackground[component];
+    const new_object = { ...glassBackground, [component]: flag };
+    saveSettings("glass_background", new_object);
+  };
 
   const handleGlassBackground = () => {
-    saveSettings("glass_background_enabled", !glassEnabled)
-  }
+    saveSettings("glass_background_enabled", !glassEnabled);
+  };
 
   return (
     <Stack>
@@ -107,11 +116,26 @@ const Index = () => {
             mr={5}
             mt={2}
           >
-            <Text w="100%" color={muted_text_color}>
-              Window
-            </Text>
+            <Flex alignItems="center" gap={2}>
+              <Text w="100%" color={muted_text_color}>
+                Window
+              </Text>
+              <Tooltip
+                placement="bottom"
+                label={"Not available on Linux"}
+                bg={bg_color}
+                color={text_color}
+                rounded="md"
+              >
+                <Box>
+                  <FaInfoCircle color={icon_color} size={15} />
+                </Box>
+              </Tooltip>
+            </Flex>
+
             <CustomSwitch
-              isChecked={glassBackground.window}
+              disabled={isLinux}
+              isChecked={isLinux ? false : glassBackground.window}
               onChange={() => handleChangeToggle("window")}
               id="glassEnabledWindow"
             />
@@ -131,11 +155,11 @@ const Index = () => {
               id="glassEnabledWindow"
             />
           </Flex>
-          <MaterialChooser />
+          {!isLinux && <MaterialChooser />}
         </Box>
       )}
     </Stack>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

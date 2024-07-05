@@ -1,26 +1,25 @@
-import { Divider, MenuList } from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
-import { utils } from "utils/index"
-import Delete from "./Delete"
-import Rename from "./Rename"
-import { ContextMenu } from "types/index"
-import AddFile from "./AddFile"
-import AddFolder from "./AddFolder"
-import OpenFIleInTab from "./OpenFileInTab"
-import SplitFile from "./SplitFile"
-import AddExcalidraw from "./AddExcalidraw"
+import { Divider, MenuList } from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import useColors from "hooks/useColors";
+import { utils } from "utils/index";
+import Delete from "./Delete";
+import Rename from "./Rename";
+import { ContextMenu } from "types/index";
+import AddFile from "./AddFile";
+import AddFolder from "./AddFolder";
+import OpenFIleInTab from "./OpenFileInTab";
+import SplitFile from "./SplitFile";
+import AddExcalidraw from "./AddExcalidraw";
 
 const Index = ({ path, name, type }: ContextMenu) => {
-  const { getBackgroundColor, getBorderColor } = useColors()
-  const { glassBackground, glassEnabled } = useSettings()
+  const { getBackgroundColor, getBorderColor } = useColors();
+  const { glassBackground, glassEnabled } = useSettings();
 
-  const bg_color = getBackgroundColor()
-  const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
+  const bg_color = getBackgroundColor();
+  const bg_color_lighter = utils.getLighterColor("0.02", bg_color);
+  const border_color = getBorderColor();
 
-  const border_color = getBorderColor()
-
-  const isGlassEnabled = glassEnabled && glassBackground.contextMenu
+  const isGlassEnabled = glassEnabled && glassBackground.contextMenu;
 
   return (
     <MenuList
@@ -54,7 +53,7 @@ const Index = ({ path, name, type }: ContextMenu) => {
       <Rename path={path} name={name} type={type} />
       <Delete path={path} name={name} type={type} />
     </MenuList>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

@@ -1,5 +1,5 @@
-import NavBar from "components/Nav-Bar"
-import { useCallback, useEffect, useState } from "react"
+import NavBar from "components/Nav-Bar";
+import { useCallback, useEffect, useState } from "react";
 import {
   Box,
   Center,
@@ -8,32 +8,32 @@ import {
   Stack,
   useColorMode,
   useToast,
-} from "@chakra-ui/react"
-import Settings from "screens/Settings"
-import { useSettings } from "contexts/SettingsContext"
-import Home from "screens/Home"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import LoadInWorkspace from "components/LoadInWorkspace"
-import useColors from "hooks/useColors"
-import useShortcuts from "hooks/useShortcuts"
-import OpenFileInTab from "components/OpenFileInTab"
-import Compact from "components/Nav-Bar/Compact"
-import FileSwitcher from "components/File-Switcher"
-import DragAndDrop from "components/DragAndDrop"
-import OpenNewFile from "components/OpenNewFile"
-import { useSlash } from "contexts/SlashContext"
-import SlashCommands from "components/Slash-Commands"
-import { backgrounds } from "utils/images"
-import { utils } from "./utils"
-import WhatsNew from "components/Whats-New"
-import ConfettiExplosion from "react-confetti-explosion"
-import UpdateToast from "components/UpdateToast"
-import { TOAST_ID } from "utils/constants"
+} from "@chakra-ui/react";
+import Settings from "screens/Settings";
+import { useSettings } from "contexts/SettingsContext";
+import Home from "screens/Home";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import LoadInWorkspace from "components/LoadInWorkspace";
+import useColors from "hooks/useColors";
+import useShortcuts from "hooks/useShortcuts";
+import OpenFileInTab from "components/OpenFileInTab";
+import Compact from "components/Nav-Bar/Compact";
+import FileSwitcher from "components/File-Switcher";
+import DragAndDrop from "components/DragAndDrop";
+import OpenNewFile from "components/OpenNewFile";
+import { useSlash } from "contexts/SlashContext";
+import SlashCommands from "components/Slash-Commands";
+import { backgrounds } from "utils/images";
+import { utils } from "./utils";
+import WhatsNew from "components/Whats-New";
+import ConfettiExplosion from "react-confetti-explosion";
+import UpdateToast from "components/UpdateToast";
+import { TOAST_ID } from "utils/constants";
 
 const App = () => {
-  const [loaded, setLoaded] = useState<boolean>(false)
-  const { slashOpen } = useSlash()
-  const { getAccentColor, getBackgroundColor } = useColors()
+  const [loaded, setLoaded] = useState<boolean>(false);
+  const { slashOpen } = useSlash();
+  const { getAccentColor, getBackgroundColor } = useColors();
   const {
     initSettings,
     compactMode,
@@ -46,79 +46,79 @@ const App = () => {
     scrollbar,
     wallpaperBrightness,
     checkUpdates,
-  } = useSettings()
+  } = useSettings();
   const { workspace, isLoaded, showSwitcher, newVersion, showConfetti } =
-    useWorkspace()
-  const { useAddShortcuts } = useShortcuts()
-  const { setColorMode } = useColorMode()
+    useWorkspace();
+  const { useAddShortcuts } = useShortcuts();
+  const { setColorMode } = useColorMode();
 
-  const toast = useToast()
-  const { checkUpdate } = useSettings()
+  const toast = useToast();
+  const { checkUpdate } = useSettings();
 
-  useAddShortcuts()
+  useAddShortcuts();
 
-  const accent_color = getAccentColor()
+  const accent_color = getAccentColor();
 
-  const bg_color = getBackgroundColor()
+  const bg_color = getBackgroundColor();
 
   const setChakraColorMode = useCallback(() => {
-    setColorMode(activeTheme)
-  }, [activeTheme, setColorMode])
+    setColorMode(activeTheme);
+  }, [activeTheme, setColorMode]);
 
   const getBackground = () => {
-    if (backgroundImage === "custom") return customBackground
+    if (backgroundImage === "custom") return customBackground;
     return backgrounds[backgroundImage]?.image
       ? `url(${backgrounds[backgroundImage]?.image})`
-      : "transparent"
-  }
+      : "transparent";
+  };
 
   const handleCheckUpdate = async () => {
-    const update = await checkUpdate()
+    const update = await checkUpdate();
     if (update) {
-      if (toast.isActive(TOAST_ID)) return
+      if (toast.isActive(TOAST_ID)) return;
       toast({
         id: TOAST_ID,
         duration: null,
         isClosable: true,
         render: () => <UpdateToast />,
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
     if (glassEnabled && glassBackground.window)
       document.getElementsByTagName("html")[0].style.backgroundColor =
-        "transparent"
+        "transparent";
     else
-      document.getElementsByTagName("html")[0].style.backgroundColor = bg_color
-  }, [bg_color, glassBackground.window, glassEnabled])
+      document.getElementsByTagName("html")[0].style.backgroundColor = bg_color;
+  }, [bg_color, glassBackground.window, glassEnabled]);
 
   useEffect(() => {
-    initSettings()
-    setChakraColorMode()
-    setLoaded(true)
-  }, [initSettings, setChakraColorMode, workspace?.path])
+    initSettings();
+    setChakraColorMode();
+    setLoaded(true);
+  }, [initSettings, setChakraColorMode, workspace?.path]);
 
   useEffect(() => {
     if (checkUpdates && loaded) {
-      handleCheckUpdate()
+      handleCheckUpdate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded, checkUpdates])
+  }, [loaded, checkUpdates]);
 
   // Styles for custom scrollbar
   useEffect(() => {
-    const styleId = "custom-scrollbar-styles"
+    const styleId = "custom-scrollbar-styles";
 
     // Remove existing styles if present
-    const existingStyle = document.getElementById(styleId)
+    const existingStyle = document.getElementById(styleId);
     if (existingStyle) {
-      existingStyle.parentNode?.removeChild(existingStyle)
+      existingStyle.parentNode?.removeChild(existingStyle);
     }
 
-    const style = document.createElement("style")
-    const color = utils.getTransparent(scrollbar.opacity, scrollbar.color)
-    style.id = styleId
+    const style = document.createElement("style");
+    const color = utils.getTransparent(scrollbar.opacity, scrollbar.color);
+    style.id = styleId;
     style.innerHTML = `
       body {
         /* Custom scrollbar styles */
@@ -131,9 +131,9 @@ const App = () => {
           background-color: ${color} !important;
         }
       }
-    `
-    document.head.appendChild(style)
-  }, [scrollbar.color, scrollbar.opacity])
+    `;
+    document.head.appendChild(style);
+  }, [scrollbar.color, scrollbar.opacity]);
 
   const renderWorkspace = () => {
     if (!isLoaded)
@@ -141,9 +141,9 @@ const App = () => {
         <Center w="full" h="full">
           <Spinner color={accent_color} />
         </Center>
-      )
-    return workspace ? <Home workspace={workspace} /> : <LoadInWorkspace />
-  }
+      );
+    return workspace ? <Home workspace={workspace} /> : <LoadInWorkspace />;
+  };
 
   return (
     <DragAndDrop>
@@ -191,7 +191,7 @@ const App = () => {
         {slashOpen && <SlashCommands />}
       </Box>
     </DragAndDrop>
-  )
-}
+  );
+};
 
-export default App
+export default App;

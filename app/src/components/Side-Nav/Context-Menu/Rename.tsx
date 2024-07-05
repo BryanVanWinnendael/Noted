@@ -7,80 +7,77 @@ import {
   MenuItem,
   Text,
   useDisclosure,
-} from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useEffect, useRef, useState } from "react"
-import { ContextMenu } from "types/index"
-import { utils } from "utils/index"
-import { BiRename } from "react-icons/bi"
+} from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useEffect, useRef, useState } from "react";
+import { ContextMenu } from "types/index";
+import { utils } from "utils/index";
+import { BiRename } from "react-icons/bi";
 
 const Rename = ({ path, name, type }: ContextMenu) => {
-  const { getBackgroundColor, getTextColor, getIconColor } = useColors()
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const { getAccentColor } = useColors()
-  const cancelRef = useRef()
-  const [newName, setNewName] = useState<string>(name.split(".noted")[0])
-  const [inValidName, setInValidName] = useState<boolean>(false)
-  const { rename } = useWorkspace()
+  const { getBackgroundColor, getTextColor, getIconColor } = useColors();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { getAccentColor } = useColors();
+  const cancelRef = useRef();
+  const [newName, setNewName] = useState<string>(name.split(".noted")[0]);
+  const [inValidName, setInValidName] = useState<boolean>(false);
+  const { rename } = useWorkspace();
 
-  const bg_color = getBackgroundColor()
-  const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
-
-  const text_color = getTextColor()
-
-  const accent_color = getAccentColor()
-
-  const icon_color = getIconColor()
+  const bg_color = getBackgroundColor();
+  const bg_color_lighter = utils.getLighterColor("0.02", bg_color);
+  const text_color = getTextColor();
+  const accent_color = getAccentColor();
+  const icon_color = getIconColor();
 
   const renameFile = async () => {
-    let newPath = ""
+    let newPath = "";
     if (name.includes(".noted")) {
-      newPath = path.split(name)[0] + newName + ".noted"
+      newPath = path.split(name)[0] + newName + ".noted";
     } else if (name.includes(".pdf")) {
-      newPath = path.split(name)[0] + newName + ".pdf"
+      newPath = path.split(name)[0] + newName + ".pdf";
     }
 
-    const res = await rename(path, newPath, type)
+    const res = await rename(path, newPath, type);
 
     if (!res) {
-      setInValidName(true)
-      return
+      setInValidName(true);
+      return;
     }
-    onClose()
-  }
+    onClose();
+  };
 
   const renameFolder = async () => {
-    const newPath = path.split(name)[0] + newName
-    const res = await rename(path, newPath, type)
+    const newPath = path.split(name)[0] + newName;
+    const res = await rename(path, newPath, type);
 
     if (!res) {
-      setInValidName(true)
-      return
+      setInValidName(true);
+      return;
     }
-    onClose()
-  }
+    onClose();
+  };
 
   const handleRename = async () => {
     switch (type) {
       case "file":
-        renameFile()
-        break
+        renameFile();
+        break;
       case "folder":
-        renameFolder()
-        break
+        renameFolder();
+        break;
     }
-  }
+  };
 
   useEffect(() => {
     return () => {
       if (name.includes(".noted")) {
-        setNewName(name.split(".noted")[0])
+        setNewName(name.split(".noted")[0]);
       } else if (name.includes(".pdf")) {
-        setNewName(name.split(".pdf")[0])
+        setNewName(name.split(".pdf")[0]);
       }
-    }
-  }, [name])
+    };
+  }, [name]);
 
   return (
     <>
@@ -100,12 +97,12 @@ const Rename = ({ path, name, type }: ContextMenu) => {
             <Input
               value={newName}
               onChange={(e) => {
-                setInValidName(false)
-                setNewName(e.target.value)
+                setInValidName(false);
+                setNewName(e.target.value);
               }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
-                  handleRename()
+                  handleRename();
                 }
               }}
               isInvalid={inValidName}
@@ -136,7 +133,7 @@ const Rename = ({ path, name, type }: ContextMenu) => {
         <Text fontSize="sm">Rename</Text>
       </MenuItem>
     </>
-  )
-}
+  );
+};
 
-export default Rename
+export default Rename;

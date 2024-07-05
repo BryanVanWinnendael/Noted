@@ -1,6 +1,6 @@
-import { months, generateDate } from "utils/calendar"
-import dayjs from "dayjs"
-import { useState } from "react"
+import { months, generateDate } from "utils/calendar";
+import dayjs from "dayjs";
+import { useState } from "react";
 import {
   Box,
   Button,
@@ -10,13 +10,13 @@ import {
   Stack,
   Text,
   Tooltip,
-} from "@chakra-ui/react"
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons"
-import { BiMerge } from "react-icons/bi"
-import { useWidget } from "contexts/WidgetContext"
-import { utils } from "utils"
-import DateViewer from "components/Widget-Bar/Calendar-Widget/DateViewer"
-import useColors from "hooks/useColors"
+} from "@chakra-ui/react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { BiMerge } from "react-icons/bi";
+import { useWidget } from "contexts/WidgetContext";
+import { utils } from "utils";
+import DateViewer from "components/Widget-Bar/Calendar-Widget/DateViewer";
+import useColors from "hooks/useColors";
 
 const Index = () => {
   const {
@@ -25,7 +25,7 @@ const Index = () => {
     getSecondaryBackgroundColor,
     getTextColor,
     getMutedTextColor,
-  } = useColors()
+  } = useColors();
   const {
     isConnected,
     setIsConnected,
@@ -34,21 +34,17 @@ const Index = () => {
     getCompatibleWidget,
     setShowDateViewer,
     showDateViewer,
-  } = useWidget()
-  const days = ["S", "M", "T", "W", "T", "F", "S"]
-  const currentDate = dayjs()
-  const [today, setToday] = useState(currentDate)
+  } = useWidget();
+  const days = ["S", "M", "T", "W", "T", "F", "S"];
+  const currentDate = dayjs();
+  const [today, setToday] = useState(currentDate);
 
-  const accent_color = getAccentColor()
-
-  const icon_color = getIconColor()
-
-  const muted_text_color = getMutedTextColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const text_color = getTextColor()
+  const accent_color = getAccentColor();
+  const icon_color = getIconColor();
+  const muted_text_color = getMutedTextColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const text_color = getTextColor();
 
   return (
     <Box h="300px">
@@ -96,13 +92,13 @@ const Index = () => {
                 h={4}
                 color={icon_color}
                 onClick={() => {
-                  setToday(today.month(today.month() - 1))
+                  setToday(today.month(today.month() - 1));
                 }}
               />
               <Text
                 color={text_color}
                 onClick={() => {
-                  setToday(currentDate)
+                  setToday(currentDate);
                 }}
               >
                 Today
@@ -112,7 +108,7 @@ const Index = () => {
                 w={4}
                 h={4}
                 onClick={() => {
-                  setToday(today.month(today.month() + 1))
+                  setToday(today.month(today.month() + 1));
                 }}
               />
             </Flex>
@@ -130,7 +126,7 @@ const Index = () => {
                 >
                   {day}
                 </Text>
-              )
+              );
             })}
           </Grid>
 
@@ -145,20 +141,20 @@ const Index = () => {
                       color={today ? accent_color : text_color}
                       rounded="md"
                       onClick={() => {
-                        setSelectedDate(date)
-                        setShowDateViewer(true)
+                        setSelectedDate(date);
+                        setShowDateViewer(true);
                       }}
                     >
                       {date.date()}
                     </Text>
                   </Center>
-                )
+                );
               },
             )}
           </Grid>
         </>
       )}
     </Box>
-  )
-}
-export default Index
+  );
+};
+export default Index;

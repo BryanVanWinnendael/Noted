@@ -1,37 +1,35 @@
-import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react"
-import { utils } from "utils"
-import { ExternalLinkIcon } from "@chakra-ui/icons"
-import { MyWindow } from "types"
-import { useSettings } from "contexts/SettingsContext"
-import CustomSwitch from "components/CustomSwitch"
-import useColors from "hooks/useColors"
-import { APP_VERSION } from "utils/constants"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useUpdate from "hooks/useUpdate"
+import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
+import { utils } from "utils";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { MyWindow } from "types";
+import { useSettings } from "contexts/SettingsContext";
+import CustomSwitch from "components/CustomSwitch";
+import useColors from "hooks/useColors";
+import { APP_VERSION } from "utils/constants";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useUpdate from "hooks/useUpdate";
 
-declare let window: MyWindow
+declare let window: MyWindow;
 
-const invoke = window.electron.invoke
+const invoke = window.electron.invoke;
 
 const General = () => {
-  const { handleCheckUpdate, loadingUpdates } = useUpdate()
-  const { getAccentColor, getTextColor, getMutedTextColor } = useColors()
-  const { saveSettings, checkUpdates } = useSettings()
-  const { setNewVersion } = useWorkspace()
+  const { handleCheckUpdate, loadingUpdates } = useUpdate();
+  const { getAccentColor, getTextColor, getMutedTextColor } = useColors();
+  const { saveSettings, checkUpdates } = useSettings();
+  const { setNewVersion } = useWorkspace();
 
-  const text_color = getTextColor()
-
-  const muted_text_color = getMutedTextColor()
-
-  const accent_color = getAccentColor()
+  const text_color = getTextColor();
+  const muted_text_color = getMutedTextColor();
+  const accent_color = getAccentColor();
 
   const handleLink = (link: string) => {
-    invoke("openBrowser", link)
-  }
+    invoke("openBrowser", link);
+  };
 
   const changeCheckUpdates = () => {
-    saveSettings("check_updates", !checkUpdates)
-  }
+    saveSettings("check_updates", !checkUpdates);
+  };
 
   return (
     <Box color={text_color}>
@@ -116,7 +114,7 @@ const General = () => {
         </Flex>
       </Stack>
     </Box>
-  )
-}
+  );
+};
 
-export default General
+export default General;

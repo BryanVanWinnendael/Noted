@@ -1,9 +1,9 @@
-import { AddIcon } from "@chakra-ui/icons"
-import { Flex, Text, Tooltip } from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import { AnimatePresence, motion } from "framer-motion"
-import useColors from "hooks/useColors"
-import { utils } from "utils"
+import { AddIcon } from "@chakra-ui/icons";
+import { Flex, Text, Tooltip } from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import { AnimatePresence, motion } from "framer-motion";
+import useColors from "hooks/useColors";
+import { utils } from "utils";
 
 const Index = () => {
   const {
@@ -11,32 +11,40 @@ const Index = () => {
     getSecondaryBackgroundColor,
     getMutedTextColor,
     getTextColor,
-  } = useColors()
-  const { activeTab, tabs, addTab, handleChangeTab, removeTab } = useWorkspace()
-  const workspace_path = localStorage.getItem("workspace_path")
-  const homeName = workspace_path?.split("\\").pop() + ".home"
+  } = useColors();
+  const { activeTab, tabs, addTab, handleChangeTab, removeTab, platform } =
+    useWorkspace();
+  const workspace_path = localStorage.getItem("workspace_path");
+  const homeName =
+    platform === "win32"
+      ? workspace_path?.split("\\").pop() + ".home"
+      : workspace_path?.split("/").pop() + ".home";
 
-  const accent_color = getAccentColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const muted_text_color = getMutedTextColor()
-
-  const text_color = getTextColor()
+  const accent_color = getAccentColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const muted_text_color = getMutedTextColor();
+  const text_color = getTextColor();
 
   const getFileName = (path: string) => {
-    const extension = path.split(".")[path.split(".").length - 1]
+    const extension = path.split(".")[path.split(".").length - 1];
+    let full_name;
 
-    const full_name = path.split("\\")
-    const name = full_name[full_name.length - 1].split("." + extension)[0]
-    if (name === homeName) return "Home"
-    return name
-  }
+    if (platform === "win32") {
+      full_name = path.split("\\");
+    } else {
+      full_name = path.split("/");
+    }
+
+    const name = full_name[full_name.length - 1].split("." + extension)[0];
+
+    if (name === homeName) return "Home";
+    return name;
+  };
 
   const handleRemoveTab = (index: number) => {
-    removeTab(index)
-  }
+    removeTab(index);
+  };
 
   return (
     <Flex w="full" alignItems="center">
@@ -135,7 +143,7 @@ const Index = () => {
         </Tooltip>
       )}
     </Flex>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

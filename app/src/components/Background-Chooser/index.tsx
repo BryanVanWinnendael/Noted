@@ -1,17 +1,17 @@
-import { Flex, Stack, Text } from "@chakra-ui/react"
-import BackgroundCard from "./BackgroundCard"
+import { Flex, Stack, Text } from "@chakra-ui/react";
+import BackgroundCard from "./BackgroundCard";
 import {
   backgroundColors,
   backgroundCities,
   backgroundAcrylic,
   backgrounds,
-} from "utils/images"
-import ImportBackground from "./ImportBackground"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import ImportCard from "./ImportCard"
+} from "utils/images";
+import ImportBackground from "./ImportBackground";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import ImportCard from "./ImportCard";
 
 const Index = () => {
-  const { backgrounds: importedBackgrounds } = useWorkspace()
+  const { backgrounds: importedBackgrounds } = useWorkspace();
 
   return (
     <Stack w="full">
@@ -59,7 +59,7 @@ const Index = () => {
         ))}
       </Flex>
     </Stack>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

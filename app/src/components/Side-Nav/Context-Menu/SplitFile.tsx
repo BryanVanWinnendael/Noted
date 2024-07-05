@@ -1,24 +1,22 @@
-import { MenuItem, Text } from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { ContextMenu } from "types/index"
-import { utils } from "utils/index"
-import { BsReverseLayoutSidebarInsetReverse } from "react-icons/bs"
+import { MenuItem, Text } from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { ContextMenu } from "types/index";
+import { utils } from "utils/index";
+import { BsReverseLayoutSidebarInsetReverse } from "react-icons/bs";
 
 const SplitFile = ({ path }: ContextMenu) => {
-  const { getTextColor, getBackgroundColor, getIconColor } = useColors()
-  const { split } = useWorkspace()
+  const { getTextColor, getBackgroundColor, getIconColor } = useColors();
+  const { split } = useWorkspace();
 
-  const bg_color = getBackgroundColor()
-  const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
-
-  const text_color = getTextColor()
-
-  const icon_color = getIconColor()
+  const bg_color = getBackgroundColor();
+  const bg_color_lighter = utils.getLighterColor("0.02", bg_color);
+  const text_color = getTextColor();
+  const icon_color = getIconColor();
 
   const handleSplit = () => {
-    split(path)
-  }
+    split(path);
+  };
 
   return (
     <MenuItem
@@ -39,7 +37,7 @@ const SplitFile = ({ path }: ContextMenu) => {
       />
       <Text fontSize="sm">Split</Text>
     </MenuItem>
-  )
-}
+  );
+};
 
-export default SplitFile
+export default SplitFile;

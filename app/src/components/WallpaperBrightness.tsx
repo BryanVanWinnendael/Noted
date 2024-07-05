@@ -7,25 +7,24 @@ import {
   SliderThumb,
   SliderTrack,
   Text,
-} from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
-import { utils } from "utils/index"
+} from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import useColors from "hooks/useColors";
+import { utils } from "utils/index";
 
 const WallpaperBrightness = () => {
-  const { saveSettings, wallpaperBrightness } = useSettings()
-  const { getMutedTextColor, getAccentColor } = useColors()
+  const { saveSettings, wallpaperBrightness } = useSettings();
+  const { getMutedTextColor, getAccentColor } = useColors();
 
-  const muted_text_color = getMutedTextColor()
+  const muted_text_color = getMutedTextColor();
+  const accent_color = getAccentColor();
 
-  const accent_color = getAccentColor()
-
-  const brightnessValue = wallpaperBrightness * 100
+  const brightnessValue = wallpaperBrightness * 100;
 
   const handleChange = (value: number) => {
-    const brightness = value / 100
-    saveSettings("wallpaper_brightness", brightness)
-  }
+    const brightness = value / 100;
+    saveSettings("wallpaper_brightness", brightness);
+  };
 
   return (
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
@@ -59,7 +58,7 @@ const WallpaperBrightness = () => {
         </Button>
       </Flex>
     </Flex>
-  )
-}
+  );
+};
 
-export default WallpaperBrightness
+export default WallpaperBrightness;

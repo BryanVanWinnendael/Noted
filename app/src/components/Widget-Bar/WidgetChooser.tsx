@@ -1,17 +1,16 @@
-import { Flex } from "@chakra-ui/react"
-import { utils } from "utils"
-import { LuListTodo } from "react-icons/lu"
-import { CalendarIcon, TimeIcon, QuestionOutlineIcon } from "@chakra-ui/icons"
-import WidgetIcon from "components/Widget-Bar/WidgetIcon"
-import useColors from "hooks/useColors"
+import { Flex } from "@chakra-ui/react";
+import { utils } from "utils";
+import { LuListTodo } from "react-icons/lu";
+import { CalendarIcon, TimeIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
+import WidgetIcon from "components/Widget-Bar/WidgetIcon";
+import useColors from "hooks/useColors";
 
 const WidgetChooser = () => {
-  const { getSecondaryBackgroundColor, getAccentColor } = useColors()
+  const { getSecondaryBackgroundColor, getAccentColor } = useColors();
 
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const accent_color = getAccentColor()
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const accent_color = getAccentColor();
 
   return (
     <Flex
@@ -48,7 +47,7 @@ const WidgetChooser = () => {
         name="info"
       />
     </Flex>
-  )
-}
+  );
+};
 
-export default WidgetChooser
+export default WidgetChooser;

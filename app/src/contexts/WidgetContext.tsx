@@ -1,84 +1,84 @@
-import { ToDo, WidgetName, WidgetTypeContext } from "types"
+import { ToDo, WidgetName, WidgetTypeContext } from "types";
 import {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useState,
-} from "react"
-import dayjs, { Dayjs } from "dayjs"
-import { CONNECTABLE_WIDGETS } from "utils/constants"
+} from "react";
+import dayjs, { Dayjs } from "dayjs";
+import { CONNECTABLE_WIDGETS } from "utils/constants";
 
-const WidgetContext = createContext<WidgetTypeContext>({} as WidgetTypeContext)
+const WidgetContext = createContext<WidgetTypeContext>({} as WidgetTypeContext);
 
 export function useWidget() {
-  return useContext(WidgetContext)
+  return useContext(WidgetContext);
 }
 
 type Props = {
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 export const WidgetProvider: React.FC<Props> = ({ children }: Props) => {
-  const [widgetPanel, setWidgetPanel] = useState<boolean>(false)
+  const [widgetPanel, setWidgetPanel] = useState<boolean>(false);
   const [selectedWidgets, setSelectedWidgets] = useState<WidgetName[]>([
     "calendar",
     "todo",
-  ])
-  const [isConnected, setIsConnected] = useState<boolean>(false)
+  ]);
+  const [isConnected, setIsConnected] = useState<boolean>(false);
 
-  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs())
-  const [showDateViewer, setShowDateViewer] = useState(false)
+  const [selectedDate, setSelectedDate] = useState<Dayjs | undefined>(dayjs());
+  const [showDateViewer, setShowDateViewer] = useState(false);
 
-  const [todos, setTodos] = useState<ToDo[]>([])
+  const [todos, setTodos] = useState<ToDo[]>([]);
 
-  const [intervalId, setIntervalId] = useState<NodeJS.Timer>()
+  const [intervalId, setIntervalId] = useState<NodeJS.Timer>();
 
   const canConnect = () => {
     for (let i = 0; i < CONNECTABLE_WIDGETS.length; i++) {
-      const widgets = CONNECTABLE_WIDGETS[i]
+      const widgets = CONNECTABLE_WIDGETS[i];
       if (
         widgets.includes(selectedWidgets[0]) &&
         widgets.includes(selectedWidgets[1])
       )
-        return true
+        return true;
     }
-    return false
-  }
+    return false;
+  };
 
   const getCompatibleWidget = (widget: WidgetName) => {
-    if (!canConnect()) return null
+    if (!canConnect()) return null;
     return selectedWidgets[0] === widget
       ? selectedWidgets[1]
-      : selectedWidgets[0]
-  }
+      : selectedWidgets[0];
+  };
 
   const getTodos = () => {
-    const jsonList = localStorage.getItem("todos")
-    if (!jsonList) return
-    const todos = JSON.parse(jsonList)
-    setTodos(todos)
-  }
+    const jsonList = localStorage.getItem("todos");
+    if (!jsonList) return;
+    const todos = JSON.parse(jsonList);
+    setTodos(todos);
+  };
 
   const getLayoutWidgets = () => {
-    const jsonList = localStorage.getItem("selectedWidgets")
-    if (!jsonList) return
-    const widgets = JSON.parse(jsonList)
-    setSelectedWidgets(widgets)
-  }
+    const jsonList = localStorage.getItem("selectedWidgets");
+    if (!jsonList) return;
+    const widgets = JSON.parse(jsonList);
+    setSelectedWidgets(widgets);
+  };
 
   const handleChangeWidgets = useCallback(() => {
-    localStorage.setItem("selectedWidgets", JSON.stringify(selectedWidgets))
-  }, [selectedWidgets])
+    localStorage.setItem("selectedWidgets", JSON.stringify(selectedWidgets));
+  }, [selectedWidgets]);
 
   useEffect(() => {
-    getTodos()
-    getLayoutWidgets()
-  }, [])
+    getTodos();
+    getLayoutWidgets();
+  }, []);
 
   useEffect(() => {
-    handleChangeWidgets()
-  }, [handleChangeWidgets])
+    handleChangeWidgets();
+  }, [handleChangeWidgets]);
 
   const value: WidgetTypeContext = {
     widgetPanel,
@@ -97,9 +97,9 @@ export const WidgetProvider: React.FC<Props> = ({ children }: Props) => {
     todos,
     setIntervalId,
     intervalId,
-  }
+  };
 
   return (
     <WidgetContext.Provider value={value}>{children}</WidgetContext.Provider>
-  )
-}
+  );
+};

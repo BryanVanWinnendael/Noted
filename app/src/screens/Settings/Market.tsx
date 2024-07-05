@@ -1,39 +1,38 @@
-import { MyWindow, Theme } from "types"
-import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
-import ThemeCard from "components/Custom-Theme/ThemeCard"
-import { Center, Spinner, Box, Text, Flex } from "@chakra-ui/react"
-import { ExternalLinkIcon } from "@chakra-ui/icons"
-import useColors from "hooks/useColors"
+import { MyWindow, Theme } from "types";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import ThemeCard from "components/Custom-Theme/ThemeCard";
+import { Center, Spinner, Box, Text, Flex } from "@chakra-ui/react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import useColors from "hooks/useColors";
 
-declare let window: MyWindow
+declare let window: MyWindow;
 
-const invoke = window.electron.invoke
+const invoke = window.electron.invoke;
 
 const Market = () => {
-  const { getAccentColor, getMutedTextColor } = useColors()
-  const serverUrl = import.meta.env.VITE_SERVER_URL
-  const [loading, setLoading] = useState<boolean>(true)
-  const [themes, setThemes] = useState<{ [key: string]: Theme }>({})
+  const { getAccentColor, getMutedTextColor } = useColors();
+  const serverUrl = import.meta.env.VITE_SERVER_URL;
+  const [loading, setLoading] = useState<boolean>(true);
+  const [themes, setThemes] = useState<{ [key: string]: Theme }>({});
 
-  const accent_color = getAccentColor()
-
-  const muted_text_color = getMutedTextColor()
+  const accent_color = getAccentColor();
+  const muted_text_color = getMutedTextColor();
 
   const handleLink = () => {
-    invoke("openBrowser", "https://write-noted.vercel.app/")
-  }
+    invoke("openBrowser", "https://write-noted.vercel.app/");
+  };
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     fetch(`${serverUrl}/api/themes`)
       .then((res) => res.json())
       .then((data: { [key: string]: Theme }) => {
-        if (data) setThemes(data)
-        setLoading(false)
+        if (data) setThemes(data);
+        setLoading(false);
       })
-      .catch(() => setLoading(false))
-  }, [serverUrl])
+      .catch(() => setLoading(false));
+  }, [serverUrl]);
 
   return (
     <Box>
@@ -66,7 +65,7 @@ const Market = () => {
                   deletable={false}
                 />
               </motion.li>
-            )
+            );
           })
         ) : (
           "No themes"
@@ -77,7 +76,7 @@ const Market = () => {
         </Center>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default Market
+export default Market;

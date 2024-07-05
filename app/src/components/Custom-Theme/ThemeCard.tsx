@@ -1,4 +1,4 @@
-import { CheckIcon, DeleteIcon, DownloadIcon } from "@chakra-ui/icons"
+import { CheckIcon, DeleteIcon, DownloadIcon } from "@chakra-ui/icons";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -16,68 +16,66 @@ import {
   useColorMode,
   useDisclosure,
   useToast,
-} from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import { useEffect, useRef, useState } from "react"
-import { Theme } from "types"
-import useColors from "hooks/useColors"
+} from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import { useEffect, useRef, useState } from "react";
+import { Theme } from "types";
+import useColors from "hooks/useColors";
 
 const ThemeCard = ({
   name,
   colors,
   deletable,
 }: {
-  name: string
-  colors: Theme
-  deletable: boolean
+  name: string;
+  colors: Theme;
+  deletable: boolean;
 }) => {
   const { getBackgroundColor, getTextColor, getSecondaryBackgroundColor } =
-    useColors()
-  const { deleteCustomTheme, addThemeToEditor, customThemes } = useSettings()
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [sortedColors, setSortedColors] = useState<Theme>()
-  const cancelRef = useRef()
-  const toast = useToast()
-  const { colorMode, setColorMode } = useColorMode()
+    useColors();
+  const { deleteCustomTheme, addThemeToEditor, customThemes } = useSettings();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [sortedColors, setSortedColors] = useState<Theme>();
+  const cancelRef = useRef();
+  const toast = useToast();
+  const { colorMode, setColorMode } = useColorMode();
 
-  const bg_color = getBackgroundColor()
-
-  const text_color = getTextColor()
-
-  const bg_colorLeft = getSecondaryBackgroundColor()
+  const bg_color = getBackgroundColor();
+  const text_color = getTextColor();
+  const bg_colorLeft = getSecondaryBackgroundColor();
 
   const handleDelete = () => {
-    deleteCustomTheme(name)
-    if (colorMode === name) setColorMode("light")
-    onClose()
-  }
+    deleteCustomTheme(name);
+    if (colorMode === name) setColorMode("light");
+    onClose();
+  };
 
   const checkThemeDownloaded = () => {
-    if (!customThemes) return false
+    if (!customThemes) return false;
 
-    if (customThemes[name]) return customThemes[name].downloaded
-    return false
-  }
+    if (customThemes[name]) return customThemes[name].downloaded;
+    return false;
+  };
 
   const handleDownload = async () => {
-    const newThemeObject: Theme = { ...colors }
-    newThemeObject.downloaded = true
-    const res = await addThemeToEditor(name, newThemeObject)
+    const newThemeObject: Theme = { ...colors };
+    newThemeObject.downloaded = true;
+    const res = await addThemeToEditor(name, newThemeObject);
 
     if (res) {
       toast({
         title: `Theme ${name} downloaded successfully`,
         status: "success",
         isClosable: true,
-      })
+      });
     } else {
       toast({
         title: `Theme ${name} already exists`,
         status: "error",
         isClosable: true,
-      })
+      });
     }
-  }
+  };
 
   useEffect(() => {
     const orderOfKeys: string[] = [
@@ -86,14 +84,14 @@ const ThemeCard = ({
       "textColor",
       "iconColor",
       "accentColor",
-    ]
+    ];
 
-    const reorderedObject: any = {}
+    const reorderedObject: any = {};
     orderOfKeys.forEach((key: string) => {
-      reorderedObject[key] = colors[key]
-    })
-    setSortedColors(reorderedObject)
-  }, [colors])
+      reorderedObject[key] = colors[key];
+    });
+    setSortedColors(reorderedObject);
+  }, [colors]);
 
   return (
     <Box bg={colors.backgroundColor} rounded={"md"} p={2}>
@@ -209,12 +207,12 @@ const ThemeCard = ({
                 border={"1px"}
                 borderColor={colors.accentColor}
               />
-            )
+            );
           })}
         </SimpleGrid>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default ThemeCard
+export default ThemeCard;

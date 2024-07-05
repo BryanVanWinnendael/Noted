@@ -1,4 +1,4 @@
-import { utils } from "utils/index"
+import { utils } from "utils/index";
 
 export const tableStyle = (
   background_color: string,
@@ -9,7 +9,7 @@ export const tableStyle = (
   const bg_color_right = utils.getLighterColor(
     "0.02",
     secondary_background_color,
-  )
+  );
 
   return {
     ".tc-wrap": {
@@ -35,5 +35,5 @@ export const tableStyle = (
     ".tc-add-column:hover, .tc-add-row:hover, .tc-add-row:hover:before": {
       backgroundColor: secondary_background_color,
     },
-  }
-}
+  };
+};

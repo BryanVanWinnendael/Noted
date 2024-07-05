@@ -1,10 +1,10 @@
-import { CloseIcon } from "@chakra-ui/icons"
-import { Box, Button, Flex, Text, Tooltip } from "@chakra-ui/react"
-import { useWidget } from "contexts/WidgetContext"
-import { RefObject, useRef } from "react"
-import { CiCalendarDate } from "react-icons/ci"
-import { utils } from "utils"
-import useColors from "hooks/useColors"
+import { CloseIcon } from "@chakra-ui/icons";
+import { Box, Button, Flex, Text, Tooltip } from "@chakra-ui/react";
+import { useWidget } from "contexts/WidgetContext";
+import { RefObject, useRef } from "react";
+import { CiCalendarDate } from "react-icons/ci";
+import { utils } from "utils";
+import useColors from "hooks/useColors";
 
 const ToDoList = () => {
   const {
@@ -12,25 +12,22 @@ const ToDoList = () => {
     getIconColor,
     getSecondaryBackgroundColor,
     getTextColor,
-  } = useColors()
-  const { todos, setTodos } = useWidget()
-  const todosRef: RefObject<HTMLDivElement> = useRef(null)
+  } = useColors();
+  const { todos, setTodos } = useWidget();
+  const todosRef: RefObject<HTMLDivElement> = useRef(null);
 
-  const accent_color = getAccentColor()
-
-  const icon_color = getIconColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const text_color = getTextColor()
+  const accent_color = getAccentColor();
+  const icon_color = getIconColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const text_color = getTextColor();
 
   const handleDelete = (index: number) => {
-    const newTodos = [...todos]
-    newTodos.splice(index, 1)
-    setTodos(newTodos)
-    localStorage.setItem("todos", JSON.stringify(newTodos))
-  }
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+  };
 
   return (
     <Box
@@ -77,10 +74,10 @@ const ToDoList = () => {
               </Tooltip>
             )}
           </Flex>
-        )
+        );
       })}
     </Box>
-  )
-}
+  );
+};
 
-export default ToDoList
+export default ToDoList;

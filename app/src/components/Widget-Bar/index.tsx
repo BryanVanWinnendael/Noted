@@ -1,55 +1,55 @@
-import { Card, Stack } from "@chakra-ui/react"
-import { utils } from "utils"
-import WidgetChooser from "components/Widget-Bar/WidgetChooser"
-import { MyWindow, WidgetName } from "types"
-import { useEffect, useState } from "react"
-import { useWidget } from "contexts/WidgetContext"
-import ClockWidget from "components/Widget-Bar/Clock-Wdiget"
-import CalendarWidget from "components/Widget-Bar/Calendar-Widget"
-import ToDoWidget from "components/Widget-Bar/ToDo-Widget"
-import { useSettings } from "contexts/SettingsContext"
-import InfoWidget from "components/Widget-Bar/Info-Widget"
-import useColors from "hooks/useColors"
+import { Card, Stack } from "@chakra-ui/react";
+import { utils } from "utils";
+import WidgetChooser from "components/Widget-Bar/WidgetChooser";
+import { MyWindow, WidgetName } from "types";
+import { useEffect, useState } from "react";
+import { useWidget } from "contexts/WidgetContext";
+import ClockWidget from "components/Widget-Bar/Clock-Wdiget";
+import CalendarWidget from "components/Widget-Bar/Calendar-Widget";
+import ToDoWidget from "components/Widget-Bar/ToDo-Widget";
+import { useSettings } from "contexts/SettingsContext";
+import InfoWidget from "components/Widget-Bar/Info-Widget";
+import useColors from "hooks/useColors";
 
-declare let window: MyWindow
+declare let window: MyWindow;
 
 type WIDGET = {
-  [key in WidgetName]: JSX.Element
-}
+  [key in WidgetName]: JSX.Element;
+};
 
 const WIDGETS: WIDGET = {
   calendar: <CalendarWidget />,
   todo: <ToDoWidget />,
   clock: <ClockWidget />,
   info: <InfoWidget />,
-}
+};
 
 const Index = () => {
-  const { getBorderColor, getBackgroundColor } = useColors()
-  const [selectedPanel, setSelectedPanel] = useState<number>(1)
-  const { selectedWidgets } = useWidget()
-  const { glassBackground, glassEnabled } = useSettings()
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight)
+  const { getBorderColor, getBackgroundColor } = useColors();
+  const [selectedPanel, setSelectedPanel] = useState<number>(1);
+  const { selectedWidgets } = useWidget();
+  const { glassBackground, glassEnabled } = useSettings();
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
-  const bg_color = getBackgroundColor()
+  const bg_color = getBackgroundColor();
 
-  const isGlassEnabled = glassEnabled && glassBackground.widgets
+  const isGlassEnabled = glassEnabled && glassBackground.widgets;
 
   const getOffset = () => {
-    const MAX_HEIGHT = 790
+    const MAX_HEIGHT = 790;
     if (windowHeight <= MAX_HEIGHT) {
-      const res = windowHeight - MAX_HEIGHT
-      return `${res}px`
+      const res = windowHeight - MAX_HEIGHT;
+      return `${res}px`;
     }
-    return 0
-  }
+    return 0;
+  };
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowHeight(window.innerHeight)
-    }
-    window.addEventListener("resize", handleResize)
-  }, [])
+      setWindowHeight(window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+  }, []);
 
   return (
     <Stack>
@@ -74,10 +74,10 @@ const Index = () => {
           >
             {WIDGETS[widget]}
           </Card>
-        )
+        );
       })}
     </Stack>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

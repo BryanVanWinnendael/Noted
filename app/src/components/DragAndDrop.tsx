@@ -1,43 +1,43 @@
-import { Box, Flex, Text } from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useState, useRef } from "react"
+import { Box, Flex, Text } from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useState, useRef } from "react";
 
 const DragAndDrop = ({ children }: { children: JSX.Element }) => {
-  const [dragging, setDragging] = useState(false)
-  const dragContainerRef = useRef<HTMLDivElement | null>(null)
-  const { getBackgroundColor } = useColors()
-  const { openFolder } = useWorkspace()
+  const [dragging, setDragging] = useState(false);
+  const dragContainerRef = useRef<HTMLDivElement | null>(null);
+  const { getBackgroundColor } = useColors();
+  const { openFolder } = useWorkspace();
 
-  const bg_color = getBackgroundColor()
+  const bg_color = getBackgroundColor();
 
   const dragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
   const drop = (e: any) => {
-    e.preventDefault()
-    const files = e.dataTransfer.files
+    e.preventDefault();
+    const files = e.dataTransfer.files;
     if (files.length > 0) {
-      const path = files[0].path
-      openFolder(path, true)
+      const path = files[0].path;
+      openFolder(path, true);
     }
-    setDragging(false)
-  }
+    setDragging(false);
+  };
 
   const dragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    const currentTarget = e.currentTarget
+    e.preventDefault();
+    const currentTarget = e.currentTarget;
 
     if (!currentTarget.contains(e.relatedTarget as Node)) {
-      setDragging(false)
+      setDragging(false);
     }
-  }
+  };
 
   const dragEnter = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    setDragging(true)
-  }
+    e.preventDefault();
+    setDragging(true);
+  };
 
   return (
     <Box
@@ -66,7 +66,7 @@ const DragAndDrop = ({ children }: { children: JSX.Element }) => {
       )}
       {children}
     </Box>
-  )
-}
+  );
+};
 
-export default DragAndDrop
+export default DragAndDrop;

@@ -10,29 +10,28 @@ import {
   AccordionPanel,
   Icon,
   Stack,
-} from "@chakra-ui/react"
-import { utils } from "utils"
-import CustomTheme from "components/Custom-Theme"
-import CustomHeaders from "components/Custom-Headers"
-import { FaPalette } from "react-icons/fa"
-import GlassChooser from "components/Glass-Chooser"
-import { GiCrackedGlass } from "react-icons/gi"
-import useColors from "hooks/useColors"
-import Compact from "components/Compact"
-import FontChooser from "components/FontChooser"
-import TranslateSeting from "components/TranslateSetting"
-import EditorTitle from "components/EditorTitle"
-import Scrollbar from "components/Scrollbar"
-import { CgScrollV } from "react-icons/cg"
-import { LuHeading } from "react-icons/lu"
+} from "@chakra-ui/react";
+import { utils } from "utils";
+import CustomTheme from "components/Custom-Theme";
+import CustomHeaders from "components/Custom-Headers";
+import { FaPalette } from "react-icons/fa";
+import GlassChooser from "components/Glass-Chooser";
+import { GiCrackedGlass } from "react-icons/gi";
+import useColors from "hooks/useColors";
+import Compact from "components/Compact";
+import FontChooser from "components/FontChooser";
+import TranslateSeting from "components/TranslateSetting";
+import EditorTitle from "components/EditorTitle";
+import Scrollbar from "components/Scrollbar";
+import { CgScrollV } from "react-icons/cg";
+import { LuHeading } from "react-icons/lu";
 
 const Editor = () => {
-  const { getSecondaryBackgroundColor, getAccentColor } = useColors()
+  const { getSecondaryBackgroundColor, getAccentColor } = useColors();
 
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const accent_color = getAccentColor()
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const accent_color = getAccentColor();
 
   return (
     <Box>
@@ -209,7 +208,7 @@ const Editor = () => {
       <FontChooser />
       <TranslateSeting />
     </Box>
-  )
-}
+  );
+};
 
-export default Editor
+export default Editor;

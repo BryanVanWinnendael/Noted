@@ -1,17 +1,17 @@
-import { Button, Text } from "@chakra-ui/react"
-import { useEffect, useRef, useState } from "react"
-import Cursor from "./Cursor"
-import useColors from "hooks/useColors"
-import { utils } from "utils/index"
+import { Button, Text } from "@chakra-ui/react";
+import { useEffect, useRef, useState } from "react";
+import Cursor from "./Cursor";
+import useColors from "hooks/useColors";
+import { utils } from "utils/index";
 
 const CopyButton = ({ text }: { text: string }) => {
-  const { getAccentColor } = useColors()
+  const { getAccentColor } = useColors();
 
-  const accent_color = getAccentColor()
+  const accent_color = getAccentColor();
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(text)
-  }
+    navigator.clipboard.writeText(text);
+  };
 
   return (
     <Button
@@ -24,41 +24,41 @@ const CopyButton = ({ text }: { text: string }) => {
     >
       Copy
     </Button>
-  )
-}
+  );
+};
 
 const RewrittenText = ({ text }: { text: string }) => {
-  const scrollBoxRef = useRef<HTMLParagraphElement>(null)
-  const [displayResponse, setDisplayResponse] = useState<string>("")
-  const [completedTyping, setCompletedTyping] = useState<boolean>(false)
+  const scrollBoxRef = useRef<HTMLParagraphElement>(null);
+  const [displayResponse, setDisplayResponse] = useState<string>("");
+  const [completedTyping, setCompletedTyping] = useState<boolean>(false);
 
   const scrollToBottom = () => {
     if (scrollBoxRef.current) {
-      scrollBoxRef.current.scrollTop = scrollBoxRef.current.scrollHeight
+      scrollBoxRef.current.scrollTop = scrollBoxRef.current.scrollHeight;
     }
-  }
+  };
 
   useEffect(() => {
-    setCompletedTyping(false)
+    setCompletedTyping(false);
 
-    let i = 0
-    const stringResponse = text
+    let i = 0;
+    const stringResponse = text;
 
     const intervalId = setInterval(() => {
-      setDisplayResponse(stringResponse.slice(0, i))
-      scrollToBottom()
+      setDisplayResponse(stringResponse.slice(0, i));
+      scrollToBottom();
 
-      i++
+      i++;
 
       if (i > stringResponse.length) {
-        clearInterval(intervalId)
-        setCompletedTyping(true)
-        scrollToBottom()
+        clearInterval(intervalId);
+        setCompletedTyping(true);
+        scrollToBottom();
       }
-    }, 5)
+    }, 5);
 
-    return () => clearInterval(intervalId)
-  }, [text])
+    return () => clearInterval(intervalId);
+  }, [text]);
 
   return text ? (
     <Text ref={scrollBoxRef} maxH={200} overflowY="scroll" maxW={400}>
@@ -68,7 +68,7 @@ const RewrittenText = ({ text }: { text: string }) => {
     </Text>
   ) : (
     <Text>No text</Text>
-  )
-}
+  );
+};
 
-export default RewrittenText
+export default RewrittenText;

@@ -1,17 +1,20 @@
-import { Switch } from "@chakra-ui/react"
-import useColors from "hooks/useColors"
+import { Switch } from "@chakra-ui/react";
+import useColors from "hooks/useColors";
 
 const CustomSwitch = ({
   isChecked,
   onChange,
   id,
+  disabled,
 }: {
-  isChecked: boolean
-  onChange: () => void
-  id: string
+  isChecked: boolean;
+  onChange: () => void;
+  id: string;
+  disabled?: boolean;
 }) => {
-  const { getAccentColor } = useColors()
-  const accent_color = getAccentColor()
+  const { getAccentColor } = useColors();
+
+  const accent_color = getAccentColor();
 
   return (
     <Switch
@@ -23,8 +26,9 @@ const CustomSwitch = ({
       isChecked={isChecked}
       onChange={onChange}
       id={id}
+      disabled={disabled}
     />
-  )
-}
+  );
+};
 
-export default CustomSwitch
+export default CustomSwitch;

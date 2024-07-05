@@ -1,28 +1,28 @@
-import { IpcRendererEvent, contextBridge, ipcRenderer } from "electron"
+import { IpcRendererEvent, contextBridge, ipcRenderer } from "electron";
 // Expose the Electron API to the renderer process
 contextBridge.exposeInMainWorld("electron", {
   invoke: ipcRenderer.invoke,
   send: ipcRenderer.send,
   ipcRenderer: {
     sendMessage(channel: string, ...args: any[]) {
-      ipcRenderer.send(channel, ...args)
+      ipcRenderer.send(channel, ...args);
     },
     on(channel: string, func: (...args: any[]) => void) {
       const subscription = (_event: IpcRendererEvent, ...args: any[]) =>
-        func(...args)
-      ipcRenderer.on(channel, subscription)
+        func(...args);
+      ipcRenderer.on(channel, subscription);
 
       return () => {
-        ipcRenderer.removeListener(channel, subscription)
-      }
+        ipcRenderer.removeListener(channel, subscription);
+      };
     },
     once(channel: string, func: (...args: any[]) => void) {
       ipcRenderer.once(channel, (_event: IpcRendererEvent, ...args: any[]) =>
         func(...args),
-      )
+      );
     },
   },
-})
+});
 
 // --------- Preload scripts loading ---------
 function domReady(
@@ -30,45 +30,45 @@ function domReady(
 ) {
   return new Promise((resolve) => {
     if (condition.includes(document.readyState)) {
-      resolve(true)
+      resolve(true);
     } else {
       document.addEventListener("readystatechange", () => {
         if (condition.includes(document.readyState)) {
-          resolve(true)
+          resolve(true);
         }
-      })
+      });
     }
-  })
+  });
 }
 
 const safeDOM = {
   append(parent: HTMLElement, child: HTMLElement) {
     if (!Array.from(parent.children).find((e) => e === child)) {
-      parent.appendChild(child)
+      parent.appendChild(child);
     }
   },
   remove(parent: HTMLElement, child: HTMLElement) {
     if (Array.from(parent.children).find((e) => e === child)) {
-      parent.removeChild(child)
+      parent.removeChild(child);
     }
   },
-}
+};
 
 const getColors = () => {
-  const theme = localStorage.getItem("chakra-ui-color-mode")
-  let colors
+  const theme = localStorage.getItem("chakra-ui-color-mode");
+  let colors;
   if (theme === "custom_theme") {
-    colors = JSON.parse(localStorage.getItem("custom-theme-json") || "")
+    colors = JSON.parse(localStorage.getItem("custom-theme-json") || "");
   } else if (theme === "light") {
-    colors = "#fff"
+    colors = "#fff";
   } else {
-    colors = JSON.parse(localStorage.getItem("theme-json") || "")
+    colors = JSON.parse(localStorage.getItem("theme-json") || "");
   }
   if (!colors) {
-    return "#fff"
+    return "#fff";
   }
-  return colors["backgroundColor"]
-}
+  return colors["backgroundColor"];
+};
 
 /**
  * https://tobiasahlin.com/spinkit
@@ -77,8 +77,8 @@ const getColors = () => {
  * https://matejkustec.github.io/SpinThatShit
  */
 function useLoading() {
-  const bg = getColors()
-  const className = `loaders-css__square-spin`
+  const bg = getColors();
+  const className = `loaders-css__square-spin`;
   const styleContent = `
 @keyframes square-spin {
   25% { transform: perspective(100px) rotateX(180deg) rotateY(0); }
@@ -107,35 +107,35 @@ function useLoading() {
   background: ${bg};
   z-index: 9;
 }
-    `
-  const oStyle = document.createElement("style")
-  const oDiv = document.createElement("div")
+    `;
+  const oStyle = document.createElement("style");
+  const oDiv = document.createElement("div");
 
-  oStyle.id = "app-loading-style"
-  oStyle.innerHTML = styleContent
-  oDiv.className = "app-loading-wrap"
-  oDiv.innerHTML = `<div class="${className}"><div></div></div>`
+  oStyle.id = "app-loading-style";
+  oStyle.innerHTML = styleContent;
+  oDiv.className = "app-loading-wrap";
+  oDiv.innerHTML = `<div class="${className}"><div></div></div>`;
 
   return {
     appendLoading() {
-      safeDOM.append(document.head, oStyle)
-      safeDOM.append(document.body, oDiv)
+      safeDOM.append(document.head, oStyle);
+      safeDOM.append(document.body, oDiv);
     },
     removeLoading() {
-      safeDOM.remove(document.head, oStyle)
-      safeDOM.remove(document.body, oDiv)
+      safeDOM.remove(document.head, oStyle);
+      safeDOM.remove(document.body, oDiv);
     },
-  }
+  };
 }
 
 // ----------------------------------------------------------------------
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
-const { appendLoading, removeLoading } = useLoading()
-domReady().then(appendLoading)
+const { appendLoading, removeLoading } = useLoading();
+domReady().then(appendLoading);
 
 window.onmessage = (ev) => {
-  ev.data.payload === "removeLoading" && removeLoading()
-}
+  ev.data.payload === "removeLoading" && removeLoading();
+};
 
-setTimeout(removeLoading, 4999)
+setTimeout(removeLoading, 4999);

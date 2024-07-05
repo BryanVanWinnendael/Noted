@@ -1,10 +1,10 @@
-import { Box, Button, Flex, Stack, Text, Tooltip } from "@chakra-ui/react"
-import { useWidget } from "contexts/WidgetContext"
-import { BiMerge } from "react-icons/bi"
-import { utils } from "utils"
-import ToDoList from "components/Widget-Bar/ToDo-Widget/ToDoList"
-import ToDoForm from "components/Widget-Bar/ToDo-Widget/ToDoForm"
-import useColors from "hooks/useColors"
+import { Box, Button, Flex, Stack, Text, Tooltip } from "@chakra-ui/react";
+import { useWidget } from "contexts/WidgetContext";
+import { BiMerge } from "react-icons/bi";
+import { utils } from "utils";
+import ToDoList from "components/Widget-Bar/ToDo-Widget/ToDoList";
+import ToDoForm from "components/Widget-Bar/ToDo-Widget/ToDoForm";
+import useColors from "hooks/useColors";
 
 const Index = () => {
   const {
@@ -12,18 +12,15 @@ const Index = () => {
     getIconColor,
     getSecondaryBackgroundColor,
     getTextColor,
-  } = useColors()
+  } = useColors();
   const { isConnected, setIsConnected, canConnect, getCompatibleWidget } =
-    useWidget()
+    useWidget();
 
-  const accent_color = getAccentColor()
-
-  const icon_color = getIconColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const text_color = getTextColor()
+  const accent_color = getAccentColor();
+  const icon_color = getIconColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const text_color = getTextColor();
 
   return (
     <Box h="300px">
@@ -62,7 +59,7 @@ const Index = () => {
         <ToDoForm />
       </Stack>
     </Box>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

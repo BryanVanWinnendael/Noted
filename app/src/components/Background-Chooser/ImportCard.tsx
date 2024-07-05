@@ -8,44 +8,40 @@ import {
   MenuList,
   Stack,
   Text,
-} from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useState } from "react"
-import { IoIosCheckmarkCircle } from "react-icons/io"
-import { MdDeleteOutline } from "react-icons/md"
-import { utils } from "utils/index"
+} from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useState } from "react";
+import { IoIosCheckmarkCircle } from "react-icons/io";
+import { MdDeleteOutline } from "react-icons/md";
+import { utils } from "utils/index";
 
 const ImportCard = ({ path }: { path: string }) => {
   const { getBackgroundColor, getBorderColor, getIconColor, getTextColor } =
-    useColors()
-  const { saveSettings, backgroundImage, customBackground } = useSettings()
-  const { deleteImportedBackground } = useWorkspace()
-  const selected = backgroundImage === "custom" && path === customBackground
-  const { glassBackground, glassEnabled } = useSettings()
-  const [isOpen, setIsOpen] = useState(false)
+    useColors();
+  const { saveSettings, backgroundImage, customBackground } = useSettings();
+  const { deleteImportedBackground } = useWorkspace();
+  const selected = backgroundImage === "custom" && path === customBackground;
+  const { glassBackground, glassEnabled } = useSettings();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const border_color = getBorderColor()
+  const border_color = getBorderColor();
+  const text_color = getTextColor();
+  const icon_color = getIconColor();
+  const bg_color = getBackgroundColor();
+  const bg_color_lighter = utils.getLighterColor("0.02", bg_color);
 
-  const text_color = getTextColor()
-
-  const icon_color = getIconColor()
-
-  const isGlassEnabled = glassEnabled && glassBackground.window
-
-  const bg_color = getBackgroundColor()
-
-  const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
+  const isGlassEnabled = glassEnabled && glassBackground.window;
 
   const handleClick = () => {
-    saveSettings("background_image", "custom")
-    saveSettings("custom_background", path)
-  }
+    saveSettings("background_image", "custom");
+    saveSettings("custom_background", path);
+  };
 
   const handleDelete = () => {
-    deleteImportedBackground(path)
-  }
+    deleteImportedBackground(path);
+  };
 
   return (
     <Stack>
@@ -134,7 +130,7 @@ const ImportCard = ({ path }: { path: string }) => {
         </MenuList>
       </Menu>
     </Stack>
-  )
-}
+  );
+};
 
-export default ImportCard
+export default ImportCard;

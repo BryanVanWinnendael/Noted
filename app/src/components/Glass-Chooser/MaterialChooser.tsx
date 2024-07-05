@@ -1,29 +1,29 @@
-import { DEFAULT_MATERIAL, DEFAULT_MATERIALS } from "utils/constants"
-import { Box, Flex, Select, Text } from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import { utils } from "utils"
-import useColors from "hooks/useColors"
-import { useEffect, useState } from "react"
+import { DEFAULT_MATERIAL, DEFAULT_MATERIALS } from "utils/constants";
+import { Box, Flex, Select, Text } from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import { utils } from "utils";
+import useColors from "hooks/useColors";
+import { useEffect, useState } from "react";
 
 const MaterialChooser = () => {
-  const { getSecondaryBackgroundColor, getMutedTextColor } = useColors()
-  const [chosenMaterial, setChosenMaterial] = useState<string>(DEFAULT_MATERIAL)
-  const { material, saveSettings } = useSettings()
+  const { getSecondaryBackgroundColor, getMutedTextColor } = useColors();
+  const [chosenMaterial, setChosenMaterial] =
+    useState<string>(DEFAULT_MATERIAL);
+  const { material, saveSettings } = useSettings();
 
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const muted_text_color = getMutedTextColor()
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const muted_text_color = getMutedTextColor();
 
   const changeMaterial = (e: any) => {
-    const chosenMaterial = e.target.value || DEFAULT_MATERIAL
-    setChosenMaterial(chosenMaterial)
-    saveSettings("material", chosenMaterial)
-  }
+    const chosenMaterial = e.target.value || DEFAULT_MATERIAL;
+    setChosenMaterial(chosenMaterial);
+    saveSettings("material", chosenMaterial);
+  };
 
   useEffect(() => {
-    if (material) setChosenMaterial(material)
-  }, [material])
+    if (material) setChosenMaterial(material);
+  }, [material]);
 
   return (
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
@@ -48,7 +48,7 @@ const MaterialChooser = () => {
           ))}
       </Select>
     </Flex>
-  )
-}
+  );
+};
 
-export default MaterialChooser
+export default MaterialChooser;

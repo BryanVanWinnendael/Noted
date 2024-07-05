@@ -4,5 +4,5 @@ export const soundStyle = (border_color: string) => {
       backgroundColor: "transparent",
       borderColor: border_color,
     },
-  }
-}
+  };
+};

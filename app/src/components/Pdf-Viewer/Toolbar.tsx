@@ -1,10 +1,10 @@
-import { Box, Button, Flex, Tooltip } from "@chakra-ui/react"
-import { CanvasTools } from "types/index"
-import { LuPencil } from "react-icons/lu"
-import useColors from "hooks/useColors"
-import { utils } from "utils/index"
-import { MdTextFields } from "react-icons/md"
-import { FaRegSave } from "react-icons/fa"
+import { Box, Button, Flex, Tooltip } from "@chakra-ui/react";
+import { CanvasTools } from "types/index";
+import { LuPencil } from "react-icons/lu";
+import useColors from "hooks/useColors";
+import { utils } from "utils/index";
+import { MdTextFields } from "react-icons/md";
+import { FaRegSave } from "react-icons/fa";
 
 const Toolbar = ({
   toggleHandTool,
@@ -12,14 +12,16 @@ const Toolbar = ({
   handleSave,
   saving,
 }: {
-  toggleHandTool: (tool: CanvasTools) => void
-  tool: CanvasTools
-  handleSave: () => void
-  saving: boolean
+  toggleHandTool: (tool: CanvasTools) => void;
+  tool: CanvasTools;
+  handleSave: () => void;
+  saving: boolean;
 }) => {
-  const { getTextColor, getBackgroundColor } = useColors()
-  const text_color = getTextColor()
-  const bg_color = getBackgroundColor()
+  const { getTextColor, getBackgroundColor } = useColors();
+
+  const text_color = getTextColor();
+  const bg_color = getBackgroundColor();
+
   return (
     <Flex justifyContent="space-between">
       <Box>
@@ -84,7 +86,7 @@ const Toolbar = ({
         </Button>
       </Tooltip>
     </Flex>
-  )
-}
+  );
+};
 
-export default Toolbar
+export default Toolbar;

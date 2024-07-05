@@ -1,21 +1,19 @@
-import { Box, Card, Icon, Stack } from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { IoIosAdd } from "react-icons/io"
+import { Box, Card, Icon, Stack } from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { IoIosAdd } from "react-icons/io";
 
 const ImportBackground = () => {
-  const { getBorderColor, getIconColor, getBackgroundColor } = useColors()
-  const { importBackground } = useWorkspace()
+  const { getBorderColor, getIconColor, getBackgroundColor } = useColors();
+  const { importBackground } = useWorkspace();
 
-  const icon_color = getIconColor()
-
-  const border_color = getBorderColor()
-
-  const background_color = getBackgroundColor()
+  const icon_color = getIconColor();
+  const border_color = getBorderColor();
+  const background_color = getBackgroundColor();
 
   const handleClick = () => {
-    importBackground()
-  }
+    importBackground();
+  };
 
   return (
     <Stack>
@@ -51,7 +49,7 @@ const ImportBackground = () => {
         <Icon color={icon_color} as={IoIosAdd} w={70} h={70} />
       </Card>
     </Stack>
-  )
-}
+  );
+};
 
-export default ImportBackground
+export default ImportBackground;

@@ -8,50 +8,47 @@ import {
   useDisclosure,
   Text,
   Tooltip,
-} from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useRef, useState } from "react"
-import { utils } from "utils/index"
-import { MdOutlineCreateNewFolder } from "react-icons/md"
+} from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useRef, useState } from "react";
+import { utils } from "utils/index";
+import { MdOutlineCreateNewFolder } from "react-icons/md";
 
 const AddFolder = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     getSecondaryBackgroundColor,
     getIconColor,
     getAccentColor,
     getTextColor,
-  } = useColors()
-  const cancelRef = useRef()
-  const [folderName, setFolderName] = useState<string>("")
-  const [inValidName, setInValidName] = useState<boolean>(false)
-  const { activeFolder, makeNewFolder } = useWorkspace()
+  } = useColors();
+  const cancelRef = useRef();
+  const [folderName, setFolderName] = useState<string>("");
+  const [inValidName, setInValidName] = useState<boolean>(false);
+  const { activeFolder, makeNewFolder } = useWorkspace();
 
-  const accent_color = getAccentColor()
-
-  const icon_color = getIconColor()
-
-  const text_color = getTextColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
+  const accent_color = getAccentColor();
+  const icon_color = getIconColor();
+  const text_color = getTextColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
 
   const handleCreateFolder = async () => {
     if (folderName === "") {
-      setInValidName(true)
-      return
+      setInValidName(true);
+      return;
     }
-    const folderPath = activeFolder || ""
-    const filename = folderName
-    const res = await makeNewFolder(filename, folderPath)
+    const folderPath = activeFolder || "";
+    const filename = folderName;
+    const res = await makeNewFolder(filename, folderPath);
     if (!res) {
-      setInValidName(true)
-      return
+      setInValidName(true);
+      return;
     }
-    setFolderName("")
-    onClose()
-  }
+    setFolderName("");
+    onClose();
+  };
 
   return (
     <>
@@ -71,12 +68,12 @@ const AddFolder = () => {
             <Input
               value={folderName}
               onChange={(e) => {
-                setInValidName(false)
-                setFolderName(e.target.value)
+                setInValidName(false);
+                setFolderName(e.target.value);
               }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
-                  handleCreateFolder()
+                  handleCreateFolder();
                 }
               }}
               isInvalid={inValidName}
@@ -111,7 +108,7 @@ const AddFolder = () => {
         />
       </Tooltip>
     </>
-  )
-}
+  );
+};
 
-export default AddFolder
+export default AddFolder;

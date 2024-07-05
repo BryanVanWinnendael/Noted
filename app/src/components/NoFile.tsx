@@ -1,12 +1,11 @@
-import { Center, Text } from "@chakra-ui/react"
-import useColors from "hooks/useColors"
+import { Center, Text } from "@chakra-ui/react";
+import useColors from "hooks/useColors";
 
 const NoFile = () => {
-  const { getTextColor, getBorderColor } = useColors()
+  const { getTextColor, getBorderColor } = useColors();
 
-  const text_color = getTextColor()
-
-  const border_color = getBorderColor()
+  const text_color = getTextColor();
+  const border_color = getBorderColor();
 
   return (
     <Center
@@ -20,7 +19,7 @@ const NoFile = () => {
         No file selected
       </Text>
     </Center>
-  )
-}
+  );
+};
 
-export default NoFile
+export default NoFile;

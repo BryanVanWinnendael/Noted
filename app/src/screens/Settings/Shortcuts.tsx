@@ -1,23 +1,21 @@
-import { Box, Kbd, Flex, Stack, Text } from "@chakra-ui/react"
-import useColors from "hooks/useColors"
-import { Fragment } from "react"
-import shortcuts from "utils/shortcuts.json"
+import { Box, Kbd, Flex, Stack, Text } from "@chakra-ui/react";
+import useColors from "hooks/useColors";
+import { Fragment } from "react";
+import shortcuts from "utils/shortcuts.json";
 
 interface ShortcutType {
-  name: string
-  description: string
-  hotkey: string[]
+  name: string;
+  description: string;
+  hotkey: string[];
 }
 
 const Shortcuts = () => {
   const { getTextColor, getMutedTextColor, getSecondaryBackgroundColor } =
-    useColors()
+    useColors();
 
-  const text_color = getTextColor()
-
-  const muted_text_color = getMutedTextColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
+  const text_color = getTextColor();
+  const muted_text_color = getMutedTextColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
 
   return (
     <Box color={text_color}>
@@ -45,7 +43,7 @@ const Shortcuts = () => {
         ))}
       </Stack>
     </Box>
-  )
-}
+  );
+};
 
-export default Shortcuts
+export default Shortcuts;

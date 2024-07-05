@@ -1,17 +1,17 @@
-import Header from "@editorjs/header"
-import SimpleImage from "@editorjs/simple-image"
-import Checklist from "@editorjs/checklist"
-import List from "@editorjs/list"
-import Quote from "@editorjs/quote"
-import Delimiter from "@editorjs/delimiter"
-import editorjsParagraphLinebreakable from "@calumk/editorjs-paragraph-linebreakable"
-import Table from "@editorjs/table"
-import TextAlign from "@canburaks/text-align-editorjs"
-import Marker from "@editorjs/marker"
-import editorjsNestedChecklist from "@calumk/editorjs-nested-checklist"
-import EJLaTeX from "editorjs-latex"
-import AudioPlayer from "editorjs-audio-player"
-import CodeBox from "@bomdi/codebox"
+import Header from "@editorjs/header";
+import SimpleImage from "@editorjs/simple-image";
+import Checklist from "@editorjs/checklist";
+import List from "@editorjs/list";
+import Quote from "@editorjs/quote";
+import Delimiter from "@editorjs/delimiter";
+import editorjsParagraphLinebreakable from "@calumk/editorjs-paragraph-linebreakable";
+import Table from "@editorjs/table";
+import TextAlign from "@canburaks/text-align-editorjs";
+import Marker from "@editorjs/marker";
+import editorjsNestedChecklist from "@calumk/editorjs-nested-checklist";
+import EJLaTeX from "editorjs-latex";
+import AudioPlayer from "editorjs-audio-player";
+import CodeBox from "@bomdi/codebox";
 
 export const EDITOR_JS_TOOLS = {
   audioPlayer: AudioPlayer,
@@ -56,4 +56,4 @@ export const EDITOR_JS_TOOLS = {
   delimiter: Delimiter,
   table: Table,
   textAlign: TextAlign,
-}
+};

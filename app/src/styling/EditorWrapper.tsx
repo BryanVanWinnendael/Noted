@@ -1,10 +1,10 @@
-import { Box } from "@chakra-ui/react"
-import { utils } from "utils"
-import { useCallback, useEffect } from "react"
-import BlockStyling from "styling/Block-Styling"
-import useColors from "hooks/useColors"
-import "styling/splitScreen.css"
-import { splitScreen } from "./SplitScreen"
+import { Box } from "@chakra-ui/react";
+import { utils } from "utils";
+import { useCallback, useEffect } from "react";
+import BlockStyling from "styling/Block-Styling";
+import useColors from "hooks/useColors";
+import "styling/splitScreen.css";
+import { splitScreen } from "./SplitScreen";
 
 const EditorWrapper = ({ children }: { children: JSX.Element }) => {
   const {
@@ -15,24 +15,24 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
     getTextColor,
     getSecondaryBackgroundColor,
     getMutedTextColor,
-  } = useColors()
-  const icon_color = getIconColor()
+  } = useColors();
+  const icon_color = getIconColor();
 
-  const bg_color = getBackgroundColor()
+  const bg_color = getBackgroundColor();
 
-  const accent_color = getAccentColor()
+  const accent_color = getAccentColor();
 
-  const text_color = getTextColor()
+  const text_color = getTextColor();
 
-  const border_color = getBorderColor()
+  const border_color = getBorderColor();
 
-  const muted_text_color = getMutedTextColor()
+  const muted_text_color = getMutedTextColor();
 
-  const secondary_background_color = getSecondaryBackgroundColor()
+  const secondary_background_color = getSecondaryBackgroundColor();
   const bg_color_right = utils.getLighterColor(
     "0.02",
     secondary_background_color,
-  )
+  );
 
   const setTooltipStyle = useCallback(
     (classname: string) => {
@@ -40,45 +40,45 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
         backgroundColor: bg_color_right,
         color: text_color,
         borderRadius: "4px",
-      }
+      };
 
-      const contentElements: any = document.getElementsByClassName(classname)
-      const originalContentStyles: CSSStyleDeclaration[] = []
+      const contentElements: any = document.getElementsByClassName(classname);
+      const originalContentStyles: CSSStyleDeclaration[] = [];
 
       for (let i = 0; i < contentElements.length; i++) {
-        originalContentStyles[i] = { ...contentElements[i].style }
+        originalContentStyles[i] = { ...contentElements[i].style };
       }
 
       // Apply new styles to elements with class .ct__content
       for (let i = 0; i < contentElements.length; i++) {
-        Object.assign(contentElements[i].style, contentStyles)
+        Object.assign(contentElements[i].style, contentStyles);
       }
     },
     [bg_color_right, text_color],
-  )
+  );
 
   const getTooltip = useCallback(() => {
-    const contentElements: any = document.getElementsByClassName("ct__content")
+    const contentElements: any = document.getElementsByClassName("ct__content");
     if (contentElements.length > 0) {
-      setTooltipStyle("ct__content")
-      setTooltipStyle("ct")
-      setTooltipStyle("ct:after")
+      setTooltipStyle("ct__content");
+      setTooltipStyle("ct");
+      setTooltipStyle("ct:after");
     }
-  }, [setTooltipStyle])
+  }, [setTooltipStyle]);
 
   const setSplitScreenColor = useCallback(() => {
-    const root = document.documentElement
-    const color = utils.getTransparent(0.2, muted_text_color)
-    root.style.setProperty("--focus-border", color)
-  }, [muted_text_color])
+    const root = document.documentElement;
+    const color = utils.getTransparent(0.2, muted_text_color);
+    root.style.setProperty("--focus-border", color);
+  }, [muted_text_color]);
 
   useEffect(() => {
-    const intervalId = setInterval(getTooltip, 1000)
+    const intervalId = setInterval(getTooltip, 1000);
     setTimeout(() => {
-      clearInterval(intervalId)
-    }, 5000)
-    setSplitScreenColor()
-  }, [getTooltip, bg_color, text_color, setSplitScreenColor])
+      clearInterval(intervalId);
+    }, 5000);
+    setSplitScreenColor();
+  }, [getTooltip, bg_color, text_color, setSplitScreenColor]);
 
   return (
     <Box
@@ -208,7 +208,7 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
     >
       <BlockStyling>{children}</BlockStyling>
     </Box>
-  )
-}
+  );
+};
 
-export default EditorWrapper
+export default EditorWrapper;

@@ -13,17 +13,17 @@ import {
   Text,
   useDisclosure,
   useNumberInput,
-} from "@chakra-ui/react"
-import { useWidget } from "contexts/WidgetContext"
-import useColors from "hooks/useColors"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { utils } from "utils"
+} from "@chakra-ui/react";
+import { useWidget } from "contexts/WidgetContext";
+import useColors from "hooks/useColors";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { utils } from "utils";
 
 type timerType = {
-  hours: number
-  minutes: number
-  seconds: number
-}
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
 
 const TimerViewer = () => {
   const {
@@ -31,20 +31,20 @@ const TimerViewer = () => {
     getSecondaryBackgroundColor,
     getTextColor,
     getMutedTextColor,
-  } = useColors()
-  const { isConnected, selectedDate } = useWidget()
-  const [timer, setTimer] = useState<timerType | undefined>()
+  } = useColors();
+  const { isConnected, selectedDate } = useWidget();
+  const [timer, setTimer] = useState<timerType | undefined>();
   const [inputTimer, setInputTimer] = useState<timerType>({
     hours: 0,
     minutes: 0,
     seconds: 30,
-  })
-  const [timerPercentage, setTimerPercentage] = useState<number>(0)
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  });
+  const [timerPercentage, setTimerPercentage] = useState<number>(0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const cancelRef = useRef()
-  const timerInvtervalIdRef = useRef<any>(null)
-  const timeStartedRef = useRef<any>(null)
+  const cancelRef = useRef();
+  const timerInvtervalIdRef = useRef<any>(null);
+  const timeStartedRef = useRef<any>(null);
 
   const { getInputProps: getInputPropsHours } = useNumberInput({
     step: 1,
@@ -54,9 +54,9 @@ const TimerViewer = () => {
     max: 60,
     precision: 0,
     onChange: (_, valueNumber: number) => {
-      setInputTimer({ ...inputTimer, hours: valueNumber })
+      setInputTimer({ ...inputTimer, hours: valueNumber });
     },
-  })
+  });
 
   const { getInputProps: getInputPropsMinutes } = useNumberInput({
     step: 1,
@@ -66,9 +66,9 @@ const TimerViewer = () => {
     max: 60,
     precision: 0,
     onChange: (_, valueNumber: number) => {
-      setInputTimer({ ...inputTimer, minutes: valueNumber })
+      setInputTimer({ ...inputTimer, minutes: valueNumber });
     },
-  })
+  });
 
   const { getInputProps: getInputPropsSeconds } = useNumberInput({
     step: 1,
@@ -78,97 +78,97 @@ const TimerViewer = () => {
     max: 60,
     precision: 0,
     onChange: (_, valueNumber: number) => {
-      setInputTimer({ ...inputTimer, seconds: valueNumber })
+      setInputTimer({ ...inputTimer, seconds: valueNumber });
     },
-  })
+  });
 
-  const inputHours = getInputPropsHours()
-  const inputMinutes = getInputPropsMinutes()
-  const inputSeconds = getInputPropsSeconds()
+  const inputHours = getInputPropsHours();
+  const inputMinutes = getInputPropsMinutes();
+  const inputSeconds = getInputPropsSeconds();
 
-  const accent_color = getAccentColor()
+  const accent_color = getAccentColor();
 
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
 
-  const text_color = getTextColor()
+  const text_color = getTextColor();
 
-  const muted_text_color = getMutedTextColor()
+  const muted_text_color = getMutedTextColor();
 
   const handleClose = () => {
-    onClose()
-    setInputTimer({ hours: 0, minutes: 0, seconds: 30 })
-  }
+    onClose();
+    setInputTimer({ hours: 0, minutes: 0, seconds: 30 });
+  };
 
   const HandleSetTimer = () => {
-    const currentDate = new Date()
-    const TIME_LOST_IN_TRANSITION = 2
+    const currentDate = new Date();
+    const TIME_LOST_IN_TRANSITION = 2;
     const futureDate = new Date(
       currentDate.getTime() +
         inputTimer.hours * 3600000 +
         inputTimer.minutes * 60000 +
         (inputTimer.seconds + TIME_LOST_IN_TRANSITION) * 1000,
-    )
-    timeStartedRef.current = futureDate
-    handleClose()
+    );
+    timeStartedRef.current = futureDate;
+    handleClose();
 
     const id = setInterval(() => {
-      startTimer()
-    }, 1000)
-    timerInvtervalIdRef.current = id
-  }
+      startTimer();
+    }, 1000);
+    timerInvtervalIdRef.current = id;
+  };
 
   const stopTimer = useCallback(() => {
-    clearInterval(timerInvtervalIdRef.current)
-    setTimerPercentage(0)
-    setTimer(undefined)
-  }, [])
+    clearInterval(timerInvtervalIdRef.current);
+    setTimerPercentage(0);
+    setTimer(undefined);
+  }, []);
 
   const startTimer = useCallback(() => {
-    const currentTime = new Date()
-    const difference = timeStartedRef.current.getTime() - currentTime.getTime()
-    const remainingHours = Math.floor(difference / (1000 * 60 * 60))
+    const currentTime = new Date();
+    const difference = timeStartedRef.current.getTime() - currentTime.getTime();
+    const remainingHours = Math.floor(difference / (1000 * 60 * 60));
     const remainingMinutes = Math.floor(
       (difference % (1000 * 60 * 60)) / (1000 * 60),
-    )
-    const remainingSeconds = Math.floor((difference % (1000 * 60)) / 1000)
+    );
+    const remainingSeconds = Math.floor((difference % (1000 * 60)) / 1000);
 
     const hasTimeRemaining =
-      remainingHours > 0 || remainingMinutes > 0 || remainingSeconds > 0
+      remainingHours > 0 || remainingMinutes > 0 || remainingSeconds > 0;
 
     if (!hasTimeRemaining) {
-      return stopTimer()
+      return stopTimer();
     }
 
     setTimer({
       hours: remainingHours,
       minutes: remainingMinutes,
       seconds: remainingSeconds,
-    })
+    });
 
     const startingSeconds =
-      inputTimer.hours * 3600 + inputTimer.minutes * 60 + inputTimer.seconds
+      inputTimer.hours * 3600 + inputTimer.minutes * 60 + inputTimer.seconds;
     const totalSeconds =
-      remainingHours * 3600 + remainingMinutes * 60 + remainingSeconds
-    const percentage = (totalSeconds / startingSeconds) * 100
-    setTimerPercentage(percentage)
-  }, [inputTimer.hours, inputTimer.minutes, inputTimer.seconds, stopTimer])
+      remainingHours * 3600 + remainingMinutes * 60 + remainingSeconds;
+    const percentage = (totalSeconds / startingSeconds) * 100;
+    setTimerPercentage(percentage);
+  }, [inputTimer.hours, inputTimer.minutes, inputTimer.seconds, stopTimer]);
 
   const handleCalculateTimeUntil = () => {
-    if (!selectedDate) return
-    const futureDate = new Date(selectedDate.toDate())
-    timeStartedRef.current = futureDate
+    if (!selectedDate) return;
+    const futureDate = new Date(selectedDate.toDate());
+    timeStartedRef.current = futureDate;
     const id = setInterval(() => {
-      startTimer()
-    }, 1000)
-    timerInvtervalIdRef.current = id
-  }
+      startTimer();
+    }, 1000);
+    timerInvtervalIdRef.current = id;
+  };
 
   useEffect(() => {
     return () => {
-      if (timerInvtervalIdRef.current) stopTimer()
-    }
-  }, [stopTimer])
+      if (timerInvtervalIdRef.current) stopTimer();
+    };
+  }, [stopTimer]);
 
   return (
     <Box>
@@ -278,7 +278,7 @@ const TimerViewer = () => {
         </Stack>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default TimerViewer
+export default TimerViewer;

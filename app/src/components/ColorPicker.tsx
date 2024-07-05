@@ -1,36 +1,36 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import {
   Popover,
   PopoverTrigger,
   Button,
   PopoverContent,
   PopoverBody,
-} from "@chakra-ui/react"
-import useColors from "hooks/useColors"
-import { HexColorPicker } from "react-colorful"
+} from "@chakra-ui/react";
+import useColors from "hooks/useColors";
+import { HexColorPicker } from "react-colorful";
 
 const ColorPicker = ({
   keyType,
   onChange,
   givenColor,
 }: {
-  keyType: any
-  onChange: (key: any, color: string) => void
-  givenColor: string
+  keyType: any;
+  onChange: (key: any, color: string) => void;
+  givenColor: string;
 }) => {
-  const { getAccentColor } = useColors()
-  const [color, setColor] = useState(givenColor)
+  const { getAccentColor } = useColors();
+  const [color, setColor] = useState(givenColor);
 
-  const accent_color = getAccentColor()
+  const accent_color = getAccentColor();
 
   const changeColor = (color: string) => {
-    setColor(color)
-    onChange(keyType, color)
-  }
+    setColor(color);
+    onChange(keyType, color);
+  };
 
   useEffect(() => {
-    setColor(givenColor)
-  }, [givenColor])
+    setColor(givenColor);
+  }, [givenColor]);
 
   return (
     <Popover>
@@ -53,7 +53,7 @@ const ColorPicker = ({
         </PopoverBody>
       </PopoverContent>
     </Popover>
-  )
-}
+  );
+};
 
-export default ColorPicker
+export default ColorPicker;

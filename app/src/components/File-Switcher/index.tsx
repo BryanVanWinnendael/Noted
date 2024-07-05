@@ -1,68 +1,67 @@
-import { Box, Flex } from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useCallback, useEffect, useState } from "react"
-import { utils } from "utils/index"
-import FileCard from "./FileCard"
+import { Box, Flex } from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useCallback, useEffect, useState } from "react";
+import { utils } from "utils/index";
+import FileCard from "./FileCard";
 
 const Index = () => {
-  const { setShowSwitcher, setActiveFolder, openFile } = useWorkspace()
-  const { getSecondaryBackgroundColor, getTextColor } = useColors()
-  const [selectedPane, setSelectedPane] = useState<number>(0)
+  const { setShowSwitcher, setActiveFolder, openFile } = useWorkspace();
+  const { getSecondaryBackgroundColor, getTextColor } = useColors();
+  const [selectedPane, setSelectedPane] = useState<number>(0);
   const openFiles: any[] = localStorage.getItem("open_files")
     ? JSON.parse(localStorage.getItem("open_files")!)
-    : []
+    : [];
 
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const text_color = getTextColor()
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const text_color = getTextColor();
 
   const selectPane = useCallback(
     (path: string) => {
-      const folderPath = path.split("\\")
-      folderPath.pop()
-      setActiveFolder(folderPath.join("\\"))
-      openFile(path)
+      const folderPath = path.split("\\");
+      folderPath.pop();
+      setActiveFolder(folderPath.join("\\"));
+      openFile(path);
     },
     [openFile, setActiveFolder],
-  )
+  );
 
   useEffect(() => {
     const handleKeyUp = (event: KeyboardEvent) => {
       if (event.key === "Control") {
-        const openFilesStorage = localStorage.getItem("open_files")
+        const openFilesStorage = localStorage.getItem("open_files");
         if (openFilesStorage) {
-          const files = JSON.parse(openFilesStorage)
-          const selectedPath = files[selectedPane].path
-          selectPane(selectedPath)
-          setShowSwitcher(false)
+          const files = JSON.parse(openFilesStorage);
+          const selectedPath = files[selectedPane].path;
+          selectPane(selectedPath);
+          setShowSwitcher(false);
         }
       }
-    }
+    };
 
     const switchPane = (event: KeyboardEvent) => {
       if (event.key === " ") {
-        const openFilesStorage = localStorage.getItem("open_files")
+        const openFilesStorage = localStorage.getItem("open_files");
         if (openFilesStorage) {
-          const files = JSON.parse(openFilesStorage)
+          const files = JSON.parse(openFilesStorage);
           if (selectedPane === files.length - 1) {
-            setSelectedPane(0)
+            setSelectedPane(0);
           } else {
-            setSelectedPane(selectedPane + 1)
+            setSelectedPane(selectedPane + 1);
           }
         }
       }
-    }
+    };
 
-    window.addEventListener("keyup", handleKeyUp)
-    window.addEventListener("keydown", switchPane)
+    window.addEventListener("keyup", handleKeyUp);
+    window.addEventListener("keydown", switchPane);
 
     return () => {
-      window.removeEventListener("keyup", handleKeyUp)
-      window.removeEventListener("keydown", switchPane)
-    }
-  }, [selectPane, selectedPane, setShowSwitcher])
+      window.removeEventListener("keyup", handleKeyUp);
+      window.removeEventListener("keydown", switchPane);
+    };
+  }, [selectPane, selectedPane, setShowSwitcher]);
 
   return (
     <>
@@ -103,7 +102,7 @@ const Index = () => {
         </Flex>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

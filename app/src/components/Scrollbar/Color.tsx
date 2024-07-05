@@ -1,23 +1,22 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react"
-import ColorPicker from "components/ColorPicker"
-import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
-import { DEFAULT_SCROLLBAR } from "utils/constants"
-import { utils } from "utils/index"
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import ColorPicker from "components/ColorPicker";
+import { useSettings } from "contexts/SettingsContext";
+import useColors from "hooks/useColors";
+import { DEFAULT_SCROLLBAR } from "utils/constants";
+import { utils } from "utils/index";
 
 const Color = () => {
-  const { saveSettings, scrollbar } = useSettings()
-  const { getMutedTextColor, getAccentColor } = useColors()
-  const color = scrollbar.color
+  const { saveSettings, scrollbar } = useSettings();
+  const { getMutedTextColor, getAccentColor } = useColors();
+  const color = scrollbar.color;
 
-  const muted_text_color = getMutedTextColor()
-
-  const accent_color = getAccentColor()
+  const muted_text_color = getMutedTextColor();
+  const accent_color = getAccentColor();
 
   const handleChange = (_: any, color: string) => {
-    const newScrollbar = { ...scrollbar, color: color }
-    saveSettings("scrollbar", newScrollbar)
-  }
+    const newScrollbar = { ...scrollbar, color: color };
+    saveSettings("scrollbar", newScrollbar);
+  };
 
   return (
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
@@ -45,7 +44,7 @@ const Color = () => {
         </Flex>
       </Flex>
     </Flex>
-  )
-}
+  );
+};
 
-export default Color
+export default Color;
