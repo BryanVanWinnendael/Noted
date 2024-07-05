@@ -1,17 +1,17 @@
-import { Flex, Box, Text } from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
-import CustomSwitch from "./CustomSwitch"
+import { Flex, Box, Text } from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import useColors from "hooks/useColors";
+import CustomSwitch from "./CustomSwitch";
 
 const ExtensionLabel = () => {
-  const { saveSettings, extensionLabel } = useSettings()
-  const { getMutedTextColor } = useColors()
+  const { saveSettings, extensionLabel } = useSettings();
+  const { getMutedTextColor } = useColors();
 
-  const muted_text_color = getMutedTextColor()
+  const muted_text_color = getMutedTextColor();
 
   const handleGlassBackground = () => {
-    saveSettings("extension_label", !extensionLabel)
-  }
+    saveSettings("extension_label", !extensionLabel);
+  };
 
   return (
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
@@ -27,7 +27,7 @@ const ExtensionLabel = () => {
         id="extensionLabel"
       />
     </Flex>
-  )
-}
+  );
+};
 
-export default ExtensionLabel
+export default ExtensionLabel;

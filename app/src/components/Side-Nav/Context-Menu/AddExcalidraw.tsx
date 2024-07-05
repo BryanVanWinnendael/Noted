@@ -7,68 +7,65 @@ import {
   useDisclosure,
   Text,
   MenuItem,
-} from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useRef, useState } from "react"
-import { ContextMenu } from "types/index"
-import { utils } from "utils/index"
-import { MdOutlineDraw } from "react-icons/md"
+} from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useRef, useState } from "react";
+import { ContextMenu } from "types/index";
+import { utils } from "utils/index";
+import { MdOutlineDraw } from "react-icons/md";
 
 const AddExcalidraw = ({ path, type }: ContextMenu) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { getAccentColor, getBackgroundColor, getTextColor, getIconColor } =
-    useColors()
-  const cancelRef = useRef()
-  const [fileName, setFileName] = useState<string>("")
-  const [inValidName, setInValidName] = useState<boolean>(false)
-  const { makeNewFile } = useWorkspace()
+    useColors();
+  const cancelRef = useRef();
+  const [fileName, setFileName] = useState<string>("");
+  const [inValidName, setInValidName] = useState<boolean>(false);
+  const { makeNewFile } = useWorkspace();
 
-  const accent_color = getAccentColor()
-
-  const bg_color = getBackgroundColor()
-  const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
-
-  const text_color = getTextColor()
-
-  const icon_color = getIconColor()
+  const accent_color = getAccentColor();
+  const bg_color = getBackgroundColor();
+  const bg_color_lighter = utils.getLighterColor("0.02", bg_color);
+  const text_color = getTextColor();
+  const icon_color = getIconColor();
 
   const handleAddToFile = async () => {
-    const folderPath = path.split("\\").slice(0, -1).join("\\")
-    const filename = fileName + ".excalidraw"
-    const res = await makeNewFile(filename, folderPath)
+    const folderPath = path.split("\\").slice(0, -1).join("\\");
+    const filename = fileName + ".excalidraw";
+    const res = await makeNewFile(filename, folderPath);
     if (!res) {
-      setInValidName(true)
-      return
+      setInValidName(true);
+      return;
     }
-    setFileName("")
-    onClose()
-  }
+    setFileName("");
+    onClose();
+  };
 
   const handleAddToFolder = async () => {
-    const folderPath = path
-    const filename = fileName + ".excalidraw"
-    const res = await makeNewFile(filename, folderPath)
+    const folderPath = path;
+    const filename = fileName + ".excalidraw";
+    const res = await makeNewFile(filename, folderPath);
     if (!res) {
-      setInValidName(true)
-      return
+      setInValidName(true);
+      return;
     }
-    setFileName("")
-    onClose()
-  }
+    setFileName("");
+    onClose();
+  };
 
   const handleAdd = async () => {
     if (fileName === "") {
-      setInValidName(true)
-      return
+      setInValidName(true);
+      return;
     }
 
     if (type === "file") {
-      handleAddToFile()
+      handleAddToFile();
     } else {
-      handleAddToFolder()
+      handleAddToFolder();
     }
-  }
+  };
 
   return (
     <>
@@ -88,12 +85,12 @@ const AddExcalidraw = ({ path, type }: ContextMenu) => {
             <Input
               value={fileName}
               onChange={(e) => {
-                setInValidName(false)
-                setFileName(e.target.value)
+                setInValidName(false);
+                setFileName(e.target.value);
               }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
-                  handleAdd()
+                  handleAdd();
                 }
               }}
               isInvalid={inValidName}
@@ -124,7 +121,7 @@ const AddExcalidraw = ({ path, type }: ContextMenu) => {
         <Text fontSize="sm">Add Excalidraw File</Text>
       </MenuItem>
     </>
-  )
-}
+  );
+};
 
-export default AddExcalidraw
+export default AddExcalidraw;

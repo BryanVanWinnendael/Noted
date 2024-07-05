@@ -1,4 +1,4 @@
-import { ArrowForwardIcon, SearchIcon } from "@chakra-ui/icons"
+import { ArrowForwardIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -11,93 +11,88 @@ import {
   InputLeftElement,
   Stack,
   Text,
-} from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { WorkspaceType } from "types/index"
-import { utils } from "utils/index"
+} from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { WorkspaceType } from "types/index";
+import { utils } from "utils/index";
 
 const OpenFileInTab = () => {
-  const [filterdFiles, setFilterdFiles] = useState<string[]>([])
-  const inputRef = useRef<HTMLInputElement | null>(null)
-  const buttonRefs = useRef<Array<HTMLButtonElement | null>>([])
-  const cancelRef = useRef()
+  const [filterdFiles, setFilterdFiles] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const cancelRef = useRef();
   const {
     getBackgroundColor,
     getSecondaryBackgroundColor,
     getTextColor,
     getMutedTextColor,
     getAccentColor,
-  } = useColors()
+  } = useColors();
   const { showOpenNewFile, setShowOpenNewFile, workspace, openFile } =
-    useWorkspace()
-  const [searchFile, setSearchFile] = useState<string>("")
-  const [currentIndex, setCurrentIndex] = useState<number | null>(null)
-  const [typing, setTyping] = useState<boolean>(false)
+    useWorkspace();
+  const [searchFile, setSearchFile] = useState<string>("");
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const [typing, setTyping] = useState<boolean>(false);
 
-  const bg_color = getBackgroundColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
+  const bg_color = getBackgroundColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
   const secondary_bg_color = utils.getLighterColor(
     "0.02",
     secondary_background_color,
-  )
-
-  const text_color = getTextColor()
-
-  const muted_text_color = getMutedTextColor()
-
-  const accent_color = utils.getTransparent(0.2, getAccentColor())
-
-  const text_color_on_accent = utils.getDarkerColor("0.1", getAccentColor())
+  );
+  const text_color = getTextColor();
+  const muted_text_color = getMutedTextColor();
+  const accent_color = utils.getTransparent(0.2, getAccentColor());
+  const text_color_on_accent = utils.getDarkerColor("0.1", getAccentColor());
 
   const handleOpenTab = (file: string) => {
-    openFile(file)
-    handleClose()
-  }
+    openFile(file);
+    handleClose();
+  };
 
   const handleClose = () => {
-    resetDialog()
-    setShowOpenNewFile(false)
-  }
+    resetDialog();
+    setShowOpenNewFile(false);
+  };
 
   const getAllFiles = useCallback(() => {
     const iterFiles = (folder: WorkspaceType[], res: string[]) => {
-      if (!folder) return
+      if (!folder) return;
       folder.forEach((file) => {
         if (file.type === "folder") {
-          if (!file.items) return
-          iterFiles(file.items, res)
+          if (!file.items) return;
+          iterFiles(file.items, res);
         } else {
-          res.push(file.path)
+          res.push(file.path);
         }
-      })
-    }
-    const res: any[] = []
-    if (!workspace?.items) return res
-    iterFiles(workspace?.items, res)
-    return res
-  }, [workspace?.items])
+      });
+    };
+    const res: any[] = [];
+    if (!workspace?.items) return res;
+    iterFiles(workspace?.items, res);
+    return res;
+  }, [workspace?.items]);
 
   const getFilename = (path: string) => {
-    const splitted_path = path.split("\\")
-    const filename = splitted_path[splitted_path.length - 1]
-    const extensionSplit = filename.split(".")
-    const extension = extensionSplit[extensionSplit.length - 1]
-    const splitted = filename.split("." + extension)[0]
-    return splitted
-  }
+    const splitted_path = path.split("\\");
+    const filename = splitted_path[splitted_path.length - 1];
+    const extensionSplit = filename.split(".");
+    const extension = extensionSplit[extensionSplit.length - 1];
+    const splitted = filename.split("." + extension)[0];
+    return splitted;
+  };
 
   const handleSetSearch = (input: string) => {
-    setSearchFile(input)
-    const files = getAllFiles()
+    setSearchFile(input);
+    const files = getAllFiles();
     const filtered = files.filter((file) => {
-      const filename = getFilename(file)
-      return filename.toLowerCase().includes(input.toLowerCase())
-    })
-    setFilterdFiles(filtered)
-  }
+      const filename = getFilename(file);
+      return filename.toLowerCase().includes(input.toLowerCase());
+    });
+    setFilterdFiles(filtered);
+  };
 
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLButtonElement>,
@@ -105,81 +100,81 @@ const OpenFileInTab = () => {
   ) => {
     switch (event.key) {
       case "ArrowDown":
-        setTyping(false)
-        event.preventDefault()
-        focusNextButton(index)
-        break
+        setTyping(false);
+        event.preventDefault();
+        focusNextButton(index);
+        break;
       case "ArrowUp":
-        setTyping(false)
-        event.preventDefault()
-        focusPreviousButton(index)
-        break
+        setTyping(false);
+        event.preventDefault();
+        focusPreviousButton(index);
+        break;
       case "Enter":
-        setTyping(false)
-        handleOpenTab(filterdFiles[index])
-        resetDialog()
-        break
+        setTyping(false);
+        handleOpenTab(filterdFiles[index]);
+        resetDialog();
+        break;
       default:
-        break
+        break;
     }
-  }
+  };
 
   const handleHideToolbar = () => {
     const popoverElement = document.querySelector(
       ".ce-popover.ce-popover--opened",
-    ) as HTMLDivElement
+    ) as HTMLDivElement;
     if (popoverElement) {
-      popoverElement.style.display = "none"
+      popoverElement.style.display = "none";
     }
-  }
+  };
 
   const resetDialog = () => {
-    setSearchFile("")
-    setCurrentIndex(null)
-    setFilterdFiles(getAllFiles())
-  }
+    setSearchFile("");
+    setCurrentIndex(null);
+    setFilterdFiles(getAllFiles());
+  };
 
   const handleKeyDialog = useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      handleHideToolbar()
+      handleHideToolbar();
       if (event.key === "Tab") {
-        setTyping(false)
-        event.preventDefault()
+        setTyping(false);
+        event.preventDefault();
         if (currentIndex === null) {
-          buttonRefs.current[0]?.focus()
-          setCurrentIndex(0)
+          buttonRefs.current[0]?.focus();
+          setCurrentIndex(0);
         } else {
-          const nextCurrent = (currentIndex + 1) % getAllFiles().length
-          buttonRefs.current[nextCurrent]?.focus()
-          setCurrentIndex(nextCurrent)
+          const nextCurrent = (currentIndex + 1) % getAllFiles().length;
+          buttonRefs.current[nextCurrent]?.focus();
+          setCurrentIndex(nextCurrent);
         }
       } else if (
         event.key !== "ArrowDown" &&
         event.key !== "ArrowUp" &&
         event.key !== "Enter"
       ) {
-        setTyping(true)
-        inputRef.current?.focus()
+        setTyping(true);
+        inputRef.current?.focus();
       }
     },
     [currentIndex, getAllFiles],
-  )
+  );
 
   const focusNextButton = (currentIndex: number) => {
-    const nextIndex = (currentIndex + 1) % getAllFiles().length
-    buttonRefs.current[nextIndex]?.focus()
-  }
+    const nextIndex = (currentIndex + 1) % getAllFiles().length;
+    buttonRefs.current[nextIndex]?.focus();
+  };
 
   const focusPreviousButton = (currentIndex: number) => {
     const previousIndex =
-      (currentIndex - 1 + getAllFiles().length) % getAllFiles().length
-    buttonRefs.current[previousIndex]?.focus()
-  }
+      (currentIndex - 1 + getAllFiles().length) % getAllFiles().length;
+    buttonRefs.current[previousIndex]?.focus();
+  };
 
   useEffect(() => {
-    const files = getAllFiles()
-    setFilterdFiles(files)
-  }, [workspace?.items, getAllFiles])
+    const files = getAllFiles();
+    setFilterdFiles(files);
+  }, [workspace?.items, getAllFiles]);
 
   return (
     <AlertDialog
@@ -213,13 +208,13 @@ const OpenFileInTab = () => {
               tabIndex={-1} // Exclude from the natural tab order
               value={searchFile}
               onChange={(e) => {
-                handleSetSearch(e.target.value)
+                handleSetSearch(e.target.value);
               }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
-                  const file = filterdFiles[0]
-                  handleOpenTab(file)
-                  resetDialog()
+                  const file = filterdFiles[0];
+                  handleOpenTab(file);
+                  resetDialog();
                 }
               }}
               placeholder="Search or enter file"
@@ -250,7 +245,7 @@ const OpenFileInTab = () => {
                   bg: utils.getDarkerColor("0.03", secondary_bg_color),
                 }}
                 onClick={() => {
-                  handleOpenTab(file)
+                  handleOpenTab(file);
                 }}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 tabIndex={0} // Make the button focusable
@@ -273,7 +268,7 @@ const OpenFileInTab = () => {
         </AlertDialogBody>
       </AlertDialogContent>
     </AlertDialog>
-  )
-}
+  );
+};
 
-export default OpenFileInTab
+export default OpenFileInTab;

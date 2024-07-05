@@ -1,8 +1,8 @@
-import { useColorMode } from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import { useWidget } from "contexts/WidgetContext"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import { useHotkeys } from "react-hotkeys-hook"
+import { useColorMode } from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import { useWidget } from "contexts/WidgetContext";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import { useHotkeys } from "react-hotkeys-hook";
 
 const useShortcuts = () => {
   const {
@@ -13,74 +13,74 @@ const useShortcuts = () => {
     openWorkspace,
     setShowSwitcher,
     closeWorkspace,
-  } = useWorkspace()
-  const { setWidgetPanel, widgetPanel } = useWidget()
-  const { onOpen } = useSettings()
-  const { setColorMode } = useColorMode()
+  } = useWorkspace();
+  const { setWidgetPanel, widgetPanel } = useWidget();
+  const { onOpen } = useSettings();
+  const { setColorMode } = useColorMode();
 
   const handleSidebar = () => {
-    setShowSidebar(!showSidebar)
-  }
+    setShowSidebar(!showSidebar);
+  };
 
   const handleNewTabAndOpenFile = () => {
-    setShowOpenFileInTab(true)
-  }
+    setShowOpenFileInTab(true);
+  };
 
   const handleOpenNewFile = () => {
-    setShowOpenNewFile(true)
-  }
+    setShowOpenNewFile(true);
+  };
 
   const handleWidgetPanel = () => {
-    setWidgetPanel(!widgetPanel)
-  }
+    setWidgetPanel(!widgetPanel);
+  };
 
   const handleOpenedWorkspace = () => {
-    openWorkspace()
-  }
+    openWorkspace();
+  };
 
   const handleCloseWorkspace = () => {
-    closeWorkspace()
-    setColorMode("light")
-  }
+    closeWorkspace();
+    setColorMode("light");
+  };
 
   const handleOpenSwitcher = () => {
-    setShowSwitcher(true)
-  }
+    setShowSwitcher(true);
+  };
 
   const handlerOpenSettings = () => {
-    onOpen()
-  }
+    onOpen();
+  };
 
   const useAddShortcuts = () => {
     useHotkeys("ctrl+t", handleNewTabAndOpenFile, {
       enableOnContentEditable: true,
-    })
+    });
     useHotkeys("ctrl+n", handleOpenNewFile, {
       enableOnContentEditable: true,
-    })
+    });
     useHotkeys("ctrl+s", handleSidebar, {
       enableOnContentEditable: true,
-    })
+    });
     useHotkeys("ctrl+w", handleWidgetPanel, {
       enableOnContentEditable: true,
-    })
+    });
     useHotkeys("ctrl+o", handleOpenedWorkspace, {
       enableOnContentEditable: true,
-    })
+    });
     useHotkeys("ctrl+r", handleCloseWorkspace, {
       enableOnContentEditable: true,
-    })
+    });
     useHotkeys("ctrl+space", handleOpenSwitcher, {
       enableOnContentEditable: true,
-    })
+    });
     useHotkeys("ctrl+p", handlerOpenSettings, {
       enableOnContentEditable: true,
-    })
-  }
+    });
+  };
 
   return {
     useAddShortcuts,
-  }
-}
+  };
+};
 
-export default useShortcuts
+export default useShortcuts;

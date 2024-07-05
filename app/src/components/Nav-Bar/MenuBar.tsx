@@ -1,5 +1,5 @@
-import { useWorkspace } from "contexts/WorkspaceContext"
-import { useSettings } from "contexts/SettingsContext"
+import { useWorkspace } from "contexts/WorkspaceContext";
+import { useSettings } from "contexts/SettingsContext";
 import {
   Menu,
   MenuButton,
@@ -7,9 +7,9 @@ import {
   MenuList,
   Text,
   useColorMode,
-} from "@chakra-ui/react"
-import { utils } from "utils"
-import useColors from "hooks/useColors"
+} from "@chakra-ui/react";
+import { utils } from "utils";
+import useColors from "hooks/useColors";
 
 const MenuBar = () => {
   const {
@@ -18,27 +18,23 @@ const MenuBar = () => {
     getTextColor,
     getMutedTextColor,
     getBorderColor,
-  } = useColors()
-  const { openWorkspace, closeWorkspace } = useWorkspace()
-  const { setColorMode } = useColorMode()
-  const { onOpen, glassBackground, glassEnabled } = useSettings()
+  } = useColors();
+  const { openWorkspace, closeWorkspace } = useWorkspace();
+  const { setColorMode } = useColorMode();
+  const { onOpen, glassBackground, glassEnabled } = useSettings();
 
-  const bg_color = getBackgroundColor()
+  const bg_color = getBackgroundColor();
+  const accent_color = getAccentColor();
+  const text_color = getTextColor();
+  const muted_text_color = getMutedTextColor();
+  const border_color = getBorderColor();
 
-  const accent_color = getAccentColor()
-
-  const text_color = getTextColor()
-
-  const muted_text_color = getMutedTextColor()
-
-  const border_color = getBorderColor()
-
-  const isGlassEnabled = glassEnabled && glassBackground.navBar
+  const isGlassEnabled = glassEnabled && glassBackground.navBar;
 
   const handleCloseWorkspace = () => {
-    closeWorkspace()
-    setColorMode("light")
-  }
+    closeWorkspace();
+    setColorMode("light");
+  };
 
   return (
     <Menu>
@@ -128,7 +124,7 @@ const MenuBar = () => {
         </MenuItem>
       </MenuList>
     </Menu>
-  )
-}
+  );
+};
 
-export default MenuBar
+export default MenuBar;

@@ -8,40 +8,41 @@ import {
   ModalOverlay,
   Grid,
   GridItem,
-} from "@chakra-ui/react"
-import useColors from "hooks/useColors"
-import { useState } from "react"
-import updates from "./updates.json"
-import Page from "./Page"
-import { IoIosArrowBack } from "react-icons/io"
-import { IoIosArrowForward } from "react-icons/io"
-import { utils } from "utils/index"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import { APP_VERSION } from "utils/constants"
+} from "@chakra-ui/react";
+import useColors from "hooks/useColors";
+import { useState } from "react";
+import updates from "utils/updates.json";
+import Page from "./Page";
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
+import { utils } from "utils/index";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import { APP_VERSION } from "utils/constants";
 
 type Update = {
-  title: string
-  text: string
-  list?: string[]
-}
+  title: string;
+  text: string;
+  list?: string[];
+};
 
 const Index = () => {
-  const { getBackgroundColor, getTextColor, getAccentColor } = useColors()
-  const { setNewVersion, setShowConfetti } = useWorkspace()
-  const [isOpen, setIsOpen] = useState(true)
-  const pages: Update[] = updates
-  const [page, setPage] = useState(0)
-  setShowConfetti(false)
-  const bg_color = getBackgroundColor()
-  const text_color = getTextColor()
-  const accent_color = getAccentColor()
+  const { getBackgroundColor, getTextColor, getAccentColor } = useColors();
+  const { setNewVersion, setShowConfetti } = useWorkspace();
+  const [isOpen, setIsOpen] = useState(true);
+  const pages: Update[] = updates;
+  const [page, setPage] = useState(0);
+  setShowConfetti(false);
+
+  const bg_color = getBackgroundColor();
+  const text_color = getTextColor();
+  const accent_color = getAccentColor();
 
   const handleClose = () => {
-    setShowConfetti(true)
-    setIsOpen(false)
-    setNewVersion(false)
-    localStorage.setItem("version", APP_VERSION)
-  }
+    setShowConfetti(true);
+    setIsOpen(false);
+    setNewVersion(false);
+    localStorage.setItem("version", APP_VERSION);
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={() => console.log()}>
@@ -61,7 +62,7 @@ const Index = () => {
         </Flex>
         <ModalBody px={4}>
           {pages.map((update, index) => {
-            if (index === page) return <Page key={index} {...update} />
+            if (index === page) return <Page key={index} {...update} />;
           })}
           <Grid pt={2} w="full" templateColumns="repeat(2, 1fr)">
             {page > 0 && (
@@ -119,7 +120,7 @@ const Index = () => {
         </ModalBody>
       </ModalContent>
     </Modal>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

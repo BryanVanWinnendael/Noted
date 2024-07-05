@@ -1,11 +1,11 @@
-import { WarningIcon } from "@chakra-ui/icons"
-import { Flex, useToast, Text } from "@chakra-ui/react"
-import UpdateToast from "components/UpdateToast"
-import { useSettings } from "contexts/SettingsContext"
-import { useState } from "react"
-import { TOAST_ID } from "utils/constants"
-import useColors from "./useColors"
-import { utils } from "utils/index"
+import { WarningIcon } from "@chakra-ui/icons";
+import { Flex, useToast, Text } from "@chakra-ui/react";
+import UpdateToast from "components/UpdateToast";
+import { useSettings } from "contexts/SettingsContext";
+import { useState } from "react";
+import { TOAST_ID } from "utils/constants";
+import useColors from "./useColors";
+import { utils } from "utils/index";
 
 const useUpdate = () => {
   const {
@@ -13,33 +13,33 @@ const useUpdate = () => {
     getTextColor,
     getBorderColor,
     getIconColor,
-  } = useColors()
-  const toast = useToast()
-  const { checkUpdate } = useSettings()
-  const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false)
+  } = useColors();
+  const toast = useToast();
+  const { checkUpdate } = useSettings();
+  const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false);
 
-  const text_color = getTextColor()
+  const text_color = getTextColor();
 
-  const border_color = getBorderColor()
+  const border_color = getBorderColor();
 
-  const icon_color = getIconColor()
+  const icon_color = getIconColor();
 
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
 
   const handleCheckUpdate = async () => {
-    setLoadingUpdates(true)
-    const update = await checkUpdate()
+    setLoadingUpdates(true);
+    const update = await checkUpdate();
     if (update) {
-      if (toast.isActive(TOAST_ID)) return setLoadingUpdates(false)
+      if (toast.isActive(TOAST_ID)) return setLoadingUpdates(false);
       toast({
         id: TOAST_ID,
         duration: null,
         isClosable: true,
         render: () => <UpdateToast />,
-      })
+      });
     } else {
-      if (toast.isActive(TOAST_ID)) return setLoadingUpdates(false)
+      if (toast.isActive(TOAST_ID)) return setLoadingUpdates(false);
       toast({
         id: TOAST_ID,
         title: "No updates available",
@@ -60,15 +60,15 @@ const useUpdate = () => {
             <Text>No updates available</Text>
           </Flex>
         ),
-      })
+      });
     }
-    setLoadingUpdates(false)
-  }
+    setLoadingUpdates(false);
+  };
 
   return {
     loadingUpdates,
     handleCheckUpdate,
-  }
-}
+  };
+};
 
-export default useUpdate
+export default useUpdate;

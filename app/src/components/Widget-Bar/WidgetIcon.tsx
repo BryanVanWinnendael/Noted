@@ -7,67 +7,66 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-} from "@chakra-ui/react"
-import { utils } from "utils"
-import { WidgetName } from "types"
-import { useWidget } from "contexts/WidgetContext"
-import useColors from "hooks/useColors"
-import { useSettings } from "contexts/SettingsContext"
+} from "@chakra-ui/react";
+import { utils } from "utils";
+import { WidgetName } from "types";
+import { useWidget } from "contexts/WidgetContext";
+import useColors from "hooks/useColors";
+import { useSettings } from "contexts/SettingsContext";
 
 const WidgetIcon = ({ icon, name }: { icon: any; name: WidgetName }) => {
   const { getAccentColor, getTextColor, getBackgroundColor, getBorderColor } =
-    useColors()
-  const { onOpen, onClose, isOpen } = useDisclosure()
-  const { selectedWidgets, setSelectedWidgets, setIsConnected } = useWidget()
-  const { glassBackground, glassEnabled } = useSettings()
+    useColors();
+  const { onOpen, onClose, isOpen } = useDisclosure();
+  const { selectedWidgets, setSelectedWidgets, setIsConnected } = useWidget();
+  const { glassBackground, glassEnabled } = useSettings();
 
-  const accent_color = getAccentColor()
-
-  const text_color = getTextColor()
+  const accent_color = getAccentColor();
+  const text_color = getTextColor();
 
   const handleClick = (e: any) => {
     if (e.type === "contextmenu") {
-      onOpen()
+      onOpen();
     }
-  }
+  };
 
-  const bg_color = getBackgroundColor()
-  const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
+  const bg_color = getBackgroundColor();
+  const bg_color_lighter = utils.getLighterColor("0.02", bg_color);
 
-  const border_color = getBorderColor()
+  const border_color = getBorderColor();
 
-  const isGlassEnabled = glassEnabled && glassBackground.contextMenu
+  const isGlassEnabled = glassEnabled && glassBackground.contextMenu;
 
   const handleSelect = (nWidget: number) => {
-    const isNameIncluded = selectedWidgets.includes(name)
-    const isInPosition = selectedWidgets[nWidget - 1] === name
+    const isNameIncluded = selectedWidgets.includes(name);
+    const isInPosition = selectedWidgets[nWidget - 1] === name;
 
-    if (isInPosition) return
+    if (isInPosition) return;
 
-    setIsConnected(false)
+    setIsConnected(false);
 
     if (isNameIncluded) {
       if (nWidget === 1) {
-        const newSelectedWidgets = [name, selectedWidgets[0]]
-        setSelectedWidgets(newSelectedWidgets)
-        return
+        const newSelectedWidgets = [name, selectedWidgets[0]];
+        setSelectedWidgets(newSelectedWidgets);
+        return;
       } else {
-        const newSelectedWidgets = [selectedWidgets[1], name]
-        setSelectedWidgets(newSelectedWidgets)
-        return
+        const newSelectedWidgets = [selectedWidgets[1], name];
+        setSelectedWidgets(newSelectedWidgets);
+        return;
       }
     } else {
       if (nWidget === 1) {
-        const newSelectedWidgets = [name, selectedWidgets[1]]
-        setSelectedWidgets(newSelectedWidgets)
-        return
+        const newSelectedWidgets = [name, selectedWidgets[1]];
+        setSelectedWidgets(newSelectedWidgets);
+        return;
       } else {
-        const newSelectedWidgets = [selectedWidgets[0], name]
-        setSelectedWidgets(newSelectedWidgets)
-        return
+        const newSelectedWidgets = [selectedWidgets[0], name];
+        setSelectedWidgets(newSelectedWidgets);
+        return;
       }
     }
-  }
+  };
 
   return (
     <Menu isOpen={isOpen} onClose={onClose}>
@@ -125,7 +124,7 @@ const WidgetIcon = ({ icon, name }: { icon: any; name: WidgetName }) => {
         </MenuItem>
       </MenuList>
     </Menu>
-  )
-}
+  );
+};
 
-export default WidgetIcon
+export default WidgetIcon;

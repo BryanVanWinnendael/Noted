@@ -1,38 +1,37 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react"
-import ColorPicker from "components/ColorPicker"
-import { utils } from "utils"
-import { useEffect, useState } from "react"
-import { HeaderColors } from "types"
-import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
-import { DEFAULT_HEADER_COLORS } from "utils/constants"
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import ColorPicker from "components/ColorPicker";
+import { utils } from "utils";
+import { useEffect, useState } from "react";
+import { HeaderColors } from "types";
+import { useSettings } from "contexts/SettingsContext";
+import useColors from "hooks/useColors";
+import { DEFAULT_HEADER_COLORS } from "utils/constants";
 
 const CustomColors = () => {
-  const { getAccentColor, getMutedTextColor } = useColors()
-  const { saveSettings, headerColors } = useSettings()
-  const [colors, setColors] = useState<HeaderColors | false>(false)
+  const { getAccentColor, getMutedTextColor } = useColors();
+  const { saveSettings, headerColors } = useSettings();
+  const [colors, setColors] = useState<HeaderColors | false>(false);
 
-  const accent_color = getAccentColor()
-
-  const muted_text_color = getMutedTextColor()
+  const accent_color = getAccentColor();
+  const muted_text_color = getMutedTextColor();
 
   const onChange = (key: keyof HeaderColors, color: string) => {
-    if (!colors) return
-    const newColors: HeaderColors = { ...colors }
-    newColors[key] = color
-    setColors(newColors)
-    saveSettings("header_colors", newColors)
-  }
+    if (!colors) return;
+    const newColors: HeaderColors = { ...colors };
+    newColors[key] = color;
+    setColors(newColors);
+    saveSettings("header_colors", newColors);
+  };
 
   const reset = () => {
-    if (!colors) return
-    setColors(DEFAULT_HEADER_COLORS)
-    saveSettings("header_colors", DEFAULT_HEADER_COLORS)
-  }
+    if (!colors) return;
+    setColors(DEFAULT_HEADER_COLORS);
+    saveSettings("header_colors", DEFAULT_HEADER_COLORS);
+  };
 
   useEffect(() => {
-    setColors(headerColors)
-  }, [headerColors])
+    setColors(headerColors);
+  }, [headerColors]);
 
   return (
     <Box>
@@ -126,7 +125,7 @@ const CustomColors = () => {
         </Box>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default CustomColors
+export default CustomColors;

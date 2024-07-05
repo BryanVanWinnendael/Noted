@@ -1,18 +1,18 @@
-import { Box, Flex, Text } from "@chakra-ui/react"
-import CustomSwitch from "components/CustomSwitch"
-import CustomColors from "components/Custom-Headers/CustomColors"
-import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
+import { Box, Flex, Text } from "@chakra-ui/react";
+import CustomSwitch from "components/CustomSwitch";
+import CustomColors from "components/Custom-Headers/CustomColors";
+import { useSettings } from "contexts/SettingsContext";
+import useColors from "hooks/useColors";
 
 const Index = () => {
-  const { getMutedTextColor } = useColors()
-  const { headerColorsEnabled, saveSettings } = useSettings()
+  const { getMutedTextColor } = useColors();
+  const { headerColorsEnabled, saveSettings } = useSettings();
 
-  const muted_text_color = getMutedTextColor()
+  const muted_text_color = getMutedTextColor();
 
   const handleChangeToggle = () => {
-    saveSettings("header_colors_enabled", !headerColorsEnabled)
-  }
+    saveSettings("header_colors_enabled", !headerColorsEnabled);
+  };
 
   return (
     <Box>
@@ -31,7 +31,7 @@ const Index = () => {
       </Flex>
       {headerColorsEnabled && <CustomColors />}
     </Box>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

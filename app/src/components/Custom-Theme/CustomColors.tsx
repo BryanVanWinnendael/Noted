@@ -13,14 +13,14 @@ import {
   Text,
   useDisclosure,
   useToast,
-} from "@chakra-ui/react"
-import ColorPicker from "components/ColorPicker"
-import { useSettings } from "contexts/SettingsContext"
-import { utils } from "utils"
-import { useEffect, useRef, useState } from "react"
-import { Theme } from "types"
-import useColors from "hooks/useColors"
-import { THEME_DARK, THEME_KEYS } from "utils/constants"
+} from "@chakra-ui/react";
+import ColorPicker from "components/ColorPicker";
+import { useSettings } from "contexts/SettingsContext";
+import { utils } from "utils";
+import { useEffect, useRef, useState } from "react";
+import { Theme } from "types";
+import useColors from "hooks/useColors";
+import { THEME_DARK, THEME_KEYS } from "utils/constants";
 
 const CustomColors = () => {
   const {
@@ -28,9 +28,9 @@ const CustomColors = () => {
     getSecondaryBackgroundColor,
     getTextColor,
     getMutedTextColor,
-  } = useColors()
-  const [colors, setColors] = useState<Theme | undefined>()
-  const cancelRef = useRef()
+  } = useColors();
+  const [colors, setColors] = useState<Theme | undefined>();
+  const cancelRef = useRef();
   const {
     saveThemeToFile,
     exportTheme,
@@ -42,79 +42,76 @@ const CustomColors = () => {
     customTheme,
     setCustomTheme,
     saveSettings,
-  } = useSettings()
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [themeName, setThemeName] = useState<string>("")
-  const [inValidName, setInValidName] = useState<boolean>(false)
-  const toast = useToast()
+  } = useSettings();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [themeName, setThemeName] = useState<string>("");
+  const [inValidName, setInValidName] = useState<boolean>(false);
+  const toast = useToast();
 
-  const accent_color = getAccentColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const text_color = getTextColor()
-
-  const muted_text_color = getMutedTextColor()
+  const accent_color = getAccentColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const text_color = getTextColor();
+  const muted_text_color = getMutedTextColor();
 
   const onChange = (key: (typeof THEME_KEYS)[number], color: string) => {
-    if (!colors) return
-    const newColors: Theme = { ...colors }
-    newColors[key] = color
-    setColors(newColors)
-    localStorage.setItem("custom-theme-json", JSON.stringify(newColors))
-    setCustomTheme(newColors)
-  }
+    if (!colors) return;
+    const newColors: Theme = { ...colors };
+    newColors[key] = color;
+    setColors(newColors);
+    localStorage.setItem("custom-theme-json", JSON.stringify(newColors));
+    setCustomTheme(newColors);
+  };
 
   const reset = () => {
-    localStorage.setItem("custom-theme-json", JSON.stringify(THEME_DARK))
-    setColors(THEME_DARK)
-  }
+    localStorage.setItem("custom-theme-json", JSON.stringify(THEME_DARK));
+    setColors(THEME_DARK);
+  };
 
   const handleExport = () => {
-    exportTheme()
-  }
+    exportTheme();
+  };
 
   const handleImport = () => {
-    importTheme()
-  }
+    importTheme();
+  };
 
   const handleRemovePath = () => {
-    removeThemePath()
-  }
+    removeThemePath();
+  };
 
   const handleSave = () => {
-    saveThemeToFile()
-  }
+    saveThemeToFile();
+  };
 
   const handleSaveThemeAs = () => {
-    if (!themeName || !colors) return setInValidName(true)
+    if (!themeName || !colors) return setInValidName(true);
     if (Object.keys(customThemes).includes(themeName))
-      return setInValidName(true)
+      return setInValidName(true);
 
-    addThemeToEditor(themeName, colors)
+    addThemeToEditor(themeName, colors);
     toast({
       title: `Theme ${themeName} saved successfully`,
       status: "success",
       isClosable: true,
-    })
+    });
 
-    setThemeName("")
-    saveSettings("active_theme", themeName)
-    close()
-  }
+    setThemeName("");
+    saveSettings("active_theme", themeName);
+    close();
+  };
 
   const close = () => {
-    setThemeName("")
-    onClose()
-  }
+    setThemeName("");
+    onClose();
+  };
 
   useEffect(() => {
-    if (customTheme) setColors(customTheme)
+    if (customTheme) setColors(customTheme);
     return () => {
-      setThemeName("")
-    }
-  }, [customTheme])
+      setThemeName("");
+    };
+  }, [customTheme]);
 
   return (
     <Box>
@@ -130,12 +127,12 @@ const CustomColors = () => {
             <Input
               value={themeName}
               onChange={(e) => {
-                setInValidName(false)
-                setThemeName(e.target.value)
+                setInValidName(false);
+                setThemeName(e.target.value);
               }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
-                  handleSaveThemeAs()
+                  handleSaveThemeAs();
                 }
               }}
               isInvalid={inValidName}
@@ -304,7 +301,7 @@ const CustomColors = () => {
         </Text>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default CustomColors
+export default CustomColors;

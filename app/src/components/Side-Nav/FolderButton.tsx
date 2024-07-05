@@ -1,14 +1,14 @@
-import { Menu, MenuButton, Flex, Text, Tooltip, Icon } from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useState } from "react"
-import { utils } from "utils/index"
-import ContextMenu from "./Context-Menu"
-import { IoIosArrowForward } from "react-icons/io"
-import { motion } from "framer-motion"
-import { FaRegFolder } from "react-icons/fa"
-import { FaRegFolderOpen } from "react-icons/fa"
-import { useSettings } from "contexts/SettingsContext"
+import { Menu, MenuButton, Flex, Text, Tooltip, Icon } from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useState } from "react";
+import { utils } from "utils/index";
+import ContextMenu from "./Context-Menu";
+import { IoIosArrowForward } from "react-icons/io";
+import { motion } from "framer-motion";
+import { FaRegFolder } from "react-icons/fa";
+import { FaRegFolderOpen } from "react-icons/fa";
+import { useSettings } from "contexts/SettingsContext";
 
 const FolderButton = ({
   path,
@@ -16,32 +16,30 @@ const FolderButton = ({
   onClick,
   expanded,
 }: {
-  path: string
-  name: string
-  onClick: () => void
-  expanded: boolean
+  path: string;
+  name: string;
+  onClick: () => void;
+  expanded: boolean;
 }) => {
   const { getSecondaryBackgroundColor, getTextColor, getIconColor } =
-    useColors()
-  const { setActiveFolder } = useWorkspace()
-  const { sidebarIcons } = useSettings()
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+    useColors();
+  const { setActiveFolder } = useWorkspace();
+  const { sidebarIcons } = useSettings();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const icon_color = getIconColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const text_color = getTextColor()
+  const icon_color = getIconColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const text_color = getTextColor();
 
   const handleSetActiveFolder = (folderPath: string) => {
-    setActiveFolder(folderPath)
-  }
+    setActiveFolder(folderPath);
+  };
 
   const handleClick = () => {
-    handleSetActiveFolder(path)
-    onClick()
-  }
+    handleSetActiveFolder(path);
+    onClick();
+  };
 
   return (
     <Menu id={path} isOpen={isOpen} onClose={() => setIsOpen(false)}>
@@ -92,7 +90,7 @@ const FolderButton = ({
       </Tooltip>
       <ContextMenu path={path} name={name} type="folder" />
     </Menu>
-  )
-}
+  );
+};
 
-export default FolderButton
+export default FolderButton;

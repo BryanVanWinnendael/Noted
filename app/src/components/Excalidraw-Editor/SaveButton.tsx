@@ -1,12 +1,11 @@
-import { Box, Tooltip } from "@chakra-ui/react"
-import useColors from "hooks/useColors"
+import { Box, Tooltip } from "@chakra-ui/react";
+import useColors from "hooks/useColors";
 
 const SaveButton = ({ callback }: { callback: () => void }) => {
-  const { getBackgroundColor, getTextColor } = useColors()
+  const { getBackgroundColor, getTextColor } = useColors();
 
-  const bg_color = getBackgroundColor()
-
-  const text_color = getTextColor()
+  const bg_color = getBackgroundColor();
+  const text_color = getTextColor();
 
   return (
     <Tooltip
@@ -38,7 +37,7 @@ const SaveButton = ({ callback }: { callback: () => void }) => {
         Save
       </Box>
     </Tooltip>
-  )
-}
+  );
+};
 
-export default SaveButton
+export default SaveButton;

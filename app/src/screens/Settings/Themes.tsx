@@ -1,15 +1,16 @@
-import { Box, Text } from "@chakra-ui/react"
-import ThemeCard from "components/Custom-Theme/ThemeCard"
-import { useSettings } from "contexts/SettingsContext"
-import { AnimatePresence, motion } from "framer-motion"
-import useColors from "hooks/useColors"
+import { Box, Text } from "@chakra-ui/react";
+import ThemeCard from "components/Custom-Theme/ThemeCard";
+import { useSettings } from "contexts/SettingsContext";
+import { AnimatePresence, motion } from "framer-motion";
+import useColors from "hooks/useColors";
 
 const Themes = () => {
-  const { getMutedTextColor } = useColors()
-  const { customThemes } = useSettings()
-  const themes = Object.keys(customThemes)
+  const { getMutedTextColor } = useColors();
+  const { customThemes } = useSettings();
 
-  const muted_text_color = getMutedTextColor()
+  const themes = Object.keys(customThemes);
+
+  const muted_text_color = getMutedTextColor();
 
   return (
     <Box>
@@ -33,12 +34,12 @@ const Themes = () => {
                     deletable={true}
                   />
                 </motion.li>
-              )
+              );
             })
           : "No themes"}
       </AnimatePresence>
     </Box>
-  )
-}
+  );
+};
 
-export default Themes
+export default Themes;

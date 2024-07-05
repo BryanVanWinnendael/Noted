@@ -1,4 +1,4 @@
-import { HeaderColors } from "types"
+import { HeaderColors } from "types";
 
 export const headerStyle = (
   header_colors_enabled: boolean,
@@ -54,5 +54,5 @@ export const headerStyle = (
           ? headerColors.h6
           : default_text_color,
     },
-  }
-}
+  };
+};

@@ -1,4 +1,4 @@
-import { utils } from "utils/index"
+import { utils } from "utils/index";
 
 export const nestedStyle = (
   secondary_background_color: string,
@@ -7,7 +7,7 @@ export const nestedStyle = (
   const bg_color_right = utils.getLighterColor(
     "0.02",
     secondary_background_color,
-  )
+  );
   return {
     ".cdx-settings-button:hover": {
       backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
@@ -15,5 +15,5 @@ export const nestedStyle = (
     ".cdx-settings-button--active": {
       color: accent_color,
     },
-  }
-}
+  };
+};

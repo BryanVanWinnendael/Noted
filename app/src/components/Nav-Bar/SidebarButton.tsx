@@ -1,26 +1,23 @@
-import { Flex, Icon, Tooltip } from "@chakra-ui/react"
-import useColors from "hooks/useColors"
-import { utils } from "utils/index"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import { BsLayoutSidebarInset } from "react-icons/bs"
+import { Flex, Icon, Tooltip } from "@chakra-ui/react";
+import useColors from "hooks/useColors";
+import { utils } from "utils/index";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import { BsLayoutSidebarInset } from "react-icons/bs";
 
 const SidebarButton = () => {
-  const { setShowSidebar, showSidebar } = useWorkspace()
+  const { setShowSidebar, showSidebar } = useWorkspace();
   const {
     getSecondaryBackgroundColor,
     getAccentColor,
     getTextColor,
     getMutedTextColor,
-  } = useColors()
+  } = useColors();
 
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const accent_color = getAccentColor()
-
-  const text_color = getTextColor()
-
-  const muted_text_color = getMutedTextColor()
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const accent_color = getAccentColor();
+  const text_color = getTextColor();
+  const muted_text_color = getMutedTextColor();
 
   return (
     <Tooltip
@@ -51,7 +48,7 @@ const SidebarButton = () => {
         />
       </Flex>
     </Tooltip>
-  )
-}
+  );
+};
 
-export default SidebarButton
+export default SidebarButton;

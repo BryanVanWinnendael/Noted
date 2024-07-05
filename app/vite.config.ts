@@ -1,8 +1,8 @@
-import { defineConfig } from "vite"
-import path from "node:path"
-import electron from "vite-plugin-electron/simple"
-import react from "@vitejs/plugin-react"
-import { esbuildCommonjs } from "@originjs/vite-plugin-commonjs"
+import { defineConfig } from "vite";
+import path from "node:path";
+import electron from "vite-plugin-electron/simple";
+import react from "@vitejs/plugin-react";
+import { esbuildCommonjs } from "@originjs/vite-plugin-commonjs";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -55,4 +55,4 @@ export default defineConfig({
   define: {
     "process.env.IS_PREACT": JSON.stringify("true"),
   },
-})
+});

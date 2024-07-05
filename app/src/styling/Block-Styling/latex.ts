@@ -10,5 +10,5 @@ export const latexStyle = (icon_color: string, muted_text_color: string) => {
     ".ce-popover-item__secondary-title": {
       color: muted_text_color,
     },
-  }
-}
+  };
+};

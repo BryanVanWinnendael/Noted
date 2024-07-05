@@ -6,37 +6,35 @@ import {
   Spinner,
   Text,
   useToast,
-} from "@chakra-ui/react"
-import useColors from "hooks/useColors"
-import { useSettings } from "contexts/SettingsContext"
-import { utils } from "utils"
-import { useState } from "react"
+} from "@chakra-ui/react";
+import useColors from "hooks/useColors";
+import { useSettings } from "contexts/SettingsContext";
+import { utils } from "utils";
+import { useState } from "react";
 
 const UpdateToast = () => {
-  const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false)
+  const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false);
   const { getSecondaryBackgroundColor, getAccentColor, getTextColor } =
-    useColors()
-  const { updateAndRestart } = useSettings()
-  const toast = useToast()
+    useColors();
+  const { updateAndRestart } = useSettings();
+  const toast = useToast();
 
-  const secondary_background_color = getSecondaryBackgroundColor()
+  const secondary_background_color = getSecondaryBackgroundColor();
   const bg_colorRight = utils.getLighterColor(
     "0.02",
     secondary_background_color,
-  )
-
-  const accent_color = getAccentColor()
-
-  const text_color = getTextColor()
+  );
+  const accent_color = getAccentColor();
+  const text_color = getTextColor();
 
   const handleClsoe = () => {
-    toast.closeAll()
-  }
+    toast.closeAll();
+  };
 
   const hanleUpdate = () => {
-    setLoadingUpdates(true)
-    updateAndRestart()
-  }
+    setLoadingUpdates(true);
+    updateAndRestart();
+  };
 
   return (
     <Box color={text_color} bg={bg_colorRight} rounded="md" p={2}>
@@ -72,7 +70,7 @@ const UpdateToast = () => {
         </>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default UpdateToast
+export default UpdateToast;

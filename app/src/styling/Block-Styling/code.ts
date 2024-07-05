@@ -15,5 +15,5 @@ export const codeStyle = (background_color: string) => {
       backgroundColor: background_color,
       borderRadius: "8px",
     },
-  }
-}
+  };
+};

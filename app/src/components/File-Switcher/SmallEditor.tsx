@@ -1,19 +1,25 @@
-import { Box } from "@chakra-ui/react"
-import { createReactEditorJS } from "react-editor-js"
-import { EDITOR_JS_TOOLS } from "components/Editor/tools"
-import EditorWrapper from "styling/EditorWrapper"
-import useColors from "hooks/useColors"
-import { utils } from "utils/index"
+import { Box } from "@chakra-ui/react";
+import { createReactEditorJS } from "react-editor-js";
+import { EDITOR_JS_TOOLS } from "components/Editor/tools";
+import EditorWrapper from "styling/EditorWrapper";
+import useColors from "hooks/useColors";
+import { utils } from "utils/index";
+import { OutputData } from "@editorjs/editorjs";
+import clone from "lodash/clone";
 
-const SmallEditor = ({ data, index }: { data: any; index: number }) => {
-  const ReactEditorJS = createReactEditorJS()
-  const { getBackgroundColor } = useColors()
+const SmallEditor = ({ data, index }: { data: OutputData; index: number }) => {
+  const ReactEditorJS = createReactEditorJS();
+  const { getBackgroundColor } = useColors();
 
-  const bg_color = getBackgroundColor()
+  const bg_color = getBackgroundColor();
   const lighter_bg_color =
     utils.getTextColor(bg_color) === "#fff"
       ? utils.getLighterColor("0.02", bg_color)
-      : utils.getDarkerColor("0.02", bg_color)
+      : utils.getDarkerColor("0.02", bg_color);
+
+  const toolsWithoutAudioPlayer = clone(EDITOR_JS_TOOLS);
+  delete toolsWithoutAudioPlayer.audioPlayer;
+  delete toolsWithoutAudioPlayer.code;
 
   return (
     <EditorWrapper>
@@ -53,7 +59,7 @@ const SmallEditor = ({ data, index }: { data: any; index: number }) => {
         <ReactEditorJS
           holder={"smallEditor" + index}
           defaultValue={data}
-          tools={EDITOR_JS_TOOLS}
+          tools={toolsWithoutAudioPlayer}
           inlineToolbar={false}
           hideToolbar={true}
           readOnly={true}
@@ -68,7 +74,7 @@ const SmallEditor = ({ data, index }: { data: any; index: number }) => {
         </ReactEditorJS>
       </Box>
     </EditorWrapper>
-  )
-}
+  );
+};
 
-export default SmallEditor
+export default SmallEditor;

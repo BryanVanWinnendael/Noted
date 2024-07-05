@@ -1,17 +1,17 @@
-import { Flex, Box, Text } from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
-import CustomSwitch from "./CustomSwitch"
+import { Flex, Box, Text } from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import useColors from "hooks/useColors";
+import CustomSwitch from "./CustomSwitch";
 
 const Compact = () => {
-  const { saveSettings, compactMode } = useSettings()
-  const { getMutedTextColor } = useColors()
+  const { saveSettings, compactMode } = useSettings();
+  const { getMutedTextColor } = useColors();
 
-  const muted_text_color = getMutedTextColor()
+  const muted_text_color = getMutedTextColor();
 
   const handleGlassBackground = () => {
-    saveSettings("compact_mode", !compactMode)
-  }
+    saveSettings("compact_mode", !compactMode);
+  };
 
   return (
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
@@ -27,7 +27,7 @@ const Compact = () => {
         id="compactMode"
       />
     </Flex>
-  )
-}
+  );
+};
 
-export default Compact
+export default Compact;

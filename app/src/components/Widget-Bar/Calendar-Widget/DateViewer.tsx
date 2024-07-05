@@ -1,11 +1,11 @@
-import { ChevronLeftIcon, CloseIcon } from "@chakra-ui/icons"
-import { Box, Button, Flex, Stack, Tooltip, Text } from "@chakra-ui/react"
-import { useWidget } from "contexts/WidgetContext"
-import { useEffect, useState } from "react"
-import { CiCalendarDate } from "react-icons/ci"
-import { utils } from "utils"
-import { ToDo } from "types"
-import useColors from "hooks/useColors"
+import { ChevronLeftIcon, CloseIcon } from "@chakra-ui/icons";
+import { Box, Button, Flex, Stack, Tooltip, Text } from "@chakra-ui/react";
+import { useWidget } from "contexts/WidgetContext";
+import { useEffect, useState } from "react";
+import { CiCalendarDate } from "react-icons/ci";
+import { utils } from "utils";
+import { ToDo } from "types";
+import useColors from "hooks/useColors";
 
 const CalendarTodo = () => {
   const {
@@ -13,44 +13,41 @@ const CalendarTodo = () => {
     getIconColor,
     getAccentColor,
     getSecondaryBackgroundColor,
-  } = useColors()
+  } = useColors();
   const { setShowDateViewer, selectedDate, todos, setTodos, setSelectedDate } =
-    useWidget()
-  const [filteredTodos, setFilteredTodos] = useState<ToDo[]>([])
+    useWidget();
+  const [filteredTodos, setFilteredTodos] = useState<ToDo[]>([]);
 
-  const text_color = getTextColor()
-
-  const icon_color = getIconColor()
-
-  const accent_color = getAccentColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
+  const text_color = getTextColor();
+  const icon_color = getIconColor();
+  const accent_color = getAccentColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
 
   const handleDelete = (name: string) => {
-    const newTodos = [...todos]
-    if (!selectedDate) return
+    const newTodos = [...todos];
+    if (!selectedDate) return;
     const index = newTodos.findIndex(
       (todo: ToDo) =>
         todo.date === selectedDate.format("DD-MM-YYYY") && name === todo.todo,
-    )
-    newTodos.splice(index, 1)
-    setTodos(newTodos)
-    localStorage.setItem("todos", JSON.stringify(newTodos))
-  }
+    );
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+  };
 
   const handleBack = () => {
-    setShowDateViewer(false)
-    setSelectedDate(undefined)
-  }
+    setShowDateViewer(false);
+    setSelectedDate(undefined);
+  };
 
   useEffect(() => {
-    if (!selectedDate) return
+    if (!selectedDate) return;
     const filterdTodos = todos.filter(
       (todo: ToDo) => todo.date === selectedDate.format("DD-MM-YYYY"),
-    )
-    setFilteredTodos(filterdTodos)
-  }, [selectedDate, todos])
+    );
+    setFilteredTodos(filterdTodos);
+  }, [selectedDate, todos]);
 
   return (
     <Box>
@@ -105,11 +102,11 @@ const CalendarTodo = () => {
                 </Tooltip>
               )}
             </Flex>
-          )
+          );
         })}
       </Stack>
     </Box>
-  )
-}
+  );
+};
 
-export default CalendarTodo
+export default CalendarTodo;

@@ -1,28 +1,27 @@
-import { Box, Flex } from "@chakra-ui/react"
-import useColors from "hooks/useColors"
-import { MyWindow } from "types/index"
-import MenuBar from "./MenuBar"
+import { Box, Flex } from "@chakra-ui/react";
+import useColors from "hooks/useColors";
+import { MyWindow } from "types/index";
+import MenuBar from "./MenuBar";
 
-declare let window: MyWindow
-const invoke = window.electron.invoke
+declare let window: MyWindow;
+const invoke = window.electron.invoke;
 const CompactNavbar = () => {
-  const { getAccentColor, getMutedTextColor } = useColors()
+  const { getAccentColor, getMutedTextColor } = useColors();
 
-  const muted_text_color = getMutedTextColor()
-
-  const accent_color = getAccentColor()
+  const muted_text_color = getMutedTextColor();
+  const accent_color = getAccentColor();
 
   const clickedClose = () => {
-    invoke("close-window")
-  }
+    invoke("close-window");
+  };
 
   const clickedMinimize = () => {
-    invoke("minimize-window")
-  }
+    invoke("minimize-window");
+  };
 
   const clickedMaximize = () => {
-    invoke("maximize-window")
-  }
+    invoke("maximize-window");
+  };
 
   return (
     <Flex w="full" gap={2}>
@@ -93,7 +92,7 @@ const CompactNavbar = () => {
         </Box>
       </Flex>
     </Flex>
-  )
-}
+  );
+};
 
-export default CompactNavbar
+export default CompactNavbar;

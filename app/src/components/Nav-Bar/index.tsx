@@ -1,14 +1,14 @@
-import MenuBar from "./MenuBar"
-import { MyWindow } from "types"
-import { Box, Flex, Grid, Tooltip } from "@chakra-ui/react"
-import Tabs from "components/Tabs"
-import { utils } from "utils"
-import { useWidget } from "contexts/WidgetContext"
-import useColors from "hooks/useColors"
-import SidebarButton from "./SidebarButton"
-import { useWorkspace } from "contexts/WorkspaceContext"
+import MenuBar from "./MenuBar";
+import { MyWindow } from "types";
+import { Box, Flex, Grid, Tooltip } from "@chakra-ui/react";
+import Tabs from "components/Tabs";
+import { utils } from "utils";
+import { useWidget } from "contexts/WidgetContext";
+import useColors from "hooks/useColors";
+import SidebarButton from "./SidebarButton";
+import { useWorkspace } from "contexts/WorkspaceContext";
 
-declare let window: MyWindow
+declare let window: MyWindow;
 
 const NavBar = () => {
   const {
@@ -16,31 +16,28 @@ const NavBar = () => {
     getAccentColor,
     getTextColor,
     getMutedTextColor,
-  } = useColors()
-  const invoke = window.electron.invoke
-  const { setWidgetPanel, widgetPanel } = useWidget()
-  const { workspace } = useWorkspace()
+  } = useColors();
+  const invoke = window.electron.invoke;
+  const { setWidgetPanel, widgetPanel } = useWidget();
+  const { workspace } = useWorkspace();
 
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const muted_text_color = getMutedTextColor()
-
-  const accent_color = getAccentColor()
-
-  const text_color = getTextColor()
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const muted_text_color = getMutedTextColor();
+  const accent_color = getAccentColor();
+  const text_color = getTextColor();
 
   const clickedClose = () => {
-    invoke("close-window")
-  }
+    invoke("close-window");
+  };
 
   const clickedMinimize = () => {
-    invoke("minimize-window")
-  }
+    invoke("minimize-window");
+  };
 
   const clickedMaximize = () => {
-    invoke("maximize-window")
-  }
+    invoke("maximize-window");
+  };
 
   return (
     <Grid
@@ -158,7 +155,7 @@ const NavBar = () => {
         </Box>
       </Flex>
     </Grid>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

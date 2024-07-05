@@ -1,17 +1,17 @@
-import { Flex, Box, Text } from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
-import CustomSwitch from "./CustomSwitch"
+import { Flex, Box, Text } from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import useColors from "hooks/useColors";
+import CustomSwitch from "./CustomSwitch";
 
 const SidebarIcons = () => {
-  const { saveSettings, sidebarIcons } = useSettings()
-  const { getMutedTextColor } = useColors()
+  const { saveSettings, sidebarIcons } = useSettings();
+  const { getMutedTextColor } = useColors();
 
-  const muted_text_color = getMutedTextColor()
+  const muted_text_color = getMutedTextColor();
 
   const handleSidebarIcons = () => {
-    saveSettings("sidebar_icons", !sidebarIcons)
-  }
+    saveSettings("sidebar_icons", !sidebarIcons);
+  };
 
   return (
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
@@ -27,7 +27,7 @@ const SidebarIcons = () => {
         id="sidebaricons"
       />
     </Flex>
-  )
-}
+  );
+};
 
-export default SidebarIcons
+export default SidebarIcons;

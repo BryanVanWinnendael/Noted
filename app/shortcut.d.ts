@@ -1,1 +1,1 @@
-declare module "@codexteam/shortcuts"
+declare module "@codexteam/shortcuts";

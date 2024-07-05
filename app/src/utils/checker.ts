@@ -1,5 +1,5 @@
-import { Settings } from "types"
-import { darken } from "polished"
+import { Settings } from "types";
+import { darken } from "polished";
 import {
   DEFAULT_ACTION_BAR_OPACITY,
   DEFAULT_ACTIVE_THEME,
@@ -22,11 +22,11 @@ import {
   DEFAULT_UPDATE,
   DEFAULT_WALLPAPER_BRIGHTNESS,
   REQUIRED_SETTINGS_KEYS,
-} from "./constants"
+} from "./constants";
 
-import languages from "./languages.json"
+import languages from "./languages.json";
 
-const headerKeys = ["h1", "h2", "h3", "h4", "h5", "h6"]
+const headerKeys = ["h1", "h2", "h3", "h4", "h5", "h6"];
 const glassKeys = [
   "navBar",
   "settings",
@@ -34,276 +34,276 @@ const glassKeys = [
   "window",
   "editor",
   "contextMenu",
-]
+];
 
 const isColor = (key: any, color: any): any => {
   try {
     if (typeof key !== "string" || !headerKeys.includes(key)) {
-      return false
+      return false;
     }
-    darken("0.1", color)
-    return true
+    darken("0.1", color);
+    return true;
   } catch {
-    return false
+    return false;
   }
-}
+};
 
 const isGlassBackground = (key: any, bool: any): any => {
   if (typeof key !== "string" || !glassKeys.includes(key)) {
-    return DEFAULT_GLASS_ENABLED
+    return DEFAULT_GLASS_ENABLED;
   }
   if (typeof bool !== "boolean") {
-    return DEFAULT_GLASS_ENABLED
+    return DEFAULT_GLASS_ENABLED;
   }
-  return true
-}
+  return true;
+};
 
 const update = (bool: any): any => {
   if (typeof bool !== "boolean") {
-    return DEFAULT_UPDATE
+    return DEFAULT_UPDATE;
   }
-  return bool
-}
+  return bool;
+};
 
 const headerColors = (obj: any): any => {
   if (typeof obj !== "object" || obj === null) {
-    return DEFAULT_HEADER_COLORS
+    return DEFAULT_HEADER_COLORS;
   }
   if (Object.keys(obj).every((key) => isColor(key, obj[key]))) {
-    return obj
+    return obj;
   }
-  return DEFAULT_HEADER_COLORS
-}
+  return DEFAULT_HEADER_COLORS;
+};
 
 const headerColorsEnabled = (bool: any): any => {
   if (typeof bool !== "boolean") {
-    return DEFAULT_HEADER_COLORS_ENABLED
+    return DEFAULT_HEADER_COLORS_ENABLED;
   }
-  return bool
-}
+  return bool;
+};
 
 const glassBackground = (obj: any): any => {
   if (typeof obj !== "object" || obj === null) {
-    return DEFAULT_GLASS
+    return DEFAULT_GLASS;
   }
-  const key_array = Object.keys(obj)
-  let allGlassBackground = true
+  const key_array = Object.keys(obj);
+  let allGlassBackground = true;
   key_array.forEach((val) => {
     if (!isGlassBackground(val, obj[val])) {
-      allGlassBackground = false
+      allGlassBackground = false;
     }
-  })
+  });
   if (allGlassBackground) {
-    return obj
+    return obj;
   }
-  return DEFAULT_GLASS
-}
+  return DEFAULT_GLASS;
+};
 
 const glassEnabled = (bool: any): any => {
   if (typeof bool !== "boolean") {
-    return DEFAULT_GLASS_ENABLED
+    return DEFAULT_GLASS_ENABLED;
   }
-  return bool
-}
+  return bool;
+};
 
 const compactMode = (bool: any): any => {
   if (typeof bool !== "boolean") {
-    return DEFAULT_COMPACT_MODE
+    return DEFAULT_COMPACT_MODE;
   }
-  return bool
-}
+  return bool;
+};
 
 const isCustomThemeString = (theme: any): any => {
   if (typeof theme !== "string") {
-    return DEFAULT_ACTIVE_THEME
+    return DEFAULT_ACTIVE_THEME;
   }
-  return theme
-}
+  return theme;
+};
 
 const isFontFamily = (font: any): any => {
   if (typeof font !== "string") {
-    return DEFAULT_FONT
+    return DEFAULT_FONT;
   }
-  return font
-}
+  return font;
+};
 
 const checkLanguage = (lang: any): any => {
-  const langArray = Object.keys(languages.translation)
+  const langArray = Object.keys(languages.translation);
   if (langArray.includes(lang)) {
-    return lang
+    return lang;
   }
-  return DEFAULT_TRANSLATE_LANGUAGE
-}
+  return DEFAULT_TRANSLATE_LANGUAGE;
+};
 
 const checkExtensionLabel = (label: any): any => {
   if (typeof label !== "boolean") {
-    return DEFAULT_EXTENSION_LABEL
+    return DEFAULT_EXTENSION_LABEL;
   }
-  return label
-}
+  return label;
+};
 
 const checkBackgroundImage = (image: any): any => {
   if (typeof image !== "string") {
-    return DEFAULT_BACKGROUND_IMAGE
+    return DEFAULT_BACKGROUND_IMAGE;
   }
-  return image
-}
+  return image;
+};
 
 const checkBlur = (blur: any): any => {
   if (typeof blur !== "number") {
-    return DEFAULT_BLUR
+    return DEFAULT_BLUR;
   }
-  return blur
-}
+  return blur;
+};
 
 const checkCustomBackground = (background: any): any => {
   if (typeof background !== "string") {
-    return ""
+    return "";
   }
-  return background
-}
+  return background;
+};
 
 const checkEditorTitle = (title: any): any => {
   if (typeof title !== "boolean") {
-    return DEFAULT_EDITOR_TITLE
+    return DEFAULT_EDITOR_TITLE;
   }
-  return title
-}
+  return title;
+};
 
 const checkScrollbar = (scrollbar: any): any => {
   if (typeof scrollbar !== "object" || scrollbar === null) {
-    return DEFAULT_SCROLLBAR
+    return DEFAULT_SCROLLBAR;
   }
   if (
     typeof scrollbar.color !== "string" ||
     typeof scrollbar.opacity !== "number"
   ) {
-    DEFAULT_SCROLLBAR
+    DEFAULT_SCROLLBAR;
   }
-  return scrollbar
-}
+  return scrollbar;
+};
 
 const checkSidebarIcons = (icons: any): any => {
   if (typeof icons !== "boolean") {
-    return DEFAULT_SIDEBAR_ICONS
+    return DEFAULT_SIDEBAR_ICONS;
   }
-  return icons
-}
+  return icons;
+};
 
 const checkWallpaperBrightness = (brightness: any): any => {
   if (typeof brightness !== "number") {
-    return DEFAULT_WALLPAPER_BRIGHTNESS
+    return DEFAULT_WALLPAPER_BRIGHTNESS;
   }
-  return brightness
-}
+  return brightness;
+};
 
 const checkActionbarOpacity = (opacity: any): any => {
   if (typeof opacity !== "number") {
-    return DEFAULT_ACTION_BAR_OPACITY
+    return DEFAULT_ACTION_BAR_OPACITY;
   }
-  return opacity
-}
+  return opacity;
+};
 
 const checkSidebarOpacity = (opacity: any): any => {
   if (typeof opacity !== "number") {
-    return DEFAULT_SIDEBAR_OPACITY
+    return DEFAULT_SIDEBAR_OPACITY;
   }
-  return opacity
-}
+  return opacity;
+};
 
 const checkMaterial = (material: any): any => {
   if (typeof material !== "string" || !DEFAULT_MATERIALS.includes(material)) {
-    return DEFAULT_MATERIAL
+    return DEFAULT_MATERIAL;
   }
-  return material
-}
+  return material;
+};
 
 export const ensureKeys = (settings: { [key in any]: any }, keys: any[]) => {
   const filteredObject = Object.fromEntries(
     Object.entries(settings).filter(([key]) => keys.includes(key as Settings)),
-  )
+  );
 
   for (const key of keys) {
     if (filteredObject[key] === undefined) {
-      filteredObject[key] = null
+      filteredObject[key] = null;
     }
   }
-  return filteredObject
-}
+  return filteredObject;
+};
 
 const settingsChecker = (settings: { [key in Settings]: any }): {
-  [key in Settings]: any
+  [key in Settings]: any;
 } => {
-  const filledSettings = ensureKeys(settings, REQUIRED_SETTINGS_KEYS)
+  const filledSettings = ensureKeys(settings, REQUIRED_SETTINGS_KEYS);
   for (const [key, value] of Object.entries(filledSettings)) {
     switch (key) {
       case "check_updates":
-        filledSettings[key] = update(value)
-        break
+        filledSettings[key] = update(value);
+        break;
       case "header_colors":
-        filledSettings[key] = headerColors(value)
-        break
+        filledSettings[key] = headerColors(value);
+        break;
       case "header_colors_enabled":
-        filledSettings[key] = headerColorsEnabled(value)
-        break
+        filledSettings[key] = headerColorsEnabled(value);
+        break;
       case "glass_background":
-        filledSettings[key] = glassBackground(value)
-        break
+        filledSettings[key] = glassBackground(value);
+        break;
       case "glass_background_enabled":
-        filledSettings[key] = glassEnabled(value)
-        break
+        filledSettings[key] = glassEnabled(value);
+        break;
       case "compact_mode":
-        filledSettings[key] = compactMode(value)
-        break
+        filledSettings[key] = compactMode(value);
+        break;
       case "active_theme":
-        filledSettings[key] = isCustomThemeString(value)
-        break
+        filledSettings[key] = isCustomThemeString(value);
+        break;
       case "font_family":
-        filledSettings[key] = isFontFamily(value)
-        break
+        filledSettings[key] = isFontFamily(value);
+        break;
       case "translate_language":
-        filledSettings[key] = checkLanguage(value)
-        break
+        filledSettings[key] = checkLanguage(value);
+        break;
       case "extension_label":
-        filledSettings[key] = checkExtensionLabel(value)
-        break
+        filledSettings[key] = checkExtensionLabel(value);
+        break;
       case "background_image":
-        filledSettings[key] = checkBackgroundImage(value)
-        break
+        filledSettings[key] = checkBackgroundImage(value);
+        break;
       case "blur":
-        filledSettings[key] = checkBlur(value)
-        break
+        filledSettings[key] = checkBlur(value);
+        break;
       case "custom_background":
-        filledSettings[key] = checkCustomBackground(value)
-        break
+        filledSettings[key] = checkCustomBackground(value);
+        break;
       case "editor_title":
-        filledSettings[key] = checkEditorTitle(value)
-        break
+        filledSettings[key] = checkEditorTitle(value);
+        break;
       case "scrollbar":
-        filledSettings[key] = checkScrollbar(value)
-        break
+        filledSettings[key] = checkScrollbar(value);
+        break;
       case "sidebar_icons":
-        filledSettings[key] = checkSidebarIcons(value)
-        break
+        filledSettings[key] = checkSidebarIcons(value);
+        break;
       case "wallpaper_brightness":
-        filledSettings[key] = checkWallpaperBrightness(value)
-        break
+        filledSettings[key] = checkWallpaperBrightness(value);
+        break;
       case "action_bar_opacity":
-        filledSettings[key] = checkActionbarOpacity(value)
-        break
+        filledSettings[key] = checkActionbarOpacity(value);
+        break;
       case "sidebar_opacity":
-        filledSettings[key] = checkSidebarOpacity(value)
-        break
+        filledSettings[key] = checkSidebarOpacity(value);
+        break;
       case "material":
-        filledSettings[key] = checkMaterial(value)
-        break
+        filledSettings[key] = checkMaterial(value);
+        break;
       default:
-        break
+        break;
     }
   }
-  return filledSettings as { [key in Settings]: any }
-}
+  return filledSettings as { [key in Settings]: any };
+};
 
 export const checker = {
   settingsChecker,
-}
+};

@@ -7,68 +7,65 @@ import {
   useDisclosure,
   Text,
   MenuItem,
-} from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useRef, useState } from "react"
-import { ContextMenu } from "types/index"
-import { utils } from "utils/index"
-import { CgFolderAdd } from "react-icons/cg"
+} from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useRef, useState } from "react";
+import { ContextMenu } from "types/index";
+import { utils } from "utils/index";
+import { CgFolderAdd } from "react-icons/cg";
 
 const AddFolder = ({ path, type }: ContextMenu) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { getAccentColor, getBackgroundColor, getTextColor, getIconColor } =
-    useColors()
-  const cancelRef = useRef()
-  const [folderName, setFolderName] = useState<string>("")
-  const [inValidName, setInValidName] = useState<boolean>(false)
-  const { makeNewFolder } = useWorkspace()
+    useColors();
+  const cancelRef = useRef();
+  const [folderName, setFolderName] = useState<string>("");
+  const [inValidName, setInValidName] = useState<boolean>(false);
+  const { makeNewFolder } = useWorkspace();
 
-  const accent_color = getAccentColor()
-
-  const bg_color = getBackgroundColor()
-  const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
-
-  const text_color = getTextColor()
-
-  const icon_color = getIconColor()
+  const accent_color = getAccentColor();
+  const bg_color = getBackgroundColor();
+  const bg_color_lighter = utils.getLighterColor("0.02", bg_color);
+  const text_color = getTextColor();
+  const icon_color = getIconColor();
 
   const handleAddToFile = async () => {
-    const folderPath = path.split("\\").slice(0, -1).join("\\")
-    const foldername = folderName
-    const res = await makeNewFolder(foldername, folderPath)
+    const folderPath = path.split("\\").slice(0, -1).join("\\");
+    const foldername = folderName;
+    const res = await makeNewFolder(foldername, folderPath);
     if (!res) {
-      setInValidName(true)
-      return
+      setInValidName(true);
+      return;
     }
-    setFolderName("")
-    onClose()
-  }
+    setFolderName("");
+    onClose();
+  };
 
   const handleAddToFolder = async () => {
-    const folderPath = path
-    const foldername = folderName
-    const res = await makeNewFolder(foldername, folderPath)
+    const folderPath = path;
+    const foldername = folderName;
+    const res = await makeNewFolder(foldername, folderPath);
     if (!res) {
-      setInValidName(true)
-      return
+      setInValidName(true);
+      return;
     }
-    setFolderName("")
-    onClose()
-  }
+    setFolderName("");
+    onClose();
+  };
 
   const handleAdd = async () => {
     if (folderName === "") {
-      setInValidName(true)
-      return
+      setInValidName(true);
+      return;
     }
 
     if (type === "file") {
-      handleAddToFile()
+      handleAddToFile();
     } else {
-      handleAddToFolder()
+      handleAddToFolder();
     }
-  }
+  };
 
   return (
     <>
@@ -88,12 +85,12 @@ const AddFolder = ({ path, type }: ContextMenu) => {
             <Input
               value={folderName}
               onChange={(e) => {
-                setInValidName(false)
-                setFolderName(e.target.value)
+                setInValidName(false);
+                setFolderName(e.target.value);
               }}
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
-                  handleAdd()
+                  handleAdd();
                 }
               }}
               isInvalid={inValidName}
@@ -124,7 +121,7 @@ const AddFolder = ({ path, type }: ContextMenu) => {
         <Text fontSize="sm">Add Folder</Text>
       </MenuItem>
     </>
-  )
-}
+  );
+};
 
-export default AddFolder
+export default AddFolder;

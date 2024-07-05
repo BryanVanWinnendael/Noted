@@ -1,14 +1,14 @@
-import { Box, Button, Flex, Stack, Text, Tooltip } from "@chakra-ui/react"
-import { useWidget } from "contexts/WidgetContext"
-import { BiMerge } from "react-icons/bi"
-import { utils } from "utils"
-import { useEditor } from "contexts/EditorContext"
-import useColors from "hooks/useColors"
-import { useMemo, useState } from "react"
+import { Box, Button, Flex, Stack, Text, Tooltip } from "@chakra-ui/react";
+import { useWidget } from "contexts/WidgetContext";
+import { BiMerge } from "react-icons/bi";
+import { utils } from "utils";
+import { useEditor } from "contexts/EditorContext";
+import useColors from "hooks/useColors";
+import { useMemo, useState } from "react";
 
 interface DateTodoCount {
-  date: string | null
-  todoCount: number
+  date: string | null;
+  todoCount: number;
 }
 
 const Index = () => {
@@ -17,64 +17,61 @@ const Index = () => {
     getIconColor,
     getSecondaryBackgroundColor,
     getTextColor,
-  } = useColors()
+  } = useColors();
   const { isConnected, setIsConnected, canConnect, getCompatibleWidget } =
-    useWidget()
-  const { blocks, time } = useEditor()
-  const [lines, setLines] = useState(0)
-  const [words, setWords] = useState(0)
-  const [dateString, setDateString] = useState("")
-  const [timeString, setTimeString] = useState("")
-  const { todos } = useWidget()
-  const [todosCount, setTodosCount] = useState<DateTodoCount[]>()
+    useWidget();
+  const { blocks, time } = useEditor();
+  const [lines, setLines] = useState(0);
+  const [words, setWords] = useState(0);
+  const [dateString, setDateString] = useState("");
+  const [timeString, setTimeString] = useState("");
+  const { todos } = useWidget();
+  const [todosCount, setTodosCount] = useState<DateTodoCount[]>();
 
-  const accent_color = getAccentColor()
-
-  const icon_color = getIconColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const text_color = getTextColor()
+  const accent_color = getAccentColor();
+  const icon_color = getIconColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const text_color = getTextColor();
 
   useMemo(async () => {
-    if (!blocks) return
-    const amountOfLines = blocks.length
-    setLines(amountOfLines)
-  }, [blocks])
+    if (!blocks) return;
+    const amountOfLines = blocks.length;
+    setLines(amountOfLines);
+  }, [blocks]);
 
   const countWords = (text: string): number => {
-    const words = text.match(/\b\w+\b/g)
-    return words ? words.length : 0
-  }
+    const words = text.match(/\b\w+\b/g);
+    return words ? words.length : 0;
+  };
 
   useMemo(async () => {
-    if (!blocks) return
-    let res = 0
+    if (!blocks) return;
+    let res = 0;
     for (const item of blocks) {
-      const wordCount = countWords(item.data.text)
-      res += wordCount
+      const wordCount = countWords(item.data.text);
+      res += wordCount;
     }
-    setWords(res)
-  }, [blocks])
+    setWords(res);
+  }, [blocks]);
 
   useMemo(async () => {
-    if (!time) return
-    const dateString = utils.getDateString(time)
-    setDateString(dateString)
-    const timeString = utils.getTimeString(time)
-    setTimeString(timeString)
-  }, [time])
+    if (!time) return;
+    const dateString = utils.getDateString(time);
+    setDateString(dateString);
+    const timeString = utils.getTimeString(time);
+    setTimeString(timeString);
+  }, [time]);
 
   useMemo(() => {
-    const dateTodoCountMap = new Map<string | null, number>()
+    const dateTodoCountMap = new Map<string | null, number>();
 
     for (const todoItem of todos) {
-      const { date } = todoItem
+      const { date } = todoItem;
       if (dateTodoCountMap.has(date)) {
-        dateTodoCountMap.set(date, dateTodoCountMap.get(date)! + 1)
+        dateTodoCountMap.set(date, dateTodoCountMap.get(date)! + 1);
       } else {
-        dateTodoCountMap.set(date, 1)
+        dateTodoCountMap.set(date, 1);
       }
     }
 
@@ -83,9 +80,9 @@ const Index = () => {
     ).map(([date, todoCount]) => ({
       date: date ? date.replaceAll("-", "/") : null,
       todoCount,
-    }))
-    setTodosCount(dateTodoCountArray)
-  }, [todos])
+    }));
+    setTodosCount(dateTodoCountArray);
+  }, [todos]);
 
   return (
     <Box h="300px">
@@ -162,13 +159,13 @@ const Index = () => {
                     {todo.todoCount}
                   </Text>
                 </Flex>
-              )
+              );
             })}
           </Stack>
         </>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

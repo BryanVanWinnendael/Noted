@@ -1,13 +1,13 @@
-import { Flex, Icon, Menu, MenuButton, Text, Tooltip } from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useState } from "react"
-import { utils } from "utils/index"
-import ContextMenu from "./Context-Menu"
-import { useSettings } from "contexts/SettingsContext"
-import { PiNoteDuotone } from "react-icons/pi"
-import { FaRegFilePdf } from "react-icons/fa"
-import { MdOutlineDraw } from "react-icons/md"
+import { Flex, Icon, Menu, MenuButton, Text, Tooltip } from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useState } from "react";
+import { utils } from "utils/index";
+import ContextMenu from "./Context-Menu";
+import { useSettings } from "contexts/SettingsContext";
+import { PiNoteDuotone } from "react-icons/pi";
+import { FaRegFilePdf } from "react-icons/fa";
+import { MdOutlineDraw } from "react-icons/md";
 
 const FileButton = ({ path, name }: { path: string; name: string }) => {
   const {
@@ -15,49 +15,46 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
     getTextColor,
     getBackgroundColor,
     getIconColor,
-  } = useColors()
-  const { extensionLabel, sidebarIcons } = useSettings()
-  const { setActiveFolder, activeTab, tabs, openFile } = useWorkspace()
-  const isActive = tabs[activeTab]?.path === path
-  const [isOpen, setIsOpen] = useState<boolean | undefined>(false)
-  const tab = tabs[activeTab]
+  } = useColors();
+  const { extensionLabel, sidebarIcons } = useSettings();
+  const { setActiveFolder, activeTab, tabs, openFile } = useWorkspace();
+  const isActive = tabs[activeTab]?.path === path;
+  const [isOpen, setIsOpen] = useState<boolean | undefined>(false);
+  const tab = tabs[activeTab];
 
-  const primary_bg_color = getBackgroundColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color)
-
-  const text_color = getTextColor()
-
-  const icon_color = getIconColor()
+  const primary_bg_color = getBackgroundColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
+  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
+  const text_color = getTextColor();
+  const icon_color = getIconColor();
 
   const handleOpenFile = (filePath: string) => {
-    const folderPath = filePath.split("\\")
-    folderPath.pop()
-    setActiveFolder(folderPath.join("\\"))
-    openFile(filePath)
-  }
+    const folderPath = filePath.split("\\");
+    folderPath.pop();
+    setActiveFolder(folderPath.join("\\"));
+    openFile(filePath);
+  };
 
   const getFileName = (path: string) => {
-    const lastDotIndex = path.lastIndexOf(".")
+    const lastDotIndex = path.lastIndexOf(".");
     if (lastDotIndex !== -1) {
-      return path.substring(0, lastDotIndex)
+      return path.substring(0, lastDotIndex);
     }
-    return path
-  }
+    return path;
+  };
 
-  const extension = name.split(".").pop()
+  const extension = name.split(".").pop();
 
   const getIcon = () => {
     switch (extension) {
       case "pdf":
-        return <Icon w={4} h={4} as={FaRegFilePdf} color={icon_color} />
+        return <Icon w={4} h={4} as={FaRegFilePdf} color={icon_color} />;
       case "excalidraw":
-        return <Icon w={4} h={4} as={MdOutlineDraw} color={icon_color} />
+        return <Icon w={4} h={4} as={MdOutlineDraw} color={icon_color} />;
       default:
-        return <Icon w={4} h={4} as={PiNoteDuotone} color={icon_color} />
+        return <Icon w={4} h={4} as={PiNoteDuotone} color={icon_color} />;
     }
-  }
+  };
 
   return (
     <Menu isOpen={isOpen} onClose={() => setIsOpen(false)} id={path}>
@@ -111,7 +108,7 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
 
       <ContextMenu path={path} name={name} type="file" />
     </Menu>
-  )
-}
+  );
+};
 
-export default FileButton
+export default FileButton;

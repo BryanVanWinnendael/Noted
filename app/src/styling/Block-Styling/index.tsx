@@ -1,15 +1,15 @@
-import { Box } from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import { headerStyle } from "styling/Block-Styling/header"
-import { codeStyle } from "./code"
-import { tableStyle } from "./table"
-import useColors from "hooks/useColors"
-import { nestedStyle } from "./nestcheck"
-import { latexStyle } from "./latex"
-import { soundStyle } from "./sound"
+import { Box } from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import { headerStyle } from "styling/Block-Styling/header";
+import { codeStyle } from "./code";
+import { tableStyle } from "./table";
+import useColors from "hooks/useColors";
+import { nestedStyle } from "./nestcheck";
+import { latexStyle } from "./latex";
+import { soundStyle } from "./sound";
 
 const Index = ({ children }: { children: JSX.Element }) => {
-  const { headerColors, headerColorsEnabled } = useSettings()
+  const { headerColors, headerColorsEnabled } = useSettings();
   const {
     getTextColor,
     getBackgroundColor,
@@ -18,15 +18,15 @@ const Index = ({ children }: { children: JSX.Element }) => {
     getBorderColor,
     getAccentColor,
     getIconColor,
-  } = useColors()
+  } = useColors();
 
-  const text_color = getTextColor()
-  const background_color = getBackgroundColor()
-  const secondary_background_color = getSecondaryBackgroundColorLighter()
-  const muted_text_color = getMutedTextColor()
-  const border_color = getBorderColor()
-  const accent_color = getAccentColor()
-  const icon_color = getIconColor()
+  const text_color = getTextColor();
+  const background_color = getBackgroundColor();
+  const secondary_background_color = getSecondaryBackgroundColorLighter();
+  const muted_text_color = getMutedTextColor();
+  const border_color = getBorderColor();
+  const accent_color = getAccentColor();
+  const icon_color = getIconColor();
 
   return (
     <Box
@@ -47,7 +47,7 @@ const Index = ({ children }: { children: JSX.Element }) => {
     >
       {children}
     </Box>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

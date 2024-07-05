@@ -1,16 +1,16 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import "./index.css"
-import { WorkspaceProvider } from "contexts/WorkspaceContext"
-import { SettingsProvider } from "contexts/SettingsContext"
-import { WidgetProvider } from "contexts/WidgetContext"
-import App from "./App"
-import { ChakraProvider, extendTheme } from "@chakra-ui/react"
-import type { ComponentStyleConfig } from "@chakra-ui/react"
-import "focus-visible/dist/focus-visible"
-import { EditorProvider } from "contexts/EditorContext"
-import FontWrapper from "styling/FontWrapper"
-import { SlashProvider } from "contexts/SlashContext"
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import { WorkspaceProvider } from "contexts/WorkspaceContext";
+import { SettingsProvider } from "contexts/SettingsContext";
+import { WidgetProvider } from "contexts/WidgetContext";
+import App from "./App";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import type { ComponentStyleConfig } from "@chakra-ui/react";
+import "focus-visible/dist/focus-visible";
+import { EditorProvider } from "contexts/EditorContext";
+import FontWrapper from "styling/FontWrapper";
+import { SlashProvider } from "contexts/SlashContext";
 
 const Link: ComponentStyleConfig = {
   baseStyle: {
@@ -24,7 +24,7 @@ const Link: ComponentStyleConfig = {
       textDecoration: "underline",
     },
   },
-}
+};
 
 const theme = extendTheme({
   components: {
@@ -48,7 +48,7 @@ const theme = extendTheme({
       },
     },
   },
-})
+});
 
 ReactDOM.render(
   <React.StrictMode>
@@ -73,6 +73,7 @@ ReactDOM.render(
   </React.StrictMode>,
 
   document.getElementById("root"),
-)
+);
 
-postMessage({ payload: "removeLoading" }, "*")
+// Remove loading screen
+postMessage({ payload: "removeLoading" }, "*");

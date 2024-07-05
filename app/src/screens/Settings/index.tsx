@@ -5,42 +5,39 @@ import {
   Modal,
   ModalContent,
   ModalOverlay,
-} from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import { useRef, useState } from "react"
-import Editor from "./Editor"
-import { utils } from "utils"
-import Themes from "./Themes"
-import Market from "./Market"
-import General from "./General"
-import useColors from "hooks/useColors"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import Shortcuts from "./Shortcuts"
-import Background from "./Background"
-import Sidebar from "./Sidebar"
+} from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import { useRef, useState } from "react";
+import Editor from "./Editor";
+import { utils } from "utils";
+import Themes from "./Themes";
+import Market from "./Market";
+import General from "./General";
+import useColors from "hooks/useColors";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import Shortcuts from "./Shortcuts";
+import Background from "./Background";
+import Sidebar from "./Sidebar";
 
 const SettingsScreen = () => {
   const { getSecondaryBackgroundColor, getAccentColor, getTextColor } =
-    useColors()
-  const [section, setSection] = useState<string>("general")
-  const { isOpen, onClose, glassBackground, glassEnabled } = useSettings()
-  const { workspace } = useWorkspace()
+    useColors();
+  const [section, setSection] = useState<string>("general");
+  const { isOpen, onClose, glassBackground, glassEnabled } = useSettings();
+  const { workspace } = useWorkspace();
 
-  const bg_colorLeft = getSecondaryBackgroundColor()
-
-  const secondary_background_color = getSecondaryBackgroundColor()
+  const bg_colorLeft = getSecondaryBackgroundColor();
+  const secondary_background_color = getSecondaryBackgroundColor();
   const bg_colorRight = utils.getLighterColor(
     "0.02",
     secondary_background_color,
-  )
+  );
+  const text_color = getTextColor();
+  const accent_color = getAccentColor();
 
-  const text_color = getTextColor()
+  const isGlassEnabled = glassEnabled && glassBackground.settings;
 
-  const accent_color = getAccentColor()
-
-  const isGlassEnabled = glassEnabled && glassBackground.settings
-
-  const finalRef = useRef(null)
+  const finalRef = useRef(null);
 
   return (
     <Modal
@@ -85,7 +82,7 @@ const SettingsScreen = () => {
                     : ""
                 }
                 onClick={() => {
-                  setSection("general")
+                  setSection("general");
                 }}
                 cursor="pointer"
                 _hover={{
@@ -117,7 +114,7 @@ const SettingsScreen = () => {
                         : ""
                     }
                     onClick={() => {
-                      setSection("editor")
+                      setSection("editor");
                     }}
                     cursor="pointer"
                     _hover={{
@@ -147,7 +144,7 @@ const SettingsScreen = () => {
                         : ""
                     }
                     onClick={() => {
-                      setSection("sidebar")
+                      setSection("sidebar");
                     }}
                     cursor="pointer"
                     _hover={{
@@ -177,7 +174,7 @@ const SettingsScreen = () => {
                         : ""
                     }
                     onClick={() => {
-                      setSection("background")
+                      setSection("background");
                     }}
                     cursor="pointer"
                     _hover={{
@@ -207,7 +204,7 @@ const SettingsScreen = () => {
                         : ""
                     }
                     onClick={() => {
-                      setSection("shortcuts")
+                      setSection("shortcuts");
                     }}
                     cursor="pointer"
                     _hover={{
@@ -237,7 +234,7 @@ const SettingsScreen = () => {
                         : ""
                     }
                     onClick={() => {
-                      setSection("themes")
+                      setSection("themes");
                     }}
                     cursor="pointer"
                     _hover={{
@@ -267,7 +264,7 @@ const SettingsScreen = () => {
                         : ""
                     }
                     onClick={() => {
-                      setSection("market")
+                      setSection("market");
                     }}
                     cursor="pointer"
                     _hover={{
@@ -351,7 +348,7 @@ const SettingsScreen = () => {
         </Grid>
       </ModalContent>
     </Modal>
-  )
-}
+  );
+};
 
-export default SettingsScreen
+export default SettingsScreen;

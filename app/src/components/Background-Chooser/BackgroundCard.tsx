@@ -1,28 +1,27 @@
-import { Box, Card, Flex, Stack, Text } from "@chakra-ui/react"
-import { useSettings } from "contexts/SettingsContext"
-import useColors from "hooks/useColors"
-import { IoIosCheckmarkCircle } from "react-icons/io"
+import { Box, Card, Flex, Stack, Text } from "@chakra-ui/react";
+import { useSettings } from "contexts/SettingsContext";
+import useColors from "hooks/useColors";
+import { IoIosCheckmarkCircle } from "react-icons/io";
 
 const BackgroundCard = ({
   image,
   name,
   select,
 }: {
-  image?: string
-  name: string
-  select: string
+  image?: string;
+  name: string;
+  select: string;
 }) => {
-  const { getBackgroundColor, getBorderColor } = useColors()
-  const { saveSettings, backgroundImage } = useSettings()
-  const selected = backgroundImage === select
+  const { getBackgroundColor, getBorderColor } = useColors();
+  const { saveSettings, backgroundImage } = useSettings();
+  const selected = backgroundImage === select;
 
-  const bg_color = getBackgroundColor()
-
-  const border_color = getBorderColor()
+  const bg_color = getBackgroundColor();
+  const border_color = getBorderColor();
 
   const handleClick = () => {
-    saveSettings("background_image", select)
-  }
+    saveSettings("background_image", select);
+  };
 
   return (
     <Stack>
@@ -64,7 +63,7 @@ const BackgroundCard = ({
       </Card>
       <Text textAlign="center">{name}</Text>
     </Stack>
-  )
-}
+  );
+};
 
-export default BackgroundCard
+export default BackgroundCard;

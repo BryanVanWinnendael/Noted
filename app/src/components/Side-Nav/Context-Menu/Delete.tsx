@@ -9,13 +9,13 @@ import {
   MenuItem,
   useDisclosure,
   Text,
-} from "@chakra-ui/react"
-import { useWorkspace } from "contexts/WorkspaceContext"
-import useColors from "hooks/useColors"
-import { useRef } from "react"
-import { ContextMenu } from "types/index"
-import { utils } from "utils/index"
-import { MdDeleteOutline } from "react-icons/md"
+} from "@chakra-ui/react";
+import { useWorkspace } from "contexts/WorkspaceContext";
+import useColors from "hooks/useColors";
+import { useRef } from "react";
+import { ContextMenu } from "types/index";
+import { utils } from "utils/index";
+import { MdDeleteOutline } from "react-icons/md";
 
 const Delete = ({ path, name, type }: ContextMenu) => {
   const {
@@ -23,31 +23,28 @@ const Delete = ({ path, name, type }: ContextMenu) => {
     getSecondaryBackgroundColor,
     getBackgroundColor,
     getIconColor,
-  } = useColors()
-  const cancelRef = useRef()
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const { deleteFile, deleteFolder } = useWorkspace()
+  } = useColors();
+  const cancelRef = useRef();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { deleteFile, deleteFolder } = useWorkspace();
 
-  const bg_colorLeft = getSecondaryBackgroundColor()
-
-  const bg_color = getBackgroundColor()
-  const bg_color_lighter = utils.getLighterColor("0.02", bg_color)
-
-  const text_color = getTextColor()
-
-  const icon_color = getIconColor()
+  const bg_colorLeft = getSecondaryBackgroundColor();
+  const bg_color = getBackgroundColor();
+  const bg_color_lighter = utils.getLighterColor("0.02", bg_color);
+  const text_color = getTextColor();
+  const icon_color = getIconColor();
 
   const handleDelete = () => {
     switch (type) {
       case "file":
-        deleteFile(path)
-        break
+        deleteFile(path);
+        break;
       case "folder":
-        deleteFolder(path)
-        break
+        deleteFolder(path);
+        break;
     }
-    onClose()
-  }
+    onClose();
+  };
 
   return (
     <>
@@ -99,7 +96,7 @@ const Delete = ({ path, name, type }: ContextMenu) => {
         <Text fontSize="sm">Delete</Text>
       </MenuItem>
     </>
-  )
-}
+  );
+};
 
-export default Delete
+export default Delete;

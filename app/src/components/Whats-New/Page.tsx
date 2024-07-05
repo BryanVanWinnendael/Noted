@@ -1,16 +1,16 @@
-import { ListItem, Stack, Text, UnorderedList } from "@chakra-ui/react"
-import useColors from "hooks/useColors"
+import { ListItem, Stack, Text, UnorderedList } from "@chakra-ui/react";
+import useColors from "hooks/useColors";
 
 type Update = {
-  title: string
-  text: string
-  list?: string[]
-}
+  title: string;
+  text: string;
+  list?: string[];
+};
 
 const Page = (update: Update) => {
-  const { getTextColor } = useColors()
+  const { getTextColor } = useColors();
 
-  const text_color = getTextColor()
+  const text_color = getTextColor();
 
   return (
     <Stack color={text_color}>
@@ -26,7 +26,7 @@ const Page = (update: Update) => {
         </UnorderedList>
       )}
     </Stack>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
