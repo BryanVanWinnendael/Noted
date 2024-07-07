@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from server.db.firebase import Firebase
-from .routers import themes
+from db.firebase import Firebase
+from routers import themes
 
 
 load_dotenv()
