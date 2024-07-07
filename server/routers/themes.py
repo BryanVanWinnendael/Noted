@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-from services import themes_service
-from middleware.auth import get_firebase_user, get_firebase_user_admin
+from ..services import themes_service
+from ..middleware.auth import get_firebase_user, get_firebase_user_admin
 
 router = APIRouter()
 
