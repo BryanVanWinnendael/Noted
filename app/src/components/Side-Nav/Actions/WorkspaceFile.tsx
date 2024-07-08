@@ -26,7 +26,7 @@ const WorkspaceFile = () => {
   return (
     <Tooltip
       placement="bottom"
-      label={"Open Workspace File"}
+      label={"Open workspace file"}
       bg={bg_color}
       color={text_color}
       rounded="md"
@@ -38,7 +38,7 @@ const WorkspaceFile = () => {
         bg={isOpened ? utils.getDarkerColor("0.03", bg_color) : "transparent"}
         w={7}
         h={7}
-        aria-label="Open Workspace File"
+        aria-label="Open workspace file"
         icon={<RiHomeLine />}
       />
     </Tooltip>

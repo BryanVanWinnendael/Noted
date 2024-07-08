@@ -1,3 +1,4 @@
+import { onAuthStateChanged, User, signOut } from "firebase/auth";
 import {
   createContext,
   useCallback,
@@ -13,6 +14,8 @@ import {
   Platforms,
 } from "types";
 import { APP_VERSION } from "utils/constants";
+import {  } from "firebase/auth";
+import { auth } from "lib/firebase";
 
 const WorkspaceContext = createContext<WorkspaceTypeContext>(
   {} as WorkspaceTypeContext,
@@ -44,6 +47,8 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const [newVersion, setNewVersion] = useState<boolean>(false);
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
   const [platform, setPlatform] = useState<Platforms>("win32");
+  const [recentWorkspaces, setRecentWorkspaces] = useState<string[]>([]);
+  const [user, setUser] = useState<User | undefined>();
 
   const resetWorkspace = () => {
     setWorkspace(undefined);
@@ -94,6 +99,23 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     return undefined;
   };
 
+  const addRecentOpenedWorkspace = (workspacePath: string) => {
+    const recentWorkspaces = JSON.parse(
+      localStorage.getItem("recent_workspaces") || "[]",
+    );
+    if (recentWorkspaces.includes(workspacePath))
+      return setRecentWorkspaces(recentWorkspaces);
+
+    if (recentWorkspaces.length >= 5) {
+      recentWorkspaces.pop();
+    }
+    console.log(recentWorkspaces);
+    recentWorkspaces.unshift(workspacePath);
+    console.log(recentWorkspaces);
+    localStorage.setItem("recent_workspaces", JSON.stringify(recentWorkspaces));
+    setRecentWorkspaces(recentWorkspaces);
+  };
+
   const openWorkspace = async () => {
     try {
       const openedWorkspace: WorkspaceType = await invoke("folder:open-dialog");
@@ -101,6 +123,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
       resetWorkspace();
       localStorage.setItem("workspace_path", openedWorkspace.path);
       setWorkspace(openedWorkspace);
+      addRecentOpenedWorkspace(openedWorkspace.path);
     } catch (err) {
       console.log(err);
     }
@@ -238,6 +261,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const handleOpenedWorkspace = useCallback(async () => {
     const workspacePath = localStorage.getItem("workspace_path");
     if (workspacePath) {
+      addRecentOpenedWorkspace(workspacePath);
       openFolder(workspacePath);
     }
     setIsLoaded(true);
@@ -258,7 +282,12 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
       });
 
       handleOpenedWorkspace();
-      openFile(`${new_folder_path}\\${fileName}`);
+      if (platform === "linux") {
+        openFile(`${new_folder_path}/${fileName}`);
+      } else {
+        openFile(`${new_folder_path}\\${fileName}`);
+      }
+
       return true;
     } catch (err) {
       return false;
@@ -407,17 +436,34 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     openFile(openedFile["filePath"]);
   };
 
+  const handleSignOutUser = () => {
+    signOut(auth)
+    setUser(undefined);
+  }
+
+  const initUser = useCallback(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      if (user) {
+        setUser(user);
+      }
+    });
+  }, []);
+
   const initPlatform = useCallback(async () => {
     const platform = await invoke("platform:get");
     setPlatform(platform);
   }, []);
 
+  
+
   useEffect(() => {
+    localStorage.setItem("open_files", JSON.stringify([])); // Used for the file switcher
     handleOpenedWorkspace();
-    localStorage.setItem("open_files", JSON.stringify([]));
     checkVersion();
     initPlatform();
-  }, [handleOpenedWorkspace, initPlatform]);
+    initUser();
+  }, [handleOpenedWorkspace, initPlatform, initUser]);
 
   const value: WorkspaceTypeContext = {
     openWorkspace,
@@ -461,6 +507,9 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     setShowConfetti,
     showConfetti,
     platform,
+    recentWorkspaces,
+    user,
+    handleSignOutUser
   };
 
   return (

@@ -18,6 +18,7 @@ import { useWorkspace } from "contexts/WorkspaceContext";
 import Shortcuts from "./Shortcuts";
 import Background from "./Background";
 import Sidebar from "./Sidebar";
+import Notes from "./Notes";
 
 const SettingsScreen = () => {
   const { getSecondaryBackgroundColor, getAccentColor, getTextColor } =
@@ -98,6 +99,36 @@ const SettingsScreen = () => {
               </Box>
               {workspace && (
                 <>
+                <Box
+                    mb={1}
+                    p={1}
+                    pl={2}
+                    rounded="md"
+                    color={
+                      section === "notes"
+                        ? utils.getDarkerColor("0.1", accent_color)
+                        : text_color
+                    }
+                    bg={
+                      section === "notes"
+                        ? utils.getTransparent(0.2, accent_color)
+                        : ""
+                    }
+                    onClick={() => {
+                      setSection("notes");
+                    }}
+                    cursor="pointer"
+                    _hover={{
+                      bg: utils.getDarkerColor(
+                        "0.03",
+                        section === "notes"
+                          ? utils.getTransparent(0.2, accent_color)
+                          : bg_colorLeft,
+                      ),
+                    }}
+                  >
+                    Notes
+                  </Box>
                   <Box
                     mb={1}
                     p={1}
@@ -341,6 +372,7 @@ const SettingsScreen = () => {
                   themes: <Themes />,
                   market: <Market />,
                   shortcuts: <Shortcuts />,
+                  notes: <Notes />,
                 }[section]
               }
             </Box>

@@ -49,7 +49,7 @@ const Index = () => {
   return (
     <Flex w="full" alignItems="center">
       <AnimatePresence mode="popLayout">
-        {Object.keys(tabs).map((key, index) => (
+        {tabs && Object.keys(tabs).map((key, index) => (
           <motion.div
             className="tab-motion"
             layout

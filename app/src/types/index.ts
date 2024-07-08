@@ -1,5 +1,6 @@
 import { Dayjs } from "dayjs";
 import EditorJS from "@editorjs/editorjs";
+import { User } from "firebase/auth";
 
 export type Platforms = "win32" | "linux";
 
@@ -94,6 +95,9 @@ export interface WorkspaceTypeContext {
   showConfetti: boolean;
   setShowConfetti: (show: boolean) => void;
   platform: Platforms;
+  recentWorkspaces: string[];
+  user: User | undefined;
+  handleSignOutUser: () => void;
 }
 
 export interface Theme {

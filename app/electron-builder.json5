@@ -10,6 +10,12 @@
     output: "release/${version}",
   },
   files: ["dist", "dist-electron"],
+  protocols: [
+    {
+      name: "Noted",
+      schemes: ["write-noted"],
+    },
+  ],
   mac: {
     target: ["dmg"],
     artifactName: "${productName}-Setup-${version}.${ext}",
@@ -31,8 +37,8 @@
     license: "license.md",
   },
   linux: {
-    target: ["AppImage"],
+    target: ["AppImage", "deb"],
     artifactName: "${productName}-Setup-${version}.${ext}",
   },
-  icon: "public/icon.ico",
+  icon: "public/icon.png",
 }

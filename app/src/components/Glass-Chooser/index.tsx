@@ -120,17 +120,19 @@ const Index = () => {
               <Text w="100%" color={muted_text_color}>
                 Window
               </Text>
-              <Tooltip
-                placement="bottom"
-                label={"Not available on Linux"}
-                bg={bg_color}
-                color={text_color}
-                rounded="md"
-              >
-                <Box>
-                  <FaInfoCircle color={icon_color} size={15} />
-                </Box>
-              </Tooltip>
+              {isLinux && (
+                <Tooltip
+                  placement="bottom"
+                  label={"Not available on Linux"}
+                  bg={bg_color}
+                  color={text_color}
+                  rounded="md"
+                >
+                  <Box>
+                    <FaInfoCircle color={icon_color} size={15} />
+                  </Box>
+                </Tooltip>
+              )}
             </Flex>
 
             <CustomSwitch

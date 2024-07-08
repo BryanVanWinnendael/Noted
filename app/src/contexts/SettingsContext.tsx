@@ -17,7 +17,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { checker, ensureKeys } from "utils/checker";
+import { checker, ensureKeys } from "utils/settings/checker";
 import { utils } from "utils";
 import {
   DEFAULT_ACTION_BAR_OPACITY,
