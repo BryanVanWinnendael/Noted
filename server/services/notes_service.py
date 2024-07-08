@@ -2,9 +2,9 @@ from firebase_admin import db
 from pydantic import BaseModel
 
 
-class Notes(BaseModel):
+class Note(BaseModel):
     id: str
-    data: any
+    data: str
 
 
 def get_note(id: str):
@@ -15,7 +15,7 @@ def get_note(id: str):
         return e
 
 
-def add_note(note: Notes, user_email: str):
+def add_note(note: Note, user_email: str):
     try:
         ref = db.reference("/notes/" + note.id)
         ref.set({

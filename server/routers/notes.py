@@ -6,9 +6,9 @@ from ..middleware.auth import get_firebase_user
 router = APIRouter()
 
 
-class Notes(BaseModel):
+class Note(BaseModel):
     id: str
-    data: any
+    data: str
 
 
 @router.get("/{id}")
@@ -18,7 +18,7 @@ async def get_note_with_id(id: str):
 
 
 @router.post("")
-async def add_note(note: Notes, user=Depends(get_firebase_user)):
+async def add_note_with_user(note: Note, user=Depends(get_firebase_user)):
     user_email = user['email']
     res = notes_service.add_note(note, user_email)
     return res
