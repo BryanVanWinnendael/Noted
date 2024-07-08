@@ -7,7 +7,6 @@ router = APIRouter()
 
 
 class Note(BaseModel):
-    id: str
     data: str
 
 

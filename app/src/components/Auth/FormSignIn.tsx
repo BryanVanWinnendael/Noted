@@ -9,7 +9,6 @@ declare let window: MyWindow;
 
 const invoke = window.electron.invoke;
 
-
 const FormSignIn = ({ onClose }:{ onClose: () => void }) => {
   const { getAccentColor, getTextColor } = useColors()
   const [isError, setIsError] = useState(false)

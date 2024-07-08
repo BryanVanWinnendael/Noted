@@ -16,6 +16,7 @@ import {
 import { APP_VERSION } from "utils/constants";
 import {  } from "firebase/auth";
 import { auth } from "lib/firebase";
+import Cookies from 'js-cookie';
 
 const WorkspaceContext = createContext<WorkspaceTypeContext>(
   {} as WorkspaceTypeContext,
@@ -442,10 +443,21 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   }
 
   const initUser = useCallback(() => {
-    onAuthStateChanged(auth, (user) => {
-      console.log(user);
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
+        const idToken = await user.getIdToken()
+        const url = import.meta.env.VITE_CLIENT_URL + "/api/auth/login.json"
+        await fetch(url, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        }).then((res) => {
+          console.log(res)
+          const sessToken = Cookies.get("session")
+          if (sessToken) localStorage.setItem("token", sessToken)
+        })
       }
     });
   }, []);
