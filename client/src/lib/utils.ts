@@ -16,6 +16,7 @@ export const fetcher = async (
   cookie: string,
   body: any = null,
 ) => {
+  console.log(cookie)
   const API_URL = import.meta.env.PUBLIC_API_URL + url
   if (method === "GET") {
     return fetch(API_URL, {
