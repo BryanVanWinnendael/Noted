@@ -1,6 +1,7 @@
 import { OutputData } from "@editorjs/editorjs";
 
 export const CreatePublicNote = async (idToken: string, data: OutputData) => {
+  console.log(idToken)
   const url = import.meta.env.VITE_SERVER_URL + "notes";
   return await fetch(url, {
     method: "POST",

@@ -18,6 +18,7 @@ def get_firebase_user(request: Request):
     :param request: The HTTP request
     """
     cookie = request.headers.get('Authorization')
+    print(cookie)
     if not cookie:
         raise HTTPException(status_code=400, detail='TokenID must be provided')
 
