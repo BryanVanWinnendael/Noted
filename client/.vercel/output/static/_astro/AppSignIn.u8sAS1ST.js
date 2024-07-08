@@ -1,0 +1,1 @@
+import{g as t,t as n}from"./web.BDtHqAq6.js";import{G as e,c as i,s as r}from"./client.eiXqt5f0.js";const s=n("<div>"),a=new e,h=()=>((async()=>{try{await r(i,a).then(o=>{window!==void 0&&(window.location.href="write-noted://"+o._tokenResponse.oauthIdToken)})}catch(o){console.error("Error signing in with Google:",o)}})(),t(s));export{h as default};

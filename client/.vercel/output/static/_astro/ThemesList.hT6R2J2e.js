@@ -1,0 +1,1 @@
+import{g as n,i as o,c as a,t as s,F as m}from"./web.BDtHqAq6.js";import{T as c}from"./ThemeCard.we2kw_7d.js";const i=s("<div>"),u=({themes:e})=>(()=>{const t=n(i);return o(t,a(m,{get each(){return e&&Object.keys(e)},children:r=>a(c,{get theme(){return e[r]},name:r})})),t})();export{u as default};
