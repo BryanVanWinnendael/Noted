@@ -3,7 +3,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "baseUrl": "/home/bryan/Documents/projects/noted/client",
+    "baseUrl": ".",
     "paths": {
       "@components/*": [
         "src/components/*"
