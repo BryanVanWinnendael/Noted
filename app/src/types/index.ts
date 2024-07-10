@@ -99,7 +99,7 @@ export interface WorkspaceTypeContext {
   user: User | undefined;
   handleSignOutUser: () => void;
   notes: UserNote[];
-  createPublicNote: (data: OutputData, path: string, style: NoteStyle) => void;
+  createPublicNote: (data: OutputData, path: string, style: NoteStyle) => Promise<boolean>;
   deletePublicNote: (id: string) => void;
 }
 

@@ -1,14 +1,14 @@
-import { auth } from "@lib/firebase/server"
+import { auth } from "@lib/firebase/server";
 
 export const getUser = async (cookie: string) => {
   try {
-    const decodedIdToken = await auth.verifySessionCookie(cookie, true)
-    const user = await auth.getUser(decodedIdToken.uid)
-    return user
+    const decodedIdToken = await auth.verifySessionCookie(cookie, true);
+    const user = await auth.getUser(decodedIdToken.uid);
+    return user;
   } catch (error) {
-    return null
+    return null;
   }
-}
+};
 
 export const fetcher = async (
   url: string,
@@ -16,7 +16,7 @@ export const fetcher = async (
   cookie: string,
   body: any = null,
 ) => {
-  const API_URL = import.meta.env.PUBLIC_API_URL + url
+  const API_URL = import.meta.env.PUBLIC_API_URL + url;
   if (method === "GET") {
     return fetch(API_URL, {
       method: method,
@@ -26,15 +26,15 @@ export const fetcher = async (
       },
     })
       .then(function (response) {
-        return response.json()
+        return response.json();
       })
       .catch(function (error) {
         console.log(
           "There has been a problem with your fetch operation: " +
             error.message,
-        )
-        throw error
-      })
+        );
+        throw error;
+      });
   } else {
     return fetch(API_URL, {
       method: method,
@@ -45,16 +45,16 @@ export const fetcher = async (
       body: JSON.stringify(body) || null,
     })
       .then(function (response) {
-        return response.json()
+        return response.json();
       })
       .catch(function (error) {
         console.log(
           "There has been a problem with your fetch operation: " +
             error.message,
-        )
-        throw error
-      })
+        );
+        throw error;
+      });
   }
-}
+};
 
-export const admins = import.meta.env.FIREBASE_ADMIN_EMAILS
+export const admins = import.meta.env.FIREBASE_ADMIN_EMAILS;

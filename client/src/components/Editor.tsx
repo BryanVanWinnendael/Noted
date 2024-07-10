@@ -1,10 +1,9 @@
 import EditorWrapper from "@lib/styling/EditorWrapper";
 import { EDITOR_JS_TOOLS } from "@lib/tools";
-import EditorJS from '@editorjs/editorjs';
+import EditorJS from "@editorjs/editorjs";
 import { useEffect } from "react";
 
 const Editor = ({ data, style }: any) => {
-
   useEffect(() => {
     const editor = new EditorJS({
       holder: "noted",
@@ -17,7 +16,7 @@ const Editor = ({ data, style }: any) => {
         editor.destroy();
       });
     };
-  },[])
+  }, []);
 
   return (
     <EditorWrapper style={JSON.parse(style)}>

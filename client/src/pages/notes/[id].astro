@@ -4,11 +4,7 @@ import NoteLayout from "@layouts/NoteLayout.astro";
 import { fetcher } from "@lib/utils";
 
 const { id } = Astro.params;
-const res = await fetcher(
-  `notes/${id}`,
-  "GET",
-  ""
-);
+const res = await fetcher(`notes/${id}`, "GET", "");
 ---
 
 <NoteLayout title="Note">

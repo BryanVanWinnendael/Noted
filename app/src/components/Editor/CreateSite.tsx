@@ -59,8 +59,8 @@ const CreateSite = ({ editor, path }: { editor:  React.MutableRefObject<EditorJS
   const handleCreateSite = async () => {
     const data = await editor.current?.save()
     if (!data) return
-    createPublicNote(data, path, style)
-    onOpen()
+    const created = await createPublicNote(data, path, style)
+    if (created) onOpen()
   }
 
   return (

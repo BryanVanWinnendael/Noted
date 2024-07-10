@@ -18,7 +18,6 @@ import {
 import { APP_VERSION } from "utils/constants";
 import {  } from "firebase/auth";
 import { auth } from "lib/firebase";
-import Cookies from 'js-cookie';
 import { GetUserNotes } from "lib/actions/notes/get";
 import { CreatePublicNote } from "lib/actions/notes/create";
 import { OutputData } from "@editorjs/editorjs";
@@ -461,7 +460,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
   const createPublicNote = async (data:  OutputData, path: string, style: NoteStyle) => {
     const { id } = await CreatePublicNote(data, path, style)
-    if (!id) return
+    if (!id) return false
 
     const tempNote: UserNote = {
       data: JSON.stringify(data),
@@ -472,6 +471,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     }
 
     setNotes([...notes, tempNote])
+    return true
   }
 
   const handleSignOutUser = () => {
@@ -484,16 +484,21 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
       if (user) {
         setUser(user);
         const idToken = await user.getIdToken()
-        const url = import.meta.env.VITE_CLIENT_URL + "api/auth/login.json"
+        const url = import.meta.env.VITE_CLIENT_URL + "api/auth/login.session.json"
         await fetch(url, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${idToken}`,
           },
-        }).then(() => {
-          const sessToken = Cookies.get("session")
+        }).then(async (sess) => {
+          try{
+          const sessJson = await sess.json()
+          const sessToken = sessJson.session
           if (sessToken) localStorage.setItem("token", sessToken)
           getUserNotes()
+          } catch (error) {
+            console.error("Error getting session token:", error)
+          }
         })
       }
     });

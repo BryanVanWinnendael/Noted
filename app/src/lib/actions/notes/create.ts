@@ -3,6 +3,8 @@ import { OutputData } from "@editorjs/editorjs";
 export const CreatePublicNote = async (data: OutputData, path: string, style: any) => {
   const token = localStorage.getItem("token") || "";
   const url = import.meta.env.VITE_SERVER_URL + "notes";
+
+  console.log("Creating public note...");
   
   return await fetch(url, {
     method: "POST",
