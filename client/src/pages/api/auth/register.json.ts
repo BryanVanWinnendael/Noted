@@ -25,7 +25,7 @@ export const POST: APIRoute = async ({ request, redirect, cookies }) => {
   const { email, password } = result.data;
   let sessionCookie;
   try {
-    const newUser = await auth.createUser({
+    await auth.createUser({
       email,
       password,
     });
