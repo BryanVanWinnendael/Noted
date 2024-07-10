@@ -1,6 +1,8 @@
 import type { NoteStyle } from "@lib/types";
 import { useCallback, useEffect } from "react";
 import BlockStyling from "./Block-Styling";
+import "./fonts.css"
+
 const EditorWrapper = ({
   children,
   style,
