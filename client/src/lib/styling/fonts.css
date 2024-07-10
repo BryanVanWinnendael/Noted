@@ -10,75 +10,75 @@
 
 @font-face {
   font-family: "Syne";
-  src: url(../assets/fonts/Syne-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/Syne-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "DM Sans Italic";
-  src: url(../assets/fonts/DMSans-Italic-VariableFont_opsz\,wght.ttf);
+  src: url(../../assets/fonts/DMSans-Italic-VariableFont_opsz\,wght.ttf);
 }
 
 @font-face {
   font-family: "DM Sans";
-  src: url(../assets/fonts/DMSans-VariableFont_opsz\,wght.ttf);
+  src: url(../../assets/fonts/DMSans-VariableFont_opsz\,wght.ttf);
 }
 
 @font-face {
   font-family: "Cormorant Italic";
-  src: url(../assets/fonts/Cormorant-Italic-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/Cormorant-Italic-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Cormorant";
-  src: url(../assets/fonts/Cormorant-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/Cormorant-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Sora";
-  src: url(../assets/fonts/Sora-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/Sora-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Vollkorn Italic";
-  src: url(../assets/fonts/Vollkorn-Italic-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/Vollkorn-Italic-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Vollkorn";
-  src: url(../assets/fonts/Vollkorn-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/Vollkorn-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Rubik Italic";
-  src: url(../assets/fonts/Rubik-Italic-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/Rubik-Italic-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Rubik";
-  src: url(../assets/fonts/Rubik-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/Rubik-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Archivo Narrow Italic";
-  src: url(../assets/fonts/ArchivoNarrow-Italic-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/ArchivoNarrow-Italic-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Archivo Narrow";
-  src: url(../assets/fonts/ArchivoNarrow-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/ArchivoNarrow-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Montserrat Italic";
-  src: url(../assets/fonts/Montserrat-Italic-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/Montserrat-Italic-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Montserrat";
-  src: url(../assets/fonts/Montserrat-VariableFont_wght.ttf);
+  src: url(../../assets/fonts/Montserrat-VariableFont_wght.ttf);
 }
 
 @font-face {
   font-family: "Inter";
-  src: url(../assets/fonts/Inter-VariableFont_slnt\,wght.ttf);
+  src: url(../../assets/fonts/Inter-VariableFont_slnt\,wght.ttf);
 }
