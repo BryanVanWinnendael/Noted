@@ -1,10 +1,14 @@
 ---
-import { getNote } from "@lib/actions/note";
 import Editor from "@components/Editor";
 import NoteLayout from "@layouts/NoteLayout.astro";
+import { fetcher } from "@lib/utils";
 
 const { id } = Astro.params;
-const res = await getNote(id);
+const res = await fetcher(
+  `notes/${id}`,
+  "GET",
+  ""
+);
 ---
 
 <NoteLayout title="Note">
