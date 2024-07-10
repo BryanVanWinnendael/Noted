@@ -1,15 +1,15 @@
 ---
-import ContentNavigation from "@components/ContentNavigation.astro"
-import Header from "../components/Header.astro"
-import Navigation from "../components/Navigation.astro"
+import ContentNavigation from "@components/ContentNavigation.astro";
+import Header from "../components/Header.astro";
+import Navigation from "../components/Navigation.astro";
 
 export interface Props {
-  title: string
+  title: string;
   content: {
-    title: string
-    section: string
-    description: string
-  }
+    title: string;
+    section: string;
+    description: string;
+  };
 }
 
 const {
@@ -18,7 +18,7 @@ const {
     section: "Section",
     description: "Description",
   },
-} = Astro.props
+} = Astro.props;
 ---
 
 <!doctype html>

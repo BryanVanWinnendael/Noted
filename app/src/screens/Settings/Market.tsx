@@ -20,12 +20,12 @@ const Market = () => {
   const muted_text_color = getMutedTextColor();
 
   const handleLink = () => {
-    invoke("openBrowser", "https://write-noted.vercel.app/");
+    invoke("openBrowser", import.meta.env.VITE_CLIENT_URL);
   };
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${serverUrl}/api/themes`)
+    fetch(`${serverUrl}themes`)
       .then((res) => res.json())
       .then((data: { [key: string]: Theme }) => {
         if (data) setThemes(data);

@@ -1,14 +1,14 @@
 ---
-import Layout from "@layouts/Layout.astro"
-import LoginForm from "@components/LoginForm"
-import { getUser } from "@lib/utils"
+import Layout from "@layouts/Layout.astro";
+import LoginForm from "@components/LoginForm";
+import { getUser } from "@lib/utils";
 
 /* Get session cookie */
-const sessionCookie = Astro.cookies.get("session")?.value
+const sessionCookie = Astro.cookies.get("session")?.value;
 if (sessionCookie) {
-  const user = await getUser(sessionCookie)
+  const user = await getUser(sessionCookie);
   if (user) {
-    return Astro.redirect("/", 302)
+    return Astro.redirect("/", 302);
   }
 }
 ---

@@ -1,0 +1,18 @@
+---
+import { getNote } from "@lib/actions/note";
+import Editor from "@components/Editor";
+import NoteLayout from "@layouts/NoteLayout.astro";
+
+const { id } = Astro.params;
+const res = await getNote(id);
+---
+
+<NoteLayout title="Note">
+  {
+    res?.data ? (
+      <Editor client:only="react" data={res.data} style={res.style} />
+    ) : (
+      <p>No note found</p>
+    )
+  }
+</NoteLayout>

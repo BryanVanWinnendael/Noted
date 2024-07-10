@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { EDITOR_JS_TOOLS } from "./tools";
 import { useWorkspace } from "contexts/WorkspaceContext";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -9,6 +9,7 @@ import { utils } from "utils/index";
 import { useEditor } from "contexts/EditorContext";
 import { useSlash } from "contexts/SlashContext";
 import { useSettings } from "contexts/SettingsContext";
+import TitleBar from "./TitleBar";
 
 const Editor = ({
   splitted,
@@ -27,7 +28,7 @@ const Editor = ({
   const [loaded, setLoaded] = useState(false);
   const { setEditor, editor, setBlocks, setTime, setSplittedEditor } =
     useEditor();
-  const { glassBackground, glassEnabled, editorTitle } = useSettings();
+  const { glassBackground, glassEnabled } = useSettings();
   const boxRef = useRef<HTMLDivElement>(null);
 
   const filename =
@@ -39,6 +40,7 @@ const Editor = ({
     platform === "win32"
       ? workspace_path?.split("\\").pop() + ".home"
       : workspace_path?.split("/").pop() + ".home";
+  const isHomeFile = filename === homeName;
 
   const text_color = getTextColor();
   const border_color = getBorderColor();
@@ -182,19 +184,8 @@ const Editor = ({
       }}
       mb={2}
     >
-      {editorTitle && (
-        <Box p={1} w="full" borderBottom="1px" borderColor={border_color}>
-          <Text
-            opacity={0.6}
-            color={text_color}
-            textAlign="center"
-            pl="4rem"
-            fontSize="md"
-          >
-            {filename === homeName ? "Home" : filename}
-          </Text>
-        </Box>
-      )}
+     
+      <TitleBar editor={editorCore} isHomeFile={isHomeFile} filename={filename} path={path}/>
       <ReactEditorJS
         holder={"noted" + path + tabKey}
         onInitialize={handleInitialize}

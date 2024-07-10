@@ -22,9 +22,9 @@ import {
   DEFAULT_UPDATE,
   DEFAULT_WALLPAPER_BRIGHTNESS,
   REQUIRED_SETTINGS_KEYS,
-} from "./constants";
+} from "../constants";
 
-import languages from "./languages.json";
+import languages from "../languages.json";
 
 const headerKeys = ["h1", "h2", "h3", "h4", "h5", "h6"];
 const glassKeys = [

@@ -16,18 +16,13 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
     getSecondaryBackgroundColor,
     getMutedTextColor,
   } = useColors();
+
   const icon_color = getIconColor();
-
   const bg_color = getBackgroundColor();
-
   const accent_color = getAccentColor();
-
   const text_color = getTextColor();
-
   const border_color = getBorderColor();
-
   const muted_text_color = getMutedTextColor();
-
   const secondary_background_color = getSecondaryBackgroundColor();
   const bg_color_right = utils.getLighterColor(
     "0.02",

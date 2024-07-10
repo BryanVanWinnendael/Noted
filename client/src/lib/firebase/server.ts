@@ -1,7 +1,7 @@
-import type { ServiceAccount } from "firebase-admin"
-import { initializeApp, cert } from "firebase-admin/app"
-import { getAuth } from "firebase-admin/auth"
-import { getFirestore } from "firebase-admin/firestore"
+import type { ServiceAccount } from "firebase-admin";
+import { initializeApp, cert } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+import { getFirestore } from "firebase-admin/firestore";
 
 const serviceAccount = {
   type: "service_account",
@@ -14,11 +14,11 @@ const serviceAccount = {
   token_uri: "https://oauth2.googleapis.com/token",
   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
   client_x509_cert_url: import.meta.env.FIREBASE_CLIENT_CERT_URL,
-}
+};
 
 export const app = initializeApp({
   credential: cert(serviceAccount as ServiceAccount),
-})
+});
 
-export const auth = getAuth(app)
-export const firestore = getFirestore(app)
+export const auth = getAuth(app);
+export const firestore = getFirestore(app);

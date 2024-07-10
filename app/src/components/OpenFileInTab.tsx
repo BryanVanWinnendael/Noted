@@ -35,10 +35,13 @@ const OpenFileInTab = () => {
     setShowOpenFileInTab,
     workspace,
     openFileInNewTab,
+    platform,
   } = useWorkspace();
   const [searchFile, setSearchFile] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [typing, setTyping] = useState<boolean>(false);
+
+  const isLinux = platform === "linux";
 
   const bg_color = getBackgroundColor();
   const secondary_background_color = getSecondaryBackgroundColor();
@@ -80,7 +83,12 @@ const OpenFileInTab = () => {
   }, [workspace?.items]);
 
   const getFilename = (path: string) => {
-    const splitted_path = path.split("\\");
+    let splitted_path;
+    if (isLinux) {
+      splitted_path = path.split("/");
+    } else {
+      splitted_path = path.split("\\");
+    }
     const filename = splitted_path[splitted_path.length - 1];
     const extensionSplit = filename.split(".");
     const extension = extensionSplit[extensionSplit.length - 1];

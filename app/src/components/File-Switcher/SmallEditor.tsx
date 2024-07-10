@@ -20,7 +20,7 @@ const SmallEditor = ({ data, index }: { data: OutputData; index: number }) => {
   const toolsWithoutAudioPlayer = clone(EDITOR_JS_TOOLS);
   delete toolsWithoutAudioPlayer.audioPlayer;
   delete toolsWithoutAudioPlayer.code;
-
+  
   return (
     <EditorWrapper>
       <Box

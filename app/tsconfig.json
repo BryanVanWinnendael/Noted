@@ -29,7 +29,8 @@
       "styling/*": ["styling/*"],
       "types/*": ["types/*"],
       "utils/*": ["utils/*"],
-      "screens/*": ["screens/*"]
+      "screens/*": ["screens/*"],
+      "lib/*": ["lib/*"]
     }
   },
   "include": ["src", "electron", "**/*.ts", "**/*.tsx", "global.d.ts"],

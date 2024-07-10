@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { utils } from "utils";
 import useColors from "hooks/useColors";
+import RecentWorkspaces from "./RecentWorkspaces";
 
 const MenuBar = () => {
   const {
@@ -88,6 +89,8 @@ const MenuBar = () => {
             Ctrl + O
           </Text>
         </MenuItem>
+
+        <RecentWorkspaces />
 
         <MenuItem
           display="flex"

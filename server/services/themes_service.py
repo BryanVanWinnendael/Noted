@@ -1,16 +1,5 @@
-import os
-from dotenv import load_dotenv
-from firebase_admin import db, credentials
-import firebase_admin
+from firebase_admin import db
 from pydantic import BaseModel
-
-load_dotenv()
-
-cred = credentials.Certificate('key.json')
-
-firebase_admin.initialize_app(cred, {
-    "databaseURL": os.environ.get("DATABASE_URL")
-})
 
 
 class Theme(BaseModel):

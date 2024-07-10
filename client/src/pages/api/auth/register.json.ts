@@ -1,15 +1,15 @@
-import { auth } from "@lib/firebase/server"
-import { registerSchema } from "@lib/schemas"
-import type { APIRoute } from "astro"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { getAuth } from "firebase/auth"
-import { app } from "@lib/firebase/client"
+import { auth } from "@lib/firebase/server";
+import { registerSchema } from "@lib/schemas";
+import type { APIRoute } from "astro";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { app } from "@lib/firebase/client";
 
-const authLogin = getAuth(app)
+const authLogin = getAuth(app);
 
 export const POST: APIRoute = async ({ request, redirect, cookies }) => {
-  const formData = await request.formData()
-  const result = registerSchema.safeParse(formData)
+  const formData = await request.formData();
+  const result = registerSchema.safeParse(formData);
 
   /* Validate the data */
   if (!result.success) {
@@ -18,26 +18,26 @@ export const POST: APIRoute = async ({ request, redirect, cookies }) => {
         errors: result.error.flatten(),
       }),
       { status: 400 },
-    )
+    );
   }
 
   /* Create the user */
-  const { email, password } = result.data
-  let sessionCookie
+  const { email, password } = result.data;
+  let sessionCookie;
   try {
     const newUser = await auth.createUser({
       email,
       password,
-    })
+    });
 
     const userCredential = await signInWithEmailAndPassword(
       authLogin,
       email,
       password,
-    )
-    const idToken = await userCredential.user.getIdToken()
+    );
+    const idToken = await userCredential.user.getIdToken();
 
-    const fiveDays = 60 * 60 * 24 * 5 * 1000
+    const fiveDays = 60 * 60 * 24 * 5 * 1000;
     sessionCookie = await auth
       .createSessionCookie(idToken, { expiresIn: fiveDays })
       .catch((error) => {
@@ -46,20 +46,20 @@ export const POST: APIRoute = async ({ request, redirect, cookies }) => {
             message: error.message,
           }),
           { status: 401 },
-        )
-      })
+        );
+      });
   } catch (error: any) {
     return new Response(
       JSON.stringify({
         error: error.code,
       }),
       { status: 400 },
-    )
+    );
   }
 
   cookies.set("session", sessionCookie, {
     path: "/",
-  })
+  });
 
-  return redirect("/", 302)
-}
+  return redirect("/", 302);
+};

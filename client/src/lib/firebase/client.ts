@@ -1,4 +1,5 @@
-import { initializeApp } from "firebase/app"
+import { initializeApp } from "firebase/app";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: import.meta.env.PUBLIC_API_KEY,
@@ -8,6 +9,7 @@ const firebaseConfig = {
   storageBucket: import.meta.env.PUBLIC_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.PUBLIC_MESSAGING_SENDER_ID,
   appId: import.meta.env.PUBLIC_APP_ID,
-}
+};
 
-export const app = initializeApp(firebaseConfig)
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);

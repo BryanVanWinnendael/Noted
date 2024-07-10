@@ -1,12 +1,12 @@
 const Profile = () => {
   async function signout() {
-    const res = await fetch("/api/auth/logout.json")
+    const res = await fetch("/api/auth/logout.json");
     if (!res.ok) {
-      const data = await res.json()
-      return data
+      const data = await res.json();
+      return data;
     }
     if (res.redirected) {
-      window.location.assign(res.url)
+      window.location.assign(res.url);
     }
   }
 
@@ -15,7 +15,7 @@ const Profile = () => {
       <button
         id="dropdownDefaultButton"
         data-dropdown-toggle="dropdown"
-        class="text-white bg-[#2c2c2e] hover:bg-[#343436] focus:ring-4 focus:outline-none focus:ring-[#6488ea] font-medium rounded-full text-sm p-1 text-center inline-flex items-center"
+        className="text-white bg-[#2c2c2e] hover:bg-[#343436] focus:ring-4 focus:outline-none focus:ring-[#6488ea] font-medium rounded-full text-sm p-1 text-center inline-flex items-center"
         type="button"
       >
         <svg
@@ -63,7 +63,7 @@ const Profile = () => {
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

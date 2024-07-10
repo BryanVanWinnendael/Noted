@@ -1,27 +1,27 @@
 ---
-import Layout from "@layouts/Layout.astro"
-import AppLayout from "@layouts/AppLayout.astro"
-import { fetcher, getUser } from "@lib/utils"
-import ThemesList from "@components/ThemesList"
-import type { ThemeType } from "@lib/types"
+import Layout from "@layouts/Layout.astro";
+import AppLayout from "@layouts/AppLayout.astro";
+import { fetcher, getUser } from "@lib/utils";
+import ThemesList from "@components/ThemesList";
+import type { ThemeType } from "@lib/types";
 
 /* Get session cookie */
-const sessionCookie = Astro.cookies.get("session")?.value
+const sessionCookie = Astro.cookies.get("session")?.value;
 if (!sessionCookie) {
-  return Astro.redirect("/signin")
+  return Astro.redirect("/signin");
 }
 
 /* Verify session cookie and get user */
-const user = await getUser(sessionCookie)
+const user = await getUser(sessionCookie);
 if (!user) {
-  return Astro.redirect("/signin")
+  return Astro.redirect("/signin");
 }
 
 const res: { [key: string]: ThemeType } = await fetcher(
   "themes/requests/user",
   "GET",
   sessionCookie,
-)
+);
 ---
 
 <Layout title="Your requests">
