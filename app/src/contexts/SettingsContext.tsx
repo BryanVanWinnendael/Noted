@@ -57,6 +57,7 @@ const invoke = window.electron.invoke;
 
 export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [view, setView] = useState<string>("general");
   const [themePath, setThemePath] = useState<string>("");
   const [customTheme, setCustomTheme] = useState<Theme | undefined>();
   const [customThemes, setCustomThemes] = useState<{ [key: string]: Theme }>(
@@ -106,6 +107,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     DEFAULT_ACTION_BAR_OPACITY,
   );
   const [material, setMaterial] = useState<Material>(DEFAULT_MATERIAL);
+  
 
   const readThemeFile = useCallback(async () => {
     const theme_path = localStorage.getItem("theme-path") || "";
@@ -423,6 +425,8 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     sidebarOpacity,
     actionbarOpacity,
     material,
+    view, 
+    setView
   };
 
   return (

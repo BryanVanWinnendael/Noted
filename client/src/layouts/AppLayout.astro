@@ -1,17 +1,17 @@
 ---
-import Profile from "@components/Profile"
-import { getUser, admins } from "@lib/utils"
+import Profile from "@components/Profile";
+import { getUser, admins } from "@lib/utils";
 
 /* Get session cookie */
-const sessionCookie = Astro.cookies.get("session")?.value
+const sessionCookie = Astro.cookies.get("session")?.value;
 if (!sessionCookie) {
-  return Astro.redirect("/signin")
+  return Astro.redirect("/signin");
 }
 
 /* Verify session cookie and get user */
-const user = await getUser(sessionCookie)
+const user = await getUser(sessionCookie);
 if (!user) {
-  return Astro.redirect("/signin")
+  return Astro.redirect("/signin");
 }
 ---
 

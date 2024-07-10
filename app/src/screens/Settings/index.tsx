@@ -7,7 +7,7 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { useSettings } from "contexts/SettingsContext";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Editor from "./Editor";
 import { utils } from "utils";
 import Themes from "./Themes";
@@ -20,11 +20,11 @@ import Background from "./Background";
 import Sidebar from "./Sidebar";
 import Notes from "./Notes";
 
+
 const SettingsScreen = () => {
   const { getSecondaryBackgroundColor, getAccentColor, getTextColor } =
     useColors();
-  const [section, setSection] = useState<string>("general");
-  const { isOpen, onClose, glassBackground, glassEnabled } = useSettings();
+    const { isOpen, onClose, glassBackground, glassEnabled, view, setView} = useSettings();
   const { workspace } = useWorkspace();
 
   const bg_colorLeft = getSecondaryBackgroundColor();
@@ -73,23 +73,23 @@ const SettingsScreen = () => {
                 pl={2}
                 rounded="md"
                 color={
-                  section === "general"
+                  view === "general"
                     ? utils.getDarkerColor("0.1", accent_color)
                     : text_color
                 }
                 bg={
-                  section === "general"
+                  view === "general"
                     ? utils.getTransparent(0.2, accent_color)
                     : ""
                 }
                 onClick={() => {
-                  setSection("general");
+                  setView("general");
                 }}
                 cursor="pointer"
                 _hover={{
                   bg: utils.getDarkerColor(
                     "0.03",
-                    section === "general"
+                    view === "general"
                       ? utils.getTransparent(0.2, accent_color)
                       : bg_colorLeft,
                   ),
@@ -105,23 +105,23 @@ const SettingsScreen = () => {
                     pl={2}
                     rounded="md"
                     color={
-                      section === "notes"
+                      view === "notes"
                         ? utils.getDarkerColor("0.1", accent_color)
                         : text_color
                     }
                     bg={
-                      section === "notes"
+                      view === "notes"
                         ? utils.getTransparent(0.2, accent_color)
                         : ""
                     }
                     onClick={() => {
-                      setSection("notes");
+                      setView("notes");
                     }}
                     cursor="pointer"
                     _hover={{
                       bg: utils.getDarkerColor(
                         "0.03",
-                        section === "notes"
+                        view === "notes"
                           ? utils.getTransparent(0.2, accent_color)
                           : bg_colorLeft,
                       ),
@@ -135,23 +135,23 @@ const SettingsScreen = () => {
                     pl={2}
                     rounded="md"
                     color={
-                      section === "editor"
+                      view === "editor"
                         ? utils.getDarkerColor("0.1", accent_color)
                         : text_color
                     }
                     bg={
-                      section === "editor"
+                      view === "editor"
                         ? utils.getTransparent(0.2, accent_color)
                         : ""
                     }
                     onClick={() => {
-                      setSection("editor");
+                      setView("editor");
                     }}
                     cursor="pointer"
                     _hover={{
                       bg: utils.getDarkerColor(
                         "0.03",
-                        section === "editor"
+                        view === "editor"
                           ? utils.getTransparent(0.2, accent_color)
                           : bg_colorLeft,
                       ),
@@ -165,23 +165,23 @@ const SettingsScreen = () => {
                     pl={2}
                     rounded="md"
                     color={
-                      section === "sidebar"
+                      view === "sidebar"
                         ? utils.getDarkerColor("0.1", accent_color)
                         : text_color
                     }
                     bg={
-                      section === "sidebar"
+                      view === "sidebar"
                         ? utils.getTransparent(0.2, accent_color)
                         : ""
                     }
                     onClick={() => {
-                      setSection("sidebar");
+                      setView("sidebar");
                     }}
                     cursor="pointer"
                     _hover={{
                       bg: utils.getDarkerColor(
                         "0.03",
-                        section === "sidebar"
+                        view === "sidebar"
                           ? utils.getTransparent(0.2, accent_color)
                           : bg_colorLeft,
                       ),
@@ -195,23 +195,23 @@ const SettingsScreen = () => {
                     pl={2}
                     rounded="md"
                     color={
-                      section === "background"
+                      view === "background"
                         ? utils.getDarkerColor("0.1", accent_color)
                         : text_color
                     }
                     bg={
-                      section === "background"
+                      view === "background"
                         ? utils.getTransparent(0.2, accent_color)
                         : ""
                     }
                     onClick={() => {
-                      setSection("background");
+                      setView("background");
                     }}
                     cursor="pointer"
                     _hover={{
                       bg: utils.getDarkerColor(
                         "0.03",
-                        section === "background"
+                        view === "background"
                           ? utils.getTransparent(0.2, accent_color)
                           : bg_colorLeft,
                       ),
@@ -225,23 +225,23 @@ const SettingsScreen = () => {
                     pl={2}
                     rounded="md"
                     color={
-                      section === "shortcuts"
+                      view === "shortcuts"
                         ? utils.getDarkerColor("0.1", accent_color)
                         : text_color
                     }
                     bg={
-                      section === "shortcuts"
+                      view === "shortcuts"
                         ? utils.getTransparent(0.2, accent_color)
                         : ""
                     }
                     onClick={() => {
-                      setSection("shortcuts");
+                      setView("shortcuts");
                     }}
                     cursor="pointer"
                     _hover={{
                       bg: utils.getDarkerColor(
                         "0.03",
-                        section === "shortcuts"
+                        view === "shortcuts"
                           ? utils.getTransparent(0.2, accent_color)
                           : bg_colorLeft,
                       ),
@@ -255,23 +255,23 @@ const SettingsScreen = () => {
                     pl={2}
                     rounded="md"
                     color={
-                      section === "themes"
+                      view === "themes"
                         ? utils.getDarkerColor("0.1", accent_color)
                         : text_color
                     }
                     bg={
-                      section === "themes"
+                      view === "themes"
                         ? utils.getTransparent(0.2, accent_color)
                         : ""
                     }
                     onClick={() => {
-                      setSection("themes");
+                      setView("themes");
                     }}
                     cursor="pointer"
                     _hover={{
                       bg: utils.getDarkerColor(
                         "0.03",
-                        section === "themes"
+                        view === "themes"
                           ? utils.getTransparent(0.2, accent_color)
                           : bg_colorLeft,
                       ),
@@ -285,23 +285,23 @@ const SettingsScreen = () => {
                     pl={2}
                     rounded="md"
                     color={
-                      section === "market"
+                      view === "market"
                         ? utils.getDarkerColor("0.1", accent_color)
                         : text_color
                     }
                     bg={
-                      section === "market"
+                      view === "market"
                         ? utils.getTransparent(0.2, accent_color)
                         : ""
                     }
                     onClick={() => {
-                      setSection("market");
+                      setView("market");
                     }}
                     cursor="pointer"
                     _hover={{
                       bg: utils.getDarkerColor(
                         "0.03",
-                        section === "market"
+                        view === "market"
                           ? utils.getTransparent(0.2, accent_color)
                           : bg_colorLeft,
                       ),
@@ -373,7 +373,7 @@ const SettingsScreen = () => {
                   market: <Market />,
                   shortcuts: <Shortcuts />,
                   notes: <Notes />,
-                }[section]
+                }[view]
               }
             </Box>
           </Flex>

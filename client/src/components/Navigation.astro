@@ -18,30 +18,30 @@ const paths: { [key: string]: string } = {
   info: "Info",
   todos: "ToDos",
   shortcuts: "Shortcuts",
-}
-const currentPath = Astro.url.pathname.split("/").pop() || "docs"
+};
+const currentPath = Astro.url.pathname.split("/").pop() || "docs";
 
-const docs = await Astro.glob("../pages/docs/*.md")
-const DOCSORDER = ["Getting Started", "Customize", "Widgets", "Shortcuts"]
+const docs = await Astro.glob("../pages/docs/*.md");
+const DOCSORDER = ["Getting Started", "Customize", "Widgets", "Shortcuts"];
 
 const groupedDocs = docs.reduce((docs: any, object: any) => {
-  const property = object.frontmatter.section
-  docs[property] = docs[property] || []
+  const property = object.frontmatter.section;
+  docs[property] = docs[property] || [];
 
-  docs[property].push(object)
+  docs[property].push(object);
   docs[property].sort(
     (a: any, b: any) => a.frontmatter.order - b.frontmatter.order,
-  )
+  );
 
-  return docs
-}, {})
+  return docs;
+}, {});
 
 const sortedGroupedDocs = Object.keys(groupedDocs)
   .sort((a, b) => DOCSORDER.indexOf(a) - DOCSORDER.indexOf(b))
   .reduce((obj: any, key: any) => {
-    obj[key] = groupedDocs[key]
-    return obj
-  }, {})
+    obj[key] = groupedDocs[key];
+    return obj;
+  }, {});
 ---
 
 <label

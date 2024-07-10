@@ -1,15 +1,14 @@
-import { OutputData } from "@editorjs/editorjs";
 
-export const CreatePublicNote = async (data: OutputData) => {
+export const DeletePublicNote = async (id: string) => {
   const token = localStorage.getItem("token") || "";
-  const url = import.meta.env.VITE_SERVER_URL + "notes";
+  const url = import.meta.env.VITE_SERVER_URL + "notes/" + id;
+  
   return await fetch(url, {
-    method: "POST",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       Authorization: token,
     },
-    body: JSON.stringify(data),
   })
   .then((res) => res.json())
   .catch((error) => {

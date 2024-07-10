@@ -1,5 +1,5 @@
 import { Dayjs } from "dayjs";
-import EditorJS from "@editorjs/editorjs";
+import EditorJS, { OutputData } from "@editorjs/editorjs";
 import { User } from "firebase/auth";
 
 export type Platforms = "win32" | "linux";
@@ -98,6 +98,9 @@ export interface WorkspaceTypeContext {
   recentWorkspaces: string[];
   user: User | undefined;
   handleSignOutUser: () => void;
+  notes: UserNote[];
+  createPublicNote: (data: OutputData, path: string, style: NoteStyle) => void;
+  deletePublicNote: (id: string) => void;
 }
 
 export interface Theme {
@@ -217,6 +220,8 @@ export interface SettingsTypeContext {
   actionbarOpacity: number;
   sidebarOpacity: number;
   material: Material;
+  view: string;
+  setView: (view: string) => void;
 }
 
 export interface EditorTypeContext {
@@ -275,4 +280,26 @@ export interface CanvasElement {
     x: number;
     y: number;
   }[];
+}
+
+export interface NoteStyle {
+  backgroundColor: string;
+  secondaryBackgroundColor: string;
+  textColor: string;
+  iconColor: string;
+  borderColor: string;
+  muted: string;
+  accent: string;
+  secondaryBackgroundColorLighter: string;
+  secondaryBackgroundColorDarker: string;
+  font: string
+  headerColors: HeaderColors | false
+}
+
+export interface UserNote {
+  user_email: string;
+  data: string;
+  path: string
+  id: string;
+  style: NoteStyle
 }

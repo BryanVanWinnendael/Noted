@@ -185,7 +185,7 @@ const Editor = ({
       mb={2}
     >
      
-      <TitleBar editor={editorCore} isHomeFile={isHomeFile} filename={filename} />
+      <TitleBar editor={editorCore} isHomeFile={isHomeFile} filename={filename} path={path}/>
       <ReactEditorJS
         holder={"noted" + path + tabKey}
         onInitialize={handleInitialize}

@@ -12,11 +12,17 @@ import {
   WorkspaceType,
   Tab,
   Platforms,
+  UserNote,
+  NoteStyle,
 } from "types";
 import { APP_VERSION } from "utils/constants";
 import {  } from "firebase/auth";
 import { auth } from "lib/firebase";
 import Cookies from 'js-cookie';
+import { GetUserNotes } from "lib/actions/notes/get";
+import { CreatePublicNote } from "lib/actions/notes/create";
+import { OutputData } from "@editorjs/editorjs";
+import { DeletePublicNote } from "lib/actions/notes/delete";
 
 const WorkspaceContext = createContext<WorkspaceTypeContext>(
   {} as WorkspaceTypeContext,
@@ -50,6 +56,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const [platform, setPlatform] = useState<Platforms>("win32");
   const [recentWorkspaces, setRecentWorkspaces] = useState<string[]>([]);
   const [user, setUser] = useState<User | undefined>();
+  const [notes, setNotes] = useState<UserNote[]>([]);
 
   const resetWorkspace = () => {
     setWorkspace(undefined);
@@ -110,9 +117,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     if (recentWorkspaces.length >= 5) {
       recentWorkspaces.pop();
     }
-    console.log(recentWorkspaces);
     recentWorkspaces.unshift(workspacePath);
-    console.log(recentWorkspaces);
     localStorage.setItem("recent_workspaces", JSON.stringify(recentWorkspaces));
     setRecentWorkspaces(recentWorkspaces);
   };
@@ -413,7 +418,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
 
       setTabs(newTabs);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -437,6 +442,38 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     openFile(openedFile["filePath"]);
   };
 
+  const getUserNotes = async () => { 
+    const notes = await GetUserNotes() 
+    const tempNotes: UserNote[] = []
+    for (const note of notes) {
+      note.data = JSON.parse(note.data)
+      tempNotes.push(note)
+    }
+
+    setNotes(tempNotes)
+  }
+
+  const deletePublicNote = async (id: string) => {
+    await DeletePublicNote(id)
+    const newNotes = notes.filter((note) => note.id !== id)
+    setNotes(newNotes)
+  }
+
+  const createPublicNote = async (data:  OutputData, path: string, style: NoteStyle) => {
+    const { id } = await CreatePublicNote(data, path, style)
+    if (!id) return
+
+    const tempNote: UserNote = {
+      data: JSON.stringify(data),
+      path,
+      user_email: user?.email || "",
+      id,
+      style
+    }
+
+    setNotes([...notes, tempNote])
+  }
+
   const handleSignOutUser = () => {
     signOut(auth)
     setUser(undefined);
@@ -447,16 +484,16 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
       if (user) {
         setUser(user);
         const idToken = await user.getIdToken()
-        const url = import.meta.env.VITE_CLIENT_URL + "/api/auth/login.json"
+        const url = import.meta.env.VITE_CLIENT_URL + "api/auth/login.json"
         await fetch(url, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${idToken}`,
           },
-        }).then((res) => {
-          console.log(res)
+        }).then(() => {
           const sessToken = Cookies.get("session")
           if (sessToken) localStorage.setItem("token", sessToken)
+          getUserNotes()
         })
       }
     });
@@ -466,7 +503,6 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     const platform = await invoke("platform:get");
     setPlatform(platform);
   }, []);
-
   
 
   useEffect(() => {
@@ -521,7 +557,10 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     platform,
     recentWorkspaces,
     user,
-    handleSignOutUser
+    handleSignOutUser,
+    notes,
+    createPublicNote,
+    deletePublicNote
   };
 
   return (

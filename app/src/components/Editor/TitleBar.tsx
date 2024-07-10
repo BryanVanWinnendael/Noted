@@ -5,7 +5,7 @@ import useColors from 'hooks/useColors';
 import EditorJS from "@editorjs/editorjs";
 
 
-const TitleBar = ({ isHomeFile, filename, editor }: { isHomeFile: boolean,filename: string, editor:  React.MutableRefObject<EditorJS | null>}) => {
+const TitleBar = ({ isHomeFile, filename, editor, path }: { isHomeFile: boolean,filename: string, editor:  React.MutableRefObject<EditorJS | null>, path: string}) => {
   const { editorTitle } = useSettings();
   const { getTextColor, getBorderColor } = useColors();
 
@@ -25,9 +25,9 @@ const TitleBar = ({ isHomeFile, filename, editor }: { isHomeFile: boolean,filena
     >
       {isHomeFile ? "Home" : filename}
     </Text>
-    <Flex alignItems="center" justifyContent="flex-end" mr={2}> <CreateSite editor={editor}/></Flex>
+    <Flex alignItems="center" justifyContent="flex-end" mr={2}> <CreateSite editor={editor} path={path}/></Flex>
   </Grid>
-    :  <Flex alignItems="center" justifyContent="flex-end" m={2}> <CreateSite editor={editor}/></Flex>
+    :  <Flex alignItems="center" justifyContent="flex-end" m={2}> <CreateSite editor={editor} path={path}/></Flex>
   )
 }
 
