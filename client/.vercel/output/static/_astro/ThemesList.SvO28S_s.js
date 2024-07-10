@@ -1,0 +1,1 @@
+import{j as t}from"./jsx-runtime.VXu5Enc-.js";import{T as s}from"./ThemeCard.WL-FJwEr.js";import"./index.kdcK0Z_5.js";const n=({themes:r})=>t.jsx("div",{children:Object.keys(r).map((e,m)=>t.jsx(s,{theme:r[e],name:e},m))});export{n as default};
