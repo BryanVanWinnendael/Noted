@@ -1,1 +1,0 @@
-import{j as n}from"./jsx-runtime.VXu5Enc-.js";import{G as t,c as i,s as r}from"./client.eiXqt5f0.js";import"./index.kdcK0Z_5.js";const e=new t,h=()=>((async()=>{try{await r(i,e).then(o=>{window!==void 0&&(window.location.href="write-noted://"+o._tokenResponse.oauthIdToken)})}catch(o){console.error("Error signing in with Google:",o)}})(),n.jsx("div",{}));export{h as default};
