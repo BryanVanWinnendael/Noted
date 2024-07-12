@@ -1,4 +1,4 @@
-import NavBar from "components/Nav-Bar";
+import NavBar from "components/NavBar";
 import { useCallback, useEffect, useState } from "react";
 import {
   Box,
@@ -17,23 +17,23 @@ import LoadInWorkspace from "components/LoadInWorkspace";
 import useColors from "hooks/useColors";
 import useShortcuts from "hooks/useShortcuts";
 import OpenFileInTab from "components/OpenFileInTab";
-import Compact from "components/Nav-Bar/Compact";
-import FileSwitcher from "components/File-Switcher";
+import Compact from "components/NavBar/Compact";
+import FileSwitcher from "components/FileSwitcher";
 import DragAndDrop from "components/DragAndDrop";
 import OpenNewFile from "components/OpenNewFile";
 import { useSlash } from "contexts/SlashContext";
-import SlashCommands from "components/Slash-Commands";
+import SlashCommands from "components/SlashCommands";
 import { backgrounds } from "utils/images";
-import { utils } from "./utils";
-import WhatsNew from "components/Whats-New";
+import WhatsNew from "components/WhatsNew";
 import ConfettiExplosion from "react-confetti-explosion";
 import UpdateToast from "components/UpdateToast";
 import { TOAST_ID } from "utils/constants";
+import CommandPalette from "components/CommandPalette";
 
 const App = () => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const { slashOpen } = useSlash();
-  const { getAccentColor, getBackgroundColor } = useColors();
+  const { accentColor, backgroundColor, getTransparent } = useColors();
   const {
     initSettings,
     compactMode,
@@ -56,10 +56,6 @@ const App = () => {
   const { checkUpdate } = useSettings();
 
   useAddShortcuts();
-
-  const accent_color = getAccentColor();
-
-  const bg_color = getBackgroundColor();
 
   const setChakraColorMode = useCallback(() => {
     setColorMode(activeTheme);
@@ -90,8 +86,8 @@ const App = () => {
       document.getElementsByTagName("html")[0].style.backgroundColor =
         "transparent";
     else
-      document.getElementsByTagName("html")[0].style.backgroundColor = bg_color;
-  }, [bg_color, glassBackground.window, glassEnabled]);
+      document.getElementsByTagName("html")[0].style.backgroundColor = backgroundColor;
+  }, [backgroundColor, glassBackground.window, glassEnabled]);
 
   useEffect(() => {
     initSettings();
@@ -117,7 +113,7 @@ const App = () => {
     }
 
     const style = document.createElement("style");
-    const color = utils.getTransparent(scrollbar.opacity, scrollbar.color);
+    const color = getTransparent(scrollbar.opacity, scrollbar.color);
     style.id = styleId;
     style.innerHTML = `
       body {
@@ -133,13 +129,13 @@ const App = () => {
       }
     `;
     document.head.appendChild(style);
-  }, [scrollbar.color, scrollbar.opacity]);
+  }, [getTransparent, scrollbar.color, scrollbar.opacity]);
 
   const renderWorkspace = () => {
     if (!isLoaded)
       return (
         <Center w="full" h="full">
-          <Spinner color={accent_color} />
+          <Spinner color={accentColor} />
         </Center>
       );
     return workspace ? <Home workspace={workspace} /> : <LoadInWorkspace />;
@@ -189,6 +185,7 @@ const App = () => {
         <OpenNewFile />
         {showSwitcher && <FileSwitcher />}
         {slashOpen && <SlashCommands />}
+        <CommandPalette />
       </Box>
     </DragAndDrop>
   );

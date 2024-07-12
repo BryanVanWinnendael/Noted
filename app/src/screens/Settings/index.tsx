@@ -8,8 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useSettings } from "contexts/SettingsContext";
 import { useRef } from "react";
-import Editor from "./Editor";
-import { utils } from "utils";
+import Appearance from "./Appearance";
 import Themes from "./Themes";
 import Market from "./Market";
 import General from "./General";
@@ -19,22 +18,15 @@ import Shortcuts from "./Shortcuts";
 import Background from "./Background";
 import Sidebar from "./Sidebar";
 import Notes from "./Notes";
+import SettingsNavItem from "components/SettingsNavItem";
+import Actions from "./Actions";
 
 
 const SettingsScreen = () => {
-  const { getSecondaryBackgroundColor, getAccentColor, getTextColor } =
+  const { secondaryBackgroundColorLighter, accentColor, textColor, secondaryBackgroundColor, getGlassBackground } =
     useColors();
     const { isOpen, onClose, glassBackground, glassEnabled, view, setView} = useSettings();
   const { workspace } = useWorkspace();
-
-  const bg_colorLeft = getSecondaryBackgroundColor();
-  const secondary_background_color = getSecondaryBackgroundColor();
-  const bg_colorRight = utils.getLighterColor(
-    "0.02",
-    secondary_background_color,
-  );
-  const text_color = getTextColor();
-  const accent_color = getAccentColor();
 
   const isGlassEnabled = glassEnabled && glassBackground.settings;
 
@@ -58,8 +50,8 @@ const SettingsScreen = () => {
             flexDirection="column"
             bg={
               isGlassEnabled
-                ? utils.getGlassBackground(bg_colorLeft)
-                : bg_colorLeft
+                ? getGlassBackground(secondaryBackgroundColor)
+                : secondaryBackgroundColor
             }
             roundedTopLeft="md"
             roundedBottomLeft="md"
@@ -67,255 +59,24 @@ const SettingsScreen = () => {
             roundedBottomRight={0}
           >
             <Box m={5}>
-              <Box
-                mb={1}
-                p={1}
-                pl={2}
-                rounded="md"
-                color={
-                  view === "general"
-                    ? utils.getDarkerColor("0.1", accent_color)
-                    : text_color
-                }
-                bg={
-                  view === "general"
-                    ? utils.getTransparent(0.2, accent_color)
-                    : ""
-                }
-                onClick={() => {
-                  setView("general");
-                }}
-                cursor="pointer"
-                _hover={{
-                  bg: utils.getDarkerColor(
-                    "0.03",
-                    view === "general"
-                      ? utils.getTransparent(0.2, accent_color)
-                      : bg_colorLeft,
-                  ),
-                }}
-              >
-                General
-              </Box>
+              <SettingsNavItem label="General" view={view} setView={setView} />
               {workspace && (
                 <>
-                <Box
-                    mb={1}
-                    p={1}
-                    pl={2}
-                    rounded="md"
-                    color={
-                      view === "notes"
-                        ? utils.getDarkerColor("0.1", accent_color)
-                        : text_color
-                    }
-                    bg={
-                      view === "notes"
-                        ? utils.getTransparent(0.2, accent_color)
-                        : ""
-                    }
-                    onClick={() => {
-                      setView("notes");
-                    }}
-                    cursor="pointer"
-                    _hover={{
-                      bg: utils.getDarkerColor(
-                        "0.03",
-                        view === "notes"
-                          ? utils.getTransparent(0.2, accent_color)
-                          : bg_colorLeft,
-                      ),
-                    }}
-                  >
-                    Notes
-                  </Box>
-                  <Box
-                    mb={1}
-                    p={1}
-                    pl={2}
-                    rounded="md"
-                    color={
-                      view === "editor"
-                        ? utils.getDarkerColor("0.1", accent_color)
-                        : text_color
-                    }
-                    bg={
-                      view === "editor"
-                        ? utils.getTransparent(0.2, accent_color)
-                        : ""
-                    }
-                    onClick={() => {
-                      setView("editor");
-                    }}
-                    cursor="pointer"
-                    _hover={{
-                      bg: utils.getDarkerColor(
-                        "0.03",
-                        view === "editor"
-                          ? utils.getTransparent(0.2, accent_color)
-                          : bg_colorLeft,
-                      ),
-                    }}
-                  >
-                    Editor
-                  </Box>
-                  <Box
-                    mb={1}
-                    p={1}
-                    pl={2}
-                    rounded="md"
-                    color={
-                      view === "sidebar"
-                        ? utils.getDarkerColor("0.1", accent_color)
-                        : text_color
-                    }
-                    bg={
-                      view === "sidebar"
-                        ? utils.getTransparent(0.2, accent_color)
-                        : ""
-                    }
-                    onClick={() => {
-                      setView("sidebar");
-                    }}
-                    cursor="pointer"
-                    _hover={{
-                      bg: utils.getDarkerColor(
-                        "0.03",
-                        view === "sidebar"
-                          ? utils.getTransparent(0.2, accent_color)
-                          : bg_colorLeft,
-                      ),
-                    }}
-                  >
-                    Sidebar
-                  </Box>
-                  <Box
-                    mb={1}
-                    p={1}
-                    pl={2}
-                    rounded="md"
-                    color={
-                      view === "background"
-                        ? utils.getDarkerColor("0.1", accent_color)
-                        : text_color
-                    }
-                    bg={
-                      view === "background"
-                        ? utils.getTransparent(0.2, accent_color)
-                        : ""
-                    }
-                    onClick={() => {
-                      setView("background");
-                    }}
-                    cursor="pointer"
-                    _hover={{
-                      bg: utils.getDarkerColor(
-                        "0.03",
-                        view === "background"
-                          ? utils.getTransparent(0.2, accent_color)
-                          : bg_colorLeft,
-                      ),
-                    }}
-                  >
-                    Background
-                  </Box>
-                  <Box
-                    mb={1}
-                    p={1}
-                    pl={2}
-                    rounded="md"
-                    color={
-                      view === "shortcuts"
-                        ? utils.getDarkerColor("0.1", accent_color)
-                        : text_color
-                    }
-                    bg={
-                      view === "shortcuts"
-                        ? utils.getTransparent(0.2, accent_color)
-                        : ""
-                    }
-                    onClick={() => {
-                      setView("shortcuts");
-                    }}
-                    cursor="pointer"
-                    _hover={{
-                      bg: utils.getDarkerColor(
-                        "0.03",
-                        view === "shortcuts"
-                          ? utils.getTransparent(0.2, accent_color)
-                          : bg_colorLeft,
-                      ),
-                    }}
-                  >
-                    Shortcuts
-                  </Box>
-                  <Box
-                    mb={1}
-                    p={1}
-                    pl={2}
-                    rounded="md"
-                    color={
-                      view === "themes"
-                        ? utils.getDarkerColor("0.1", accent_color)
-                        : text_color
-                    }
-                    bg={
-                      view === "themes"
-                        ? utils.getTransparent(0.2, accent_color)
-                        : ""
-                    }
-                    onClick={() => {
-                      setView("themes");
-                    }}
-                    cursor="pointer"
-                    _hover={{
-                      bg: utils.getDarkerColor(
-                        "0.03",
-                        view === "themes"
-                          ? utils.getTransparent(0.2, accent_color)
-                          : bg_colorLeft,
-                      ),
-                    }}
-                  >
-                    Custom themes
-                  </Box>
-                  <Box
-                    mb={1}
-                    p={1}
-                    pl={2}
-                    rounded="md"
-                    color={
-                      view === "market"
-                        ? utils.getDarkerColor("0.1", accent_color)
-                        : text_color
-                    }
-                    bg={
-                      view === "market"
-                        ? utils.getTransparent(0.2, accent_color)
-                        : ""
-                    }
-                    onClick={() => {
-                      setView("market");
-                    }}
-                    cursor="pointer"
-                    _hover={{
-                      bg: utils.getDarkerColor(
-                        "0.03",
-                        view === "market"
-                          ? utils.getTransparent(0.2, accent_color)
-                          : bg_colorLeft,
-                      ),
-                    }}
-                  >
-                    Market
-                  </Box>
+                  <SettingsNavItem label="Notes" view={view} setView={setView} />
+                  <SettingsNavItem label="Actions" view={view} setView={setView} />
+                  <SettingsNavItem label="Appearance" view={view} setView={setView} />
+                  <SettingsNavItem label="Sidebar" view={view} setView={setView} />
+                  <SettingsNavItem label="Background" view={view} setView={setView} />
+                  <SettingsNavItem label="Custom themes" view={view} setView={setView} />
+                  <SettingsNavItem label="Market" view={view} setView={setView} />
+                  <SettingsNavItem label="Shortcuts" view={view} setView={setView} />
                 </>
               )}
             </Box>
           </Flex>
 
           <Flex
-            color={text_color}
+            color={textColor}
             border="1px"
             borderColor="rgb(220,220,220, 0.2)"
             borderLeftColor="rgb(220,220,220, 0)"
@@ -323,8 +84,8 @@ const SettingsScreen = () => {
             className="glass"
             bg={
               isGlassEnabled
-                ? utils.getGlassBackground(bg_colorRight)
-                : bg_colorRight
+                ? getGlassBackground(secondaryBackgroundColorLighter)
+                : secondaryBackgroundColorLighter
             }
             roundedTopRight="md"
             roundedBottomRight="md"
@@ -338,7 +99,7 @@ const SettingsScreen = () => {
                 cursor="pointer"
                 m={2}
                 onClick={onClose}
-                _hover={{ fill: accent_color }}
+                _hover={{ fill: accentColor }}
                 fill="gray"
                 w="fit-content"
                 h="fit-content"
@@ -365,14 +126,15 @@ const SettingsScreen = () => {
             >
               {
                 {
-                  general: <General />,
-                  editor: <Editor />,
-                  sidebar: <Sidebar />,
-                  background: <Background />,
-                  themes: <Themes />,
-                  market: <Market />,
-                  shortcuts: <Shortcuts />,
-                  notes: <Notes />,
+                  General: <General />,
+                  Appearance: <Appearance />,
+                  Sidebar: <Sidebar />,
+                  Background: <Background />,
+                  "Custom themes": <Themes />,
+                  Market: <Market />,
+                  Shortcuts: <Shortcuts />,
+                  Notes: <Notes />,
+                  Actions: <Actions />,
                 }[view]
               }
             </Box>

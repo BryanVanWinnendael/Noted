@@ -16,7 +16,6 @@ import { useWorkspace } from "contexts/WorkspaceContext";
 import useColors from "hooks/useColors";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { WorkspaceType } from "types/index";
-import { utils } from "utils/index";
 
 const OpenFileInTab = () => {
   const [filterdFiles, setFilterdFiles] = useState<string[]>([]);
@@ -24,11 +23,13 @@ const OpenFileInTab = () => {
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const cancelRef = useRef();
   const {
-    getBackgroundColor,
-    getSecondaryBackgroundColor,
-    getTextColor,
-    getMutedTextColor,
-    getAccentColor,
+    backgroundColor,
+    textColor,
+    mutedTextColor,
+    accentColor,
+    textAccentColor,
+    borderColor,
+    secondaryBackgroundColorDarker
   } = useColors();
   const { showOpenNewFile, setShowOpenNewFile, workspace, openFile, platform } =
     useWorkspace();
@@ -37,17 +38,6 @@ const OpenFileInTab = () => {
   const [typing, setTyping] = useState<boolean>(false);
 
   const isLinux = platform === "linux";
-
-  const bg_color = getBackgroundColor();
-  const secondary_background_color = getSecondaryBackgroundColor();
-  const secondary_bg_color = utils.getLighterColor(
-    "0.02",
-    secondary_background_color,
-  );
-  const text_color = getTextColor();
-  const muted_text_color = getMutedTextColor();
-  const accent_color = utils.getTransparent(0.2, getAccentColor());
-  const text_color_on_accent = utils.getDarkerColor("0.1", getAccentColor());
 
   const handleOpenTab = (file: string) => {
     openFile(file);
@@ -194,8 +184,8 @@ const OpenFileInTab = () => {
       <AlertDialogContent
         onKeyDown={handleKeyDialog}
         shadow="lg"
-        bg={bg_color}
-        color={utils.getTextColor(bg_color)}
+        bg={backgroundColor}
+        color={textColor}
       >
         <AlertDialogBody>
           <InputGroup>
@@ -209,7 +199,7 @@ const OpenFileInTab = () => {
               borderTop={"none"}
               borderLeft={"none"}
               borderBottom={"1px"}
-              borderColor={utils.getLighterColor("0.2", bg_color)}
+              borderColor={borderColor}
               autoFocus={true}
               ref={inputRef}
               tabIndex={-1} // Exclude from the natural tab order
@@ -217,7 +207,7 @@ const OpenFileInTab = () => {
               onChange={(e) => {
                 handleSetSearch(e.target.value);
               }}
-              onKeyPress={(e) => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   const file = filterdFiles[0];
                   handleOpenTab(file);
@@ -231,16 +221,16 @@ const OpenFileInTab = () => {
             {filterdFiles.map((file: string, index: number) => (
               <Button
                 border="none"
-                bg={typing && index === 0 ? accent_color : "transparent"}
+                bg={typing && index === 0 ? accentColor : "transparent"}
                 color={
-                  typing && index === 0 ? text_color_on_accent : text_color
+                  typing && index === 0 ? textAccentColor : textColor
                 }
                 key={index}
                 ref={(el) => (buttonRefs.current[index] = el)}
                 autoFocus={index === 0 ? true : false}
                 _focusVisible={{
-                  bg: accent_color,
-                  color: text_color_on_accent,
+                  bg: accentColor,
+                  color: textAccentColor,
                 }}
                 cursor="pointer"
                 display="flex"
@@ -249,7 +239,7 @@ const OpenFileInTab = () => {
                 py={1}
                 rounded="md"
                 _hover={{
-                  bg: utils.getDarkerColor("0.03", secondary_bg_color),
+                  bg: secondaryBackgroundColorDarker,
                 }}
                 onClick={() => {
                   handleOpenTab(file);
@@ -265,7 +255,7 @@ const OpenFileInTab = () => {
                 >
                   {getFilename(file)}
                 </Text>
-                <Flex alignItems="center" gap={1} color={muted_text_color}>
+                <Flex alignItems="center" gap={1} color={mutedTextColor}>
                   <Text>Open</Text>
                   <ArrowForwardIcon />
                 </Flex>

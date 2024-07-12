@@ -10,15 +10,12 @@ import {
 } from "@chakra-ui/react";
 import { useSettings } from "contexts/SettingsContext";
 import useColors from "hooks/useColors";
-import { utils } from "utils/index";
 
 const Opacity = () => {
   const { saveSettings, scrollbar } = useSettings();
-  const { getMutedTextColor, getAccentColor } = useColors();
-  const opacity = scrollbar.opacity;
+  const { mutedTextColor, accentColor, textColor } = useColors();
 
-  const muted_text_color = getMutedTextColor();
-  const accent_color = getAccentColor();
+  const opacity = scrollbar.opacity;
   const opacityValue = opacity * 100;
 
   const handleChange = (value: number) => {
@@ -31,7 +28,7 @@ const Opacity = () => {
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
         <Text fontWeight="semibold">Opacity</Text>
-        <Text color={muted_text_color}>
+        <Text color={mutedTextColor}>
           Choose the opacity for the scrollbar
         </Text>
       </Box>
@@ -49,10 +46,10 @@ const Opacity = () => {
           <SliderThumb />
         </Slider>
         <Button
-          color={utils.getTextColor(accent_color)}
-          _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
+          color={textColor}
+          _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
           h={8}
-          bg={accent_color}
+          bg={accentColor}
           onClick={() => handleChange(50)}
         >
           Reset

@@ -6,10 +6,8 @@ import { useState, useRef } from "react";
 const DragAndDrop = ({ children }: { children: JSX.Element }) => {
   const [dragging, setDragging] = useState(false);
   const dragContainerRef = useRef<HTMLDivElement | null>(null);
-  const { getBackgroundColor } = useColors();
+  const { backgroundColor } = useColors();
   const { openFolder } = useWorkspace();
-
-  const bg_color = getBackgroundColor();
 
   const dragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -55,9 +53,9 @@ const DragAndDrop = ({ children }: { children: JSX.Element }) => {
           top={0}
           w="100vw"
           h="100vh"
-          bg={bg_color}
+          bg={backgroundColor}
           opacity={0.7}
-          zIndex={999999999999999999}
+          zIndex={99999}
           justifyContent="center"
           alignItems="center"
         >

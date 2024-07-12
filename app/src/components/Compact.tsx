@@ -5,9 +5,7 @@ import CustomSwitch from "./CustomSwitch";
 
 const Compact = () => {
   const { saveSettings, compactMode } = useSettings();
-  const { getMutedTextColor } = useColors();
-
-  const muted_text_color = getMutedTextColor();
+  const { mutedTextColor } = useColors();
 
   const handleGlassBackground = () => {
     saveSettings("compact_mode", !compactMode);
@@ -17,7 +15,7 @@ const Compact = () => {
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
         <Text fontWeight="semibold">Compact mode</Text>
-        <Text color={muted_text_color}>
+        <Text color={mutedTextColor}>
           Enable or disable compact mode for the app
         </Text>
       </Box>

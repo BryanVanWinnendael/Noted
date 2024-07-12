@@ -3,14 +3,14 @@ import { Flex, Text, Tooltip } from "@chakra-ui/react";
 import { useWorkspace } from "contexts/WorkspaceContext";
 import { AnimatePresence, motion } from "framer-motion";
 import useColors from "hooks/useColors";
-import { utils } from "utils";
 
 const Index = () => {
   const {
-    getAccentColor,
-    getSecondaryBackgroundColor,
-    getMutedTextColor,
-    getTextColor,
+    accentColor,
+    mutedTextColor,
+    textColor,
+    secondaryBackgroundColorLighter,
+    getTransparent
   } = useColors();
   const { activeTab, tabs, addTab, handleChangeTab, removeTab, platform } =
     useWorkspace();
@@ -19,12 +19,6 @@ const Index = () => {
     platform === "win32"
       ? workspace_path?.split("\\").pop() + ".home"
       : workspace_path?.split("/").pop() + ".home";
-
-  const accent_color = getAccentColor();
-  const secondary_background_color = getSecondaryBackgroundColor();
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
-  const muted_text_color = getMutedTextColor();
-  const text_color = getTextColor();
 
   const getFileName = (path: string) => {
     const extension = path.split(".")[path.split(".").length - 1];
@@ -59,8 +53,8 @@ const Index = () => {
             <Tooltip
               placement="bottom"
               label={getFileName(tabs[parseInt(key)].path)}
-              bg={bg_color}
-              color={text_color}
+              bg={secondaryBackgroundColorLighter}
+              color={textColor}
               rounded="md"
             >
               <Flex
@@ -76,13 +70,13 @@ const Index = () => {
                 opacity={10}
                 bg={
                   index === activeTab
-                    ? utils.getTransparent(100, bg_color)
-                    : utils.getTransparent(0.5, bg_color)
+                    ? getTransparent(100, secondaryBackgroundColorLighter)
+                    : getTransparent(0.5, secondaryBackgroundColorLighter)
                 }
                 color={
                   index === activeTab
-                    ? accent_color
-                    : utils.getTransparent(0.5, utils.getTextColor(bg_color))
+                    ? accentColor
+                    : mutedTextColor
                 }
               >
                 <Flex
@@ -103,8 +97,8 @@ const Index = () => {
                     justifyContent="center"
                     alignItems="center"
                     onClick={() => handleRemoveTab(index)}
-                    fill={accent_color}
-                    _hover={{ fill: accent_color }}
+                    fill={accentColor}
+                    _hover={{ fill: accentColor }}
                     cursor="pointer"
                     w="fit-content"
                     h="full"
@@ -129,16 +123,16 @@ const Index = () => {
         <Tooltip
           placement="bottom"
           label={"Ctrl+T"}
-          bg={bg_color}
-          color={text_color}
+          bg={secondaryBackgroundColorLighter}
+          color={textColor}
           rounded="md"
         >
           <AddIcon
             ml={2}
             onClick={addTab}
             cursor="pointer"
-            color={muted_text_color}
-            _hover={{ color: accent_color }}
+            color={mutedTextColor}
+            _hover={{ color: accentColor }}
           />
         </Tooltip>
       )}

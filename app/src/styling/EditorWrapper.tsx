@@ -1,5 +1,4 @@
 import { Box } from "@chakra-ui/react";
-import { utils } from "utils";
 import { useCallback, useEffect } from "react";
 import BlockStyling from "styling/Block-Styling";
 import useColors from "hooks/useColors";
@@ -8,32 +7,22 @@ import { splitScreen } from "./SplitScreen";
 
 const EditorWrapper = ({ children }: { children: JSX.Element }) => {
   const {
-    getBorderColor,
-    getIconColor,
-    getBackgroundColor,
-    getAccentColor,
-    getTextColor,
-    getSecondaryBackgroundColor,
-    getMutedTextColor,
+    borderColor,
+    iconColor,
+    backgroundColor,
+    accentColor,
+    textColor,
+    secondaryBackgroundColorLighter,
+    mutedTextColor,
+    getTransparent,
+    secondaryBackgroundColorDarker
   } = useColors();
-
-  const icon_color = getIconColor();
-  const bg_color = getBackgroundColor();
-  const accent_color = getAccentColor();
-  const text_color = getTextColor();
-  const border_color = getBorderColor();
-  const muted_text_color = getMutedTextColor();
-  const secondary_background_color = getSecondaryBackgroundColor();
-  const bg_color_right = utils.getLighterColor(
-    "0.02",
-    secondary_background_color,
-  );
 
   const setTooltipStyle = useCallback(
     (classname: string) => {
       const contentStyles = {
-        backgroundColor: bg_color_right,
-        color: text_color,
+        backgroundColor: secondaryBackgroundColorLighter,
+        color: textColor,
         borderRadius: "4px",
       };
 
@@ -49,7 +38,7 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
         Object.assign(contentElements[i].style, contentStyles);
       }
     },
-    [bg_color_right, text_color],
+    [secondaryBackgroundColorLighter, textColor],
   );
 
   const getTooltip = useCallback(() => {
@@ -63,9 +52,9 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
 
   const setSplitScreenColor = useCallback(() => {
     const root = document.documentElement;
-    const color = utils.getTransparent(0.2, muted_text_color);
+    const color = getTransparent(0.2, mutedTextColor);
     root.style.setProperty("--focus-border", color);
-  }, [muted_text_color]);
+  }, [mutedTextColor, getTransparent]);
 
   useEffect(() => {
     const intervalId = setInterval(getTooltip, 1000);
@@ -73,89 +62,89 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
       clearInterval(intervalId);
     }, 5000);
     setSplitScreenColor();
-  }, [getTooltip, bg_color, text_color, setSplitScreenColor]);
+  }, [getTooltip, backgroundColor, textColor, setSplitScreenColor]);
 
   return (
     <Box
       pb={2}
       h="full"
       css={{
-        ...splitScreen(muted_text_color),
+        ...splitScreen(mutedTextColor),
         ".css-18m9o4h": {
           height: "100%",
         },
         ".ce-toolbar__plus, .ce-toolbar__settings-btn": {
-          color: icon_color,
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
-          borderColor: border_color,
+          color: iconColor,
+          backgroundColor: secondaryBackgroundColorDarker,
+          borderColor: borderColor,
         },
         ".ce-popover": {
-          backgroundColor: bg_color,
-          borderColor: border_color,
+          backgroundColor: backgroundColor,
+          borderColor: borderColor,
         },
         ".ce-popover-item__title": {
-          color: text_color,
+          color: textColor,
         },
         ".ce-popover-item__icon": {
-          background: utils.getDarkerColor("0.03", bg_color_right),
-          color: icon_color,
-          boxShadow: `0 0 0 1px ${border_color}`,
-          WebkitBoxShadow: `0 0 0 1px ${border_color}`,
+          background: secondaryBackgroundColorDarker,
+          color: iconColor,
+          boxShadow: `0 0 0 1px ${borderColor}`,
+          WebkitBoxShadow: `0 0 0 1px ${borderColor}`,
         },
         ".ce-popover-item:hover:not(.ce-popover-item--no-hover)": {
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
+          backgroundColor: secondaryBackgroundColorDarker,
         },
         ".ce-toolbar__plus:hover, .ce-toolbar__settings-btn:hover": {
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
+          backgroundColor: secondaryBackgroundColorDarker,
         },
         ".cdx-search-field": {
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
-          color: text_color,
+          backgroundColor: secondaryBackgroundColorDarker,
+          color: textColor,
         },
         ".ce-block--selected .ce-block__content": {
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
+          backgroundColor: secondaryBackgroundColorDarker,
         },
         ".cdx-checklist__item--checked .cdx-checklist__item-checkbox-check": {
-          background: accent_color,
-          backgroundColor: accent_color,
-          borderColor: accent_color,
+          background: accentColor,
+          backgroundColor: accentColor,
+          borderColor: accentColor,
         },
         ".cdx-checklist__item-checkbox-check:before": {
-          backgroundColor: accent_color,
+          backgroundColor: accentColor,
         },
         ".ce-inline-toolbar": {
-          backgroundColor: bg_color_right,
-          borderColor: border_color,
-          color: text_color,
+          backgroundColor: secondaryBackgroundColorLighter,
+          borderColor: borderColor,
+          color: textColor,
         },
         ".ce-inline-toolbar__dropdown:hover, .ce-inline-tool:hover": {
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
+          backgroundColor: secondaryBackgroundColorDarker,
         },
         ".ce-conversion-toolbar": {
-          backgroundColor: bg_color_right,
-          borderColor: border_color,
-          color: text_color,
+          backgroundColor: secondaryBackgroundColorLighter,
+          borderColor: borderColor,
+          color: textColor,
         },
         ".ce-conversion-tool:hover": {
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
+          backgroundColor: secondaryBackgroundColorDarker,
         },
         ".ce-conversion-tool__icon": {
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
-          color: icon_color,
-          boxShadow: `0 0 0 1px ${border_color}`,
-          WebkitBoxShadow: `0 0 0 1px ${border_color}`,
+          backgroundColor: secondaryBackgroundColorDarker,
+          color: iconColor,
+          boxShadow: `0 0 0 1px ${borderColor}`,
+          WebkitBoxShadow: `0 0 0 1px ${borderColor}`,
         },
         ".ce-inline-tool-input": {
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
-          color: text_color,
+          backgroundColor: secondaryBackgroundColorDarker,
+          color: textColor,
         },
         ".ce-inline-tool--active": {
-          color: accent_color,
+          color: accentColor,
         },
         ".ce-toolbar__plus": {
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
-          color: icon_color,
-          borderColor: border_color,
+          backgroundColor: secondaryBackgroundColorDarker,
+          color: iconColor,
+          borderColor: borderColor,
         },
         ".ce-block__content": {
           margin: "0 0 0 4rem",
@@ -169,8 +158,8 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
           backgroundColor: "transparent",
         },
         ".cdx-checklist__item-checkbox-check": {
-          backgroundColor: utils.getDarkerColor("0.03", bg_color_right),
-          borderColor: border_color,
+          backgroundColor: secondaryBackgroundColorDarker,
+          borderColor: borderColor,
         },
         "@media (min-width: 651px)": {
           ".ce-popover": {

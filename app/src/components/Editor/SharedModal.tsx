@@ -17,12 +17,8 @@ const SharedModal = ({
   onClose: () => void,
   id: string
 }) => {
-  const { getBackgroundColor, getTextColor, getAccentColor } = useColors()
+  const { backgroundColor, textColor, accentColor } = useColors()
   const { onOpen, setView } = useSettings();
-
-  const bg_color = getBackgroundColor()
-  const text_color = getTextColor()
-  const accent_color = getAccentColor()
 
   const handleVisit = () => {
     const link = import.meta.env.VITE_CLIENT_URL + "notes/" + id
@@ -48,8 +44,8 @@ const SharedModal = ({
     onClose={onClose}>
         <ModalOverlay />
         <ModalContent
-        bg={bg_color}
-        color={text_color}
+        bg={backgroundColor}
+        color={textColor}
         >
           <ModalHeader>Note shared online!</ModalHeader>
 
@@ -60,14 +56,14 @@ const SharedModal = ({
             </Text>
             <Flex>
               <Button 
-              _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
-              bg={accent_color} color={text_color} mr={3} onClick={handleVisit}>
+              _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
+              bg={accentColor} color={textColor} mr={3} onClick={handleVisit}>
                 visit
               </Button>
               <Button 
               onClick={handleViewAll}
               _hover={{ opacity: 0.8 }}
-              color={text_color} variant='outline'>view all shared notes</Button>
+              color={textColor} variant='outline'>view all shared notes</Button>
             </Flex>
           </ModalBody>
         </ModalContent>

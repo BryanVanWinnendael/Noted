@@ -1,14 +1,11 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { utils } from "utils";
 import { PanelResizeHandle } from "react-resizable-panels";
 import useColors from "hooks/useColors";
 import { useState } from "react";
 
 export default function ResizeHandle({ id }: { id?: string }) {
-  const { getMutedTextColor } = useColors();
+  const { mutedTextColor, getTransparent } = useColors();
   const [hover, setHover] = useState(false);
-
-  const muted_text_color = getMutedTextColor();
 
   return (
     <PanelResizeHandle id={id}>
@@ -23,7 +20,7 @@ export default function ResizeHandle({ id }: { id?: string }) {
       >
         <Box
           w={1}
-          bg={utils.getTransparent(0.2, muted_text_color)}
+          bg={getTransparent(0.2, mutedTextColor)}
           h={hover ? "100%" : 5}
           transition="all 0.2s"
           rounded="sm"

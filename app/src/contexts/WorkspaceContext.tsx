@@ -22,6 +22,7 @@ import { GetUserNotes } from "lib/actions/notes/get";
 import { CreatePublicNote } from "lib/actions/notes/create";
 import { OutputData } from "@editorjs/editorjs";
 import { DeletePublicNote } from "lib/actions/notes/delete";
+import { Login } from "lib/actions/auth/login";
 
 const WorkspaceContext = createContext<WorkspaceTypeContext>(
   {} as WorkspaceTypeContext,
@@ -56,6 +57,7 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
   const [recentWorkspaces, setRecentWorkspaces] = useState<string[]>([]);
   const [user, setUser] = useState<User | undefined>();
   const [notes, setNotes] = useState<UserNote[]>([]);
+  const [showCmdPalette, setShowCmdPalette] = useState<boolean>(false);
 
   const resetWorkspace = () => {
     setWorkspace(undefined);
@@ -484,22 +486,11 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
       if (user) {
         setUser(user);
         const idToken = await user.getIdToken()
-        const url = import.meta.env.VITE_CLIENT_URL + "api/auth/login.session.json"
-        await fetch(url, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${idToken}`,
-          },
-        }).then(async (sess) => {
-          try{
-          const sessJson = await sess.json()
-          const sessToken = sessJson.session
-          if (sessToken) localStorage.setItem("token", sessToken)
-          getUserNotes()
-          } catch (error) {
-            console.error("Error getting session token:", error)
-          }
-        })
+        const res = await Login(idToken)
+        if (!res) return
+        const sessToken = res.session
+        if (sessToken) localStorage.setItem("token", sessToken)
+        getUserNotes()
       }
     });
   }, []);
@@ -565,7 +556,9 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     handleSignOutUser,
     notes,
     createPublicNote,
-    deletePublicNote
+    deletePublicNote,
+    setShowCmdPalette,
+    showCmdPalette,
   };
 
   return (

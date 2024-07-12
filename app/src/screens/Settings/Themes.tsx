@@ -1,21 +1,19 @@
 import { Box, Text } from "@chakra-ui/react";
-import ThemeCard from "components/Custom-Theme/ThemeCard";
+import ThemeCard from "components/CustomTheme/ThemeCard";
 import { useSettings } from "contexts/SettingsContext";
 import { AnimatePresence, motion } from "framer-motion";
 import useColors from "hooks/useColors";
 
 const Themes = () => {
-  const { getMutedTextColor } = useColors();
+  const { mutedTextColor } = useColors();
   const { customThemes } = useSettings();
 
   const themes = Object.keys(customThemes);
 
-  const muted_text_color = getMutedTextColor();
-
   return (
     <Box>
       <Text fontSize="3xl">Custom themes</Text>
-      <Text color={muted_text_color}>Manage your custom themes here</Text>
+      <Text color={mutedTextColor}>Manage your custom themes here</Text>
       <AnimatePresence mode={"popLayout"}>
         {themes.length > 0
           ? themes.map((theme) => {

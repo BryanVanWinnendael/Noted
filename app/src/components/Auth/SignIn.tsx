@@ -13,22 +13,18 @@ import GoogleSignIn from "./GoogleSignIn";
 import FormSignIn from "./FormSignIn";
 
 const SignIn = () => {
-  const { getBackgroundColor, getTextColor, getAccentColor } = useColors();
+  const { backgroundColor, textColor, accentColor } = useColors();
   const { isOpen, onOpen, onClose } = useDisclosure()
-
-  const bg_color = getBackgroundColor();
-  const text_color = getTextColor();
-  const accent_color = getAccentColor();
 
   return (
     <>
-    <Button bg={accent_color} _hover={{ backgroundColor: accent_color, opacity: 0.8 }} color={text_color} onClick={onOpen}>Sign in</Button>
+    <Button bg={accentColor} _hover={{ backgroundColor: accentColor, opacity: 0.8 }} color={textColor} onClick={onOpen}>Sign in</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent p={5} bg={bg_color}>
+        <ModalContent p={5} bg={backgroundColor}>
           <Flex p={2} px={5} w="full" gap={1} alignItems="center">
             <Text
-              bg={`linear-gradient(to right, ${accent_color}, ${text_color}, ${text_color})`}
+              bg={`linear-gradient(to right, ${accentColor}, ${textColor}, ${textColor})`}
               backgroundClip="text"
               backgroundSize="200% auto"
               fontWeight={700}

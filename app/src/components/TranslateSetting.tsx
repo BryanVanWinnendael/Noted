@@ -1,20 +1,15 @@
 import { DEFAULT_TRANSLATE_LANGUAGE } from "utils/constants";
 import { Box, Flex, Select, Text } from "@chakra-ui/react";
 import { useSettings } from "contexts/SettingsContext";
-import { utils } from "utils";
 import useColors from "hooks/useColors";
 import { useEffect, useState } from "react";
 import languages from "utils/languages.json";
 
-const TranslateSeting = () => {
-  const { getSecondaryBackgroundColor, getMutedTextColor } = useColors();
+const TranslateSetting = () => {
+  const { mutedTextColor, secondaryBackgroundColorLighter } = useColors();
   const [language, setLanguage] = useState<string>(DEFAULT_TRANSLATE_LANGUAGE);
   const [languagesList, setLanguagesList] = useState<string[]>([]);
   const { translateLanguage, saveSettings } = useSettings();
-
-  const secondary_background_color = getSecondaryBackgroundColor();
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
-  const muted_text_color = getMutedTextColor();
 
   const changeLanguage = (e: any) => {
     const chosenLanguage = e.target.value || DEFAULT_TRANSLATE_LANGUAGE;
@@ -36,7 +31,7 @@ const TranslateSeting = () => {
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
         <Text fontWeight="semibold">Language</Text>
-        <Text color={muted_text_color}>
+        <Text color={mutedTextColor}>
           Choose the language when translating text to
         </Text>
       </Box>
@@ -45,7 +40,7 @@ const TranslateSeting = () => {
         maxH="200px"
         value={language}
         width="auto"
-        css={{ "& > *": { background: `${bg_color} !important` } }}
+        css={{ "& > *": { background: `${secondaryBackgroundColorLighter} !important` } }}
         placeholder={DEFAULT_TRANSLATE_LANGUAGE + " (default)"}
         h="30px"
       >
@@ -60,4 +55,4 @@ const TranslateSeting = () => {
   );
 };
 
-export default TranslateSeting;
+export default TranslateSetting;

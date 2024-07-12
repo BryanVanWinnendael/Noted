@@ -12,15 +12,13 @@ const CustomSwitch = ({
   id: string;
   disabled?: boolean;
 }) => {
-  const { getAccentColor } = useColors();
-
-  const accent_color = getAccentColor();
+  const { accentColor } = useColors();
 
   return (
     <Switch
       sx={{
         ".css-p27qcy[aria-checked=true], .css-p27qcy[data-checked]": {
-          backgroundColor: accent_color,
+          backgroundColor: accentColor,
         },
       }}
       isChecked={isChecked}

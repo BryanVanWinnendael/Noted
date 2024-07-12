@@ -2,7 +2,6 @@ import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
 import useColors from "hooks/useColors";
 import SignIn from "components/Auth/SignIn";
 import { useWorkspace } from "contexts/WorkspaceContext";
-import { utils } from "utils/index";
 import { MyWindow } from "types/index";
 import DeleteSharedSite from "components/Editor/DeleteSharedSite";
 
@@ -12,21 +11,15 @@ const invoke = window.electron.invoke;
 
 const Notes = () => {
   const { user, handleSignOutUser, notes, platform } = useWorkspace();
-  const { getTextColor, getMutedTextColor, getAccentColor } = useColors();
-
-  const text_color = getTextColor();
-  const muted_text_color = getMutedTextColor();
-  const accent_color = getAccentColor();
+  const { textColor, mutedTextColor, accentColor } = useColors();
 
   const handleVisit = (id: string) => {
     const link = import.meta.env.VITE_CLIENT_URL + "notes/" + id
     invoke("openBrowser", link);
   }
 
- 
-
   return (
-    <Box color={text_color}>
+    <Box color={textColor}>
       <Text fontSize="3xl" mb={4}>
         Notes
       </Text>
@@ -43,7 +36,7 @@ const Notes = () => {
           <>
           <Box>
             <Text fontWeight="semibold">Sign in</Text>
-            <Text color={muted_text_color}>
+            <Text color={mutedTextColor}>
               Sign in with email or google
             </Text>
           </Box>
@@ -74,15 +67,15 @@ const Notes = () => {
               return (
                 <Flex key={note.id} justifyContent="space-between" p={2} mr={5}>
                   <Flex alignItems="center">
-                    <Text color={text_color} fontWeight="semibold">{filename}</Text>
+                    <Text color={textColor} fontWeight="semibold">{filename}</Text>
                     <DeleteSharedSite id={note.id} />
                   </Flex>
 
                   <Button 
-                  color={utils.getTextColor(accent_color)}
-                  _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
+                  color={textColor}
+                  _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
                   h={8}
-                  bg={accent_color}
+                  bg={accentColor}
                   onClick={() => handleVisit(note.id)}
                   >visist</Button>
                 </Flex>

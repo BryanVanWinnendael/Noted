@@ -5,9 +5,7 @@ import CustomSwitch from "./CustomSwitch";
 
 const ExtensionLabel = () => {
   const { saveSettings, extensionLabel } = useSettings();
-  const { getMutedTextColor } = useColors();
-
-  const muted_text_color = getMutedTextColor();
+  const { mutedTextColor } = useColors();
 
   const handleGlassBackground = () => {
     saveSettings("extension_label", !extensionLabel);
@@ -17,7 +15,7 @@ const ExtensionLabel = () => {
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
         <Text fontWeight="semibold">Extension label</Text>
-        <Text color={muted_text_color}>
+        <Text color={mutedTextColor}>
           Enable or disable the label for the extension
         </Text>
       </Box>

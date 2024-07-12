@@ -6,12 +6,7 @@ import { CiShare2 } from 'react-icons/ci';
 const DeleteSharedSite = ({id}: {id: string}) => {
   const { deletePublicNote } = useWorkspace()
   const toast = useToast();
-  const { getAccentColor, getBackgroundColor, getTextColor } = useColors()
-
-  const accent_color = getAccentColor()
-  const bg_color = getBackgroundColor()
-  const text_color = getTextColor()
-
+  const { accentColor, backgroundColor, textColor } = useColors()
 
   const handleDeleteSite = () => {
     if (!id) return
@@ -28,12 +23,12 @@ const DeleteSharedSite = ({id}: {id: string}) => {
     <Tooltip 
       placement="bottom"
       label={"unshare note"}
-      bg={bg_color}
-      color={text_color}
+      bg={backgroundColor}
+      color={textColor}
       rounded="md">
     <IconButton
      w="fit" h="fit" onClick={handleDeleteSite} variant="transparent" aria-label="share-button" 
-      icon={<CiShare2 color={accent_color}/>} />
+      icon={<CiShare2 color={accentColor}/>} />
       </Tooltip>
   )
 }

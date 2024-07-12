@@ -10,15 +10,12 @@ declare let window: MyWindow;
 const invoke = window.electron.invoke;
 
 const FormSignIn = ({ onClose }:{ onClose: () => void }) => {
-  const { getAccentColor, getTextColor } = useColors()
+  const { accentColor, textColor } = useColors()
   const [isError, setIsError] = useState(false)
   const [input, setInput] = useState({
     email: 'fcmecraft2@gmail.com',
     password: ''
   })
-
-  const accent_color = getAccentColor();
-  const text_color = getTextColor();
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) =>  {
     setIsError(false);
@@ -73,16 +70,16 @@ const FormSignIn = ({ onClose }:{ onClose: () => void }) => {
       <Text
         onClick={handleCreateAccount}
         cursor="pointer"
-        color={accent_color}
+        color={accentColor}
       >
         create an account
       </Text>
       <Button
         w="100%"
         mt={4}
-        bg={accent_color}
-        _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
-        color={text_color}
+        bg={accentColor}
+        _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
+        color={textColor}
         type='submit'
       >
         Sign in with email

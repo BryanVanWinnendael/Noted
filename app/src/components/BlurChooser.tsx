@@ -10,14 +10,10 @@ import {
 } from "@chakra-ui/react";
 import { useSettings } from "contexts/SettingsContext";
 import useColors from "hooks/useColors";
-import { utils } from "utils/index";
 
 const BlurChooser = () => {
   const { saveSettings, blur } = useSettings();
-  const { getMutedTextColor, getAccentColor } = useColors();
-
-  const muted_text_color = getMutedTextColor();
-  const accent_color = getAccentColor();
+  const { mutedTextColor, accentColor, textColor} = useColors();
 
   const blurValue = blur * 10;
 
@@ -30,7 +26,7 @@ const BlurChooser = () => {
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
         <Text fontWeight="semibold">Blur</Text>
-        <Text color={muted_text_color}>Choose the blur for the background</Text>
+        <Text color={mutedTextColor}>Choose the blur for the background</Text>
       </Box>
 
       <Flex w="50%" gap={2} alignItems="center">
@@ -46,10 +42,10 @@ const BlurChooser = () => {
           <SliderThumb />
         </Slider>
         <Button
-          color={utils.getTextColor(accent_color)}
-          _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
+          color={textColor}
+          _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
           h={8}
-          bg={accent_color}
+          bg={accentColor}
           onClick={() => handleChange(0)}
         >
           Reset

@@ -1,5 +1,10 @@
 [
   {
+    "name": "Command Palette",
+    "description": "Open the command palette",
+    "hotkey": ["Ctrl", "Space"]
+  },
+  {
     "name": "Settings",
     "description": "Open the settings menu",
     "hotkey": ["Ctrl", "P"]
@@ -37,6 +42,6 @@
   {
     "name": "File switcher",
     "description": "Switch between recent opened files",
-    "hotkey": ["Ctrl", "Space"]
+    "hotkey": ["Ctrl", "Tab"]
   }
 ]

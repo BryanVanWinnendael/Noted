@@ -5,27 +5,17 @@ import { useSettings } from "contexts/SettingsContext";
 import { useState } from "react";
 import { TOAST_ID } from "utils/constants";
 import useColors from "./useColors";
-import { utils } from "utils/index";
 
 const useUpdate = () => {
   const {
-    getSecondaryBackgroundColor,
-    getTextColor,
-    getBorderColor,
-    getIconColor,
+    secondaryBackgroundColorLighter,
+    textColor,
+    borderColor,
+    iconColor,
   } = useColors();
   const toast = useToast();
   const { checkUpdate } = useSettings();
   const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false);
-
-  const text_color = getTextColor();
-
-  const border_color = getBorderColor();
-
-  const icon_color = getIconColor();
-
-  const secondary_background_color = getSecondaryBackgroundColor();
-  const bg_color = utils.getLighterColor("0.02", secondary_background_color);
 
   const handleCheckUpdate = async () => {
     setLoadingUpdates(true);
@@ -49,14 +39,14 @@ const useUpdate = () => {
         render: () => (
           <Flex
             border="1px"
-            borderColor={border_color}
+            borderColor={borderColor}
             alignItems="center"
-            bg={bg_color}
-            color={text_color}
+            bg={secondaryBackgroundColorLighter}
+            color={textColor}
             p={3}
             rounded="md"
           >
-            <WarningIcon color={icon_color} mr={3} />
+            <WarningIcon color={iconColor} mr={3} />
             <Text>No updates available</Text>
           </Flex>
         ),

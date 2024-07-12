@@ -9,23 +9,14 @@ import {
 } from "@chakra-ui/react";
 import useColors from "hooks/useColors";
 import { useSettings } from "contexts/SettingsContext";
-import { utils } from "utils";
 import { useState } from "react";
 
 const UpdateToast = () => {
   const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false);
-  const { getSecondaryBackgroundColor, getAccentColor, getTextColor } =
+  const { accentColor, textAccentColor, secondaryBackgroundColorLighter, textColor } =
     useColors();
   const { updateAndRestart } = useSettings();
   const toast = useToast();
-
-  const secondary_background_color = getSecondaryBackgroundColor();
-  const bg_colorRight = utils.getLighterColor(
-    "0.02",
-    secondary_background_color,
-  );
-  const accent_color = getAccentColor();
-  const text_color = getTextColor();
 
   const handleClsoe = () => {
     toast.closeAll();
@@ -37,10 +28,10 @@ const UpdateToast = () => {
   };
 
   return (
-    <Box color={text_color} bg={bg_colorRight} rounded="md" p={2}>
+    <Box color={textAccentColor} bg={secondaryBackgroundColorLighter} rounded="md" p={2}>
       {loadingUpdates ? (
         <Center>
-          <Spinner bg={accent_color} />
+          <Spinner bg={accentColor} />
         </Center>
       ) : (
         <>
@@ -48,9 +39,9 @@ const UpdateToast = () => {
           <Text fontSize="sm">Do you want to restart now?</Text>
           <Flex mt={2} gap={2}>
             <Button
-              bg={accent_color}
-              _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
-              color={utils.getTextColor(accent_color)}
+              bg={accentColor}
+              _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
+              color={textColor}
               h={8}
               onClick={hanleUpdate}
             >
@@ -58,9 +49,9 @@ const UpdateToast = () => {
             </Button>
             <Button
               h={8}
-              color={text_color}
+              color={textAccentColor}
               _hover={{ opacity: 0.6 }}
-              borderColor={accent_color}
+              borderColor={accentColor}
               variant="outline"
               onClick={handleClsoe}
             >

@@ -13,6 +13,7 @@ const useShortcuts = () => {
     openWorkspace,
     setShowSwitcher,
     closeWorkspace,
+    setShowCmdPalette
   } = useWorkspace();
   const { setWidgetPanel, widgetPanel } = useWidget();
   const { onOpen } = useSettings();
@@ -47,9 +48,13 @@ const useShortcuts = () => {
     setShowSwitcher(true);
   };
 
-  const handlerOpenSettings = () => {
+  const handleOpenSettings = () => {
     onOpen();
   };
+
+  const handleOpenCommandPalette = () => {
+    setShowCmdPalette(true);
+  }
 
   const useAddShortcuts = () => {
     useHotkeys("ctrl+t", handleNewTabAndOpenFile, {
@@ -70,10 +75,13 @@ const useShortcuts = () => {
     useHotkeys("ctrl+r", handleCloseWorkspace, {
       enableOnContentEditable: true,
     });
-    useHotkeys("ctrl+space", handleOpenSwitcher, {
+    useHotkeys("ctrl+tab", handleOpenSwitcher, {
       enableOnContentEditable: true,
     });
-    useHotkeys("ctrl+p", handlerOpenSettings, {
+    useHotkeys("ctrl+p", handleOpenSettings, {
+      enableOnContentEditable: true,
+    });
+    useHotkeys("ctrl+space", handleOpenCommandPalette, {
       enableOnContentEditable: true,
     });
   };

@@ -18,10 +18,8 @@ const ColorPicker = ({
   onChange: (key: any, color: string) => void;
   givenColor: string;
 }) => {
-  const { getAccentColor } = useColors();
+  const { accentColor } = useColors();
   const [color, setColor] = useState(givenColor);
-
-  const accent_color = getAccentColor();
 
   const changeColor = (color: string) => {
     setColor(color);
@@ -37,7 +35,7 @@ const ColorPicker = ({
       <PopoverTrigger>
         <Button
           border="1px"
-          borderColor={accent_color}
+          borderColor={accentColor}
           aria-label={color}
           background={color}
           height="22px"

@@ -10,15 +10,11 @@ interface ShortcutType {
 }
 
 const Shortcuts = () => {
-  const { getTextColor, getMutedTextColor, getSecondaryBackgroundColor } =
+  const { textColor, mutedTextColor, secondaryBackgroundColor } =
     useColors();
 
-  const text_color = getTextColor();
-  const muted_text_color = getMutedTextColor();
-  const secondary_background_color = getSecondaryBackgroundColor();
-
   return (
-    <Box color={text_color}>
+    <Box color={textColor}>
       <Text fontSize="3xl" mb={4}>
         Shortcuts
       </Text>
@@ -27,12 +23,12 @@ const Shortcuts = () => {
           <Flex alignItems="center" justify="space-between" key={index}>
             <Box>
               <Text fontWeight="semibold">{shortcut.name}</Text>
-              <Text color={muted_text_color}>{shortcut.description}</Text>
+              <Text color={mutedTextColor}>{shortcut.description}</Text>
             </Box>
             <span>
               {shortcut.hotkey.map((key, index) => (
                 <Fragment key={index}>
-                  <Kbd bg={secondary_background_color} color={text_color}>
+                  <Kbd bg={secondaryBackgroundColor} color={textColor}>
                     {key}
                   </Kbd>
                   {index < shortcut.hotkey.length - 1 && " + "}

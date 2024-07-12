@@ -11,19 +11,18 @@ import {
 } from "@chakra-ui/react";
 import useColors from "hooks/useColors";
 import { useRef } from "react";
-import { utils } from "utils/index";
-import AddFileDialog from "./Side-Nav/Actions/AddFileDialog";
+import AddFileDialog from "./SideNav/Actions/AddFileDialog";
 import { TbFilePlus } from "react-icons/tb";
-import AddExcalidrawDialog from "./Side-Nav/Actions/AddExcalidrawDialog";
+import AddExcalidrawDialog from "./SideNav/Actions/AddExcalidrawDialog";
 
 const NoFile = () => {
   const {
-    getTextColor,
-    getBorderColor,
-    getAccentColor,
-    getBackgroundColor,
-    getIconColor,
-    getSecondaryBackgroundColor,
+    textColor,
+    borderColor,
+    accentColor,
+    iconColor,
+    secondaryBackgroundColor,
+    secondaryBackgroundColorDarker
   } = useColors();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -37,13 +36,6 @@ const NoFile = () => {
     onClose: onCloseExcalidraw,
   } = useDisclosure();
   const cancelRef = useRef();
-
-  const text_color = getTextColor();
-  const border_color = getBorderColor();
-  const accent_color = getAccentColor();
-  const bg_color = getBackgroundColor();
-  const icon_color = getIconColor();
-  const secondary_background_color = getSecondaryBackgroundColor();
 
   return (
     <>
@@ -60,8 +52,8 @@ const NoFile = () => {
       >
         <AlertDialogOverlay />
         <AlertDialogContent
-          bg={secondary_background_color}
-          color={utils.getTextColor(bg_color)}
+          bg={secondaryBackgroundColor}
+          color={textColor}
           shadow="md"
         >
           <AlertDialogBody>
@@ -69,9 +61,9 @@ const NoFile = () => {
               <Button
                 onClick={onOpenFile}
                 _hover={{
-                  bg: utils.getDarkerColor("0.03", secondary_background_color),
+                  bg: secondaryBackgroundColorDarker,
                 }}
-                color={icon_color}
+                color={iconColor}
                 bg="none"
                 h={7}
                 display="flex"
@@ -84,9 +76,9 @@ const NoFile = () => {
               <Button
                 onClick={onOpenExcalidraw}
                 _hover={{
-                  bg: utils.getDarkerColor("0.03", secondary_background_color),
+                  bg: secondaryBackgroundColorDarker,
                 }}
-                color={icon_color}
+                color={iconColor}
                 bg="none"
                 h={7}
                 display="flex"
@@ -102,22 +94,22 @@ const NoFile = () => {
 
       <Center
         border="1px"
-        borderColor={border_color}
+        borderColor={borderColor}
         rounded="md"
         w="full"
         h="full"
       >
         <Flex direction="column" gap={1}>
-          <Text color={text_color} fontSize="xl" fontWeight="bold" m="auto">
+          <Text color={textColor} fontSize="xl" fontWeight="bold" m="auto">
             No file opened
           </Text>
-          <Text color={text_color} fontSize="md" m="auto">
+          <Text color={textColor} fontSize="md" m="auto">
             Please select a file from the sidebar
           </Text>
           <Text
             onClick={onOpen}
             cursor="pointer"
-            color={accent_color}
+            color={accentColor}
             fontSize="md"
             m="auto"
             decoration="underline"

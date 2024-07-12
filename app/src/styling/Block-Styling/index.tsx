@@ -11,37 +11,29 @@ import { soundStyle } from "./sound";
 const Index = ({ children }: { children: JSX.Element }) => {
   const { headerColors, headerColorsEnabled } = useSettings();
   const {
-    getTextColor,
-    getBackgroundColor,
-    getSecondaryBackgroundColorLighter,
-    getMutedTextColor,
-    getBorderColor,
-    getAccentColor,
-    getIconColor,
+    textColor,
+    backgroundColor,
+    secondaryBackgroundColorLighter,
+    mutedTextColor,
+    borderColor,
+    accentColor,
+    iconColor,
   } = useColors();
-
-  const text_color = getTextColor();
-  const background_color = getBackgroundColor();
-  const secondary_background_color = getSecondaryBackgroundColorLighter();
-  const muted_text_color = getMutedTextColor();
-  const border_color = getBorderColor();
-  const accent_color = getAccentColor();
-  const icon_color = getIconColor();
 
   return (
     <Box
       h="100%"
       __css={{
-        ...soundStyle(border_color),
-        ...latexStyle(icon_color, muted_text_color),
-        ...nestedStyle(secondary_background_color, accent_color),
-        ...headerStyle(headerColorsEnabled, headerColors, text_color),
-        ...codeStyle(background_color),
+        ...soundStyle(borderColor),
+        ...latexStyle(iconColor, mutedTextColor),
+        ...nestedStyle(secondaryBackgroundColorLighter, accentColor),
+        ...headerStyle(headerColorsEnabled, headerColors, textColor),
+        ...codeStyle(backgroundColor),
         ...tableStyle(
-          background_color,
-          secondary_background_color,
-          muted_text_color,
-          border_color,
+          backgroundColor,
+          secondaryBackgroundColorLighter,
+          mutedTextColor,
+          borderColor,
         ),
       }}
     >

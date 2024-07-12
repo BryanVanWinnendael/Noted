@@ -101,6 +101,8 @@ export interface WorkspaceTypeContext {
   notes: UserNote[];
   createPublicNote: (data: OutputData, path: string, style: NoteStyle) => Promise<boolean>;
   deletePublicNote: (id: string) => void;
+  showCmdPalette: boolean;
+  setShowCmdPalette: (show: boolean) => void;
 }
 
 export interface Theme {

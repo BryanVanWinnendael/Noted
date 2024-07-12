@@ -1,7 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
 import Editor from "components/Editor";
-import WidgetBar from "components/Widget-Bar";
-import SideNav from "components/Side-Nav";
+import WidgetBar from "components/WidgetBar";
+import SideNav from "components/SideNav";
 import { ActiveTab, WorkspaceType } from "types";
 import { Panel, PanelGroup } from "react-resizable-panels";
 import ResizeHandle from "components/ResizableHandle";
@@ -9,12 +9,12 @@ import { useWidget } from "contexts/WidgetContext";
 import EditorWrapper from "styling/EditorWrapper";
 import { useWorkspace } from "contexts/WorkspaceContext";
 import { useSettings } from "contexts/SettingsContext";
-import PdfViewer from "components/Pdf-Viewer";
+import PdfViewer from "components/PdfViewer";
 import NoFile from "components/NoFile";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 import { useCallback } from "react";
-import ExcalidrawEditor from "components/Excalidraw-Editor";
+import ExcalidrawEditor from "components/ExcalidrawEditor";
 
 const Index = ({ workspace }: { workspace: WorkspaceType }) => {
   const { showSidebar, tabs, activeTab } = useWorkspace();

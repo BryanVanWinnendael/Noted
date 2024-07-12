@@ -5,9 +5,7 @@ import CustomSwitch from "./CustomSwitch";
 
 const SidebarIcons = () => {
   const { saveSettings, sidebarIcons } = useSettings();
-  const { getMutedTextColor } = useColors();
-
-  const muted_text_color = getMutedTextColor();
+  const { mutedTextColor } = useColors();
 
   const handleSidebarIcons = () => {
     saveSettings("sidebar_icons", !sidebarIcons);
@@ -17,7 +15,7 @@ const SidebarIcons = () => {
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
         <Text fontWeight="semibold">Sidebar icons</Text>
-        <Text color={muted_text_color}>
+        <Text color={mutedTextColor}>
           Enable or disable the icons for the sidebar
         </Text>
       </Box>

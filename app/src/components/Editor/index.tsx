@@ -21,7 +21,7 @@ const Editor = ({
   tabKey: string;
 }) => {
   const { setPosition, setSlashOpen, slashOpen } = useSlash();
-  const { getTextColor, getBorderColor, getBackgroundColor } = useColors();
+  const { textColor, borderColor, backgroundColorLighter, getGlassBackground } = useColors();
   const ReactEditorJS = createReactEditorJS();
   const editorCore = useRef<EditorCore | null>(null);
   const { saveFile, readFile, platform } = useWorkspace();
@@ -41,14 +41,6 @@ const Editor = ({
       ? workspace_path?.split("\\").pop() + ".home"
       : workspace_path?.split("/").pop() + ".home";
   const isHomeFile = filename === homeName;
-
-  const text_color = getTextColor();
-  const border_color = getBorderColor();
-  const bg_color = getBackgroundColor();
-  const lighter_bg_color =
-    utils.getTextColor(bg_color) === "#fff"
-      ? utils.getLighterColor("0.02", bg_color)
-      : utils.getDarkerColor("0.02", bg_color);
 
   const isGlassEnabled = glassEnabled && glassBackground.editor;
 
@@ -163,11 +155,11 @@ const Editor = ({
 
   return (
     <Flex
-      color={text_color}
+      color={textColor}
       w="full"
       h="full"
       border="1px"
-      borderColor={border_color}
+      borderColor={borderColor}
       rounded="md"
       maxHeight="100%"
       className="glass"
@@ -176,8 +168,8 @@ const Editor = ({
       flexDirection="column"
       bg={
         isGlassEnabled
-          ? utils.getGlassBackground(lighter_bg_color)
-          : lighter_bg_color
+          ? getGlassBackground(backgroundColorLighter)
+          : backgroundColorLighter
       }
       style={{
         backdropFilter: isGlassEnabled ? `blur(10px)` : "none", // Apply backdrop filter only when glass effect is enabled

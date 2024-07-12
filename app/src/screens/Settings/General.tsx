@@ -1,5 +1,4 @@
 import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
-import { utils } from "utils";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MyWindow } from "types";
 import { useSettings } from "contexts/SettingsContext";
@@ -15,13 +14,9 @@ const invoke = window.electron.invoke;
 
 const General = () => {
   const { handleCheckUpdate, loadingUpdates } = useUpdate();
-  const { getAccentColor, getTextColor, getMutedTextColor } = useColors();
+  const { accentColor, textColor, mutedTextColor } = useColors();
   const { saveSettings, checkUpdates } = useSettings();
   const { setNewVersion } = useWorkspace();
-
-  const text_color = getTextColor();
-  const muted_text_color = getMutedTextColor();
-  const accent_color = getAccentColor();
 
   const handleLink = (link: string) => {
     invoke("openBrowser", link);
@@ -32,7 +27,7 @@ const General = () => {
   };
 
   return (
-    <Box color={text_color}>
+    <Box color={textColor}>
       <Text fontSize="3xl" mb={4}>
         General
       </Text>
@@ -47,18 +42,18 @@ const General = () => {
                 )
               }
               cursor="pointer"
-              color={accent_color}
+              color={accentColor}
             >
               Read changelog <ExternalLinkIcon mx="2px" />
             </Text>
           </Box>
 
           <Button
-            color={utils.getTextColor(accent_color)}
+            color={textColor}
             onClick={handleCheckUpdate}
-            _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
+            _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
             h={8}
-            bg={accent_color}
+            bg={accentColor}
             isLoading={loadingUpdates}
           >
             Check for updates
@@ -67,17 +62,17 @@ const General = () => {
         <Flex alignItems="center" justify="space-between">
           <Box>
             <Text fontWeight="semibold">What's new</Text>
-            <Text color={muted_text_color}>
+            <Text color={mutedTextColor}>
               Read What's new in {APP_VERSION}
             </Text>
           </Box>
 
           <Button
-            color={utils.getTextColor(accent_color)}
+            color={textColor}
             onClick={() => setNewVersion(true)}
-            _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
+            _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
             h={8}
-            bg={accent_color}
+            bg={accentColor}
           >
             Read
           </Button>
@@ -85,7 +80,7 @@ const General = () => {
         <Flex alignItems="center" justify="space-between">
           <Box>
             <Text fontWeight="semibold">Check for updates on launch</Text>
-            <Text color={muted_text_color}>
+            <Text color={mutedTextColor}>
               Get notified when a new version is available
             </Text>
           </Box>
@@ -99,15 +94,15 @@ const General = () => {
         <Flex alignItems="center" justify="space-between">
           <Box>
             <Text fontWeight="semibold">Help</Text>
-            <Text color={muted_text_color}>Learn how to use Noted</Text>
+            <Text color={mutedTextColor}>Learn how to use Noted</Text>
           </Box>
 
           <Button
-            color={utils.getTextColor(accent_color)}
+            color={textColor}
             onClick={() => handleLink("https://write-noted.vercel.app/docs")}
-            _hover={{ backgroundColor: accent_color, opacity: 0.8 }}
+            _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
             h={8}
-            bg={accent_color}
+            bg={accentColor}
           >
             Open
           </Button>

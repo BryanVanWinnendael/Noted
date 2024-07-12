@@ -5,9 +5,7 @@ import CustomSwitch from "./CustomSwitch";
 
 const EditorTitle = () => {
   const { saveSettings, editorTitle } = useSettings();
-  const { getMutedTextColor } = useColors();
-
-  const muted_text_color = getMutedTextColor();
+  const { mutedTextColor } = useColors();
 
   const handleGlassBackground = () => {
     saveSettings("editor_title", !editorTitle);
@@ -17,7 +15,7 @@ const EditorTitle = () => {
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
         <Text fontWeight="semibold">Editor title</Text>
-        <Text color={muted_text_color}>
+        <Text color={mutedTextColor}>
           Enable or disable the title for the editor
         </Text>
       </Box>

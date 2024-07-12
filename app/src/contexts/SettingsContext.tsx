@@ -57,7 +57,7 @@ const invoke = window.electron.invoke;
 
 export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [view, setView] = useState<string>("general");
+  const [view, setView] = useState<string>("General");
   const [themePath, setThemePath] = useState<string>("");
   const [customTheme, setCustomTheme] = useState<Theme | undefined>();
   const [customThemes, setCustomThemes] = useState<{ [key: string]: Theme }>(

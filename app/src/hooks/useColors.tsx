@@ -155,15 +155,6 @@ const useColors = () => {
     }
   };
 
-  const geTextColorFromBackgroundColor = (bg_color?: string | undefined) => {
-    if (!bg_color) {
-      const bg_color = getBackgroundColor();
-      return utils.getTextColor(bg_color);
-    } else {
-      return utils.getTextColor(bg_color);
-    }
-  };
-
   const getBackgroundColorLighter = () => {
     const bg_color = getBackgroundColor();
     return utils.getLighterColor("0.02", bg_color);
@@ -174,22 +165,49 @@ const useColors = () => {
     return utils.getLighterColor("0.02", secondary_background_color);
   };
 
+  const getSecondaryBackgroundColorDarker = () => {
+    const secondary_background_color = getSecondaryBackgroundColor();
+    return utils.getDarkerColor("0.02", secondary_background_color);
+  }
+
+  const getBackgroundColorDarker = () => {
+    const bg_color = getBackgroundColor();
+    return utils.getDarkerColor("0.02", bg_color);
+  }
+
+
   const getBorderColor = () => {
     const muted_color = getMutedTextColor();
     return utils.getTransparent(0.2, muted_color);
   };
 
+  const getTextColorOnAccentCollor = () => {
+    return utils.getDarkerColor("0.1", getAccentColor());
+  }
+
+  const getGlassBackground = (color: string) => {
+    return utils.getGlassBackground(color)
+  }
+
+  const getTransparent = (opacity: number, color: string) => {
+    return utils.getTransparent(opacity, color);
+  }
+
   return {
-    getBackgroundColor,
-    getSecondaryBackgroundColor,
-    getTextColor,
-    getIconColor,
-    getAccentColor,
-    getBorderColor,
-    getMutedTextColor,
-    geTextColorFromBackgroundColor,
-    getBackgroundColorLighter,
-    getSecondaryBackgroundColorLighter,
+    backgroundColor: getBackgroundColor(),
+    backgroundColorLighter: getBackgroundColorLighter(),
+    backgroundColorDarker: getBackgroundColorDarker(),
+    secondaryBackgroundColor: getSecondaryBackgroundColor(),
+    secondaryBackgroundColorLighter: getSecondaryBackgroundColorLighter(),
+    secondaryBackgroundColorDarker: getSecondaryBackgroundColorDarker(),
+    textColor: getTextColor(),
+    iconColor: getIconColor(),
+    accentColor: getAccentColor(),
+    borderColor: getBorderColor(),
+    mutedTextColor: getMutedTextColor(),
+    textAccentColor: getTextColorOnAccentCollor(),
+    getGlassBackground,
+    getTransparent
   };
 };
 
