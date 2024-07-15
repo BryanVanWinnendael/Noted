@@ -24,7 +24,7 @@ const FormSignIn = ({ onClose }: { onClose: () => void }) => {
   const { accentColor, textColor } = useColors();
   const [isError, setIsError] = useState(false);
   const [input, setInput] = useState({
-    email: "fcmecraft2@gmail.com",
+    email: "",
     password: "",
   });
 

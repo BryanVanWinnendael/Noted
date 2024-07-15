@@ -133,8 +133,11 @@ if (!gotTheLock) {
       const deepLink = commandLine.find((arg) =>
         arg.startsWith("write-noted://"),
       );
-      win.webContents.send("token", deepLink);
-      const token = deepLink?.split("write-noted://")[1];
+
+      let token = deepLink?.split("write-noted://")[1];
+      if (token?.endsWith("/")) {
+        token = token.slice(0, -1);
+      }
 
       if (win.isMinimized()) win.restore();
       win.focus();

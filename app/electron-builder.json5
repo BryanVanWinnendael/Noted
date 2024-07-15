@@ -40,5 +40,5 @@
     target: ["AppImage", "deb"],
     artifactName: "${productName}-Setup-${version}.${ext}",
   },
-  icon: "public/icon.icns",
+  icon: "public/icon.ico",
 }

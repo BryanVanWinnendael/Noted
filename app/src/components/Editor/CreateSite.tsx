@@ -15,7 +15,7 @@ const CreateSite = ({
   editor: React.MutableRefObject<EditorJS | null>;
   path: string;
 }) => {
-  const { fontFamily, headerColors } = useSettings();
+  const { fontFamily, headerColors, headerColorsEnabled } = useSettings();
   const {
     backgroundColor,
     textColor,
@@ -41,7 +41,7 @@ const CreateSite = ({
     muted: mutedTextColor,
     accent: accentColor,
     font: fontFamily,
-    headerColors: headerColors,
+    headerColors: headerColorsEnabled ? headerColors : false,
   };
 
   const isPublic = notes.find((note) => note.path === path);
