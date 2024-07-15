@@ -1,7 +1,6 @@
 import {
   Box,
   Text,
-  Divider,
   Flex,
   Accordion,
   AccordionButton,
@@ -25,12 +24,18 @@ import { CgScrollV } from "react-icons/cg";
 import { LuHeading } from "react-icons/lu";
 
 const Appearance = () => {
-  const { accentColor, textColor, getTransparent, secondaryBackgroundColorDarker } = useColors();
+  const {
+    accentColor,
+    textColor,
+    getTransparent,
+    secondaryBackgroundColorDarker,
+  } = useColors();
 
   return (
     <Box>
-      <Text fontSize="3xl">Appearance</Text>
-      <Divider mb={4} />
+      <Text fontSize="3xl" mb={4}>
+        Appearance
+      </Text>
       <Stack gap={3} mr={5} mb={4}>
         <Accordion allowMultiple defaultIndex={[0]}>
           <AccordionItem border={0}>
@@ -39,7 +44,7 @@ const Appearance = () => {
               _expanded={{
                 bg: getTransparent(0.2, accentColor),
                 fill: accentColor,
-                color: accentColor
+                color: accentColor,
               }}
               border={0}
               _hover={{
@@ -103,7 +108,7 @@ const Appearance = () => {
               _expanded={{
                 bg: getTransparent(0.2, accentColor),
                 fill: accentColor,
-                color: accentColor
+                color: accentColor,
               }}
               border={0}
               _hover={{
@@ -135,7 +140,7 @@ const Appearance = () => {
               _expanded={{
                 bg: getTransparent(0.2, accentColor),
                 fill: accentColor,
-                color: accentColor
+                color: accentColor,
               }}
               border={0}
               _hover={{

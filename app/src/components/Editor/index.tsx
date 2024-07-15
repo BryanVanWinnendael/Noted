@@ -21,7 +21,8 @@ const Editor = ({
   tabKey: string;
 }) => {
   const { setPosition, setSlashOpen, slashOpen } = useSlash();
-  const { textColor, borderColor, backgroundColorLighter, getGlassBackground } = useColors();
+  const { textColor, borderColor, backgroundColorLighter, getGlassBackground } =
+    useColors();
   const ReactEditorJS = createReactEditorJS();
   const editorCore = useRef<EditorCore | null>(null);
   const { saveFile, readFile, platform } = useWorkspace();
@@ -176,8 +177,12 @@ const Editor = ({
       }}
       mb={2}
     >
-     
-      <TitleBar editor={editorCore} isHomeFile={isHomeFile} filename={filename} path={path}/>
+      <TitleBar
+        editor={editorCore}
+        isHomeFile={isHomeFile}
+        filename={filename}
+        path={path}
+      />
       <ReactEditorJS
         holder={"noted" + path + tabKey}
         onInitialize={handleInitialize}

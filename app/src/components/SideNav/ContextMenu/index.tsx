@@ -11,7 +11,8 @@ import SplitFile from "./SplitFile";
 import AddExcalidraw from "./AddExcalidraw";
 
 const Index = ({ path, name, type }: ContextMenu) => {
-  const { borderColor, backgroundColorLighter, getGlassBackground } = useColors();
+  const { borderColor, backgroundColorLighter, getGlassBackground } =
+    useColors();
   const { glassBackground, glassEnabled } = useSettings();
 
   const isGlassEnabled = glassEnabled && glassBackground.contextMenu;

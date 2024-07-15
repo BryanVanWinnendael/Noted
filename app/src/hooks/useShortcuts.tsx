@@ -13,7 +13,7 @@ const useShortcuts = () => {
     openWorkspace,
     setShowSwitcher,
     closeWorkspace,
-    setShowCmdPalette
+    setShowCmdPalette,
   } = useWorkspace();
   const { setWidgetPanel, widgetPanel } = useWidget();
   const { onOpen } = useSettings();
@@ -54,7 +54,7 @@ const useShortcuts = () => {
 
   const handleOpenCommandPalette = () => {
     setShowCmdPalette(true);
-  }
+  };
 
   const useAddShortcuts = () => {
     useHotkeys("ctrl+t", handleNewTabAndOpenFile, {

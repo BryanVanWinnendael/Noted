@@ -6,8 +6,14 @@ import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
 const RecentWorkspaces = () => {
-  const { backgroundColor, textColor, borderColor, iconColor, backgroundColorDarker, getGlassBackground } =
-    useColors();
+  const {
+    backgroundColor,
+    textColor,
+    borderColor,
+    iconColor,
+    backgroundColorDarker,
+    getGlassBackground,
+  } = useColors();
   const { recentWorkspaces, openFolder } = useWorkspace();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { glassBackground, glassEnabled } = useSettings();
@@ -19,6 +25,9 @@ const RecentWorkspaces = () => {
     setIsOpen(false);
   };
 
+  const handleMouseEnter = () => setIsOpen(true);
+  const handleMouseLeave = () => setIsOpen(false);
+
   return (
     <Menu
       onClose={() => setIsOpen(false)}
@@ -26,7 +35,11 @@ const RecentWorkspaces = () => {
       placement="end-end"
       closeOnSelect={false}
     >
-      <MenuButton w="full" onMouseEnter={() => setIsOpen(true)}>
+      <MenuButton
+        w="full"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <MenuItem
           display="flex"
           justifyContent="space-between"
@@ -47,27 +60,32 @@ const RecentWorkspaces = () => {
         className="glass"
         border="1px"
         borderColor={borderColor}
-        bg={isGlassEnabled ? getGlassBackground(backgroundColor) : backgroundColor}
+        bg={
+          isGlassEnabled ? getGlassBackground(backgroundColor) : backgroundColor
+        }
         rounded="md"
         shadow="none"
         zIndex={99999999}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
-        {recentWorkspaces && recentWorkspaces.map((workspace, index) => (
-          <MenuItem
-            display="flex"
-            justifyContent="space-between"
-            w="full"
-            bg="transparent"
-            px={4}
-            gap={4}
-            color={textColor}
-            _hover={{ bg: backgroundColorDarker }}
-            key={index}
-            onClick={() => handleOpenWorkspace(workspace)}
-          >
-            <Text w="fit-content">{workspace}</Text>
-          </MenuItem>
-        ))}
+        {recentWorkspaces &&
+          recentWorkspaces.map((workspace, index) => (
+            <MenuItem
+              display="flex"
+              justifyContent="space-between"
+              w="full"
+              bg="transparent"
+              px={4}
+              gap={4}
+              color={textColor}
+              _hover={{ bg: backgroundColorDarker }}
+              key={index}
+              onClick={() => handleOpenWorkspace(workspace)}
+            >
+              <Text w="fit-content">{workspace}</Text>
+            </MenuItem>
+          ))}
       </MenuList>
     </Menu>
   );

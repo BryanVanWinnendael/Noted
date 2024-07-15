@@ -18,8 +18,8 @@ const Index = () => {
   return (
     <Center p={1} bg={transparent_bg_color} rounded="md" h="fit-content">
       <WorkspaceFile />
-      <AddExcalidraw />
       <AddFile />
+      <AddExcalidraw />
       <AddFolder />
     </Center>
   );

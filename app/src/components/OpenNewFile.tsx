@@ -29,7 +29,7 @@ const OpenFileInTab = () => {
     accentColor,
     textAccentColor,
     borderColor,
-    secondaryBackgroundColorDarker
+    secondaryBackgroundColorDarker,
   } = useColors();
   const { showOpenNewFile, setShowOpenNewFile, workspace, openFile, platform } =
     useWorkspace();
@@ -222,9 +222,7 @@ const OpenFileInTab = () => {
               <Button
                 border="none"
                 bg={typing && index === 0 ? accentColor : "transparent"}
-                color={
-                  typing && index === 0 ? textAccentColor : textColor
-                }
+                color={typing && index === 0 ? textAccentColor : textColor}
                 key={index}
                 ref={(el) => (buttonRefs.current[index] = el)}
                 autoFocus={index === 0 ? true : false}

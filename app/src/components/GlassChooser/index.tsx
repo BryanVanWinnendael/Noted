@@ -10,8 +10,7 @@ import { FaInfoCircle } from "react-icons/fa";
 const Index = () => {
   const { platform } = useWorkspace();
   const { glassBackground, saveSettings, glassEnabled } = useSettings();
-  const { mutedTextColor, iconColor, backgroundColor, textColor } =
-    useColors();
+  const { mutedTextColor, iconColor, backgroundColor, textColor } = useColors();
 
   const isLinux = platform === "linux";
 

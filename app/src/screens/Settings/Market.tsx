@@ -26,7 +26,7 @@ const Market = () => {
       const res = await GetMarket();
       if (res) setThemes(res);
       setLoading(false);
-    }
+    };
 
     getMarket();
   }, []);

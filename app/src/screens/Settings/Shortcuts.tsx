@@ -10,8 +10,7 @@ interface ShortcutType {
 }
 
 const Shortcuts = () => {
-  const { textColor, mutedTextColor, secondaryBackgroundColor } =
-    useColors();
+  const { textColor, mutedTextColor, secondaryBackgroundColor } = useColors();
 
   return (
     <Box color={textColor}>

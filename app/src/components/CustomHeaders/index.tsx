@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import CustomSwitch from "components/CustomSwitch";
-import CustomColors from "components/Custom-Headers/CustomColors";
+import CustomColors from "components/CustomHeaders/CustomColors";
 import { useSettings } from "contexts/SettingsContext";
 import useColors from "hooks/useColors";
 

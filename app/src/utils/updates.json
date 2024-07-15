@@ -1,50 +1,22 @@
 [
   {
-    "title": "View pdfs",
-    "text": "With version 1.2, you can now view pdfs in the app. With noted pdf viewer you can also write and draw on the pdfs."
+    "title": "Linux support",
+    "text": "Noted version 2.0.0 now supports Linux!"
   },
   {
-    "title": "Support for excalidraw",
-    "text": "With version 1.2, you can now view excalidraw files in the app. You can also edit the excalidraw files."
+    "title": "Share notes with others",
+    "text": "With version 2.0.0, you can now share notes with others. You can share notes with others by clicking on the share button in your note when logged in."
   },
   {
-    "title": "Split screen",
-    "text": "With version 1.2, you can open any of the supported files in split screen mode. Just right click on the file and select split."
+    "title": "Command Palette",
+    "text": "With version 2.0.0, you can now open the command palette by pressing Ctrl + Space."
   },
   {
-    "title": "Noted home file",
-    "text": "With version 1.2, you can now access the home file from the actionbar. This can be easily accessed from a click of a button."
+    "title": "Recent opened workspaces",
+    "text": "With version 2.0.0, you can now switch between recent opened workspaces."
   },
   {
-    "title": "Noted actions",
-    "text": "With version 1.2, you can now perform actions while writing by typing \\ in the editor. This includes translating and rewriting the text. "
-  },
-  {
-    "title": "Backgrounds",
-    "text": "With version 1.2, you can now change the background of the app. You can select from a variety of backgrounds or import your own background."
-  },
-  {
-    "title": "Block styles",
-    "text": "With version 1.2, you can now select from a variety of new and updated block styles.",
-    "list": [
-      "Improved code block",
-      "Text marker",
-      "Nested checklist",
-      "LaTex",
-      "Audio player"
-    ]
-  },
-  {
-    "title": "More customizations",
-    "text": "With version 1.2, you can now customize the app even more. This includes",
-    "list": [
-      "Change the sidebar opacity",
-      "Change the actionbar opacity",
-      "Change the look of the scrollbar",
-      "Show or hide extension labels",
-      "Show or hide sidebar icons",
-      "Show or hide file name as Noted title",
-      "Glassmorphism effect for the editor"
-    ]
+    "title": "Changed noted actions",
+    "text": "With version 2.0.0, noted actions now uses the groq api."
   }
 ]

@@ -31,7 +31,9 @@ const MaterialChooser = () => {
         maxH="200px"
         value={chosenMaterial}
         width="auto"
-        css={{ "& > *": { background: `${secondaryBackgroundColor} !important` } }}
+        css={{
+          "& > *": { background: `${secondaryBackgroundColor} !important` },
+        }}
         placeholder={DEFAULT_MATERIAL + " (default)"}
         h="30px"
       >

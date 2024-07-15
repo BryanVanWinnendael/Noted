@@ -1,7 +1,7 @@
 {
   "name": "Noted",
   "private": true,
-  "version": "1.2.6",
+  "version": "2.0.0",
   "repository": "https://github.com/BryanVanWinnendael/Noted",
   "publish": {
     "provider": "github",

@@ -17,7 +17,8 @@ const UIOptions = {
 
 const Index = ({ path, splitted }: { path: string; splitted?: boolean }) => {
   const { saveFile, readFile } = useWorkspace();
-  const { textColor, borderColor, backgroundColor, backgroundColorLighter } = useColors();
+  const { textColor, borderColor, backgroundColor, backgroundColorLighter } =
+    useColors();
   const [data, setData] = useState(null);
   const [excalidrawAPI, setExcalidrawAPI] =
     useState<ExcalidrawImperativeAPI | null>(null);

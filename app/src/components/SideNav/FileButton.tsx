@@ -16,7 +16,7 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
     iconColor,
     secondaryBackgroundColorLighter,
     secondaryBackgroundColorDarker,
-    getTransparent
+    getTransparent,
   } = useColors();
   const { extensionLabel, sidebarIcons } = useSettings();
   const { setActiveFolder, activeTab, tabs, openFile } = useWorkspace();
@@ -63,9 +63,7 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
       >
         <MenuButton
           p={1}
-          bg={
-            tab?.path === path ? secondaryBackgroundColorDarker : "none"
-          }
+          bg={tab?.path === path ? secondaryBackgroundColorDarker : "none"}
           onClick={() => handleOpenFile(path)}
           onContextMenu={() => setIsOpen(true)}
           color={textColor}

@@ -12,12 +12,8 @@ interface DateTodoCount {
 }
 
 const Index = () => {
-  const {
-    accentColor,
-    iconColor,
-    textColor,
-    secondaryBackgroundColorLighter
-  } = useColors();
+  const { accentColor, iconColor, textColor, secondaryBackgroundColorLighter } =
+    useColors();
   const { isConnected, setIsConnected, canConnect, getCompatibleWidget } =
     useWidget();
   const { blocks, time } = useEditor();

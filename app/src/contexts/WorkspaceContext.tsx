@@ -16,7 +16,7 @@ import {
   NoteStyle,
 } from "types";
 import { APP_VERSION } from "utils/constants";
-import {  } from "firebase/auth";
+import {} from "firebase/auth";
 import { auth } from "lib/firebase";
 import { GetUserNotes } from "lib/actions/notes/get";
 import { CreatePublicNote } from "lib/actions/notes/create";
@@ -443,54 +443,58 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     openFile(openedFile["filePath"]);
   };
 
-  const getUserNotes = async () => { 
-    const notes = await GetUserNotes() 
-    const tempNotes: UserNote[] = []
+  const getUserNotes = async () => {
+    const notes = await GetUserNotes();
+    const tempNotes: UserNote[] = [];
     for (const note of notes) {
-      note.data = JSON.parse(note.data)
-      tempNotes.push(note)
+      note.data = JSON.parse(note.data);
+      tempNotes.push(note);
     }
 
-    setNotes(tempNotes)
-  }
+    setNotes(tempNotes);
+  };
 
   const deletePublicNote = async (id: string) => {
-    await DeletePublicNote(id)
-    const newNotes = notes.filter((note) => note.id !== id)
-    setNotes(newNotes)
-  }
+    await DeletePublicNote(id);
+    const newNotes = notes.filter((note) => note.id !== id);
+    setNotes(newNotes);
+  };
 
-  const createPublicNote = async (data:  OutputData, path: string, style: NoteStyle) => {
-    const { id } = await CreatePublicNote(data, path, style)
-    if (!id) return false
+  const createPublicNote = async (
+    data: OutputData,
+    path: string,
+    style: NoteStyle,
+  ) => {
+    const { id } = await CreatePublicNote(data, path, style);
+    if (!id) return false;
 
     const tempNote: UserNote = {
       data: JSON.stringify(data),
       path,
       user_email: user?.email || "",
       id,
-      style
-    }
+      style,
+    };
 
-    setNotes([...notes, tempNote])
-    return true
-  }
+    setNotes([...notes, tempNote]);
+    return true;
+  };
 
   const handleSignOutUser = () => {
-    signOut(auth)
+    signOut(auth);
     setUser(undefined);
-  }
+  };
 
   const initUser = useCallback(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user);
-        const idToken = await user.getIdToken()
-        const res = await Login(idToken)
-        if (!res) return
-        const sessToken = res.session
-        if (sessToken) localStorage.setItem("token", sessToken)
-        getUserNotes()
+        const idToken = await user.getIdToken();
+        const res = await Login(idToken);
+        if (!res) return;
+        const sessToken = res.session;
+        if (sessToken) localStorage.setItem("token", sessToken);
+        getUserNotes();
       }
     });
   }, []);
@@ -499,7 +503,6 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
     const platform = await invoke("platform:get");
     setPlatform(platform);
   }, []);
-  
 
   useEffect(() => {
     localStorage.setItem("open_files", JSON.stringify([])); // Used for the file switcher

@@ -4,7 +4,7 @@ import Cursor from "./Cursor";
 import useColors from "hooks/useColors";
 
 const CopyButton = ({ text }: { text: string }) => {
-  const { accentColor, textColor} = useColors();
+  const { accentColor, textColor } = useColors();
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);

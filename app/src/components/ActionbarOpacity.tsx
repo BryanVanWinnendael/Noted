@@ -26,9 +26,7 @@ const ActionbarOpacity = () => {
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
         <Text fontWeight="semibold">Actionbar pacity</Text>
-        <Text color={mutedTextColor}>
-          Choose the opacity for the actiobar
-        </Text>
+        <Text color={mutedTextColor}>Choose the opacity for the actiobar</Text>
       </Box>
 
       <Flex w="50%" gap={2} alignItems="center">

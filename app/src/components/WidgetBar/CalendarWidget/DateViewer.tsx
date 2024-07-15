@@ -7,12 +7,8 @@ import { ToDo } from "types";
 import useColors from "hooks/useColors";
 
 const CalendarTodo = () => {
-  const {
-    textColor,
-    iconColor,
-    accentColor,
-    secondaryBackgroundColorLighter
-  } = useColors();
+  const { textColor, iconColor, accentColor, secondaryBackgroundColorLighter } =
+    useColors();
   const { setShowDateViewer, selectedDate, todos, setTodos, setSelectedDate } =
     useWidget();
   const [filteredTodos, setFilteredTodos] = useState<ToDo[]>([]);

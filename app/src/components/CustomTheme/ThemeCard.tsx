@@ -31,8 +31,7 @@ const ThemeCard = ({
   colors: Theme;
   deletable: boolean;
 }) => {
-  const { backgroundColor, textColor, borderColor } =
-    useColors();
+  const { backgroundColor, textColor, borderColor } = useColors();
   const { deleteCustomTheme, addThemeToEditor, customThemes } = useSettings();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [sortedColors, setSortedColors] = useState<Theme>();
@@ -97,7 +96,11 @@ const ThemeCard = ({
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent bg={backgroundColor} color={textColor} shadow="md">
+          <AlertDialogContent
+            bg={backgroundColor}
+            color={textColor}
+            shadow="md"
+          >
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete Theme {name}
             </AlertDialogHeader>

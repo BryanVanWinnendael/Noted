@@ -1,21 +1,11 @@
-import { Box, Flex, Select, Text, useColorMode } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { Box, Flex, Text, useColorMode } from "@chakra-ui/react";
 import CustomColors from "components/CustomTheme/CustomColors";
 import useColors from "hooks/useColors";
+import ThemeChooser from "./ThemeChooser";
 
 const Index = () => {
-  const { secondaryBackgroundColorLighter, mutedTextColor } = useColors();
-  const { setColorMode, colorMode } = useColorMode();
-  const { customThemes, saveSettings } = useSettings();
-
-
-  const changeTheme = (e: any) => {
-    const theme = e.target.value || "light";
-    setColorMode(theme);
-    saveSettings("active_theme", theme);
-    if (customThemes && customThemes[theme])
-      localStorage.setItem("theme-json", JSON.stringify(customThemes[theme]));
-  };
+  const { mutedTextColor } = useColors();
+  const { colorMode } = useColorMode();
 
   return (
     <Box p={2}>
@@ -24,24 +14,7 @@ const Index = () => {
           <Text fontWeight="semibold">Base color scheme</Text>
           <Text color={mutedTextColor}>Choose default color scheme</Text>
         </Box>
-        <Select
-          value={colorMode}
-          width="auto"
-          css={{ "& > *": { background: `${secondaryBackgroundColorLighter} !important` } }}
-          onChange={changeTheme}
-          placeholder="Light"
-          h="30px"
-        >
-          <option value="dark">Dark</option>
-          <option value="deep_blue">Deep blue</option>
-          {customThemes &&
-            Object.keys(customThemes).map((theme, index) => (
-              <option key={index} value={theme}>
-                {theme}
-              </option>
-            ))}
-          <option value="custom_theme">Custom</option>
-        </Select>
+        <ThemeChooser />
       </Flex>
       {String(colorMode) === "custom_theme" && <CustomColors />}
     </Box>

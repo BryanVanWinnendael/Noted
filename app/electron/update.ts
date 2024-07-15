@@ -24,11 +24,11 @@ class Updates {
           return v1parts.length !== v2parts.length;
         };
         if (isNewerVersion(curr_version, update?.updateInfo.version || "")) {
-          return true;
+          return update?.updateInfo.version;
         }
         return false;
       } catch (error) {
-        return error;
+        return false;
       }
     });
 

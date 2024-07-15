@@ -1,9 +1,21 @@
-import { Box } from '@chakra-ui/react';
-import useColors from 'hooks/useColors';
+import { Box } from "@chakra-ui/react";
+import useColors from "hooks/useColors";
 
-const SettingsNavItem = ({ label, view, setView }: { label: string, view: string, setView: (view: string) => void }) => {
-  const { secondaryBackgroundColorDarker, accentColor, textColor, getTransparent} =
-  useColors();
+const SettingsNavItem = ({
+  label,
+  view,
+  setView,
+}: {
+  label: string;
+  view: string;
+  setView: (view: string) => void;
+}) => {
+  const {
+    secondaryBackgroundColorDarker,
+    accentColor,
+    textColor,
+    getTransparent,
+  } = useColors();
 
   return (
     <Box
@@ -11,16 +23,8 @@ const SettingsNavItem = ({ label, view, setView }: { label: string, view: string
       p={1}
       pl={2}
       rounded="md"
-      color={
-        view === label
-          ? accentColor
-          : textColor
-      }
-      bg={
-        view === label
-          ? getTransparent(0.2, accentColor)
-          : ""
-      }
+      color={view === label ? accentColor : textColor}
+      bg={view === label ? getTransparent(0.2, accentColor) : ""}
       onClick={() => {
         setView(label);
       }}
@@ -29,9 +33,9 @@ const SettingsNavItem = ({ label, view, setView }: { label: string, view: string
         bg: secondaryBackgroundColorDarker,
       }}
     >
-      {label} 
+      {label}
     </Box>
-  )
-}
+  );
+};
 
-export default SettingsNavItem
+export default SettingsNavItem;

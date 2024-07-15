@@ -11,9 +11,9 @@ import useColors from "hooks/useColors";
 import { useSettings } from "contexts/SettingsContext";
 import { useState } from "react";
 
-const UpdateToast = () => {
+const UpdateToast = ({ version }: { version: string }) => {
   const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false);
-  const { accentColor, textAccentColor, secondaryBackgroundColorLighter, textColor } =
+  const { accentColor, secondaryBackgroundColorLighter, textColor } =
     useColors();
   const { updateAndRestart } = useSettings();
   const toast = useToast();
@@ -28,14 +28,19 @@ const UpdateToast = () => {
   };
 
   return (
-    <Box color={textAccentColor} bg={secondaryBackgroundColorLighter} rounded="md" p={2}>
+    <Box
+      color={textColor}
+      bg={secondaryBackgroundColorLighter}
+      rounded="md"
+      p={2}
+    >
       {loadingUpdates ? (
         <Center>
           <Spinner bg={accentColor} />
         </Center>
       ) : (
         <>
-          <Text fontSize="sm">A new update is avaible!</Text>
+          <Text fontSize="sm">A new update is avaible! ({version})</Text>
           <Text fontSize="sm">Do you want to restart now?</Text>
           <Flex mt={2} gap={2}>
             <Button
@@ -49,7 +54,7 @@ const UpdateToast = () => {
             </Button>
             <Button
               h={8}
-              color={textAccentColor}
+              color={textColor}
               _hover={{ opacity: 0.6 }}
               borderColor={accentColor}
               variant="outline"

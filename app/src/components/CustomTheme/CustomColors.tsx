@@ -26,7 +26,7 @@ const CustomColors = () => {
     accentColor,
     textColor,
     mutedTextColor,
-    secondaryBackgroundColorDarker
+    secondaryBackgroundColorDarker,
   } = useColors();
   const [colors, setColors] = useState<Theme | undefined>();
   const cancelRef = useRef();
@@ -115,7 +115,10 @@ const CustomColors = () => {
         isOpen={isOpen}
       >
         <AlertDialogOverlay />
-        <AlertDialogContent bg={secondaryBackgroundColorDarker} color={textColor}>
+        <AlertDialogContent
+          bg={secondaryBackgroundColorDarker}
+          color={textColor}
+        >
           <AlertDialogBody>
             <Input
               value={themeName}

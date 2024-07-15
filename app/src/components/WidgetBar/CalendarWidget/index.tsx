@@ -14,7 +14,7 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { BiMerge } from "react-icons/bi";
 import { useWidget } from "contexts/WidgetContext";
-import DateViewer from "components/Widget-Bar/Calendar-Widget/DateViewer";
+import DateViewer from "components/WidgetBar/CalendarWidget/DateViewer";
 import useColors from "hooks/useColors";
 
 const Index = () => {
@@ -23,7 +23,7 @@ const Index = () => {
     iconColor,
     textColor,
     mutedTextColor,
-    secondaryBackgroundColorLighter
+    secondaryBackgroundColorLighter,
   } = useColors();
   const {
     isConnected,

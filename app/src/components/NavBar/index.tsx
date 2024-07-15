@@ -14,7 +14,7 @@ const NavBar = () => {
     accentColor,
     textColor,
     mutedTextColor,
-    secondaryBackgroundColorLighter
+    secondaryBackgroundColorLighter,
   } = useColors();
   const invoke = window.electron.invoke;
   const { setWidgetPanel, widgetPanel } = useWidget();

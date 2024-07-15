@@ -21,7 +21,7 @@ const AddFolder = () => {
     accentColor,
     textColor,
     secondaryBackgroundColorLighter,
-    secondaryBackgroundColorDarker
+    secondaryBackgroundColorDarker,
   } = useColors();
   const cancelRef = useRef();
   const [folderName, setFolderName] = useState<string>("");

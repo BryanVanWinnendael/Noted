@@ -1,17 +1,13 @@
 import { Box, Button, Flex, Stack, Text, Tooltip } from "@chakra-ui/react";
 import { useWidget } from "contexts/WidgetContext";
 import { BiMerge } from "react-icons/bi";
-import ToDoList from "components/Widget-Bar/ToDo-Widget/ToDoList";
-import ToDoForm from "components/Widget-Bar/ToDo-Widget/ToDoForm";
+import ToDoList from "components/WidgetBar/ToDoWidget/ToDoList";
+import ToDoForm from "components/WidgetBar/ToDoWidget/ToDoForm";
 import useColors from "hooks/useColors";
 
 const Index = () => {
-  const {
-    accentColor,
-    iconColor,
-    textColor,
-    secondaryBackgroundColorLighter
-  } = useColors();
+  const { accentColor, iconColor, textColor, secondaryBackgroundColorLighter } =
+    useColors();
   const { isConnected, setIsConnected, canConnect, getCompatibleWidget } =
     useWidget();
 

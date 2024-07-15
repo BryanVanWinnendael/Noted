@@ -17,8 +17,15 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
 
 const ImportCard = ({ path }: { path: string }) => {
-  const { borderColor, textColor, iconColor, backgroundColor, backgroundColorLighter, getGlassBackground, backgroundColorDarker } =
-    useColors();
+  const {
+    borderColor,
+    textColor,
+    iconColor,
+    backgroundColor,
+    backgroundColorLighter,
+    getGlassBackground,
+    backgroundColorDarker,
+  } = useColors();
   const { saveSettings, backgroundImage, customBackground } = useSettings();
   const { deleteImportedBackground } = useWorkspace();
   const selected = backgroundImage === "custom" && path === customBackground;

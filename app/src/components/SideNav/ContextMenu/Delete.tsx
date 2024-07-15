@@ -22,7 +22,7 @@ const Delete = ({ path, name, type }: ContextMenu) => {
     secondaryBackgroundColor,
     backgroundColor,
     iconColor,
-    backgroundColorDarker
+    backgroundColorDarker,
   } = useColors();
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -48,7 +48,11 @@ const Delete = ({ path, name, type }: ContextMenu) => {
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent bg={backgroundColor} color={textColor} shadow="md">
+          <AlertDialogContent
+            bg={backgroundColor}
+            color={textColor}
+            shadow="md"
+          >
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete {type} {name.split(".noted")[0]}
             </AlertDialogHeader>

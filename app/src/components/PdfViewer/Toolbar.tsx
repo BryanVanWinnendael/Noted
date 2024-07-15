@@ -31,11 +31,7 @@ const Toolbar = ({
           <Button
             _hover={{ backgroundColorDarker }}
             color={textColor}
-            bg={
-              tool === "pencil"
-                ? backgroundColorDarker
-                : "transparent"
-            }
+            bg={tool === "pencil" ? backgroundColorDarker : "transparent"}
             leftIcon={<LuPencil />}
             onClick={() => toggleHandTool("pencil")}
           >
@@ -52,11 +48,7 @@ const Toolbar = ({
           <Button
             _hover={{ bg: backgroundColorDarker }}
             color={textColor}
-            bg={
-              tool === "text"
-                ? backgroundColorDarker
-                : "transparent"
-            }
+            bg={tool === "text" ? backgroundColorDarker : "transparent"}
             onClick={() => toggleHandTool("text")}
           >
             <MdTextFields />

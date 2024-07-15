@@ -20,8 +20,12 @@ const FolderButton = ({
   onClick: () => void;
   expanded: boolean;
 }) => {
-  const { textColor, iconColor, secondaryBackgroundColorLighter, secondaryBackgroundColorDarker } =
-    useColors();
+  const {
+    textColor,
+    iconColor,
+    secondaryBackgroundColorLighter,
+    secondaryBackgroundColorDarker,
+  } = useColors();
   const { setActiveFolder } = useWorkspace();
   const { sidebarIcons } = useSettings();
   const [isOpen, setIsOpen] = useState<boolean>(false);

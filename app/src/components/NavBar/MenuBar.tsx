@@ -19,7 +19,7 @@ const MenuBar = () => {
     mutedTextColor,
     borderColor,
     backgroundColorDarker,
-    getGlassBackground
+    getGlassBackground,
   } = useColors();
   const { openWorkspace, closeWorkspace } = useWorkspace();
   const { setColorMode } = useColorMode();
@@ -63,7 +63,9 @@ const MenuBar = () => {
         className="glass"
         border="1px"
         borderColor={borderColor}
-        bg={isGlassEnabled ? getGlassBackground(backgroundColor) : backgroundColor}
+        bg={
+          isGlassEnabled ? getGlassBackground(backgroundColor) : backgroundColor
+        }
         rounded="md"
         shadow="none"
         zIndex={99999999}
@@ -76,7 +78,7 @@ const MenuBar = () => {
           px={4}
           gap={4}
           color={textColor}
-          _hover={{ bg: backgroundColorDarker}}
+          _hover={{ bg: backgroundColorDarker }}
           onClick={openWorkspace}
         >
           <Text w="fit-content">Open Workspace</Text>

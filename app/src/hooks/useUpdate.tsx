@@ -7,12 +7,8 @@ import { TOAST_ID } from "utils/constants";
 import useColors from "./useColors";
 
 const useUpdate = () => {
-  const {
-    secondaryBackgroundColorLighter,
-    textColor,
-    borderColor,
-    iconColor,
-  } = useColors();
+  const { secondaryBackgroundColorLighter, textColor, borderColor, iconColor } =
+    useColors();
   const toast = useToast();
   const { checkUpdate } = useSettings();
   const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false);
@@ -26,7 +22,7 @@ const useUpdate = () => {
         id: TOAST_ID,
         duration: null,
         isClosable: true,
-        render: () => <UpdateToast />,
+        render: () => <UpdateToast version={update} />,
       });
     } else {
       if (toast.isActive(TOAST_ID)) return setLoadingUpdates(false);

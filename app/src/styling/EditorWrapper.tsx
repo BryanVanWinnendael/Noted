@@ -15,7 +15,7 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
     secondaryBackgroundColorLighter,
     mutedTextColor,
     getTransparent,
-    secondaryBackgroundColorDarker
+    secondaryBackgroundColorDarker,
   } = useColors();
 
   const setTooltipStyle = useCallback(

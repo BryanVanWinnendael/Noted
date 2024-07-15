@@ -99,7 +99,11 @@ export interface WorkspaceTypeContext {
   user: User | undefined;
   handleSignOutUser: () => void;
   notes: UserNote[];
-  createPublicNote: (data: OutputData, path: string, style: NoteStyle) => Promise<boolean>;
+  createPublicNote: (
+    data: OutputData,
+    path: string,
+    style: NoteStyle,
+  ) => Promise<boolean>;
   deletePublicNote: (id: string) => void;
   showCmdPalette: boolean;
   setShowCmdPalette: (show: boolean) => void;
@@ -294,14 +298,14 @@ export interface NoteStyle {
   accent: string;
   secondaryBackgroundColorLighter: string;
   secondaryBackgroundColorDarker: string;
-  font: string
-  headerColors: HeaderColors | false
+  font: string;
+  headerColors: HeaderColors | false;
 }
 
 export interface UserNote {
   user_email: string;
   data: string;
-  path: string
+  path: string;
   id: string;
-  style: NoteStyle
+  style: NoteStyle;
 }

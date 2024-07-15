@@ -20,7 +20,7 @@ const Actions = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setKey(e.target.value);
     localStorage.setItem("apiKey", e.target.value);
-  }
+  };
 
   return (
     <Box color={textColor}>
@@ -32,22 +32,22 @@ const Actions = () => {
           <Box>
             <Text fontWeight="semibold">API key</Text>
             <Text
-              onClick={() =>
-                handleLink(
-                  "https://console.groq.com/keys",
-                )
-              }
+              onClick={() => handleLink("https://console.groq.com/keys")}
               cursor="pointer"
               color={accentColor}
             >
-             Setup API key <ExternalLinkIcon mx="2px" />
+              Setup API key <ExternalLinkIcon mx="2px" />
             </Text>
           </Box>
 
-          <Input onChange={handleChange} value={key} width="fit-content" type="password" />
+          <Input
+            onChange={handleChange}
+            value={key}
+            width="fit-content"
+            type="password"
+          />
         </Flex>
         <TranslateSetting />
-        
       </Stack>
     </Box>
   );

@@ -17,7 +17,8 @@ const AddExcalidrawDialog = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const { accentColor, secondaryBackgroundColorLighter, textColor } = useColors();
+  const { accentColor, secondaryBackgroundColorLighter, textColor } =
+    useColors();
   const cancelRef = useRef();
   const [fileName, setFileName] = useState<string>("");
   const [inValidName, setInValidName] = useState<boolean>(false);

@@ -8,38 +8,45 @@ import { FcGoogle } from "react-icons/fc";
 declare let window: MyWindow;
 
 const invoke = window.electron.invoke;
-const win = window.electron.ipcRenderer
+const win = window.electron.ipcRenderer;
 
-
-const GoogleSignIn = ({ onClose }:{ onClose: () => void }) => {
+const GoogleSignIn = ({ onClose }: { onClose: () => void }) => {
   const signInWithGoogle = async () => {
     const link = import.meta.env.VITE_CLIENT_URL + "app/signin";
     invoke("openBrowser", link);
   };
 
-  const signInWithToken = useCallback(async (token: string) => {
-    const credential = GoogleAuthProvider.credential(token);
-    signInWithCredential(auth, credential)
-    .then(() => {
-      onClose()
-    })
-    .catch((error) => {
-      console.error("Error signing in with token:", error);
-    });
-  },[onClose])
+  const signInWithToken = useCallback(
+    async (token: string) => {
+      const credential = GoogleAuthProvider.credential(token);
+      signInWithCredential(auth, credential)
+        .then(() => {
+          onClose();
+        })
+        .catch((error) => {
+          console.error("Error signing in with token:", error);
+        });
+    },
+    [onClose],
+  );
 
   useEffect(() => {
     win.on("token", (token: string) => {
       signInWithToken(token);
     });
-  },[signInWithToken])
+  }, [signInWithToken]);
 
   return (
-    <Button onClick={signInWithGoogle} display="flex" alignItems="center" gap={2}>
+    <Button
+      onClick={signInWithGoogle}
+      display="flex"
+      alignItems="center"
+      gap={2}
+    >
       <FcGoogle />
       Sign in with google
     </Button>
-  )
-}
+  );
+};
 
-export default GoogleSignIn
+export default GoogleSignIn;

@@ -1,13 +1,13 @@
 import { Card, Stack } from "@chakra-ui/react";
-import WidgetChooser from "components/Widget-Bar/WidgetChooser";
+import WidgetChooser from "components/WidgetBar/WidgetChooser";
 import { MyWindow, WidgetName } from "types";
 import { useEffect, useState } from "react";
 import { useWidget } from "contexts/WidgetContext";
-import ClockWidget from "components/Widget-Bar/Clock-Wdiget";
-import CalendarWidget from "components/Widget-Bar/Calendar-Widget";
-import ToDoWidget from "components/Widget-Bar/ToDo-Widget";
+import ClockWidget from "components/WidgetBar/ClockWdiget";
+import CalendarWidget from "components/WidgetBar/CalendarWidget";
+import ToDoWidget from "components/WidgetBar/ToDoWidget";
 import { useSettings } from "contexts/SettingsContext";
-import InfoWidget from "components/Widget-Bar/Info-Widget";
+import InfoWidget from "components/WidgetBar/InfoWidget";
 import useColors from "hooks/useColors";
 
 declare let window: MyWindow;
@@ -60,7 +60,11 @@ const Index = () => {
             top={index === 1 ? getOffset() : 0}
             cursor="pointer"
             zIndex={selectedPanel === index ? 10 : 0}
-            bg={isGlassEnabled ? getGlassBackground(backgroundColor) : backgroundColor}
+            bg={
+              isGlassEnabled
+                ? getGlassBackground(backgroundColor)
+                : backgroundColor
+            }
             className="glass"
             shadow="md"
             rounded="lg"

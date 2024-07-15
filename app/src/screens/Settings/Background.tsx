@@ -1,5 +1,5 @@
 import { Box, Divider, Text } from "@chakra-ui/react";
-import BackgroundChooser from "components/Background-Chooser";
+import BackgroundChooser from "components/BackgroundChooser";
 import BlurChooser from "components/BlurChooser";
 import WallpaperBrightness from "components/WallpaperBrightness";
 

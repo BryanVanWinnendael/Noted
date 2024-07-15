@@ -8,6 +8,12 @@ import { autoUpdater } from "electron-updater";
 
 autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = false;
+autoUpdater.setFeedURL({
+  provider: "github",
+  owner: "Bryan Van Winnendael",
+  repo: "Noted",
+  token: import.meta.env.VITE_GITHUB_TOKEN,
+});
 
 // The built directory structure
 //
@@ -29,12 +35,13 @@ const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
 if (process.defaultApp) {
   if (process.argv.length >= 2) {
-    app.setAsDefaultProtocolClient('write-noted', process.execPath, [path.resolve(process.argv[1])])
+    app.setAsDefaultProtocolClient("write-noted", process.execPath, [
+      path.resolve(process.argv[1]),
+    ]);
   }
 } else {
-  app.setAsDefaultProtocolClient('write-noted')
+  app.setAsDefaultProtocolClient("write-noted");
 }
-
 
 function createWindow() {
   win = new BrowserWindow({
@@ -53,8 +60,7 @@ function createWindow() {
     backgroundMaterial: "acrylic",
   });
 
-  // app.isPackaged && win.webContents.openDevTools();
-  win.webContents.openDevTools();
+  !app.isPackaged && win.webContents.openDevTools();
   win.setMenu(null);
 
   const updater = new Updates(win);
@@ -104,7 +110,6 @@ function createWindow() {
     shell.openExternal(link);
   });
 
-  
   // Test active push message to Renderer-process.
   win.webContents.on("did-finish-load", () => {
     win?.webContents.send("main-process-message", new Date().toLocaleString());
@@ -118,32 +123,34 @@ function createWindow() {
   }
 }
 
-const gotTheLock = app.requestSingleInstanceLock()
+const gotTheLock = app.requestSingleInstanceLock();
 
 if (!gotTheLock) {
-  app.quit()
+  app.quit();
 } else {
-  app.on('second-instance', (_, commandLine) => {
+  app.on("second-instance", (_, commandLine) => {
     if (win) {
-      const deepLink = commandLine.find(arg => arg.startsWith('write-noted://'))
-      win.webContents.send("token", deepLink)
-      const token = deepLink?.split('write-noted://')[1]
-      
-      if (win.isMinimized()) win.restore()
-        win.focus()
+      const deepLink = commandLine.find((arg) =>
+        arg.startsWith("write-noted://"),
+      );
+      win.webContents.send("token", deepLink);
+      const token = deepLink?.split("write-noted://")[1];
 
-      win.webContents.send("token", token)
+      if (win.isMinimized()) win.restore();
+      win.focus();
+
+      win.webContents.send("token", token);
     }
-  })
+  });
 
   app.whenReady().then(() => {
-    createWindow()
-  })
+    createWindow();
+  });
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit()
-})
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") app.quit();
+});

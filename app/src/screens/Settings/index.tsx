@@ -21,11 +21,16 @@ import Notes from "./Notes";
 import SettingsNavItem from "components/SettingsNavItem";
 import Actions from "./Actions";
 
-
 const SettingsScreen = () => {
-  const { secondaryBackgroundColorLighter, accentColor, textColor, secondaryBackgroundColor, getGlassBackground } =
-    useColors();
-    const { isOpen, onClose, glassBackground, glassEnabled, view, setView} = useSettings();
+  const {
+    secondaryBackgroundColorLighter,
+    accentColor,
+    textColor,
+    secondaryBackgroundColor,
+    getGlassBackground,
+  } = useColors();
+  const { isOpen, onClose, glassBackground, glassEnabled, view, setView } =
+    useSettings();
   const { workspace } = useWorkspace();
 
   const isGlassEnabled = glassEnabled && glassBackground.settings;
@@ -62,14 +67,46 @@ const SettingsScreen = () => {
               <SettingsNavItem label="General" view={view} setView={setView} />
               {workspace && (
                 <>
-                  <SettingsNavItem label="Notes" view={view} setView={setView} />
-                  <SettingsNavItem label="Actions" view={view} setView={setView} />
-                  <SettingsNavItem label="Appearance" view={view} setView={setView} />
-                  <SettingsNavItem label="Sidebar" view={view} setView={setView} />
-                  <SettingsNavItem label="Background" view={view} setView={setView} />
-                  <SettingsNavItem label="Custom themes" view={view} setView={setView} />
-                  <SettingsNavItem label="Market" view={view} setView={setView} />
-                  <SettingsNavItem label="Shortcuts" view={view} setView={setView} />
+                  <SettingsNavItem
+                    label="Notes"
+                    view={view}
+                    setView={setView}
+                  />
+                  <SettingsNavItem
+                    label="Actions"
+                    view={view}
+                    setView={setView}
+                  />
+                  <SettingsNavItem
+                    label="Appearance"
+                    view={view}
+                    setView={setView}
+                  />
+                  <SettingsNavItem
+                    label="Sidebar"
+                    view={view}
+                    setView={setView}
+                  />
+                  <SettingsNavItem
+                    label="Background"
+                    view={view}
+                    setView={setView}
+                  />
+                  <SettingsNavItem
+                    label="Custom themes"
+                    view={view}
+                    setView={setView}
+                  />
+                  <SettingsNavItem
+                    label="Market"
+                    view={view}
+                    setView={setView}
+                  />
+                  <SettingsNavItem
+                    label="Shortcuts"
+                    view={view}
+                    setView={setView}
+                  />
                 </>
               )}
             </Box>

@@ -5,8 +5,12 @@ import AddExcalidrawDialog from "./AddExcalidrawDialog";
 
 const AddFile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { iconColor, textColor, secondaryBackgroundColorLighter, secondaryBackgroundColor } =
-    useColors();
+  const {
+    iconColor,
+    textColor,
+    secondaryBackgroundColorLighter,
+    secondaryBackgroundColor,
+  } = useColors();
 
   return (
     <>

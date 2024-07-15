@@ -13,7 +13,7 @@ import useColors from "hooks/useColors";
 
 const BlurChooser = () => {
   const { saveSettings, blur } = useSettings();
-  const { mutedTextColor, accentColor, textColor} = useColors();
+  const { mutedTextColor, accentColor, textColor } = useColors();
 
   const blurValue = blur * 10;
 

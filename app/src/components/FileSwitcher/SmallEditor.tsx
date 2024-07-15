@@ -11,9 +11,9 @@ const SmallEditor = ({ data, index }: { data: OutputData; index: number }) => {
   const { backgroundColorLighter } = useColors();
 
   const toolsWithoutAudioPlayer = clone(EDITOR_JS_TOOLS);
-  delete toolsWithoutAudioPlayer.audioPlayer;
   delete toolsWithoutAudioPlayer.code;
-  
+  delete toolsWithoutAudioPlayer.audioPlayer;
+
   return (
     <EditorWrapper>
       <Box
@@ -46,6 +46,28 @@ const SmallEditor = ({ data, index }: { data: OutputData; index: number }) => {
           },
           ".editorjs-codeFlask_Wrapper": {
             height: "100%",
+          },
+          ".cdx-checklist__item-checkbox svg, .cdx-checklist__item-checkbox-check":
+            {
+              height: "5px",
+              width: "5px",
+            },
+          ".cdx-checklist__item-checkbox": {
+            marginTop: "0px",
+            height: "5px",
+            width: "5px",
+          },
+          ".ce-stub": {
+            display: "none",
+          },
+          ".tc-table": {
+            fontSize: "5px",
+          },
+          ".tc-cell": {
+            padding: "0px",
+          },
+          ".cdx-marker": {
+            padding: "0px",
           },
         }}
       >

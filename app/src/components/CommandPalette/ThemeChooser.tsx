@@ -11,14 +11,23 @@ import {
   InputLeftElement,
   Stack,
   Text,
+  useColorMode,
 } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useSettings } from "contexts/SettingsContext";
 import useColors from "hooks/useColors";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { WorkspaceType } from "types/index";
+import { FaCheck } from "react-icons/fa";
 
-const OpenFileInTab = () => {
-  const [filterdFiles, setFilterdFiles] = useState<string[]>([]);
+const ThemeChooser = ({
+  isOpen,
+  handleCloseThemeChooser,
+}: {
+  isOpen: boolean;
+  handleCloseThemeChooser: () => void;
+}) => {
+  const { customThemes, saveSettings } = useSettings();
+  const { setColorMode, colorMode } = useColorMode();
+  const [filterdThemes, setFilterdThemes] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const cancelRef = useRef();
@@ -31,69 +40,49 @@ const OpenFileInTab = () => {
     textAccentColor,
     borderColor,
   } = useColors();
-  const {
-    showOpenFileInTab,
-    setShowOpenFileInTab,
-    workspace,
-    openFileInNewTab,
-    platform,
-  } = useWorkspace();
   const [searchFile, setSearchFile] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [typing, setTyping] = useState<boolean>(false);
 
-  const isLinux = platform === "linux";
+  const isActiveTheme = (theme: string) => {
+    if (theme === "Dark") theme = "dark";
+    if (theme === "Light") theme = "light";
+    if (theme === "Deep blue") theme = "deep_blue";
+    return colorMode === theme;
+  };
 
-  const handleOpenTab = (file: string) => {
-    openFileInNewTab(file);
+  const changeTheme = (theme: string) => {
+    if (theme === "Dark") theme = "dark";
+    if (theme === "Light") theme = "light";
+    if (theme === "Deep blue") theme = "deep_blue";
+
+    setColorMode(theme);
+    saveSettings("active_theme", theme);
+    if (customThemes && customThemes[theme])
+      localStorage.setItem("theme-json", JSON.stringify(customThemes[theme]));
+  };
+
+  const handleChooseTheme = (theme: string) => {
+    changeTheme(theme);
     handleClose();
   };
 
   const handleClose = () => {
     resetDialog();
-    setShowOpenFileInTab(false);
+    handleCloseThemeChooser();
   };
 
-  const getAllFiles = useCallback(() => {
-    const iterFiles = (folder: WorkspaceType[], res: string[]) => {
-      if (!folder) return;
-      folder.forEach((file) => {
-        if (file.type === "folder") {
-          if (!file.items) return;
-          iterFiles(file.items, res);
-        } else {
-          res.push(file.path);
-        }
-      });
-    };
-    const res: any[] = [];
-    if (!workspace?.items) return res;
-    iterFiles(workspace?.items, res);
-    return res;
-  }, [workspace?.items]);
-
-  const getFilename = (path: string) => {
-    let splitted_path;
-    if (isLinux) {
-      splitted_path = path.split("/");
-    } else {
-      splitted_path = path.split("\\");
-    }
-    const filename = splitted_path[splitted_path.length - 1];
-    const extensionSplit = filename.split(".");
-    const extension = extensionSplit[extensionSplit.length - 1];
-    const splitted = filename.split("." + extension)[0];
-    return splitted;
-  };
+  const getAllThemes = useCallback(() => {
+    return ["Light", "Dark", "Deep blue"].concat(Object.keys(customThemes));
+  }, [customThemes]);
 
   const handleSetSearch = (input: string) => {
     setSearchFile(input);
-    const files = getAllFiles();
-    const filtered = files.filter((file) => {
-      const filename = getFilename(file);
-      return filename.toLowerCase().includes(input.toLowerCase());
+    const themes = getAllThemes();
+    const filtered = themes.filter((theme) => {
+      return theme.toLowerCase().includes(input.toLowerCase());
     });
-    setFilterdFiles(filtered);
+    setFilterdThemes(filtered);
   };
 
   const handleKeyDown = (
@@ -113,7 +102,7 @@ const OpenFileInTab = () => {
         break;
       case "Enter":
         setTyping(false);
-        handleOpenTab(filterdFiles[index]);
+        handleChooseTheme(filterdThemes[index]);
         resetDialog();
         break;
       default:
@@ -133,7 +122,7 @@ const OpenFileInTab = () => {
   const resetDialog = () => {
     setSearchFile("");
     setCurrentIndex(null);
-    setFilterdFiles(getAllFiles());
+    setFilterdThemes(getAllThemes());
   };
 
   const handleKeyDialog = useCallback(
@@ -146,7 +135,7 @@ const OpenFileInTab = () => {
           buttonRefs.current[0]?.focus();
           setCurrentIndex(0);
         } else {
-          const nextCurrent = (currentIndex + 1) % getAllFiles().length;
+          const nextCurrent = (currentIndex + 1) % getAllThemes().length;
           buttonRefs.current[nextCurrent]?.focus();
           setCurrentIndex(nextCurrent);
         }
@@ -159,31 +148,31 @@ const OpenFileInTab = () => {
         inputRef.current?.focus();
       }
     },
-    [currentIndex, getAllFiles],
+    [currentIndex, getAllThemes],
   );
 
   const focusNextButton = (currentIndex: number) => {
-    const nextIndex = (currentIndex + 1) % getAllFiles().length;
+    const nextIndex = (currentIndex + 1) % getAllThemes().length;
     buttonRefs.current[nextIndex]?.focus();
   };
 
   const focusPreviousButton = (currentIndex: number) => {
     const previousIndex =
-      (currentIndex - 1 + getAllFiles().length) % getAllFiles().length;
+      (currentIndex - 1 + getAllThemes().length) % getAllThemes().length;
     buttonRefs.current[previousIndex]?.focus();
   };
 
   useEffect(() => {
-    const files = getAllFiles();
-    setFilterdFiles(files);
-  }, [workspace?.items, getAllFiles]);
+    const files = getAllThemes();
+    setFilterdThemes(files);
+  }, [getAllThemes]);
 
   return (
     <AlertDialog
       motionPreset="slideInBottom"
       leastDestructiveRef={cancelRef as any}
       onClose={handleClose}
-      isOpen={showOpenFileInTab}
+      isOpen={isOpen}
     >
       <AlertDialogOverlay onKeyDown={handleKeyDialog} />
       <AlertDialogContent
@@ -214,16 +203,16 @@ const OpenFileInTab = () => {
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  const file = filterdFiles[0];
-                  handleOpenTab(file);
+                  const theme = filterdThemes[0];
+                  handleChooseTheme(theme);
                   resetDialog();
                 }
               }}
-              placeholder="Search or enter file"
+              placeholder="Search or enter theme"
             />
           </InputGroup>
           <Stack maxH={200} overflowY="scroll" mt={2}>
-            {filterdFiles.map((file: string, index: number) => (
+            {filterdThemes.map((theme: string, index: number) => (
               <Button
                 border="none"
                 bg={typing && index === 0 ? accentColor : "transparent"}
@@ -238,6 +227,7 @@ const OpenFileInTab = () => {
                 cursor="pointer"
                 display="flex"
                 justifyContent="space-between"
+                alignItems="center"
                 px={2}
                 py={1}
                 rounded="md"
@@ -245,21 +235,24 @@ const OpenFileInTab = () => {
                   bg: secondaryBackgroundColorDarker,
                 }}
                 onClick={() => {
-                  handleOpenTab(file);
+                  handleChooseTheme(theme);
                 }}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 tabIndex={0} // Make the button focusable
               >
-                <Text
-                  maxW="full"
-                  overflow="hidden"
-                  whiteSpace="nowrap"
-                  textOverflow="ellipsis"
-                >
-                  {getFilename(file)}
-                </Text>
+                <Flex alignItems="center" gap={2}>
+                  {isActiveTheme(theme) && <FaCheck color={accentColor} />}
+                  <Text
+                    maxW="full"
+                    overflow="hidden"
+                    whiteSpace="nowrap"
+                    textOverflow="ellipsis"
+                  >
+                    {theme}
+                  </Text>
+                </Flex>
                 <Flex alignItems="center" gap={1} color={mutedTextColor}>
-                  <Text>Open in tab</Text>
+                  <Text>Choose</Text>
                   <ArrowForwardIcon />
                 </Flex>
               </Button>
@@ -271,4 +264,4 @@ const OpenFileInTab = () => {
   );
 };
 
-export default OpenFileInTab;
+export default ThemeChooser;

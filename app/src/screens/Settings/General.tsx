@@ -62,9 +62,7 @@ const General = () => {
         <Flex alignItems="center" justify="space-between">
           <Box>
             <Text fontWeight="semibold">What's new</Text>
-            <Text color={mutedTextColor}>
-              Read What's new in {APP_VERSION}
-            </Text>
+            <Text color={mutedTextColor}>Read What's new in {APP_VERSION}</Text>
           </Box>
 
           <Button

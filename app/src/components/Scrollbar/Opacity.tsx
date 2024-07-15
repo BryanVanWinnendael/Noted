@@ -28,9 +28,7 @@ const Opacity = () => {
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
         <Text fontWeight="semibold">Opacity</Text>
-        <Text color={mutedTextColor}>
-          Choose the opacity for the scrollbar
-        </Text>
+        <Text color={mutedTextColor}>Choose the opacity for the scrollbar</Text>
       </Box>
 
       <Flex w="50%" gap={2} alignItems="center">

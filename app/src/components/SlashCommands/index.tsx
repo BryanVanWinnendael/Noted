@@ -16,8 +16,14 @@ const SlashCommands = () => {
   const boxRef = useRef<HTMLDivElement>(null);
   const topP = position.y + 25;
   const LeftP = position.x;
-  const { backgroundColor, borderColor, textColor, iconColor, backgroundColorDarker, getGlassBackground } =
-    useColors();
+  const {
+    backgroundColor,
+    borderColor,
+    textColor,
+    iconColor,
+    backgroundColorDarker,
+    getGlassBackground,
+  } = useColors();
   const { glassBackground, glassEnabled } = useSettings();
   const [open, setOpen] = useState<openType>(false);
 

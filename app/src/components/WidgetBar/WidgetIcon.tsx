@@ -14,8 +14,16 @@ import useColors from "hooks/useColors";
 import { useSettings } from "contexts/SettingsContext";
 
 const WidgetIcon = ({ icon, name }: { icon: any; name: WidgetName }) => {
-  const { accentColor, textColor, backgroundColor, borderColor, backgroundColorLighter, getTransparent,backgroundColorDarker, getGlassBackground } =
-    useColors();
+  const {
+    accentColor,
+    textColor,
+    backgroundColor,
+    borderColor,
+    backgroundColorLighter,
+    getTransparent,
+    backgroundColorDarker,
+    getGlassBackground,
+  } = useColors();
   const { onOpen, onClose, isOpen } = useDisclosure();
   const { selectedWidgets, setSelectedWidgets, setIsConnected } = useWidget();
   const { glassBackground, glassEnabled } = useSettings();
@@ -62,7 +70,12 @@ const WidgetIcon = ({ icon, name }: { icon: any; name: WidgetName }) => {
   return (
     <Menu isOpen={isOpen} onClose={onClose}>
       <MenuButton onContextMenu={(e) => handleClick(e)}>
-        <Tooltip label={name} bg={backgroundColor} color={textColor} rounded="md">
+        <Tooltip
+          label={name}
+          bg={backgroundColor}
+          color={textColor}
+          rounded="md"
+        >
           <IconButton
             _hover={{ opacity: 0.8 }}
             _active={{ opacity: 0.8 }}

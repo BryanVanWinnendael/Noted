@@ -14,11 +14,18 @@ import FormSignIn from "./FormSignIn";
 
 const SignIn = () => {
   const { backgroundColor, textColor, accentColor } = useColors();
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-    <Button bg={accentColor} _hover={{ backgroundColor: accentColor, opacity: 0.8 }} color={textColor} onClick={onOpen}>Sign in</Button>
+      <Button
+        bg={accentColor}
+        _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
+        color={textColor}
+        onClick={onOpen}
+      >
+        Sign in
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent p={5} bg={backgroundColor}>
@@ -30,14 +37,14 @@ const SignIn = () => {
               fontWeight={700}
               fontSize="4xl"
             >
-             Sign in
+              Sign in
             </Text>
           </Flex>
           <ModalBody px={4}>
             <Flex direction="column" gap={2}>
-              <FormSignIn onClose={onClose}/>
+              <FormSignIn onClose={onClose} />
               <Text textAlign="center">or</Text>
-              <GoogleSignIn onClose={onClose}/>
+              <GoogleSignIn onClose={onClose} />
             </Flex>
           </ModalBody>
         </ModalContent>

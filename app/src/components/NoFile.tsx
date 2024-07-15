@@ -22,7 +22,7 @@ const NoFile = () => {
     accentColor,
     iconColor,
     secondaryBackgroundColor,
-    secondaryBackgroundColorDarker
+    secondaryBackgroundColorDarker,
   } = useColors();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {

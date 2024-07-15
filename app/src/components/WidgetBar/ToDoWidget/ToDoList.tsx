@@ -6,12 +6,8 @@ import { CiCalendarDate } from "react-icons/ci";
 import useColors from "hooks/useColors";
 
 const ToDoList = () => {
-  const {
-    accentColor,
-    iconColor,
-    textColor,
-    secondaryBackgroundColorLighter
-  } = useColors();
+  const { accentColor, iconColor, textColor, secondaryBackgroundColorLighter } =
+    useColors();
   const { todos, setTodos } = useWidget();
   const todosRef: RefObject<HTMLDivElement> = useRef(null);
 

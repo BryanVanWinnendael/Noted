@@ -168,13 +168,12 @@ const useColors = () => {
   const getSecondaryBackgroundColorDarker = () => {
     const secondary_background_color = getSecondaryBackgroundColor();
     return utils.getDarkerColor("0.02", secondary_background_color);
-  }
+  };
 
   const getBackgroundColorDarker = () => {
     const bg_color = getBackgroundColor();
     return utils.getDarkerColor("0.02", bg_color);
-  }
-
+  };
 
   const getBorderColor = () => {
     const muted_color = getMutedTextColor();
@@ -183,15 +182,15 @@ const useColors = () => {
 
   const getTextColorOnAccentCollor = () => {
     return utils.getDarkerColor("0.1", getAccentColor());
-  }
+  };
 
   const getGlassBackground = (color: string) => {
-    return utils.getGlassBackground(color)
-  }
+    return utils.getGlassBackground(color);
+  };
 
   const getTransparent = (opacity: number, color: string) => {
     return utils.getTransparent(opacity, color);
-  }
+  };
 
   return {
     backgroundColor: getBackgroundColor(),
@@ -207,7 +206,7 @@ const useColors = () => {
     mutedTextColor: getMutedTextColor(),
     textAccentColor: getTextColorOnAccentCollor(),
     getGlassBackground,
-    getTransparent
+    getTransparent,
   };
 };
 

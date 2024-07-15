@@ -76,7 +76,7 @@ const App = () => {
         id: TOAST_ID,
         duration: null,
         isClosable: true,
-        render: () => <UpdateToast />,
+        render: () => <UpdateToast version={update} />,
       });
     }
   };
@@ -86,7 +86,8 @@ const App = () => {
       document.getElementsByTagName("html")[0].style.backgroundColor =
         "transparent";
     else
-      document.getElementsByTagName("html")[0].style.backgroundColor = backgroundColor;
+      document.getElementsByTagName("html")[0].style.backgroundColor =
+        backgroundColor;
   }, [backgroundColor, glassBackground.window, glassEnabled]);
 
   useEffect(() => {

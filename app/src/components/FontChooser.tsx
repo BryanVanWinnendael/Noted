@@ -30,7 +30,11 @@ const FontChooser = () => {
         maxH="200px"
         value={font}
         width="auto"
-        css={{ "& > *": { background: `${secondaryBackgroundColorLighter} !important` } }}
+        css={{
+          "& > *": {
+            background: `${secondaryBackgroundColorLighter} !important`,
+          },
+        }}
         placeholder={DEFAULT_FONT + " (default)"}
         h="30px"
       >

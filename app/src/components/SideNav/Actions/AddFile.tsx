@@ -5,8 +5,12 @@ import AddFileDialog from "./AddFileDialog";
 
 const AddFile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { iconColor, textColor, secondaryBackgroundColorLighter, secondaryBackgroundColorDarker } =
-    useColors();
+  const {
+    iconColor,
+    textColor,
+    secondaryBackgroundColorLighter,
+    secondaryBackgroundColorDarker,
+  } = useColors();
 
   return (
     <>

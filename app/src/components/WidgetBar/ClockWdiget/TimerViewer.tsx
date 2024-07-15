@@ -25,12 +25,8 @@ type timerType = {
 };
 
 const TimerViewer = () => {
-  const {
-    accentColor,
-    secondaryBackgroundColor,
-    textColor,
-    mutedTextColor,
-  } = useColors();
+  const { accentColor, secondaryBackgroundColor, textColor, mutedTextColor } =
+    useColors();
   const { isConnected, selectedDate } = useWidget();
   const [timer, setTimer] = useState<timerType | undefined>();
   const [inputTimer, setInputTimer] = useState<timerType>({
@@ -184,16 +180,8 @@ const TimerViewer = () => {
             </Flex>
             <Flex gap={2}>
               <Input focusBorderColor={accentColor} {...inputHours} w={100} />
-              <Input
-                focusBorderColor={accentColor}
-                {...inputMinutes}
-                w={100}
-              />
-              <Input
-                focusBorderColor={accentColor}
-                {...inputSeconds}
-                w={100}
-              />
+              <Input focusBorderColor={accentColor} {...inputMinutes} w={100} />
+              <Input focusBorderColor={accentColor} {...inputSeconds} w={100} />
               <Button
                 bg={accentColor}
                 _hover={{ opacity: 0.8 }}

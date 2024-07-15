@@ -5,6 +5,11 @@
     "hotkey": ["Ctrl", "Space"]
   },
   {
+    "name": "File switcher",
+    "description": "Switch between recent opened files",
+    "hotkey": ["Ctrl", "Tab"]
+  },
+  {
     "name": "Settings",
     "description": "Open the settings menu",
     "hotkey": ["Ctrl", "P"]
@@ -38,10 +43,5 @@
     "name": "Open File",
     "description": "Open a chosen File",
     "hotkey": ["Ctrl", "N"]
-  },
-  {
-    "name": "File switcher",
-    "description": "Switch between recent opened files",
-    "hotkey": ["Ctrl", "Tab"]
   }
 ]

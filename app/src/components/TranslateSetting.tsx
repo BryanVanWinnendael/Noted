@@ -40,7 +40,11 @@ const TranslateSetting = () => {
         maxH="200px"
         value={language}
         width="auto"
-        css={{ "& > *": { background: `${secondaryBackgroundColorLighter} !important` } }}
+        css={{
+          "& > *": {
+            background: `${secondaryBackgroundColorLighter} !important`,
+          },
+        }}
         placeholder={DEFAULT_TRANSLATE_LANGUAGE + " (default)"}
         h="30px"
       >

@@ -16,8 +16,13 @@ import { CgFolderAdd } from "react-icons/cg";
 
 const AddFolder = ({ path, type }: ContextMenu) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { accentColor, backgroundColor, textColor, iconColor, backgroundColorDarker } =
-    useColors();
+  const {
+    accentColor,
+    backgroundColor,
+    textColor,
+    iconColor,
+    backgroundColorDarker,
+  } = useColors();
   const cancelRef = useRef();
   const [folderName, setFolderName] = useState<string>("");
   const [inValidName, setInValidName] = useState<boolean>(false);
@@ -69,11 +74,7 @@ const AddFolder = ({ path, type }: ContextMenu) => {
         isOpen={isOpen}
       >
         <AlertDialogOverlay />
-        <AlertDialogContent
-          bg={backgroundColor}
-          color={textColor}
-          shadow="md"
-        >
+        <AlertDialogContent bg={backgroundColor} color={textColor} shadow="md">
           <AlertDialogBody>
             <Input
               value={folderName}

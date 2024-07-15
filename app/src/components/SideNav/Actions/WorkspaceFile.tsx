@@ -4,8 +4,12 @@ import useColors from "hooks/useColors";
 import { RiHomeLine } from "react-icons/ri";
 
 const WorkspaceFile = () => {
-  const { iconColor, textColor, secondaryBackgroundColorLighter, secondaryBackgroundColorDarker } =
-    useColors();
+  const {
+    iconColor,
+    textColor,
+    secondaryBackgroundColorLighter,
+    secondaryBackgroundColorDarker,
+  } = useColors();
   const { openWorkspaceFile } = useWorkspace();
   const workspace_path = localStorage.getItem("workspace_path");
   const workspace_name = workspace_path?.split("\\").pop() + ".home.noted";

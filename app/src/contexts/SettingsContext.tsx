@@ -107,7 +107,6 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     DEFAULT_ACTION_BAR_OPACITY,
   );
   const [material, setMaterial] = useState<Material>(DEFAULT_MATERIAL);
-  
 
   const readThemeFile = useCallback(async () => {
     const theme_path = localStorage.getItem("theme-path") || "";
@@ -228,7 +227,6 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
   const checkUpdate = async () => {
     try {
       const res = await invoke("updates:check");
-
       return res;
     } catch (err) {
       return false;
@@ -425,8 +423,8 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     sidebarOpacity,
     actionbarOpacity,
     material,
-    view, 
-    setView
+    view,
+    setView,
   };
 
   return (

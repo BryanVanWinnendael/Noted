@@ -15,7 +15,13 @@ import { ContextMenu } from "types/index";
 import { BiRename } from "react-icons/bi";
 
 const Rename = ({ path, name, type }: ContextMenu) => {
-  const { backgroundColor, textColor, iconColor, backgroundColorDarker, accentColor } = useColors();
+  const {
+    backgroundColor,
+    textColor,
+    iconColor,
+    backgroundColorDarker,
+    accentColor,
+  } = useColors();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   const [newName, setNewName] = useState<string>(name.split(".noted")[0]);
@@ -80,11 +86,7 @@ const Rename = ({ path, name, type }: ContextMenu) => {
         isOpen={isOpen}
       >
         <AlertDialogOverlay />
-        <AlertDialogContent
-          bg={backgroundColor}
-          color={textColor}
-          shadow="md"
-        >
+        <AlertDialogContent bg={backgroundColor} color={textColor} shadow="md">
           <AlertDialogBody>
             <Input
               value={newName}

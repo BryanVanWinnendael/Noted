@@ -1,7 +1,7 @@
 import type { NoteStyle } from "@lib/types";
 import { useCallback, useEffect } from "react";
 import BlockStyling from "./Block-Styling";
-import "./fonts.css"
+import "./fonts.css";
 
 const EditorWrapper = ({
   children,
@@ -66,7 +66,7 @@ const EditorWrapper = ({
         color: text_color,
         backgroundColor: bg_color,
       }}
-      className="w-full h-full"
+      className="w-full h-full min-h-screen"
     >
       <style>
         {`

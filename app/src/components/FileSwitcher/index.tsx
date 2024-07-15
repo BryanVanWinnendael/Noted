@@ -6,7 +6,11 @@ import FileCard from "./FileCard";
 
 const Index = () => {
   const { setShowSwitcher, setActiveFolder, openFile } = useWorkspace();
-  const { secondaryBackgroundColor, textColor, secondaryBackgroundColorLighter } = useColors();
+  const {
+    secondaryBackgroundColor,
+    textColor,
+    secondaryBackgroundColorLighter,
+  } = useColors();
   const [selectedPane, setSelectedPane] = useState<number>(0);
   const openFiles: any[] = localStorage.getItem("open_files")
     ? JSON.parse(localStorage.getItem("open_files")!)
@@ -87,7 +91,9 @@ const Index = () => {
                 cursor="pointer"
                 _hover={{ bg: secondaryBackgroundColorLighter }}
                 className="md:pb-[26px] pb-[23px] md:px-[13px] px-[8px] md:pt-[13px] pt-[8px]"
-                bg={selectedPane === index ? secondaryBackgroundColorLighter : ""}
+                bg={
+                  selectedPane === index ? secondaryBackgroundColorLighter : ""
+                }
                 h="full"
               >
                 <FileCard data={file.data} path={file.path} index={index} />

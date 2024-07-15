@@ -5,7 +5,7 @@ import { ContextMenu } from "types/index";
 import { CgTab } from "react-icons/cg";
 
 const OpenFIleInTab = ({ path }: ContextMenu) => {
-  const { textColor, iconColor, backgroundColorDarker} = useColors();
+  const { textColor, iconColor, backgroundColorDarker } = useColors();
   const { openFileInNewTab } = useWorkspace();
 
   const handleOpen = async () => {
@@ -25,7 +25,7 @@ const OpenFIleInTab = ({ path }: ContextMenu) => {
         _hover={{ bg: backgroundColorDarker }}
         gap={2}
       >
-        <CgTab color={iconColor } width={5} height={5} />
+        <CgTab color={iconColor} width={5} height={5} />
         <Text fontSize="sm">Open in New Tab</Text>
       </MenuItem>
     </>
