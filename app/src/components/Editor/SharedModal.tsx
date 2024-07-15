@@ -37,7 +37,7 @@ const SharedModal = ({
   };
 
   const handleViewAll = () => {
-    setView("notes");
+    setView("Notes");
     onOpen();
     onClose();
   };
