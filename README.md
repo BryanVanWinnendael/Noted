@@ -2,15 +2,14 @@
 
 <div>
   <a href="https://github.com/BryanVanWinnendael/noted/releases/latest">
-      <img src="https://img.shields.io/github/downloads/BryanVanWinnendael/noted/total" alt="latest download">
-  </a>
-  <a href="https://github.com/BryanVanWinnendael/noted/releases/latest">
       <img src="https://img.shields.io/github/v/release/BryanVanWinnendael/noted" alt="version">
   </a>
   <a href="">
     <img src="https://img.shields.io/github/contributors/BryanVanWinnendael/noted" alt="contributers">
   </a>
 </div>
+
+[Download Noted](https://write-noted.vercel.app/download).
 
 Noted is a desktop application where you can write block styled notes. It is inspired by [Notion](https://www.notion.so/), [Obsidian](https://obsidian.md/) and [Arc](https://arc.net/).
 
