@@ -29,16 +29,16 @@
     ],
     artifactName: "${productName}-Setup-${version}.${ext}",
   },
+  linux: {
+    target: ["deb"],
+    artifactName: "${productName}-Setup-${version}.${ext}",
+  },
   nsis: {
     oneClick: false,
     perMachine: false,
     allowToChangeInstallationDirectory: true,
     deleteAppDataOnUninstall: false,
     license: "license.md",
-  },
-  linux: {
-    target: ["AppImage", "deb"],
-    artifactName: "${productName}-Setup-${version}.${ext}",
   },
   icon: "public/icon.icns",
 }

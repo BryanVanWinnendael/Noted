@@ -235,6 +235,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
 
   const updateAndRestart = async () => {
     try {
+      console.log("worksaceContext restart and update")
       await invoke("updates:update-and-restart");
     } catch (err) {
       console.log(err);
@@ -372,12 +373,12 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
     await invoke("change-material", material);
   }, [material]);
 
-  const initSettings = useCallback(() => {
-    getSettings();
-    getCustomThemes();
-    readThemeFile();
+  const initSettings = useCallback(async () => {
+    await getSettings();
+    await getCustomThemes();
+    await readThemeFile();
     resetCustomTheme();
-    setAppMaterial();
+    await setAppMaterial();
   }, [getCustomThemes, getSettings, readThemeFile, setAppMaterial]);
 
   useEffect(() => {

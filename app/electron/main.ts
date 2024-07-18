@@ -9,10 +9,8 @@ import { autoUpdater } from "electron-updater";
 autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = false;
 autoUpdater.setFeedURL({
-  provider: "github",
-  owner: "Bryan Van Winnendael",
-  repo: "Noted",
-  token: import.meta.env.VITE_GITHUB_TOKEN,
+  provider: "generic",
+  url: process.platform === "linux" ? import.meta.env.VITE_UPDATE_SERVER_LINUX : import.meta.env.VITE_UPDATE_SERVER_WINDOWS ,
 });
 
 // The built directory structure
@@ -60,7 +58,7 @@ function createWindow() {
     backgroundMaterial: "acrylic",
   });
 
-  !app.isPackaged && win.webContents.openDevTools();
+  win.webContents.openDevTools();
   win.setMenu(null);
 
   const updater = new Updates(win);

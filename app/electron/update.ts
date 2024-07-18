@@ -23,6 +23,7 @@ class Updates {
           }
           return v1parts.length !== v2parts.length;
         };
+
         if (isNewerVersion(curr_version, update?.updateInfo.version || "")) {
           return update?.updateInfo.version;
         }
@@ -32,40 +33,15 @@ class Updates {
       }
     });
 
-    ipcMain.handle("updates:download", async () => {
-      try {
-        if (this.win) {
-          this.win.webContents.send("loaded", "downloading update");
-        }
-        await autoUpdater.downloadUpdate();
-      } catch (error) {
-        if (this.win) {
-          this.win.webContents.send("loaded", "error downloading update");
-        }
-      }
-    });
-
     ipcMain.handle("updates:update-and-restart", async () => {
       try {
-        if (this.win) {
-          this.win.webContents.send("loaded", "restarting app");
-        }
+        await autoUpdater.downloadUpdate();
         autoUpdater.quitAndInstall(true, true);
       } catch (error) {
         if (this.win) {
           this.win.webContents.send("loaded", "error installing update");
         }
       }
-    });
-
-    autoUpdater.on("update-downloaded", () => {
-      if (this.win) {
-        this.win.webContents.send("loaded", "update downloaded");
-      }
-    });
-
-    ipcMain.handle("quitAndUpdate", async () => {
-      autoUpdater.quitAndInstall(true, false);
     });
   }
 }

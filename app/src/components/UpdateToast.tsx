@@ -36,7 +36,7 @@ const UpdateToast = ({ version }: { version: string }) => {
     >
       {loadingUpdates ? (
         <Center>
-          <Spinner bg={accentColor} />
+          <Spinner color={accentColor} />
         </Center>
       ) : (
         <>

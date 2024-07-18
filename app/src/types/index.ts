@@ -207,7 +207,7 @@ export interface SettingsTypeContext {
   glassBackground: GlassSettings;
   glassEnabled: boolean;
   saveSettings: (key: Settings, value: any) => void;
-  initSettings: () => void;
+  initSettings: () => Promise<void>;
   customTheme: Theme | undefined;
   compactMode: boolean;
   setCompactMode: (compact: boolean) => void;

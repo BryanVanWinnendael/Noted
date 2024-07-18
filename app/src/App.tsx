@@ -57,9 +57,11 @@ const App = () => {
 
   useAddShortcuts();
 
-  const setChakraColorMode = useCallback(() => {
+  const init = useCallback(async () => {
     setColorMode(activeTheme);
-  }, [activeTheme, setColorMode]);
+    await initSettings();
+    setLoaded(true);
+  }, [activeTheme, initSettings, setColorMode]);
 
   const getBackground = () => {
     if (backgroundImage === "custom") return customBackground;
@@ -91,17 +93,15 @@ const App = () => {
   }, [backgroundColor, glassBackground.window, glassEnabled]);
 
   useEffect(() => {
-    initSettings();
-    setChakraColorMode();
-    setLoaded(true);
-  }, [initSettings, setChakraColorMode, workspace?.path]);
-
-  useEffect(() => {
     if (checkUpdates && loaded) {
       handleCheckUpdate();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loaded, checkUpdates]);
+
+  useEffect(() => {
+    init();
+  }, [init, workspace?.path]);
 
   // Styles for custom scrollbar
   useEffect(() => {
