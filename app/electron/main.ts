@@ -10,7 +10,10 @@ autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = false;
 autoUpdater.setFeedURL({
   provider: "generic",
-  url: process.platform === "linux" ? import.meta.env.VITE_UPDATE_SERVER_LINUX : import.meta.env.VITE_UPDATE_SERVER_WINDOWS ,
+  url:
+    process.platform === "linux"
+      ? import.meta.env.VITE_UPDATE_SERVER_LINUX
+      : import.meta.env.VITE_UPDATE_SERVER_WINDOWS,
 });
 
 // The built directory structure
@@ -58,7 +61,7 @@ function createWindow() {
     backgroundMaterial: "acrylic",
   });
 
-  win.webContents.openDevTools();
+  !app.isPackaged && win.webContents.openDevTools();
   win.setMenu(null);
 
   const updater = new Updates(win);

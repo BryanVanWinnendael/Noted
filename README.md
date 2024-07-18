@@ -28,6 +28,7 @@ Functionalities:
   - Delimiter
   - Table
   - ...
+- Share notes online
 - Themes
 - Colored Headers
 - Glass Application
@@ -39,6 +40,7 @@ Functionalities:
 To see the full list you can read the [Documentation](https://write-noted.vercel.app/docs).
 
 ![heading](./assets/heading.png)
+![shared](./assets/online.png)
 ![backgrounds](./assets/backgrounds.png)
 ![glass](./assets/glass.png)
 ![market](./assets/glass.png)

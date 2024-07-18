@@ -1,0 +1,104 @@
+---
+import NoteLayout from "@layouts/NoteLayout.astro";
+import SectionImage from "@assets/images/index/file_right_click.png";
+import SectionImage2 from "@assets/images/theme/light.png";
+import SectionImage3 from "@assets/images/backgrounds/bg3.png";
+
+import SectionImage4 from "@assets/images/notes/app.png";
+import SectionImage5 from "@assets/images/notes/online.png";
+
+import { Image } from "astro:assets";
+import DownloadNav from "@components/DownloadNav.astro";
+import DownloadCom from "@components/Download";
+import DownloadFooter from "@components/DownloadFooter";
+---
+
+<NoteLayout title="Download">
+  <DownloadNav />
+  <main class="w-full pt-24 flex flex-col items-center justify-center p-4">
+    <h1 class="scroll-m-20 text-5xl font-extrabold tracking-tight lg:text-8xl">
+      Noted
+    </h1>
+    <p
+      class="leading-7 text-xl [&:not(:first-child)]:mt-6 lg:text-4xl w-1/2 text-center"
+    >
+      Write your notes in a fully customizable, block-style note-taking app.
+    </p>
+    <div class="mt-6 flex gap-4">
+      <DownloadCom client:load />
+      <a
+        href="/docs"
+        target="_blank"
+        class="text-[#6488ea] hover:text-[#5c7cd4] flex items-center gap-1"
+      >
+        See docs
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6 12H18M18 12L13 7M18 12L13 17"
+            stroke="#6488ea"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </a>
+    </div>
+    <section class="mt-10">
+      <div class="w-full flex justify-center">
+        <Image
+          src={SectionImage}
+          alt="Right click on a file"
+          class="lg:w-1/2 w-full rounded-xl border border-gray-200"
+        />
+      </div>
+    </section>
+    <section class="w-full h-full flex justify-center mt-12">
+      <div class="bg-[#f6f5f4] h-full lg:w-3/4 w-full rounded-xl p-12">
+        <h2 class="scroll-m-2 text-3xl font-semibold tracking-tight first:mt-0">
+          Customize
+        </h2>
+        <p class="leading-7 mb-4 w-1/2">
+          With Noted, you have the freedom to personalize your application
+          according to your preferences.
+        </p>
+        <Image
+          src={SectionImage2}
+          alt="Right click on a file"
+          class="w-full rounded-xl border border-gray-200"
+        />
+        <Image
+          src={SectionImage3}
+          alt="Right click on a file"
+          class="w-full rounded-xl border border-gray-200 mt-4"
+        />
+      </div>
+    </section>
+
+    <section class="w-full h-full flex justify-center mt-12">
+      <div class="bg-[#f6f5f4] h-full lg:w-3/4 w-full rounded-xl p-12">
+        <h2 class="scroll-m-2 text-3xl font-semibold tracking-tight first:mt-0">
+          Share notes
+        </h2>
+        <p class="leading-7 mb-4 w-1/2">
+          Share your created notes online with others.
+        </p>
+        <Image
+          src={SectionImage4}
+          alt="Right click on a file"
+          class="w-full rounded-xl border border-gray-200"
+        />
+        <Image
+          src={SectionImage5}
+          alt="Right click on a file"
+          class="w-full rounded-xl border border-gray-200 mt-4"
+        />
+      </div>
+    </section>
+
+    <DownloadFooter client:load />
+  </main>
+</NoteLayout>

@@ -235,7 +235,7 @@ export const SettingsProvider: React.FC<Props> = ({ children }: Props) => {
 
   const updateAndRestart = async () => {
     try {
-      console.log("worksaceContext restart and update")
+      console.log("worksaceContext restart and update");
       await invoke("updates:update-and-restart");
     } catch (err) {
       console.log(err);
