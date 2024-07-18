@@ -1,10 +1,24 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-const DownloadFooter = ({ os }: { os: "windows" | "linux" }) => {
+const getOS = async () => {
+  const res = await fetch("/api/os.json");
+  return res.json();
+};
+
+const DownloadFooter = () => {
+  const [os, setOS] = useState<"windows" | "linux">("windows");
   const url =
     os === "windows"
       ? import.meta.env.PUBLIC_DOWNLOAD_URL_WIN
       : import.meta.env.PUBLIC_DOWNLOAD_URL_LIN;
+
+  useEffect(() => {
+    const getUserOs = async () => {
+      const res = await getOS();
+      setOS(res.os);
+    };
+    getUserOs();
+  }, []);
 
   return (
     <section className="w-full h-full flex justify-center mt-12">

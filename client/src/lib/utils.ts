@@ -58,17 +58,3 @@ export const fetcher = async (
 };
 
 export const admins = import.meta.env.FIREBASE_ADMIN_EMAILS;
-
-export const getOs = async () => {
-  const url = import.meta.env.PUBLIC_HOSTED_URL + "/api/os.json";
-  return fetch(url)
-    .then(function (response) {
-      return response.json();
-    })
-    .catch(function (error) {
-      console.log(
-        "There has been a problem with your fetch operation: " + error.message,
-      );
-      throw error;
-    });
-};

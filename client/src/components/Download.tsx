@@ -1,8 +1,24 @@
-const Download = ({ nav, os }: { nav?: boolean; os: "windows" | "linux" }) => {
+import { useEffect, useState } from "react";
+
+const getOS = async () => {
+  const res = await fetch("/api/os.json");
+  return res.json();
+};
+
+const Download = ({ nav }: { nav?: boolean }) => {
+  const [os, setOS] = useState<"windows" | "linux">("windows");
   const url =
     os === "windows"
       ? import.meta.env.PUBLIC_DOWNLOAD_URL_WIN
       : import.meta.env.PUBLIC_DOWNLOAD_URL_LIN;
+
+  useEffect(() => {
+    const getUserOs = async () => {
+      const res = await getOS();
+      setOS(res.os);
+    };
+    getUserOs();
+  }, []);
 
   const handleDownload = () => {
     window.open(url);

@@ -1,8 +1,5 @@
 ---
-import { getOs } from "@lib/utils";
 import Download from "./Download";
-
-const { os } = await getOs();
 ---
 
 <header>
@@ -37,7 +34,7 @@ const { os } = await getOs();
               <img class="w-8 h-8" src="/favicon.svg" alt="Noted themes" />
               <p>Noted</p>
             </a>
-            <Download nav={true} client:load os={os} />
+            <Download nav={true} client:load />
             <li>
               <a
                 class="hover:bg-gray-100 px-2 py-1 rounded-lg"
