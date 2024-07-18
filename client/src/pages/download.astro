@@ -25,7 +25,7 @@ import DownloadFooter from "@components/DownloadFooter";
       Write your notes in a fully customizable, block-style note-taking app.
     </p>
     <div class="mt-6 flex gap-4">
-      <DownloadCom client:load />
+      <DownloadCom client:only="react" />
       <a
         href="/docs"
         target="_blank"
@@ -99,6 +99,6 @@ import DownloadFooter from "@components/DownloadFooter";
       </div>
     </section>
 
-    <DownloadFooter client:load />
+    <DownloadFooter client:only="react" />
   </main>
 </NoteLayout>

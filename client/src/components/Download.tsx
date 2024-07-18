@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Download = ({ nav }: { nav?: boolean }) => {
   const [os, setOS] = useState<"windows" | "linux">("windows");
@@ -17,7 +17,6 @@ const Download = ({ nav }: { nav?: boolean }) => {
   }, []);
 
   const handleDownload = () => {
-    console.log("Download clicked");
     window.open(url);
   };
 
