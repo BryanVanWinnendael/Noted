@@ -11,6 +11,9 @@ import { Image } from "astro:assets";
 import DownloadNav from "@components/DownloadNav.astro";
 import DownloadCom from "@components/Download";
 import DownloadFooter from "@components/DownloadFooter";
+import { getOs } from "@lib/utils";
+
+const { os } = await getOs();
 ---
 
 <NoteLayout title="Download">
@@ -25,7 +28,7 @@ import DownloadFooter from "@components/DownloadFooter";
       Write your notes in a fully customizable, block-style note-taking app.
     </p>
     <div class="mt-6 flex gap-4">
-      <DownloadCom client:only="react" />
+      <DownloadCom client:load os={os} />
       <a
         href="/docs"
         target="_blank"
@@ -99,6 +102,6 @@ import DownloadFooter from "@components/DownloadFooter";
       </div>
     </section>
 
-    <DownloadFooter client:only="react" />
+    <DownloadFooter client:load os={os} />
   </main>
 </NoteLayout>

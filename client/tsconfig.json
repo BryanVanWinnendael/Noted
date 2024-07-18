@@ -31,7 +31,10 @@
       ],
       "@assets/*": [
         "src/assets/*"
-      ]
+      ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
     }
   }
 }

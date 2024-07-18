@@ -1,20 +1,8 @@
-import { useEffect, useState } from "react";
-
-const Download = ({ nav }: { nav?: boolean }) => {
-  const [os, setOS] = useState<"windows" | "linux">("windows");
+const Download = ({ nav, os }: { nav?: boolean; os: "windows" | "linux" }) => {
   const url =
     os === "windows"
       ? import.meta.env.PUBLIC_DOWNLOAD_URL_WIN
       : import.meta.env.PUBLIC_DOWNLOAD_URL_LIN;
-
-  useEffect(() => {
-    const userAgent = navigator.userAgent;
-    if (userAgent.indexOf("Win") !== -1) {
-      setOS("windows");
-    } else if (userAgent.indexOf("Linux") !== -1) {
-      setOS("linux");
-    }
-  }, []);
 
   const handleDownload = () => {
     window.open(url);

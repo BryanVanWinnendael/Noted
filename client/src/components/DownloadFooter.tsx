@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-const DownloadFooter = () => {
-  const [os, setOS] = useState<"windows" | "linux">("windows");
+const DownloadFooter = ({ os }: { os: "windows" | "linux" }) => {
   const url =
     os === "windows"
       ? import.meta.env.PUBLIC_DOWNLOAD_URL_WIN
       : import.meta.env.PUBLIC_DOWNLOAD_URL_LIN;
-
-  useEffect(() => {
-    const userAgent = navigator.userAgent;
-    if (userAgent.indexOf("Win") !== -1) {
-      setOS("windows");
-    } else if (userAgent.indexOf("Linux") !== -1) {
-      setOS("linux");
-    }
-  }, []);
 
   return (
     <section className="w-full h-full flex justify-center mt-12">
