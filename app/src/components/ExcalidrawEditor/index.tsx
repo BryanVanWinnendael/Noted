@@ -23,7 +23,7 @@ const Index = ({ path, splitted }: { path: string; splitted?: boolean }) => {
   const [excalidrawAPI, setExcalidrawAPI] =
     useState<ExcalidrawImperativeAPI | null>(null);
 
-  const saveData = useCallback(async () => {
+  const handleSave = useCallback(async () => {
     const elements = excalidrawAPI?.getSceneElements();
     const theme = excalidrawAPI?.getAppState().theme;
     const bg = excalidrawAPI?.getAppState().viewBackgroundColor;
@@ -46,7 +46,7 @@ const Index = ({ path, splitted }: { path: string; splitted?: boolean }) => {
     const handleKeyDown = async (event: KeyboardEvent) => {
       if (event.ctrlKey && event.altKey && event.key === "s") {
         event.preventDefault();
-        saveData();
+        handleSave();
       }
     };
 
@@ -55,10 +55,10 @@ const Index = ({ path, splitted }: { path: string; splitted?: boolean }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [saveData]);
+  }, [handleSave]);
 
   useEffect(() => {
-    const fetchDataAndUpdateScene = async () => {
+    const getData = async () => {
       let file = null;
       try {
         file = await readFile(path);
@@ -99,7 +99,7 @@ const Index = ({ path, splitted }: { path: string; splitted?: boolean }) => {
       data: null,
     };
     utils.saveToRecentOpened(openedFile, splitted);
-    fetchDataAndUpdateScene();
+    getData();
   }, [backgroundColor, excalidrawAPI, path, readFile, splitted]);
 
   return (
@@ -116,7 +116,7 @@ const Index = ({ path, splitted }: { path: string; splitted?: boolean }) => {
     >
       {data && (
         <Excalidraw
-          renderTopRightUI={() => <SaveButton callback={saveData} />}
+          renderTopRightUI={() => <SaveButton callback={handleSave} />}
           excalidrawAPI={(api) => setExcalidrawAPI(api)}
           initialData={data}
           UIOptions={UIOptions as any}

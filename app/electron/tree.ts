@@ -11,7 +11,7 @@ interface FileInfo {
   id: string;
 }
 
-class FileTree {
+class Tree {
   path: string;
   name: string | null;
   type: "folder";
@@ -27,7 +27,7 @@ class FileTree {
   }
 
   build = () => {
-    this.items = FileTree.readDir(this.path);
+    this.items = Tree.readDir(this.path);
   };
 
   static readDir(path: string): FileInfo[] {
@@ -35,11 +35,12 @@ class FileTree {
 
     fs.readdirSync(path).forEach((file: string) => {
       if (EXCLUDED_FOLDERS.includes(file)) return;
+
       let fileInfo: FileInfo;
       if (process.platform === "linux") {
-        fileInfo = new FileTree(`${path}/${file}`, file);
+        fileInfo = new Tree(`${path}/${file}`, file);
       } else {
-        fileInfo = new FileTree(`${path}\\${file}`, file);
+        fileInfo = new Tree(`${path}\\${file}`, file);
       }
 
       const stat: fs.Stats = fs.statSync(fileInfo.path);
@@ -49,7 +50,7 @@ class FileTree {
       if (!INCLUDED_EXTENSIONS.includes(extension) && !isFolder) return;
 
       if (stat.isDirectory()) {
-        fileInfo.items = FileTree.readDir(fileInfo.path);
+        fileInfo.items = Tree.readDir(fileInfo.path);
       }
 
       fileInfo.type = isFolder ? "folder" : "file";
@@ -60,4 +61,4 @@ class FileTree {
   }
 }
 
-export default FileTree;
+export default Tree;

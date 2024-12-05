@@ -22,7 +22,6 @@ const Index = ({ splitted, path }: { splitted?: boolean; path: string }) => {
     h: 0,
   });
   const [saving, setSaving] = useState<boolean>(false);
-
   const [zoom, setZoom] = useState<number>(1);
   const divRef = useRef<HTMLDivElement>(null);
   const [canvasWidth, setCanvasWidth] = useState<string>("100%");
@@ -67,14 +66,14 @@ const Index = ({ splitted, path }: { splitted?: boolean; path: string }) => {
   }, [originalSize.h, originalSize.w, path, pdfDoc, savePdfFile]);
 
   useEffect(() => {
-    const fetchPdf = async () => {
+    const getData = async () => {
       const pdfjs = await import("pdfjs-dist");
       pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
       const loadingTask = pdfjs.getDocument(path);
       const doc = await loadingTask.promise;
       setPdfDoc(doc);
     };
-    fetchPdf();
+    getData();
   }, [path]);
 
   useEffect(() => {

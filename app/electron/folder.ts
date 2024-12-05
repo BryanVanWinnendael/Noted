@@ -1,7 +1,7 @@
 import { ipcMain, dialog, OpenDialogReturnValue } from "electron";
 import fs from "fs";
 import path from "path";
-import FileTree from "./fileTree";
+import Tree from "./tree";
 
 interface FileInfo {
   path: string;
@@ -23,12 +23,12 @@ class Folders {
           properties: ["openDirectory"],
         });
       if (!canceled && filePaths && filePaths[0]) {
-        const fileTree = new FileTree(filePaths[0]);
+        const tree = new Tree(filePaths[0]);
 
-        fileTree.build();
-        const fileTreeObject = this.fileTreeToObject(fileTree);
+        tree.build();
+        const treeObject = this.treeToObject(tree);
         this.initNotedFolder(filePaths[0]);
-        return fileTreeObject;
+        return treeObject;
       }
       return null;
     });
@@ -37,12 +37,11 @@ class Folders {
       "folder:open",
       async (_event, params: { folder_path: string }) => {
         const folderPath = params.folder_path;
-        console.log("folder:open", folderPath);
-        const fileTree = new FileTree(folderPath);
+        const tree = new Tree(folderPath);
 
-        fileTree.build();
-        const fileTreeObject = this.fileTreeToObject(fileTree);
-        return fileTreeObject;
+        tree.build();
+        const treeObject = this.treeToObject(tree);
+        return treeObject;
       },
     );
 
@@ -89,18 +88,18 @@ class Folders {
     );
   }
 
-  fileTreeToObject = (fileTree: FileTree | FileInfo): any => {
-    const fileTreeObject: any = {};
-    const folderName = path.basename(fileTree.path);
-    fileTreeObject.name = folderName;
-    fileTreeObject.path = fileTree.path;
-    fileTreeObject.items = [];
-    fileTreeObject.type = fileTree.type;
-    fileTreeObject.id = fileTree.path;
-    fileTree.items.forEach((item) => {
+  treeToObject = (tree: Tree | FileInfo): any => {
+    const treeObject: any = {};
+    const folderName = path.basename(tree.path);
+    treeObject.name = folderName;
+    treeObject.path = tree.path;
+    treeObject.items = [];
+    treeObject.type = tree.type;
+    treeObject.id = tree.path;
+    tree.items.forEach((item) => {
       if (item.type === "folder") {
-        const folder = this.fileTreeToObject(item);
-        fileTreeObject.items.push(folder);
+        const folder = this.treeToObject(item);
+        treeObject.items.push(folder);
       } else {
         const file = {
           name: item.name,
@@ -108,10 +107,10 @@ class Folders {
           type: item.type,
           id: item.path,
         };
-        fileTreeObject.items.push(file);
+        treeObject.items.push(file);
       }
     });
-    return fileTreeObject;
+    return treeObject;
   };
 
   initNotedFolder = (workspacePath: string) => {

@@ -61,7 +61,7 @@ function createWindow() {
     backgroundMaterial: "acrylic",
   });
 
-  !app.isPackaged && win.webContents.openDevTools();
+  app.isPackaged && win.webContents.openDevTools();
   win.setMenu(null);
 
   const updater = new Updates(win);
@@ -131,6 +131,7 @@ if (!gotTheLock) {
 } else {
   app.on("second-instance", (_, commandLine) => {
     if (win) {
+      win.webContents.send("token", "test");
       const deepLink = commandLine.find((arg) =>
         arg.startsWith("write-noted://"),
       );
