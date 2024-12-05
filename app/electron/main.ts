@@ -59,7 +59,7 @@ function createWindow() {
       webSecurity: false,
     },
     vibrancy: "under-window",
-    transparent: true,
+    transparent: process.platform === "darwin" ? true : false,
     backgroundMaterial: "acrylic",
   });
 
