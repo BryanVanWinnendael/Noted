@@ -64,6 +64,7 @@ class Files {
 
     ipcMain.handle("file:settings-get", async (_, params) => {
       const workspacePath = params.workspace_path;
+      if (!workspacePath) return;
       const settingsPath = path.join(workspacePath, ".noted/settings.json");
       if (!fs.existsSync(settingsPath)) this.initNotedFolder(workspacePath);
 
@@ -128,24 +129,26 @@ class Files {
         const fileName = path.basename(filePaths[0]);
         const backgroundPath = path.join(notedFolderPath, fileName);
         fs.copyFileSync(filePaths[0], backgroundPath);
-        if (process.platform === "linux")
-          return path.join("file:/", backgroundPath);
-        return backgroundPath;
+        if (process.platform === "win32") return backgroundPath;
+        return path.join("file:/", backgroundPath);
       }
       return null;
     });
 
     ipcMain.handle("file:get-imported-background", async (_, params) => {
       const workspacePath = params.workspace_path;
+      if (!workspacePath) {
+        return [];
+      }
       const notedFolderPath = path.join(workspacePath, ".noted/backgrounds");
       if (!fs.existsSync(notedFolderPath)) {
         return [];
       }
       const files = fs.readdirSync(notedFolderPath);
       return files.map((file) => {
-        if (process.platform === "linux")
-          return path.join("file:/", notedFolderPath, file);
-        return path.join(notedFolderPath, file);
+        if (process.platform === "win32")
+          return path.join(notedFolderPath, file);
+        return path.join("file:/", notedFolderPath, file);
       });
     });
 
@@ -162,11 +165,14 @@ class Files {
 
     ipcMain.handle("file:open-workspace-file", async (_, params) => {
       const workspacePath = params.workspace_path;
+      if (!workspacePath) {
+        return;
+      }
       let name;
-      if (process.platform === "linux") {
-        name = workspacePath?.split("/").pop() + ".home.noted";
-      } else {
+      if (process.platform === "win32") {
         name = workspacePath?.split("\\").pop() + ".home.noted";
+      } else {
+        name = workspacePath?.split("/").pop() + ".home.noted";
       }
 
       const filePath = path.join(workspacePath, name);

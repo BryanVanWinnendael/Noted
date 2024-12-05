@@ -36,10 +36,11 @@ class FileTree {
     fs.readdirSync(path).forEach((file: string) => {
       if (EXCLUDED_FOLDERS.includes(file)) return;
       let fileInfo: FileInfo;
-      if (process.platform === "linux") {
-        fileInfo = new FileTree(`${path}/${file}`, file);
-      } else {
+      console.log(process.platform);
+      if (process.platform === "win32") {
         fileInfo = new FileTree(`${path}\\${file}`, file);
+      } else {
+        fileInfo = new FileTree(`${path}/${file}`, file);
       }
 
       const stat: fs.Stats = fs.statSync(fileInfo.path);

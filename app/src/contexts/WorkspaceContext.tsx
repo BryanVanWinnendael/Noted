@@ -289,10 +289,10 @@ export const WorkspaceProvider: React.FC<Props> = ({ children }: Props) => {
       });
 
       handleOpenedWorkspace();
-      if (platform === "linux") {
-        openFile(`${new_folder_path}/${fileName}`);
-      } else {
+      if (platform === "win32") {
         openFile(`${new_folder_path}\\${fileName}`);
+      } else {
+        openFile(`${new_folder_path}/${fileName}`);
       }
 
       return true;

@@ -42,7 +42,7 @@ const OpenFileInTab = () => {
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [typing, setTyping] = useState<boolean>(false);
 
-  const isLinux = platform === "linux";
+  const isWindows = platform === "win32";
 
   const handleOpenTab = (file: string) => {
     openFileInNewTab(file);
@@ -74,11 +74,12 @@ const OpenFileInTab = () => {
 
   const getFilename = (path: string) => {
     let splitted_path;
-    if (isLinux) {
-      splitted_path = path.split("/");
-    } else {
+    if (isWindows) {
       splitted_path = path.split("\\");
+    } else {
+      splitted_path = path.split("/");
     }
+
     const filename = splitted_path[splitted_path.length - 1];
     const extensionSplit = filename.split(".");
     const extension = extensionSplit[extensionSplit.length - 1];
