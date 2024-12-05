@@ -13,71 +13,70 @@ import PdfViewer from "components/PdfViewer";
 import NoFile from "components/NoFile";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
-import { useCallback } from "react";
 import ExcalidrawEditor from "components/ExcalidrawEditor";
+
+const FILE_EXTENSIONS = {
+  NOTED: "noted",
+  PDF: "pdf",
+  EXCALIDRAW: "excalidraw",
+};
+
+const TabContent = ({
+  tab,
+  index,
+  isActive,
+}: {
+  tab: ActiveTab;
+  index: number;
+  isActive: boolean;
+}) => {
+  const renderContent = (path: string, tabKey: string, splitted: boolean) => {
+    const extension = path.split(".").pop();
+    const commonProps = { path, tabKey, splitted };
+
+    switch (extension) {
+      case FILE_EXTENSIONS.NOTED:
+        return <Editor {...commonProps} />;
+      case FILE_EXTENSIONS.PDF:
+        return <PdfViewer {...commonProps} />;
+      case FILE_EXTENSIONS.EXCALIDRAW:
+        return <ExcalidrawEditor {...commonProps} />;
+      default:
+        return <NoFile />;
+    }
+  };
+
+  if (!tab.path) return <NoFile />;
+  const tabKey = index.toString();
+
+  return (
+    <Box
+      display={isActive ? "block" : "none"}
+      height="100%"
+      id={index.toString()}
+    >
+      <Allotment>
+        {renderContent(tab.path, tabKey, false)}
+        {tab.splittedPath && (
+          <Box pl={2} maxHeight="100%" h="full">
+            {renderContent(tab.splittedPath, tabKey + "split", true)}
+          </Box>
+        )}
+      </Allotment>
+    </Box>
+  );
+};
 
 const Index = ({ workspace }: { workspace: WorkspaceType }) => {
   const { showSidebar, tabs, activeTab } = useWorkspace();
-  const length_tabs = Object.keys(tabs).length;
   const { widgetPanel } = useWidget();
   const { compactMode } = useSettings();
-
-  const openScreen = useCallback((tab: ActiveTab, index: number) => {
-    if (!tab.path) return <NoFile />;
-
-    const path = tab.path;
-    const extension = path.split(".").pop();
-
-    const tabKey = index.toString();
-
-    switch (extension) {
-      case "noted":
-        return <Editor path={path} tabKey={tabKey} />;
-      case "pdf":
-        return <PdfViewer path={path} />;
-      case "excalidraw":
-        return <ExcalidrawEditor path={path} />;
-      default:
-        return <NoFile />;
-    }
-  }, []);
-
-  const openSplitScreen = useCallback((tab: ActiveTab, index: number) => {
-    if (!tab.splittedPath) return <NoFile />;
-
-    const path = tab.splittedPath;
-    const extension = path.split(".").pop();
-
-    const tabKey = index.toString() + "split";
-
-    switch (extension) {
-      case "noted":
-        return (
-          <Box pl={2} maxHeight="100%" h="full">
-            <Editor splitted={true} path={path} tabKey={tabKey} />
-          </Box>
-        );
-      case "pdf":
-        return (
-          <Box pl={2} maxHeight="100%" h="full">
-            <PdfViewer splitted={true} path={path} />
-          </Box>
-        );
-      case "excalidraw":
-        return (
-          <Box pl={2} maxHeight="100%" h="full">
-            <ExcalidrawEditor path={path} splitted={true} />
-          </Box>
-        );
-      default:
-        return <NoFile />;
-    }
-  }, []);
+  const lengthTabs = Object.keys(tabs).length;
 
   return (
     <Flex w="full" pt={compactMode ? 0 : 9} h="full" px={2}>
       <PanelGroup
-        id={"sidebar"}
+        id="sidebar"
         autoSaveId="example"
         direction="horizontal"
         style={{
@@ -106,22 +105,17 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
         >
           <EditorWrapper>
             <>
-              {length_tabs > 0 ? (
+              {lengthTabs > 0 ? (
                 Object.keys(tabs).map((key, index) => {
                   const tab = tabs[parseInt(key)];
                   const isActive = Number(key) === activeTab;
                   return (
-                    <Box
+                    <TabContent
                       key={index}
-                      display={isActive ? "block" : "none"}
-                      height="100%"
-                      id={key}
-                    >
-                      <Allotment>
-                        {openScreen(tab, index)}
-                        {tab.splittedPath && openSplitScreen(tab, index)}
-                      </Allotment>
-                    </Box>
+                      tab={tab}
+                      index={index}
+                      isActive={isActive}
+                    />
                   );
                 })
               ) : (
@@ -134,7 +128,7 @@ const Index = ({ workspace }: { workspace: WorkspaceType }) => {
         {widgetPanel && (
           <>
             <ResizeHandle />
-            <Panel id="wdigetbar" order={3} minSize={12}>
+            <Panel id="widgetbar" order={3} minSize={12}>
               <WidgetBar />
             </Panel>
           </>

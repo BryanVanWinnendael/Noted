@@ -28,7 +28,7 @@ class Updates {
           return update?.updateInfo.version;
         }
         return false;
-      } catch (error) {
+      } catch (error) { 
         return false;
       }
     });
