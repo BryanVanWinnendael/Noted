@@ -37,10 +37,10 @@ class Tree {
       if (EXCLUDED_FOLDERS.includes(file)) return;
 
       let fileInfo: FileInfo;
-      if (process.platform === "linux") {
-        fileInfo = new Tree(`${path}/${file}`, file);
-      } else {
+      if (process.platform === "win32") {
         fileInfo = new Tree(`${path}\\${file}`, file);
+      } else {
+        fileInfo = new Tree(`${path}/${file}`, file);
       }
 
       const stat: fs.Stats = fs.statSync(fileInfo.path);

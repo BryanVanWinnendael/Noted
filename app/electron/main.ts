@@ -30,7 +30,7 @@ process.env.VITE_PUBLIC = app.isPackaged
   ? process.env.DIST
   : path.join(process.env.DIST, "../public");
 
-let win: BrowserWindow | null;
+let win: BrowserWindow;
 // 🚧 Use ['ENV_NAME'] avoid vite:define plugin - Vite@2.x
 const VITE_DEV_SERVER_URL = process.env["VITE_DEV_SERVER_URL"];
 
@@ -58,10 +58,12 @@ function createWindow() {
       preload: path.join(__dirname, "preload.js"),
       webSecurity: false,
     },
+    vibrancy: "under-window",
+    transparent: true,
     backgroundMaterial: "acrylic",
   });
 
-  app.isPackaged && win.webContents.openDevTools();
+  !app.isPackaged && win.webContents.openDevTools();
   win.setMenu(null);
 
   const updater = new Updates(win);
@@ -104,6 +106,8 @@ function createWindow() {
   ipcMain.handle("close-window", async () => {
     if (process.platform !== "darwin") {
       app.quit();
+    } else {
+      app.hide();
     }
   });
 
@@ -124,28 +128,23 @@ function createWindow() {
   }
 }
 
+// Used for google auth redirect
 const gotTheLock = app.requestSingleInstanceLock();
-
 if (!gotTheLock) {
   app.quit();
 } else {
+  // Used for linux/windows
   app.on("second-instance", (_, commandLine) => {
-    if (win) {
-      win.webContents.send("token", "test");
-      const deepLink = commandLine.find((arg) =>
-        arg.startsWith("write-noted://"),
-      );
+    const token = getGoogleAuthToken(commandLine);
+    if (!token) return;
+    sendTokenToApp(token);
+  });
 
-      let token = deepLink?.split("write-noted://")[1];
-      if (token?.endsWith("/")) {
-        token = token.slice(0, -1);
-      }
-
-      if (win.isMinimized()) win.restore();
-      win.focus();
-
-      win.webContents.send("token", token);
-    }
+  // Used for macos
+  app.on("open-url", (_, commandLine) => {
+    const token = getGoogleAuthToken(commandLine);
+    if (!token) return;
+    sendTokenToApp(token);
   });
 
   app.whenReady().then(() => {
@@ -159,3 +158,26 @@ if (!gotTheLock) {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
+
+function getGoogleAuthToken(cml: string[] | string) {
+  const deepLink =
+    typeof cml === "string"
+      ? cml
+      : cml.find((arg) => arg.startsWith("write-noted://"));
+
+  let token = deepLink?.split("write-noted://")[1];
+  if (token?.endsWith("/")) {
+    token = token.slice(0, -1);
+  }
+
+  return token;
+}
+
+function sendTokenToApp(token: string) {
+  if (win) {
+    if (win.isMinimized()) win.restore();
+    win.focus();
+
+    win.webContents.send("token", token);
+  }
+}

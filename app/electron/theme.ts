@@ -94,6 +94,7 @@ class Themes {
         params: { workspace_path: string },
       ) => {
         try {
+          if (!params.workspace_path) return {};
           const themesPath = path.join(params.workspace_path, ".noted/themes");
           if (!fs.existsSync(themesPath)) {
             fs.mkdirSync(themesPath);
