@@ -1,16 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { WorkspaceProvider } from "contexts/WorkspaceContext";
-import { SettingsProvider } from "contexts/SettingsContext";
-import { WidgetProvider } from "contexts/WidgetContext";
 import App from "./App";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { ComponentStyleConfig } from "@chakra-ui/react";
 import "focus-visible/dist/focus-visible";
-import { EditorProvider } from "contexts/EditorContext";
 import FontWrapper from "styling/FontWrapper";
-import { SlashProvider } from "contexts/SlashContext";
 
 const Link: ComponentStyleConfig = {
   baseStyle: {
@@ -52,24 +47,14 @@ const theme = extendTheme({
 
 ReactDOM.render(
   <React.StrictMode>
-    <WidgetProvider>
-      <SettingsProvider>
-        <WorkspaceProvider>
-          <EditorProvider>
-            <ChakraProvider
-              theme={theme}
-              toastOptions={{ defaultOptions: { position: "bottom-right" } }}
-            >
-              <FontWrapper>
-                <SlashProvider>
-                  <App />
-                </SlashProvider>
-              </FontWrapper>
-            </ChakraProvider>
-          </EditorProvider>
-        </WorkspaceProvider>
-      </SettingsProvider>
-    </WidgetProvider>
+    <ChakraProvider
+      theme={theme}
+      toastOptions={{ defaultOptions: { position: "bottom-right" } }}
+    >
+      <FontWrapper>
+        <App />
+      </FontWrapper>
+    </ChakraProvider>
   </React.StrictMode>,
 
   document.getElementById("root"),

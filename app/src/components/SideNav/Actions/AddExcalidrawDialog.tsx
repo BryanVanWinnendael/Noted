@@ -6,7 +6,7 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useRef, useState } from "react";
 
@@ -22,7 +22,7 @@ const AddExcalidrawDialog = ({
   const cancelRef = useRef();
   const [fileName, setFileName] = useState<string>("");
   const [inValidName, setInValidName] = useState<boolean>(false);
-  const { activeFolder, makeNewFile } = useWorkspace();
+  const { activeFolder, makeNewFile } = useWorkspaceStore();
 
   const handleCreateFile = async () => {
     if (fileName === "") {

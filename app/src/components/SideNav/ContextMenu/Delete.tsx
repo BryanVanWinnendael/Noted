@@ -10,7 +10,7 @@ import {
   useDisclosure,
   Text,
 } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useRef } from "react";
 import { ContextMenu } from "types/index";
@@ -26,7 +26,7 @@ const Delete = ({ path, name, type }: ContextMenu) => {
   } = useColors();
   const cancelRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { deleteFile, deleteFolder } = useWorkspace();
+  const { deleteFile, deleteFolder } = useWorkspaceStore();
 
   const handleDelete = () => {
     switch (type) {

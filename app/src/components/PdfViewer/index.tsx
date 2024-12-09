@@ -7,11 +7,11 @@ import Toolbar from "./Toolbar";
 import Canvas from "./Canvas";
 import { CanvasTools } from "types/index";
 import { PDFDocumentProxy } from "pdfjs-dist";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import jsPDF from "jspdf";
 
 const Index = ({ splitted, path }: { splitted?: boolean; path: string }) => {
-  const { savePdfFile } = useWorkspace();
+  const { savePdfFile } = useWorkspaceStore();
   const { textColor, borderColor, backgroundColorLighter } = useColors();
   const canvasRefs = useRef<Array<HTMLCanvasElement | null>>([]);
   const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);

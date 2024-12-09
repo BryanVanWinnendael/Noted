@@ -8,11 +8,11 @@ import {
   SliderTrack,
   Text,
 } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 
 const Opacity = () => {
-  const { saveSettings, scrollbar } = useSettings();
+  const { saveSettings, scrollbar } = useSettingsStore();
   const { mutedTextColor, accentColor, textColor } = useColors();
 
   const opacity = scrollbar.opacity;

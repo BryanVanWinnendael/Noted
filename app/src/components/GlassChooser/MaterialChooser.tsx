@@ -1,6 +1,6 @@
 import { DEFAULT_MATERIAL, DEFAULT_MATERIALS } from "utils/constants";
 import { Box, Flex, Select, Text } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import { useEffect, useState } from "react";
 
@@ -8,11 +8,12 @@ const MaterialChooser = () => {
   const { mutedTextColor, secondaryBackgroundColor } = useColors();
   const [chosenMaterial, setChosenMaterial] =
     useState<string>(DEFAULT_MATERIAL);
-  const { material, saveSettings } = useSettings();
+  const { material, saveSettings, setAppMaterial } = useSettingsStore();
 
   const changeMaterial = (e: any) => {
     const chosenMaterial = e.target.value || DEFAULT_MATERIAL;
     setChosenMaterial(chosenMaterial);
+    setAppMaterial(chosenMaterial);
     saveSettings("material", chosenMaterial);
   };
 

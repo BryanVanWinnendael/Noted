@@ -1,11 +1,11 @@
 import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { MyWindow } from "types";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import CustomSwitch from "components/CustomSwitch";
 import useColors from "hooks/useColors";
 import { APP_VERSION } from "utils/constants";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useUpdate from "hooks/useUpdate";
 
 declare let window: MyWindow;
@@ -15,8 +15,8 @@ const invoke = window.electron.invoke;
 const General = () => {
   const { handleCheckUpdate, loadingUpdates } = useUpdate();
   const { accentColor, textColor, mutedTextColor } = useColors();
-  const { saveSettings, checkUpdates } = useSettings();
-  const { setNewVersion } = useWorkspace();
+  const { saveSettings, checkUpdates } = useSettingsStore();
+  const { setNewVersion } = useWorkspaceStore();
 
   const handleLink = (link: string) => {
     invoke("openBrowser", link);

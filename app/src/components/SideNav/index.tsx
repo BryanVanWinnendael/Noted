@@ -1,15 +1,14 @@
 import { WorkspaceType } from "types";
 import { Box, Text } from "@chakra-ui/react";
 import useColors from "hooks/useColors";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import CompactNavbar from "components/NavBar/CompactNavbar";
 import Actions from "./Actions";
 import TreeView from "./TreeView";
 
 const Index = ({ workspace }: { workspace: WorkspaceType }) => {
   const { textColor, secondaryBackgroundColor, getTransparent } = useColors();
-  const { compactMode } = useSettings();
-  const { sidebarOpacity } = useSettings();
+  const { compactMode, sidebarOpacity } = useSettingsStore();
 
   const transparent_bg_color = getTransparent(
     sidebarOpacity,

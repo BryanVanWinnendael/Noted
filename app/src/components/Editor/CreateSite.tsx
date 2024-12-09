@@ -2,11 +2,11 @@ import { IconButton, Tooltip, useDisclosure } from "@chakra-ui/react";
 import { CiShare2 } from "react-icons/ci";
 import useColors from "hooks/useColors";
 import EditorJS from "@editorjs/editorjs";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import SharedModal from "./SharedModal";
 import DeleteSharedSite from "./DeleteSharedSite";
 import { NoteStyle } from "types/index";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 
 const CreateSite = ({
   editor,
@@ -15,7 +15,7 @@ const CreateSite = ({
   editor: React.MutableRefObject<EditorJS | null>;
   path: string;
 }) => {
-  const { fontFamily, headerColors, headerColorsEnabled } = useSettings();
+  const { fontFamily, headerColors, headerColorsEnabled } = useSettingsStore();
   const {
     backgroundColor,
     textColor,
@@ -27,7 +27,7 @@ const CreateSite = ({
     secondaryBackgroundColorLighter,
     secondaryBackgroundColorDarker,
   } = useColors();
-  const { notes, createPublicNote } = useWorkspace();
+  const { notes, createPublicNote } = useWorkspaceStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const style: NoteStyle = {

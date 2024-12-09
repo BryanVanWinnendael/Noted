@@ -34,6 +34,7 @@ export default defineConfig({
       utils: path.resolve(__dirname, "./src/utils"),
       screens: path.resolve(__dirname, "./src/screens"),
       lib: path.resolve(__dirname, "./src/lib"),
+      stores: path.resolve(__dirname, "./src/stores"),
     },
   },
   optimizeDeps: {

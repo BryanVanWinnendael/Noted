@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Stack, Text, Tooltip } from "@chakra-ui/react";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import { BiMerge } from "react-icons/bi";
 import ToDoList from "components/WidgetBar/ToDoWidget/ToDoList";
 import ToDoForm from "components/WidgetBar/ToDoWidget/ToDoForm";
@@ -9,7 +9,7 @@ const Index = () => {
   const { accentColor, iconColor, textColor, secondaryBackgroundColorLighter } =
     useColors();
   const { isConnected, setIsConnected, canConnect, getCompatibleWidget } =
-    useWidget();
+    useWidgetStore();
 
   return (
     <Box h="300px">

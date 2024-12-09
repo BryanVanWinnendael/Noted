@@ -1,5 +1,5 @@
 import { IconButton, Tooltip } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { RiHomeLine } from "react-icons/ri";
 
@@ -10,7 +10,7 @@ const WorkspaceFile = () => {
     secondaryBackgroundColorLighter,
     secondaryBackgroundColorDarker,
   } = useColors();
-  const { openWorkspaceFile } = useWorkspace();
+  const { openWorkspaceFile } = useWorkspaceStore();
   const workspace_path = localStorage.getItem("workspace_path");
   const workspace_name = workspace_path?.split("\\").pop() + ".home.noted";
   const workspace_file = workspace_path + "\\" + workspace_name;

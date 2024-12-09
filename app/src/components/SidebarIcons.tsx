@@ -1,10 +1,10 @@
 import { Flex, Box, Text } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import CustomSwitch from "./CustomSwitch";
 
 const SidebarIcons = () => {
-  const { saveSettings, sidebarIcons } = useSettings();
+  const { saveSettings, sidebarIcons } = useSettingsStore();
   const { mutedTextColor } = useColors();
 
   const handleSidebarIcons = () => {

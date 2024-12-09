@@ -1,8 +1,8 @@
 import { Text, Button, Center, Stack } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 
 const LoadInWorkspace = () => {
-  const { openWorkspace } = useWorkspace();
+  const { openWorkspace } = useWorkspaceStore();
 
   return (
     <Center h="full" w="full">

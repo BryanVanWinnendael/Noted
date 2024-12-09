@@ -1,14 +1,14 @@
 import { Box, Flex } from "@chakra-ui/react";
 import { EDITOR_JS_TOOLS } from "./tools";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createReactEditorJS } from "react-editor-js";
 import EditorCore from "@editorjs/editorjs";
 import useColors from "hooks/useColors";
 import { utils } from "utils/index";
-import { useEditor } from "contexts/EditorContext";
-import { useSlash } from "contexts/SlashContext";
-import { useSettings } from "contexts/SettingsContext";
+import { useEditorStore } from "stores/EditorStore";
+import { useSlashStore } from "stores/SlashStore";
+import { useSettingsStore } from "stores/SettingsStore";
 import TitleBar from "./TitleBar";
 
 const Editor = ({
@@ -20,16 +20,16 @@ const Editor = ({
   path: string;
   tabKey: string;
 }) => {
-  const { setPosition, setSlashOpen, slashOpen } = useSlash();
+  const { setPosition, setSlashOpen, slashOpen } = useSlashStore();
+  const { setEditor, editor, setBlocks, setTime, setSplittedEditor } =
+    useEditorStore();
   const { textColor, borderColor, backgroundColorLighter, getGlassBackground } =
     useColors();
   const ReactEditorJS = createReactEditorJS();
   const editorCore = useRef<EditorCore | null>(null);
-  const { saveFile, readFile, platform } = useWorkspace();
+  const { saveFile, readFile, platform } = useWorkspaceStore();
   const [loaded, setLoaded] = useState(false);
-  const { setEditor, editor, setBlocks, setTime, setSplittedEditor } =
-    useEditor();
-  const { glassBackground, glassEnabled } = useSettings();
+  const { glassBackground, glassEnabled } = useSettingsStore();
   const boxRef = useRef<HTMLDivElement>(null);
 
   const filename =

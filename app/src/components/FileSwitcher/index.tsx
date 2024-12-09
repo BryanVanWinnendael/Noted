@@ -1,11 +1,11 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useCallback, useEffect, useState } from "react";
 import FileCard from "./FileCard";
 
 const Index = () => {
-  const { setShowSwitcher, setActiveFolder, openFile } = useWorkspace();
+  const { setShowSwitcher, setActiveFolder, openFile } = useWorkspaceStore();
   const {
     secondaryBackgroundColor,
     textColor,

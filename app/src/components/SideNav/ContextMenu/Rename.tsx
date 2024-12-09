@@ -8,11 +8,11 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
 import useColors from "hooks/useColors";
 import { useEffect, useRef, useState } from "react";
 import { ContextMenu } from "types/index";
 import { BiRename } from "react-icons/bi";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 
 const Rename = ({ path, name, type }: ContextMenu) => {
   const {
@@ -26,7 +26,7 @@ const Rename = ({ path, name, type }: ContextMenu) => {
   const cancelRef = useRef();
   const [newName, setNewName] = useState<string>(name.split(".noted")[0]);
   const [inValidName, setInValidName] = useState<boolean>(false);
-  const { rename } = useWorkspace();
+  const { rename } = useWorkspaceStore();
 
   const renameFile = async () => {
     let newPath = "";

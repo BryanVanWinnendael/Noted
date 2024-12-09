@@ -1,12 +1,12 @@
 import { Box, Text } from "@chakra-ui/react";
 import ThemeCard from "components/CustomTheme/ThemeCard";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import { AnimatePresence, motion } from "framer-motion";
 import useColors from "hooks/useColors";
 
 const Themes = () => {
   const { mutedTextColor } = useColors();
-  const { customThemes } = useSettings();
+  const { customThemes } = useSettingsStore();
 
   const themes = Object.keys(customThemes);
 

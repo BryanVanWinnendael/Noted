@@ -1,7 +1,7 @@
 import { useColorMode } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
-import { useWidget } from "contexts/WidgetContext";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useSettingsStore } from "stores/SettingsStore";
+import { useWidgetStore } from "stores/WidgetStore";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import { useHotkeys } from "react-hotkeys-hook";
 
 const useShortcuts = () => {
@@ -14,9 +14,9 @@ const useShortcuts = () => {
     setShowSwitcher,
     closeWorkspace,
     setShowCmdPalette,
-  } = useWorkspace();
-  const { setWidgetPanel, widgetPanel } = useWidget();
-  const { onOpen } = useSettings();
+  } = useWorkspaceStore();
+  const { setWidgetPanel, widgetPanel } = useWidgetStore();
+  const { onOpen } = useSettingsStore();
   const { setColorMode } = useColorMode();
 
   const handleSidebar = () => {

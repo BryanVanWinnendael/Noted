@@ -15,7 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import ColorPicker from "components/ColorPicker";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import { useEffect, useRef, useState } from "react";
 import { Theme } from "types";
 import useColors from "hooks/useColors";
@@ -41,7 +41,7 @@ const CustomColors = () => {
     customTheme,
     setCustomTheme,
     saveSettings,
-  } = useSettings();
+  } = useSettingsStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [themeName, setThemeName] = useState<string>("");
   const [inValidName, setInValidName] = useState<boolean>(false);

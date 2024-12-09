@@ -1,11 +1,11 @@
 import { useColorMode, Select } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 
 const ThemeChooser = () => {
   const { secondaryBackgroundColorLighter } = useColors();
   const { setColorMode, colorMode } = useColorMode();
-  const { customThemes, saveSettings } = useSettings();
+  const { customThemes, saveSettings } = useSettingsStore();
 
   const changeTheme = (e: any) => {
     const theme = e.target.value || "light";

@@ -3,11 +3,11 @@ import useColors from "hooks/useColors";
 import { useState } from "react";
 import RewrittenText from "./RewrittenText";
 import { Spinner } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import { TranslateText } from "lib/actions/ai/translate";
 
 const Translater = () => {
-  const { translateLanguage } = useSettings();
+  const { translateLanguage } = useSettingsStore();
   const { accentColor, borderColor, textColor } = useColors();
   const [text, setText] = useState<string>("");
   const [rewrittenText, setRewrittenText] = useState<string>("");

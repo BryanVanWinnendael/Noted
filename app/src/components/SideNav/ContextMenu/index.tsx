@@ -1,5 +1,5 @@
 import { Divider, MenuList } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import Delete from "./Delete";
 import Rename from "./Rename";
@@ -13,7 +13,7 @@ import AddExcalidraw from "./AddExcalidraw";
 const Index = ({ path, name, type }: ContextMenu) => {
   const { borderColor, backgroundColorLighter, getGlassBackground } =
     useColors();
-  const { glassBackground, glassEnabled } = useSettings();
+  const { glassBackground, glassEnabled } = useSettingsStore();
 
   const isGlassEnabled = glassEnabled && glassBackground.contextMenu;
 

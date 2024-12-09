@@ -8,11 +8,11 @@ import {
   SliderTrack,
   Text,
 } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 
 const ActionbarOpacity = () => {
-  const { saveSettings, actionbarOpacity } = useSettings();
+  const { saveSettings, actionbarOpacity } = useSettingsStore();
   const { mutedTextColor, accentColor, textColor } = useColors();
 
   const opacityValue = actionbarOpacity * 100;

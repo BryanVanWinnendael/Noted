@@ -1,8 +1,8 @@
 import { Box, Button, Flex, Stack, Text, Tooltip } from "@chakra-ui/react";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import { BiMerge } from "react-icons/bi";
 import { utils } from "utils";
-import { useEditor } from "contexts/EditorContext";
+import { useEditorStore } from "stores/EditorStore";
 import useColors from "hooks/useColors";
 import { useMemo, useState } from "react";
 
@@ -14,14 +14,18 @@ interface DateTodoCount {
 const Index = () => {
   const { accentColor, iconColor, textColor, secondaryBackgroundColorLighter } =
     useColors();
-  const { isConnected, setIsConnected, canConnect, getCompatibleWidget } =
-    useWidget();
-  const { blocks, time } = useEditor();
+  const {
+    isConnected,
+    setIsConnected,
+    canConnect,
+    getCompatibleWidget,
+    todos,
+  } = useWidgetStore();
+  const { blocks, time } = useEditorStore();
   const [lines, setLines] = useState(0);
   const [words, setWords] = useState(0);
   const [dateString, setDateString] = useState("");
   const [timeString, setTimeString] = useState("");
-  const { todos } = useWidget();
   const [todosCount, setTodosCount] = useState<DateTodoCount[]>();
 
   useMemo(async () => {

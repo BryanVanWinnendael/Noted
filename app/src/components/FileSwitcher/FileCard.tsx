@@ -3,7 +3,7 @@ import SmallEditor from "./SmallEditor";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import useColors from "hooks/useColors";
 import { MdOutlineDraw } from "react-icons/md";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 
 const FileCard = ({
   data,
@@ -14,7 +14,7 @@ const FileCard = ({
   path: string;
   index: number;
 }) => {
-  const { platform } = useWorkspace();
+  const { platform } = useWorkspaceStore();
   const { iconColor } = useColors();
 
   const extension = path.split(".")[path.split(".").length - 1];

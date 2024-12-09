@@ -1,4 +1,4 @@
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useUpdate from "hooks/useUpdate";
 
 export interface CommandSettingsProps {
@@ -14,7 +14,7 @@ const useCommandSettings = ({ openThemeDialog }: CommandSettingsProps) => {
     glassEnabled,
     editorTitle,
     compactMode,
-  } = useSettings();
+  } = useSettingsStore();
   const { handleCheckUpdate } = useUpdate();
 
   const openSettings = () => {

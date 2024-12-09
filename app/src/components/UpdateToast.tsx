@@ -8,14 +8,14 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import useColors from "hooks/useColors";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import { useState } from "react";
 
-const UpdateToast = ({ version }: { version: string }) => {
+const UpdateToast = () => {
   const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false);
   const { accentColor, secondaryBackgroundColorLighter, textColor } =
     useColors();
-  const { updateAndRestart } = useSettings();
+  const { updateAndRestart } = useSettingsStore();
   const toast = useToast();
 
   const handleClsoe = () => {
@@ -40,7 +40,7 @@ const UpdateToast = ({ version }: { version: string }) => {
         </Center>
       ) : (
         <>
-          <Text fontSize="sm">A new update is avaible! ({version})</Text>
+          <Text fontSize="sm">A new update is avaible!</Text>
           <Text fontSize="sm">Do you want to restart now?</Text>
           <Flex mt={2} gap={2}>
             <Button

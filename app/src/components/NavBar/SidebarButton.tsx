@@ -1,10 +1,10 @@
 import { Flex, Icon, Tooltip } from "@chakra-ui/react";
 import useColors from "hooks/useColors";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import { BsLayoutSidebarInset } from "react-icons/bs";
 
 const SidebarButton = () => {
-  const { setShowSidebar, showSidebar } = useWorkspace();
+  const { setShowSidebar, showSidebar } = useWorkspaceStore();
   const {
     accentColor,
     textColor,

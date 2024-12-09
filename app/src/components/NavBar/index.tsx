@@ -2,10 +2,10 @@ import MenuBar from "./MenuBar";
 import { MyWindow } from "types";
 import { Box, Flex, Grid, Tooltip } from "@chakra-ui/react";
 import Tabs from "components/Tabs";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import useColors from "hooks/useColors";
 import SidebarButton from "./SidebarButton";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 
 declare let window: MyWindow;
 
@@ -17,8 +17,8 @@ const NavBar = () => {
     secondaryBackgroundColorLighter,
   } = useColors();
   const invoke = window.electron.invoke;
-  const { setWidgetPanel, widgetPanel } = useWidget();
-  const { workspace } = useWorkspace();
+  const { setWidgetPanel, widgetPanel } = useWidgetStore();
+  const { workspace } = useWorkspaceStore();
 
   const clickedClose = () => {
     invoke("close-window");

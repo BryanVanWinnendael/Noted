@@ -17,7 +17,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import { useEffect, useRef, useState } from "react";
 import { Theme } from "types";
 import useColors from "hooks/useColors";
@@ -32,7 +32,8 @@ const ThemeCard = ({
   deletable: boolean;
 }) => {
   const { backgroundColor, textColor, borderColor } = useColors();
-  const { deleteCustomTheme, addThemeToEditor, customThemes } = useSettings();
+  const { deleteCustomTheme, addThemeToEditor, customThemes } =
+    useSettingsStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [sortedColors, setSortedColors] = useState<Theme>();
   const cancelRef = useRef();

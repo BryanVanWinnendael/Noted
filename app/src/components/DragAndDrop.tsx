@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useState, useRef } from "react";
 
@@ -7,7 +7,7 @@ const DragAndDrop = ({ children }: { children: JSX.Element }) => {
   const [dragging, setDragging] = useState(false);
   const dragContainerRef = useRef<HTMLDivElement | null>(null);
   const { backgroundColor } = useColors();
-  const { openFolder } = useWorkspace();
+  const { openFolder } = useWorkspaceStore();
 
   const dragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();

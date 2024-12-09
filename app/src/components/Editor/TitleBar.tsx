@@ -1,9 +1,9 @@
 import { Flex, Grid, Text } from "@chakra-ui/react";
 import CreateSite from "components/Editor/CreateSite";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import EditorJS from "@editorjs/editorjs";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 
 const TitleBar = ({
   isHomeFile,
@@ -16,9 +16,9 @@ const TitleBar = ({
   editor: React.MutableRefObject<EditorJS | null>;
   path: string;
 }) => {
-  const { editorTitle } = useSettings();
+  const { editorTitle } = useSettingsStore();
   const { textColor, borderColor } = useColors();
-  const { user } = useWorkspace();
+  const { user } = useWorkspaceStore();
 
   return editorTitle ? (
     <Grid

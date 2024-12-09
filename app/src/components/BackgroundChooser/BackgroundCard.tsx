@@ -1,5 +1,5 @@
 import { Box, Card, Flex, Stack, Text } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 
@@ -13,7 +13,7 @@ const BackgroundCard = ({
   select: string;
 }) => {
   const { backgroundColor, borderColor } = useColors();
-  const { saveSettings, backgroundImage } = useSettings();
+  const { saveSettings, backgroundImage } = useSettingsStore();
   const selected = backgroundImage === select;
 
   const handleClick = () => {

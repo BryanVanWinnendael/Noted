@@ -1,5 +1,5 @@
 import { Box } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import { headerStyle } from "styling/Block-Styling/header";
 import { codeStyle } from "./code";
 import { tableStyle } from "./table";
@@ -9,7 +9,7 @@ import { latexStyle } from "./latex";
 import { soundStyle } from "./sound";
 
 const Index = ({ children }: { children: JSX.Element }) => {
-  const { headerColors, headerColorsEnabled } = useSettings();
+  const { headerColors, headerColorsEnabled } = useSettingsStore();
   const {
     textColor,
     backgroundColor,

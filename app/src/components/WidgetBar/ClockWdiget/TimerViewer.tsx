@@ -14,7 +14,7 @@ import {
   useDisclosure,
   useNumberInput,
 } from "@chakra-ui/react";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import useColors from "hooks/useColors";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -27,7 +27,7 @@ type timerType = {
 const TimerViewer = () => {
   const { accentColor, secondaryBackgroundColor, textColor, mutedTextColor } =
     useColors();
-  const { isConnected, selectedDate } = useWidget();
+  const { isConnected, selectedDate } = useWidgetStore();
   const [timer, setTimer] = useState<timerType | undefined>();
   const [inputTimer, setInputTimer] = useState<timerType>({
     hours: 0,

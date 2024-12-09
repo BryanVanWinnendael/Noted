@@ -1,4 +1,4 @@
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import { useRef, useState } from "react";
 import {
   AlertDialog,
@@ -17,7 +17,7 @@ const AddFileDialog = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const { activeFolder, makeNewFile } = useWorkspace();
+  const { activeFolder, makeNewFile } = useWorkspaceStore();
   const { backgroundColor, accentColor, textColor } = useColors();
 
   const cancelRef = useRef();

@@ -30,7 +30,8 @@
       "types/*": ["types/*"],
       "utils/*": ["utils/*"],
       "screens/*": ["screens/*"],
-      "lib/*": ["lib/*"]
+      "lib/*": ["lib/*"],
+      "stores/*": ["stores/*"]
     }
   },
   "include": ["src", "electron", "**/*.ts", "**/*.tsx", "global.d.ts"],

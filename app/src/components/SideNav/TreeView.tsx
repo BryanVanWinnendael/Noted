@@ -4,14 +4,14 @@ import FileButton from "./FileButton";
 import FolderButton from "./FolderButton";
 import { Box } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 
 interface TreeViewProps {
   items: WorkspaceType[];
 }
 
 const TreeView: React.FC<TreeViewProps> = ({ items }) => {
-  const { platform } = useWorkspace();
+  const { platform } = useWorkspaceStore();
   const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const workspace_path = localStorage.getItem("workspace_path");
   const homeName =

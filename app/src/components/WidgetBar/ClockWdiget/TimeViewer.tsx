@@ -1,11 +1,11 @@
 import { Box, Center, Spinner, Text } from "@chakra-ui/react";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import useColors from "hooks/useColors";
 import { useCallback, useEffect, useState } from "react";
 
 const TimeViewer = () => {
   const { accentColor, textColor } = useColors();
-  const { setIntervalId, intervalId } = useWidget();
+  const { setIntervalId, intervalId } = useWidgetStore();
   const [time, setTime] = useState<string>("");
   const [date, setDate] = useState<string>("");
 

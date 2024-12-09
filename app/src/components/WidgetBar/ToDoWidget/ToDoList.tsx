@@ -1,6 +1,6 @@
 import { CloseIcon } from "@chakra-ui/icons";
 import { Box, Button, Flex, Text, Tooltip } from "@chakra-ui/react";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import { RefObject, useRef } from "react";
 import { CiCalendarDate } from "react-icons/ci";
 import useColors from "hooks/useColors";
@@ -8,7 +8,7 @@ import useColors from "hooks/useColors";
 const ToDoList = () => {
   const { accentColor, iconColor, textColor, secondaryBackgroundColorLighter } =
     useColors();
-  const { todos, setTodos } = useWidget();
+  const { todos, setTodos } = useWidgetStore();
   const todosRef: RefObject<HTMLDivElement> = useRef(null);
 
   const handleDelete = (index: number) => {

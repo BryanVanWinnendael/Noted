@@ -1,15 +1,15 @@
 import { Flex, Box, Text, Stack, Tooltip } from "@chakra-ui/react";
 import CustomSwitch from "components/CustomSwitch";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import { GlassComponents } from "types";
 import useColors from "hooks/useColors";
 import MaterialChooser from "./MaterialChooser";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import { FaInfoCircle } from "react-icons/fa";
 
 const Index = () => {
-  const { platform } = useWorkspace();
-  const { glassBackground, saveSettings, glassEnabled } = useSettings();
+  const { platform } = useWorkspaceStore();
+  const { glassBackground, saveSettings, glassEnabled } = useSettingsStore();
   const { mutedTextColor, iconColor, backgroundColor, textColor } = useColors();
 
   const isLinux = platform === "linux";

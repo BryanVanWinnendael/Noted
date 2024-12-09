@@ -5,10 +5,10 @@ import SideNav from "components/SideNav";
 import { ActiveTab, WorkspaceType } from "types";
 import { Panel, PanelGroup } from "react-resizable-panels";
 import ResizeHandle from "components/ResizableHandle";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import EditorWrapper from "styling/EditorWrapper";
-import { useWorkspace } from "contexts/WorkspaceContext";
-import { useSettings } from "contexts/SettingsContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
+import { useSettingsStore } from "stores/SettingsStore";
 import PdfViewer from "components/PdfViewer";
 import NoFile from "components/NoFile";
 import { Allotment } from "allotment";
@@ -68,9 +68,9 @@ const TabContent = ({
 };
 
 const Index = ({ workspace }: { workspace: WorkspaceType }) => {
-  const { showSidebar, tabs, activeTab } = useWorkspace();
-  const { widgetPanel } = useWidget();
-  const { compactMode } = useSettings();
+  const { showSidebar, tabs, activeTab } = useWorkspaceStore();
+  const { widgetPanel } = useWidgetStore();
+  const { compactMode } = useSettingsStore();
   const lengthTabs = Object.keys(tabs).length;
 
   return (

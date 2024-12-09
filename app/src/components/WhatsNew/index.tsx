@@ -15,7 +15,7 @@ import updates from "utils/updates.json";
 import Page from "./Page";
 import { IoIosArrowBack } from "react-icons/io";
 import { IoIosArrowForward } from "react-icons/io";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import { APP_VERSION } from "utils/constants";
 
 type Update = {
@@ -26,7 +26,7 @@ type Update = {
 
 const Index = () => {
   const { backgroundColor, textColor, accentColor } = useColors();
-  const { setNewVersion, setShowConfetti } = useWorkspace();
+  const { setNewVersion, setShowConfetti } = useWorkspaceStore();
   const [isOpen, setIsOpen] = useState(true);
   const pages: Update[] = updates;
   const [page, setPage] = useState(0);

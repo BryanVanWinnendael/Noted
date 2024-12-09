@@ -4,7 +4,7 @@ import { utils } from "utils/index";
 import { Excalidraw } from "@excalidraw/excalidraw";
 import { useCallback, useEffect, useState } from "react";
 import { ExcalidrawImperativeAPI } from "@excalidraw/excalidraw/types/types";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import SaveButton from "./SaveButton";
 
 const UIOptions = {
@@ -16,7 +16,7 @@ const UIOptions = {
 };
 
 const Index = ({ path, splitted }: { path: string; splitted?: boolean }) => {
-  const { saveFile, readFile } = useWorkspace();
+  const { saveFile, readFile } = useWorkspaceStore();
   const { textColor, borderColor, backgroundColor, backgroundColorLighter } =
     useColors();
   const [data, setData] = useState(null);

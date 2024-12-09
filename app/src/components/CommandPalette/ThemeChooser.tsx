@@ -13,7 +13,7 @@ import {
   Text,
   useColorMode,
 } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa";
@@ -25,7 +25,7 @@ const ThemeChooser = ({
   isOpen: boolean;
   handleCloseThemeChooser: () => void;
 }) => {
-  const { customThemes, saveSettings } = useSettings();
+  const { customThemes, saveSettings } = useSettingsStore();
   const { setColorMode, colorMode } = useColorMode();
   const [filterdThemes, setFilterdThemes] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);

@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
 import useColors from "hooks/useColors";
 import SignIn from "components/Auth/SignIn";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import { MyWindow } from "types/index";
 import DeleteSharedSite from "components/Editor/DeleteSharedSite";
 
@@ -10,7 +10,7 @@ declare let window: MyWindow;
 const invoke = window.electron.invoke;
 
 const Notes = () => {
-  const { user, handleSignOutUser, notes, platform } = useWorkspace();
+  const { user, handleSignOutUser, notes, platform } = useWorkspaceStore();
   const { textColor, mutedTextColor, accentColor } = useColors();
 
   const handleVisit = (id: string) => {

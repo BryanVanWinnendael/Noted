@@ -1,7 +1,7 @@
 import { WarningIcon } from "@chakra-ui/icons";
 import { Flex, useToast, Text } from "@chakra-ui/react";
 import UpdateToast from "components/UpdateToast";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import { useState } from "react";
 import { TOAST_ID } from "utils/constants";
 import useColors from "./useColors";
@@ -10,7 +10,7 @@ const useUpdate = () => {
   const { secondaryBackgroundColorLighter, textColor, borderColor, iconColor } =
     useColors();
   const toast = useToast();
-  const { checkUpdate } = useSettings();
+  const { checkUpdate } = useSettingsStore();
   const [loadingUpdates, setLoadingUpdates] = useState<boolean>(false);
 
   const handleCheckUpdate = async () => {
@@ -22,7 +22,7 @@ const useUpdate = () => {
         id: TOAST_ID,
         duration: null,
         isClosable: true,
-        render: () => <UpdateToast version={update} />,
+        render: () => <UpdateToast />,
       });
     } else {
       if (toast.isActive(TOAST_ID)) return setLoadingUpdates(false);

@@ -1,11 +1,11 @@
 import { Box, Input } from "@chakra-ui/react";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import useColors from "hooks/useColors";
 import { useState } from "react";
 
 const ToDoForm = () => {
   const { accentColor } = useColors();
-  const { isConnected, selectedDate, todos, setTodos } = useWidget();
+  const { isConnected, selectedDate, todos, setTodos } = useWidgetStore();
   const [newTodo, setNewTodo] = useState<string>("");
 
   const handleTodo = () => {

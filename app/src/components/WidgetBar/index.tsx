@@ -2,11 +2,11 @@ import { Card, Stack } from "@chakra-ui/react";
 import WidgetChooser from "components/WidgetBar/WidgetChooser";
 import { MyWindow, WidgetName } from "types";
 import { useEffect, useState } from "react";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import ClockWidget from "components/WidgetBar/ClockWdiget";
 import CalendarWidget from "components/WidgetBar/CalendarWidget";
 import ToDoWidget from "components/WidgetBar/ToDoWidget";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import InfoWidget from "components/WidgetBar/InfoWidget";
 import useColors from "hooks/useColors";
 
@@ -26,8 +26,8 @@ const WIDGETS: WIDGET = {
 const Index = () => {
   const { borderColor, backgroundColor, getGlassBackground } = useColors();
   const [selectedPanel, setSelectedPanel] = useState<number>(1);
-  const { selectedWidgets } = useWidget();
-  const { glassBackground, glassEnabled } = useSettings();
+  const { selectedWidgets } = useWidgetStore();
+  const { glassBackground, glassEnabled } = useSettingsStore();
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   const isGlassEnabled = glassEnabled && glassBackground.widgets;

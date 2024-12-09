@@ -8,7 +8,7 @@ import {
   Text,
   MenuItem,
 } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useRef, useState } from "react";
 import { ContextMenu } from "types/index";
@@ -26,7 +26,7 @@ const AddFolder = ({ path, type }: ContextMenu) => {
   const cancelRef = useRef();
   const [folderName, setFolderName] = useState<string>("");
   const [inValidName, setInValidName] = useState<boolean>(false);
-  const { makeNewFolder } = useWorkspace();
+  const { makeNewFolder } = useWorkspaceStore();
 
   const handleAddToFile = async () => {
     const folderPath = path.split("\\").slice(0, -1).join("\\");

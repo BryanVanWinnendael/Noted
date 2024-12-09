@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, CloseIcon } from "@chakra-ui/icons";
 import { Box, Button, Flex, Stack, Tooltip, Text } from "@chakra-ui/react";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import { useEffect, useState } from "react";
 import { CiCalendarDate } from "react-icons/ci";
 import { ToDo } from "types";
@@ -10,7 +10,7 @@ const CalendarTodo = () => {
   const { textColor, iconColor, accentColor, secondaryBackgroundColorLighter } =
     useColors();
   const { setShowDateViewer, selectedDate, todos, setTodos, setSelectedDate } =
-    useWidget();
+    useWidgetStore();
   const [filteredTodos, setFilteredTodos] = useState<ToDo[]>([]);
 
   const handleDelete = (name: string) => {
@@ -56,7 +56,7 @@ const CalendarTodo = () => {
       <Stack>
         {filteredTodos.map((todo, index) => {
           return (
-            <Flex gap={2} alignItems="center">
+            <Flex gap={2} alignItems="center" key={index}>
               <CloseIcon
                 onClick={() => handleDelete(todo.todo)}
                 _hover={{ color: accentColor }}

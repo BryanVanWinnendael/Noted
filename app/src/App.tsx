@@ -1,5 +1,5 @@
 import NavBar from "components/NavBar";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Box,
   Center,
@@ -10,30 +10,30 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import Settings from "screens/Settings";
-import { useSettings } from "contexts/SettingsContext";
 import Home from "screens/Home";
-import { useWorkspace } from "contexts/WorkspaceContext";
 import LoadInWorkspace from "components/LoadInWorkspace";
+import Compact from "components/NavBar/Compact";
+import DragAndDrop from "components/DragAndDrop";
+import FileSwitcher from "components/FileSwitcher";
+import OpenFileInTab from "components/OpenFileInTab";
+import OpenNewFile from "components/OpenNewFile";
+import SlashCommands from "components/SlashCommands";
+import CommandPalette from "components/CommandPalette";
+import ConfettiExplosion from "react-confetti-explosion";
+import WhatsNew from "components/WhatsNew";
+import UpdateToast from "components/UpdateToast";
+import { useSlashStore } from "stores/SlashStore";
+import { useSettingsStore } from "stores/SettingsStore";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import useShortcuts from "hooks/useShortcuts";
-import OpenFileInTab from "components/OpenFileInTab";
-import Compact from "components/NavBar/Compact";
-import FileSwitcher from "components/FileSwitcher";
-import DragAndDrop from "components/DragAndDrop";
-import OpenNewFile from "components/OpenNewFile";
-import { useSlash } from "contexts/SlashContext";
-import SlashCommands from "components/SlashCommands";
 import { backgrounds } from "utils/images";
-import WhatsNew from "components/WhatsNew";
-import ConfettiExplosion from "react-confetti-explosion";
-import UpdateToast from "components/UpdateToast";
 import { TOAST_ID } from "utils/constants";
-import CommandPalette from "components/CommandPalette";
 
 const App = () => {
-  const [loaded, setLoaded] = useState<boolean>(false);
-  const { slashOpen } = useSlash();
-  const { accentColor, backgroundColor, getTransparent } = useColors();
+  const [loaded, setLoaded] = useState(false);
+  const { slashOpen } = useSlashStore();
+  const { accentColor, getTransparent, backgroundColor } = useColors();
   const {
     initSettings,
     compactMode,
@@ -46,68 +46,59 @@ const App = () => {
     scrollbar,
     wallpaperBrightness,
     checkUpdates,
-  } = useSettings();
-  const { workspace, isLoaded, showSwitcher, newVersion, showConfetti } =
-    useWorkspace();
-  const { useAddShortcuts } = useShortcuts();
+    checkUpdate,
+  } = useSettingsStore();
+  const {
+    workspace,
+    isLoaded,
+    showSwitcher,
+    newVersion,
+    showConfetti,
+    initWorkspace,
+  } = useWorkspaceStore();
   const { setColorMode } = useColorMode();
-
   const toast = useToast();
-  const { checkUpdate } = useSettings();
+  const { useAddShortcuts } = useShortcuts();
 
   useAddShortcuts();
 
-  const init = useCallback(async () => {
+  // Initialization logic
+  useEffect(() => {
+    const initApp = async () => {
+      await initSettings();
+      initWorkspace();
+      setLoaded(true);
+    };
+
+    initApp();
+  }, [initSettings, initWorkspace]);
+
+  // Set color mode for active theme
+  useEffect(() => {
     setColorMode(activeTheme);
-    await initSettings();
-    setLoaded(true);
-  }, [activeTheme, initSettings, setColorMode]);
-
-  const getBackground = () => {
-    if (backgroundImage === "custom") return customBackground;
-    return backgrounds[backgroundImage]?.image
-      ? `url(${backgrounds[backgroundImage]?.image})`
-      : "transparent";
-  };
-
-  const handleCheckUpdate = async () => {
-    const update = await checkUpdate();
-    if (update) {
-      if (toast.isActive(TOAST_ID)) return;
-      toast({
-        id: TOAST_ID,
-        duration: null,
-        isClosable: true,
-        render: () => <UpdateToast version={update} />,
-      });
-    }
-  };
+  }, [activeTheme, setColorMode]);
 
   useEffect(() => {
-    if (glassEnabled && glassBackground.window)
-      document.getElementsByTagName("html")[0].style.backgroundColor =
-        "transparent";
-    else
-      document.getElementsByTagName("html")[0].style.backgroundColor =
-        backgroundColor;
-  }, [backgroundColor, glassBackground.window, glassEnabled]);
+    const handleUpdateCheck = async () => {
+      if (checkUpdates && loaded) {
+        const update = await checkUpdate();
+        if (update && !toast.isActive(TOAST_ID)) {
+          toast({
+            id: TOAST_ID,
+            duration: null,
+            isClosable: true,
+            render: () => <UpdateToast />,
+          });
+        }
+      }
+    };
 
-  useEffect(() => {
-    if (checkUpdates && loaded) {
-      handleCheckUpdate();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded, checkUpdates]);
+    handleUpdateCheck();
+  }, [checkUpdates, loaded, checkUpdate, toast]);
 
-  useEffect(() => {
-    init();
-  }, [init, workspace?.path]);
-
-  // Styles for custom scrollbar
+  // Custom scrollbar styles
   useEffect(() => {
     const styleId = "custom-scrollbar-styles";
-
-    // Remove existing styles if present
     const existingStyle = document.getElementById(styleId);
     if (existingStyle) {
       existingStyle.parentNode?.removeChild(existingStyle);
@@ -118,27 +109,50 @@ const App = () => {
     style.id = styleId;
     style.innerHTML = `
       body {
-        /* Custom scrollbar styles */
         ::-webkit-scrollbar-thumb {
           border-radius: 10px;
           background-color: ${color} !important;
         }
-
         ::-webkit-scrollbar-thumb:hover {
           background-color: ${color} !important;
         }
       }
     `;
     document.head.appendChild(style);
+
+    return () => {
+      const cleanupStyle = document.getElementById(styleId);
+      cleanupStyle?.parentNode?.removeChild(cleanupStyle);
+    };
   }, [getTransparent, scrollbar.color, scrollbar.opacity]);
 
+  // Glass background logic
+  useEffect(() => {
+    const htmlElement = document.getElementsByTagName("html")[0];
+    htmlElement.style.backgroundColor =
+      glassEnabled && glassBackground.window ? "transparent" : backgroundColor;
+  }, [glassEnabled, glassBackground.window, backgroundColor]);
+
+  // Background images styles
+  const backgroundStyles = useMemo(() => {
+    const background =
+      backgroundImage === "custom"
+        ? customBackground
+        : backgrounds[backgroundImage]?.image || "transparent";
+    return {
+      background,
+      filter: `blur(${blur}px) brightness(${wallpaperBrightness})`,
+    };
+  }, [backgroundImage, customBackground, blur, wallpaperBrightness]);
+
   const renderWorkspace = () => {
-    if (!isLoaded)
+    if (!isLoaded) {
       return (
         <Center w="full" h="full">
           <Spinner color={accentColor} />
         </Center>
       );
+    }
     return workspace ? <Home workspace={workspace} /> : <LoadInWorkspace />;
   };
 
@@ -154,27 +168,18 @@ const App = () => {
             />
           </Flex>
         )}
+
         {newVersion && <WhatsNew />}
-        {backgroundImage === "custom" ? (
-          <img
-            style={{
-              filter: `blur(${blur}px) brightness(${wallpaperBrightness})`,
-            }}
-            src={getBackground()}
-            alt="background"
-            className="absolute w-full h-full object-cover"
-          />
-        ) : (
-          <Box
-            position="absolute"
-            bg={getBackground()}
-            backgroundSize="cover"
-            backgroundRepeat="no-repeat"
-            w="100vw"
-            h="100vh"
-            filter={`blur(${blur}px) brightness(${wallpaperBrightness})`}
-          />
-        )}
+
+        <Box
+          position="absolute"
+          bg={backgroundStyles.background}
+          backgroundSize="cover"
+          backgroundRepeat="no-repeat"
+          w="100vw"
+          h="100vh"
+          style={{ filter: backgroundStyles.filter }}
+        />
 
         <Settings />
         {!compactMode ? <NavBar /> : <Compact />}

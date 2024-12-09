@@ -1,11 +1,11 @@
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import ColorPicker from "components/ColorPicker";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import { DEFAULT_SCROLLBAR } from "utils/constants";
 
 const Color = () => {
-  const { saveSettings, scrollbar } = useSettings();
+  const { saveSettings, scrollbar } = useSettingsStore();
   const { mutedTextColor, accentColor, textColor } = useColors();
   const color = scrollbar.color;
 

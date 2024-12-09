@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
-import { useSlash } from "contexts/SlashContext";
+import { useSettingsStore } from "stores/SettingsStore";
+import { useSlashStore } from "stores/SlashStore";
 import { motion } from "framer-motion";
 import useColors from "hooks/useColors";
 import { useEffect, useRef, useState } from "react";
@@ -12,7 +12,7 @@ import { MdOutlineWrapText } from "react-icons/md";
 type openType = "rewriter" | "translator" | false;
 
 const SlashCommands = () => {
-  const { position, setSlashOpen } = useSlash();
+  const { position, setSlashOpen } = useSlashStore();
   const boxRef = useRef<HTMLDivElement>(null);
   const topP = position.y + 25;
   const LeftP = position.x;
@@ -24,7 +24,7 @@ const SlashCommands = () => {
     backgroundColorDarker,
     getGlassBackground,
   } = useColors();
-  const { glassBackground, glassEnabled } = useSettings();
+  const { glassBackground, glassEnabled } = useSettingsStore();
   const [open, setOpen] = useState<openType>(false);
 
   const isGlassEnabled = glassEnabled && glassBackground.navBar;

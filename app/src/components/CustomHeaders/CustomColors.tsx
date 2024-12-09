@@ -2,13 +2,13 @@ import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import ColorPicker from "components/ColorPicker";
 import { useEffect, useState } from "react";
 import { HeaderColors } from "types";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import { DEFAULT_HEADER_COLORS } from "utils/constants";
 
 const CustomColors = () => {
   const { accentColor, mutedTextColor, textColor } = useColors();
-  const { saveSettings, headerColors } = useSettings();
+  const { saveSettings, headerColors } = useSettingsStore();
   const [colors, setColors] = useState<HeaderColors | false>(false);
 
   const onChange = (key: keyof HeaderColors, color: string) => {

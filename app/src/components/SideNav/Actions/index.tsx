@@ -3,12 +3,12 @@ import AddFile from "./AddFile";
 import AddFolder from "./AddFolder";
 import AddExcalidraw from "./AddExcalidraw";
 import useColors from "hooks/useColors";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import WorkspaceFile from "./WorkspaceFile";
 
 const Index = () => {
   const { secondaryBackgroundColor, getTransparent } = useColors();
-  const { actionbarOpacity } = useSettings();
+  const { actionbarOpacity } = useSettingsStore();
 
   const transparent_bg_color = getTransparent(
     actionbarOpacity,

@@ -1,7 +1,7 @@
 import { Box, Button, Center, Flex, Stack, Tooltip } from "@chakra-ui/react";
 import TimerViewer from "components/WidgetBar/ClockWdiget/TimerViewer";
 import TimeViewer from "components/WidgetBar/ClockWdiget/TimeViewer";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import useColors from "hooks/useColors";
 import { BiMerge } from "react-icons/bi";
 
@@ -9,7 +9,7 @@ const Index = () => {
   const { accentColor, iconColor, textColor, secondaryBackgroundColorLighter } =
     useColors();
   const { isConnected, setIsConnected, canConnect, getCompatibleWidget } =
-    useWidget();
+    useWidgetStore();
 
   return (
     <Box h="300px">

@@ -1,10 +1,10 @@
 import { IconButton, Tooltip, useToast } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { CiShare2 } from "react-icons/ci";
 
 const DeleteSharedSite = ({ id }: { id: string }) => {
-  const { deletePublicNote } = useWorkspace();
+  const { deletePublicNote } = useWorkspaceStore();
   const toast = useToast();
   const { accentColor, backgroundColor, textColor } = useColors();
 

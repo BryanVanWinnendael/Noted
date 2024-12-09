@@ -1,6 +1,6 @@
 import { AddIcon } from "@chakra-ui/icons";
 import { Flex, Text, Tooltip } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import { AnimatePresence, motion } from "framer-motion";
 import useColors from "hooks/useColors";
 
@@ -13,7 +13,7 @@ const Index = () => {
     getTransparent,
   } = useColors();
   const { activeTab, tabs, addTab, handleChangeTab, removeTab, platform } =
-    useWorkspace();
+    useWorkspaceStore();
   const workspace_path = localStorage.getItem("workspace_path");
   const homeName =
     platform === "win32"

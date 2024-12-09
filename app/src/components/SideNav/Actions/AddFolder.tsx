@@ -9,7 +9,7 @@ import {
   Text,
   Tooltip,
 } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useRef, useState } from "react";
 import { MdOutlineCreateNewFolder } from "react-icons/md";
@@ -26,7 +26,7 @@ const AddFolder = () => {
   const cancelRef = useRef();
   const [folderName, setFolderName] = useState<string>("");
   const [inValidName, setInValidName] = useState<boolean>(false);
-  const { activeFolder, makeNewFolder } = useWorkspace();
+  const { activeFolder, makeNewFolder } = useWorkspaceStore();
 
   const handleCreateFolder = async () => {
     if (folderName === "") {

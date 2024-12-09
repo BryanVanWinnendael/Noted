@@ -8,11 +8,11 @@ import {
   SliderTrack,
   Text,
 } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 
 const WallpaperBrightness = () => {
-  const { saveSettings, wallpaperBrightness } = useSettings();
+  const { saveSettings, wallpaperBrightness } = useSettingsStore();
   const { mutedTextColor, accentColor, textColor } = useColors();
 
   const brightnessValue = wallpaperBrightness * 100;

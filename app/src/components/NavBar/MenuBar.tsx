@@ -1,5 +1,5 @@
-import { useWorkspace } from "contexts/WorkspaceContext";
-import { useSettings } from "contexts/SettingsContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
+import { useSettingsStore } from "stores/SettingsStore";
 import {
   Menu,
   MenuButton,
@@ -21,9 +21,9 @@ const MenuBar = () => {
     backgroundColorDarker,
     getGlassBackground,
   } = useColors();
-  const { openWorkspace, closeWorkspace } = useWorkspace();
+  const { openWorkspace, closeWorkspace } = useWorkspaceStore();
   const { setColorMode } = useColorMode();
-  const { onOpen, glassBackground, glassEnabled } = useSettings();
+  const { onOpen, glassBackground, glassEnabled } = useSettingsStore();
 
   const isGlassEnabled = glassEnabled && glassBackground.navBar;
 

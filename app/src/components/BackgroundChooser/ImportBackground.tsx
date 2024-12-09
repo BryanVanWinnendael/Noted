@@ -1,11 +1,11 @@
 import { Box, Card, Icon, Stack } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { IoIosAdd } from "react-icons/io";
 
 const ImportBackground = () => {
   const { borderColor, iconColor, backgroundColor } = useColors();
-  const { importBackground } = useWorkspace();
+  const { importBackground } = useWorkspaceStore();
 
   const handleClick = () => {
     importBackground();

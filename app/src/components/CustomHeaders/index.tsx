@@ -1,12 +1,12 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import CustomSwitch from "components/CustomSwitch";
 import CustomColors from "components/CustomHeaders/CustomColors";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 
 const Index = () => {
   const { mutedTextColor } = useColors();
-  const { headerColorsEnabled, saveSettings } = useSettings();
+  const { headerColorsEnabled, saveSettings } = useSettingsStore();
 
   const handleChangeToggle = () => {
     saveSettings("header_colors_enabled", !headerColorsEnabled);

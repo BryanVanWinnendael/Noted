@@ -1,10 +1,10 @@
 import { Box } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 
 const Compact = () => {
   const { backgroundColor } = useColors();
-  const { glassBackground, glassEnabled } = useSettings();
+  const { glassBackground, glassEnabled } = useSettingsStore();
 
   const isGlassEnabled = glassEnabled && glassBackground.window;
 

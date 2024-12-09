@@ -1,9 +1,9 @@
 import { Flex, Icon, Menu, MenuButton, Text, Tooltip } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useState } from "react";
 import ContextMenu from "./ContextMenu";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import { PiNoteDuotone } from "react-icons/pi";
 import { FaRegFilePdf } from "react-icons/fa";
 import { MdOutlineDraw } from "react-icons/md";
@@ -18,8 +18,8 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
     secondaryBackgroundColorDarker,
     getTransparent,
   } = useColors();
-  const { extensionLabel, sidebarIcons } = useSettings();
-  const { setActiveFolder, activeTab, tabs, openFile } = useWorkspace();
+  const { extensionLabel, sidebarIcons } = useSettingsStore();
+  const { setActiveFolder, activeTab, tabs, openFile } = useWorkspaceStore();
   const isActive = tabs[activeTab]?.path === path;
   const [isOpen, setIsOpen] = useState<boolean | undefined>(false);
   const tab = tabs[activeTab];

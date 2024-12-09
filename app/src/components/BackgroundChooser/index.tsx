@@ -7,11 +7,11 @@ import {
   backgrounds,
 } from "utils/images";
 import ImportBackground from "./ImportBackground";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import ImportCard from "./ImportCard";
 
 const Index = () => {
-  const { backgrounds: importedBackgrounds } = useWorkspace();
+  const { backgrounds: importedBackgrounds } = useWorkspaceStore();
 
   return (
     <Stack w="full">

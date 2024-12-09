@@ -1,10 +1,10 @@
 import { Flex, Box, Text } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import CustomSwitch from "./CustomSwitch";
 
 const EditorTitle = () => {
-  const { saveSettings, editorTitle } = useSettings();
+  const { saveSettings, editorTitle } = useSettingsStore();
   const { mutedTextColor } = useColors();
 
   const handleGlassBackground = () => {

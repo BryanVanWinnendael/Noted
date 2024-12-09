@@ -9,8 +9,8 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useSettingsStore } from "stores/SettingsStore";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useState } from "react";
 import { IoIosCheckmarkCircle } from "react-icons/io";
@@ -26,10 +26,15 @@ const ImportCard = ({ path }: { path: string }) => {
     getGlassBackground,
     backgroundColorDarker,
   } = useColors();
-  const { saveSettings, backgroundImage, customBackground } = useSettings();
-  const { deleteImportedBackground } = useWorkspace();
+  const {
+    saveSettings,
+    backgroundImage,
+    customBackground,
+    glassBackground,
+    glassEnabled,
+  } = useSettingsStore();
+  const { deleteImportedBackground } = useWorkspaceStore();
   const selected = backgroundImage === "custom" && path === customBackground;
-  const { glassBackground, glassEnabled } = useSettings();
   const [isOpen, setIsOpen] = useState(false);
 
   const isGlassEnabled = glassEnabled && glassBackground.window;

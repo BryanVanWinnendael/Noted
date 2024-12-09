@@ -1,12 +1,12 @@
 import { Text, MenuItem } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { ContextMenu } from "types/index";
 import { CgTab } from "react-icons/cg";
 
 const OpenFIleInTab = ({ path }: ContextMenu) => {
   const { textColor, iconColor, backgroundColorDarker } = useColors();
-  const { openFileInNewTab } = useWorkspace();
+  const { openFileInNewTab } = useWorkspaceStore();
 
   const handleOpen = async () => {
     openFileInNewTab(path);

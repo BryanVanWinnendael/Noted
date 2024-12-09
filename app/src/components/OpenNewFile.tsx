@@ -12,7 +12,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { WorkspaceType } from "types/index";
@@ -32,7 +32,7 @@ const OpenFileInTab = () => {
     secondaryBackgroundColorDarker,
   } = useColors();
   const { showOpenNewFile, setShowOpenNewFile, workspace, openFile, platform } =
-    useWorkspace();
+    useWorkspaceStore();
   const [searchFile, setSearchFile] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [typing, setTyping] = useState<boolean>(false);

@@ -1,6 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useSettingsStore } from "stores/SettingsStore";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
@@ -14,9 +14,9 @@ const RecentWorkspaces = () => {
     backgroundColorDarker,
     getGlassBackground,
   } = useColors();
-  const { recentWorkspaces, openFolder } = useWorkspace();
+  const { recentWorkspaces, openFolder } = useWorkspaceStore();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { glassBackground, glassEnabled } = useSettings();
+  const { glassBackground, glassEnabled } = useSettingsStore();
 
   const isGlassEnabled = glassEnabled && glassBackground.navBar;
 

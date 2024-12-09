@@ -1,5 +1,5 @@
 import { Menu, MenuButton, Flex, Text, Tooltip, Icon } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useState } from "react";
 import ContextMenu from "./ContextMenu";
@@ -7,7 +7,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { motion } from "framer-motion";
 import { FaRegFolder } from "react-icons/fa";
 import { FaRegFolderOpen } from "react-icons/fa";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 
 const FolderButton = ({
   path,
@@ -26,8 +26,8 @@ const FolderButton = ({
     secondaryBackgroundColorLighter,
     secondaryBackgroundColorDarker,
   } = useColors();
-  const { setActiveFolder } = useWorkspace();
-  const { sidebarIcons } = useSettings();
+  const { setActiveFolder } = useWorkspaceStore();
+  const { sidebarIcons } = useSettingsStore();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleSetActiveFolder = (folderPath: string) => {

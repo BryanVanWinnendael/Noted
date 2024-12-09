@@ -12,7 +12,7 @@ import {
 import ConfettiExplosion from "react-confetti-explosion";
 import useColors from "hooks/useColors";
 import { MyWindow } from "types/index";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 
 declare let window: MyWindow;
 
@@ -28,7 +28,7 @@ const SharedModal = ({
   id: string;
 }) => {
   const { backgroundColor, textColor, accentColor } = useColors();
-  const { onOpen, setView } = useSettings();
+  const { onOpen, setView } = useSettingsStore();
 
   const handleVisit = () => {
     const link = import.meta.env.VITE_CLIENT_URL + "notes/" + id;

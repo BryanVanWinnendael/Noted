@@ -6,14 +6,14 @@ import {
   ModalContent,
   ModalOverlay,
 } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import { useRef } from "react";
 import Appearance from "./Appearance";
 import Themes from "./Themes";
 import Market from "./Market";
 import General from "./General";
 import useColors from "hooks/useColors";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import Shortcuts from "./Shortcuts";
 import Background from "./Background";
 import Sidebar from "./Sidebar";
@@ -30,8 +30,8 @@ const SettingsScreen = () => {
     getGlassBackground,
   } = useColors();
   const { isOpen, onClose, glassBackground, glassEnabled, view, setView } =
-    useSettings();
-  const { workspace } = useWorkspace();
+    useSettingsStore();
+  const { workspace } = useWorkspaceStore();
 
   const isGlassEnabled = glassEnabled && glassBackground.settings;
 

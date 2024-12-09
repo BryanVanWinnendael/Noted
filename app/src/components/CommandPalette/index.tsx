@@ -13,7 +13,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useWorkspace } from "contexts/WorkspaceContext";
+import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useColors from "hooks/useColors";
 import { useCallback, useRef, useState } from "react";
 import useCommands from "../../hooks/commands/useCommands";
@@ -47,7 +47,7 @@ const Index = () => {
     textAccentColor,
     borderColor,
   } = useColors();
-  const { showCmdPalette, setShowCmdPalette } = useWorkspace();
+  const { showCmdPalette, setShowCmdPalette } = useWorkspaceStore();
   const [searchCommand, setSearchCommand] = useState<string>("");
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [typing, setTyping] = useState<boolean>(false);

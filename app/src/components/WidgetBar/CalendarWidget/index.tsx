@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { BiMerge } from "react-icons/bi";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import DateViewer from "components/WidgetBar/CalendarWidget/DateViewer";
 import useColors from "hooks/useColors";
 
@@ -33,7 +33,7 @@ const Index = () => {
     getCompatibleWidget,
     setShowDateViewer,
     showDateViewer,
-  } = useWidget();
+  } = useWidgetStore();
   const days = ["S", "M", "T", "W", "T", "F", "S"];
   const currentDate = dayjs();
   const [today, setToday] = useState(currentDate);

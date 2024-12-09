@@ -8,11 +8,11 @@ import {
   SliderTrack,
   Text,
 } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 
 const BlurChooser = () => {
-  const { saveSettings, blur } = useSettings();
+  const { saveSettings, blur } = useSettingsStore();
   const { mutedTextColor, accentColor, textColor } = useColors();
 
   const blurValue = blur * 10;

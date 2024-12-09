@@ -1,13 +1,13 @@
 import { DEFAULT_FONT, DEFAULT_FONTS } from "utils/constants";
 import { Box, Flex, Select, Text } from "@chakra-ui/react";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import { useEffect, useState } from "react";
 
 const FontChooser = () => {
   const { mutedTextColor, secondaryBackgroundColorLighter } = useColors();
   const [font, setFont] = useState<string>(DEFAULT_FONT);
-  const { fontFamily, saveSettings } = useSettings();
+  const { fontFamily, saveSettings } = useSettingsStore();
 
   const changeFont = (e: any) => {
     const chosenFont = e.target.value || DEFAULT_FONT;

@@ -9,9 +9,9 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { WidgetName } from "types";
-import { useWidget } from "contexts/WidgetContext";
+import { useWidgetStore } from "stores/WidgetStore";
 import useColors from "hooks/useColors";
-import { useSettings } from "contexts/SettingsContext";
+import { useSettingsStore } from "stores/SettingsStore";
 
 const WidgetIcon = ({ icon, name }: { icon: any; name: WidgetName }) => {
   const {
@@ -25,8 +25,9 @@ const WidgetIcon = ({ icon, name }: { icon: any; name: WidgetName }) => {
     getGlassBackground,
   } = useColors();
   const { onOpen, onClose, isOpen } = useDisclosure();
-  const { selectedWidgets, setSelectedWidgets, setIsConnected } = useWidget();
-  const { glassBackground, glassEnabled } = useSettings();
+  const { selectedWidgets, setSelectedWidgets, setIsConnected } =
+    useWidgetStore();
+  const { glassBackground, glassEnabled } = useSettingsStore();
 
   const handleClick = (e: any) => {
     if (e.type === "contextmenu") {
