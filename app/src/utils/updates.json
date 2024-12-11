@@ -1,22 +1,18 @@
 [
   {
-    "title": "Linux support",
-    "text": "Noted version 2.0.0 now supports Linux!"
+    "title": "MacOS support",
+    "text": "Noted version 2.2.0 now supports MacOS!"
   },
   {
-    "title": "Share notes with others",
-    "text": "With version 2.0.0, you can now share notes with others. You can share notes with others by clicking on the share button in your note when logged in."
+    "title": "Hex input for color pickers",
+    "text": "With version 2.2.0, you can now input hex values for color pickers."
   },
   {
-    "title": "Command Palette",
-    "text": "With version 2.0.0, you can now open the command palette by pressing Ctrl + Space."
+    "title": "More customizations for the sidebar",
+    "text": "With version 2.2.0, you can now customize the sidebar icon and text color."
   },
   {
-    "title": "Recent opened workspaces",
-    "text": "With version 2.0.0, you can now switch between recent opened workspaces."
-  },
-  {
-    "title": "Changed noted actions",
-    "text": "With version 2.0.0, noted actions now uses the groq api."
+    "title": "Optimization and fixed bugs",
+    "text": "Fixed bugs for file switcher and imporved performance."
   }
 ]
