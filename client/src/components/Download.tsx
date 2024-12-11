@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const getOS = async () => {
   const res = await fetch("/api/os.json");
@@ -6,11 +6,18 @@ const getOS = async () => {
 };
 
 const Download = ({ nav }: { nav?: boolean }) => {
-  const [os, setOS] = useState<"windows" | "linux">("windows");
-  const url =
-    os === "windows"
-      ? import.meta.env.PUBLIC_DOWNLOAD_URL_WIN
-      : import.meta.env.PUBLIC_DOWNLOAD_URL_LIN;
+  const [os, setOS] = useState<"windows" | "linux" | "macos">("windows");
+
+  const url = useMemo(() => {
+    switch (os) {
+      case "windows":
+        return import.meta.env.PUBLIC_DOWNLOAD_URL_WIN;
+      case "linux":
+        return import.meta.env.PUBLIC_DOWNLOAD_URL_LIN;
+      case "macos":
+        return import.meta.env.PUBLIC_DOWNLOAD_URL_MAC;
+    }
+  }, [os]);
 
   useEffect(() => {
     const getUserOs = async () => {
