@@ -7,7 +7,7 @@ const DragAndDrop = ({ children }: { children: JSX.Element }) => {
   const [dragging, setDragging] = useState(false);
   const dragContainerRef = useRef<HTMLDivElement | null>(null);
   const { backgroundColor } = useColors();
-  const { openFolder } = useWorkspaceStore();
+  const { openRecentWorkspace } = useWorkspaceStore();
 
   const dragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ const DragAndDrop = ({ children }: { children: JSX.Element }) => {
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       const path = files[0].path;
-      openFolder(path, true);
+      openRecentWorkspace(path);
     }
     setDragging(false);
   };
