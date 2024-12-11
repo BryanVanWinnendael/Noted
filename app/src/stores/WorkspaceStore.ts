@@ -477,8 +477,8 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
       tab.splittedPath = filePath;
       newTabs[activeTab] = tab;
       set({ tabs: newTabs });
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   },
   checkVersion: () => {

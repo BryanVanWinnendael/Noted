@@ -248,16 +248,18 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
     try {
       const { customThemes, setCustomThemes } = get();
       if (customThemes[name]) return false;
+
       const workspace_path = localStorage.getItem("workspace_path");
       const newCustomThemes = { ...customThemes };
       newCustomThemes[name] = theme;
       setCustomThemes(newCustomThemes);
+
       await invoke("theme:settings-save", {
         name,
         theme: JSON.stringify(theme),
         workspace_path,
       });
-      localStorage.setItem("theme-json", JSON.stringify(theme));
+
       return true;
     } catch (err) {
       console.log(err);
@@ -454,7 +456,6 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
     const { setSettings } = get();
     try {
       const workspace_path = localStorage.getItem("workspace_path");
-      console.log(workspace_path, "settings");
       const settingsString = await invoke("file:settings-get", {
         workspace_path,
       });
