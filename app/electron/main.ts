@@ -10,11 +10,22 @@ autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = false;
 autoUpdater.setFeedURL({
   provider: "generic",
-  url:
-    process.platform === "linux"
-      ? import.meta.env.VITE_UPDATE_SERVER_LINUX
-      : import.meta.env.VITE_UPDATE_SERVER_WINDOWS,
+  url: getUpdateURL(),
 });
+
+function getUpdateURL() {
+  const os = process.platform;
+  switch (os) {
+    case "darwin":
+      return import.meta.env.VITE_UPDATE_SERVER_MACOS;
+    case "win32":
+      return import.meta.env.VITE_UPDATE_SERVER_WINDOWS;
+    case "linux":
+      return import.meta.env.VITE_UPDATE_SERVER_LINUX;
+    default:
+      return import.meta.env.VITE_UPDATE_SERVER_WINDOWS;
+  }
+}
 
 // The built directory structure
 //
