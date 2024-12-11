@@ -2,7 +2,7 @@ import { MyWindow, Theme } from "types";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ThemeCard from "components/CustomTheme/ThemeCard";
-import { Center, Spinner, Box, Text, Flex } from "@chakra-ui/react";
+import { Center, Spinner, Box, Text, Flex, useToast } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import useColors from "hooks/useColors";
 import { GetMarket } from "lib/actions/market/get";
@@ -13,6 +13,7 @@ const invoke = window.electron.invoke;
 
 const Market = () => {
   const { accentColor, mutedTextColor } = useColors();
+  const toast = useToast();
   const [loading, setLoading] = useState<boolean>(true);
   const [themes, setThemes] = useState<{ [key: string]: Theme }>({});
 
@@ -24,12 +25,21 @@ const Market = () => {
     setLoading(true);
     const getMarket = async () => {
       const res = await GetMarket();
-      if (res) setThemes(res);
+      if (!res) {
+        toast({
+          title: "Failed to fetch market themes",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        setThemes(res);
+      }
       setLoading(false);
     };
 
     getMarket();
-  }, []);
+  }, [toast]);
 
   return (
     <Box>

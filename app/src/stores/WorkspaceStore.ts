@@ -83,8 +83,8 @@ interface WorkspaceStore {
   split: (filePath: string) => Promise<void>;
   checkVersion: () => void;
   openWorkspaceFile: () => Promise<void>;
-  getUserNotes: () => Promise<void>;
-  deletePublicNote: (id: string) => Promise<void>;
+  getUserNotes: () => Promise<boolean>;
+  deletePublicNote: (id: string) => Promise<boolean>;
   createPublicNote: (
     data: OutputData,
     path: string,
@@ -503,6 +503,8 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   },
   getUserNotes: async () => {
     const notes = await GetUserNotes();
+    if (!notes) return false;
+
     const tempNotes: UserNote[] = [];
     for (const note of notes) {
       note.data = JSON.parse(note.data);
@@ -510,16 +512,22 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     }
 
     set({ notes: tempNotes });
+    return true;
   },
   deletePublicNote: async (id) => {
+    const res = await DeletePublicNote(id);
+    if (!res) return false;
+
     const { notes } = get();
-    await DeletePublicNote(id);
     const newNotes = notes.filter((note) => note.id !== id);
     set({ notes: newNotes });
+
+    return true;
   },
   createPublicNote: async (data, path, style) => {
     const { id } = await CreatePublicNote(data, path, style);
     if (!id) return false;
+
     const { user, notes } = get();
     const tempNote: UserNote = {
       data: JSON.stringify(data),
@@ -528,8 +536,8 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
       id,
       style,
     };
-
     set({ notes: [...notes, tempNote] });
+
     return true;
   },
   handleSignOutUser: () => {
@@ -540,13 +548,16 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   initUser: () => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const { getUserNotes } = get();
-        set({ user });
         const idToken = await user.getIdToken();
         const res = await Login(idToken);
         if (!res) return;
+
+        set({ user });
+
         const sessToken = res.session;
         if (sessToken) localStorage.setItem("token", sessToken);
+
+        const { getUserNotes } = get();
         getUserNotes();
       }
     });

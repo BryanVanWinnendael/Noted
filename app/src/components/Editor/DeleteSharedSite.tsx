@@ -10,13 +10,23 @@ const DeleteSharedSite = ({ id }: { id: string }) => {
 
   const handleDeleteSite = () => {
     if (!id) return;
-    deletePublicNote(id);
-    toast({
-      title: "Note unshared!",
-      status: "error",
-      duration: 9000,
-      isClosable: true,
-    });
+
+    const res = deletePublicNote(id);
+    if (!res) {
+      toast({
+        title: "Failed to unshare note",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Note unshared!",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   };
 
   return (

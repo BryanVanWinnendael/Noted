@@ -1,4 +1,4 @@
-import { IconButton, Tooltip, useDisclosure } from "@chakra-ui/react";
+import { IconButton, Tooltip, useDisclosure, useToast } from "@chakra-ui/react";
 import { CiShare2 } from "react-icons/ci";
 import useColors from "hooks/useColors";
 import EditorJS from "@editorjs/editorjs";
@@ -15,6 +15,7 @@ const CreateSite = ({
   editor: React.MutableRefObject<EditorJS | null>;
   path: string;
 }) => {
+  const toast = useToast();
   const { fontFamily, headerColors, headerColorsEnabled } = useSettingsStore();
   const {
     backgroundColor,
@@ -50,8 +51,17 @@ const CreateSite = ({
   const handleCreateSite = async () => {
     const data = await editor.current?.save();
     if (!data) return;
+
     const created = await createPublicNote(data, path, style);
-    if (created) onOpen();
+    if (!created)
+      return toast({
+        title: "Failed to share note",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+
+    onOpen();
   };
 
   return (

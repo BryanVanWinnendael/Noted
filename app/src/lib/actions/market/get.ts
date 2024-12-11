@@ -1,14 +1,15 @@
-export const GetMarket = async () => {
-  const url = import.meta.env.VITE_SERVER_URL + "themes";
-  
-  return await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-  .then((res) => res.json())
-  .catch((error) => {
-    console.error("Error creating public note:", error);
-  })
+export const GetMarket = async (): Promise<any | false> => {
+  try {
+    const url = import.meta.env.VITE_SERVER_URL + "themes";
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return await response.json();
+  } catch (error) {
+    return false;
+  }
 }

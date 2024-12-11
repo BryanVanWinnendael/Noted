@@ -2,7 +2,7 @@ import { auth } from "lib/firebase";
 import { useCallback, useEffect } from "react";
 import { MyWindow } from "types/index";
 import { GoogleAuthProvider, signInWithCredential } from "firebase/auth";
-import { Button } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 
 declare let window: MyWindow;
@@ -11,6 +11,8 @@ const invoke = window.electron.invoke;
 const win = window.electron.ipcRenderer;
 
 const GoogleSignIn = ({ onClose }: { onClose: () => void }) => {
+  const toast = useToast();
+
   const signInWithGoogle = async () => {
     const link = import.meta.env.VITE_CLIENT_URL + "app/signin";
     invoke("openBrowser", link);
@@ -23,11 +25,16 @@ const GoogleSignIn = ({ onClose }: { onClose: () => void }) => {
         .then(() => {
           onClose();
         })
-        .catch((error) => {
-          console.error("Error signing in with token:", error);
+        .catch(() => {
+          toast({
+            title: "Failed to sign in",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
         });
     },
-    [onClose],
+    [onClose, toast],
   );
 
   useEffect(() => {

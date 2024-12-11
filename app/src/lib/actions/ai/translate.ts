@@ -9,7 +9,7 @@ export const TranslateText = async (text: string, lang: string) => {
   return chatCompletion.choices[0]?.message?.content || ""
 }
 
-const getGroqChatCompletion = async (apiKey: string, text: string,lang: string) => {
+const getGroqChatCompletion = async (apiKey: string, text: string, lang: string) => {
   const groq = new Groq({ apiKey, dangerouslyAllowBrowser: true});
 
   const content = `Translate this text to ${lang} and only give me the response back:  ${text}`
