@@ -40,5 +40,5 @@
     deleteAppDataOnUninstall: false,
     license: "license.md",
   },
-  icon: "public/icon.icns",
+  icon: "public/icon.png",
 }
