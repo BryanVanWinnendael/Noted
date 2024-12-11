@@ -59,6 +59,7 @@ const CustomColors = () => {
   const reset = () => {
     localStorage.setItem("custom-theme-json", JSON.stringify(THEME_DARK));
     setColors(THEME_DARK);
+    setCustomTheme(THEME_DARK);
   };
 
   const handleExport = () => {
