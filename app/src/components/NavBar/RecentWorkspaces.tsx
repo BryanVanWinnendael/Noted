@@ -14,14 +14,14 @@ const RecentWorkspaces = () => {
     backgroundColorDarker,
     getGlassBackground,
   } = useColors();
-  const { recentWorkspaces, openFolder } = useWorkspaceStore();
+  const { recentWorkspaces, openRecentWorkspace } = useWorkspaceStore();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { glassBackground, glassEnabled } = useSettingsStore();
 
   const isGlassEnabled = glassEnabled && glassBackground.navBar;
 
-  const handleOpenWorkspace = (workspace: string) => {
-    openFolder(workspace);
+  const handleOpenWorkspace = (workspacePath: string) => {
+    openRecentWorkspace(workspacePath);
     setIsOpen(false);
   };
 

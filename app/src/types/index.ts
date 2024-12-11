@@ -1,7 +1,3 @@
-import { Dayjs } from "dayjs";
-import EditorJS, { OutputData } from "@editorjs/editorjs";
-import { User } from "firebase/auth";
-
 export type Platforms = "win32" | "linux";
 
 export interface MyWindow extends Window {
@@ -51,62 +47,6 @@ export type OpenAvailbleTypes = "noted" | "pdf";
 export interface OpenTypes {
   type: OpenAvailbleTypes;
   splittedType?: OpenAvailbleTypes;
-}
-
-export interface WorkspaceTypeContext {
-  openWorkspace: () => void;
-  openFolder: (path: string, reset?: boolean) => void;
-  workspace: WorkspaceType | undefined;
-  openFile: (path: string) => void;
-  saveFile: (data: any, path: string) => Promise<void>;
-  isLoaded: boolean;
-  addTab: () => void;
-  activeTab: number;
-  tabs: Tab;
-  handleChangeTab: (tab: number) => void;
-  setTabs: (tabs: Tab) => void;
-  removeTab: (tab: number) => void;
-  showSidebar: boolean;
-  setShowSidebar: (show: boolean) => void;
-  setShowOpenFileInTab: (show: boolean) => void;
-  showOpenFileInTab: boolean;
-  setShowOpenNewFile: (show: boolean) => void;
-  showOpenNewFile: boolean;
-  openFileInNewTab: (filePath: string) => void;
-  makeNewFile: (fileName: string, folderPath: string) => Promise<boolean>;
-  makeNewFolder: (folderName: string, folderPath: string) => Promise<boolean>;
-  activeFolder: string | undefined;
-  setActiveFolder: (folder: string) => void;
-  deleteFile: (path: string) => Promise<boolean>;
-  deleteFolder: (path: string) => Promise<boolean>;
-  rename: (oldPath: string, newPath: string, type: string) => Promise<boolean>;
-  showSwitcher: boolean;
-  setShowSwitcher: (show: boolean) => void;
-  closeWorkspace: () => void;
-  savePdfFile: (data: any, path: string) => void;
-  split: (path: string) => Promise<void>;
-  readFile: (path: string) => Promise<any>;
-  importBackground: () => Promise<void>;
-  backgrounds: string[];
-  deleteImportedBackground: (path: string) => void;
-  newVersion: boolean;
-  setNewVersion: (newVersion: boolean) => void;
-  openWorkspaceFile: () => Promise<void>;
-  showConfetti: boolean;
-  setShowConfetti: (show: boolean) => void;
-  platform: Platforms;
-  recentWorkspaces: string[];
-  user: User | undefined;
-  handleSignOutUser: () => void;
-  notes: UserNote[];
-  createPublicNote: (
-    data: OutputData,
-    path: string,
-    style: NoteStyle,
-  ) => Promise<boolean>;
-  deletePublicNote: (id: string) => void;
-  showCmdPalette: boolean;
-  setShowCmdPalette: (show: boolean) => void;
 }
 
 export interface Theme {
@@ -185,91 +125,13 @@ export type Settings =
   | "wallpaper_brightness"
   | "action_bar_opacity"
   | "sidebar_opacity"
-  | "material";
-
-export interface SettingsTypeContext {
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
-  saveThemeToFile: () => void;
-  exportTheme: () => void;
-  importTheme: () => void;
-  themePath: string;
-  removeThemePath: () => void;
-  headerColors: HeaderColors | false;
-  headerColorsEnabled: boolean;
-  addThemeToEditor: (name: string, customTheme: Theme) => Promise<boolean>;
-  customThemes: { [key: string]: Theme };
-  deleteCustomTheme: (name: string) => void;
-  checkUpdates: boolean | null;
-  updateAndRestart: () => void;
-  checkUpdate: () => any;
-  glassBackground: GlassSettings;
-  glassEnabled: boolean;
-  saveSettings: (key: Settings, value: any) => void;
-  initSettings: () => Promise<void>;
-  customTheme: Theme | undefined;
-  compactMode: boolean;
-  setCompactMode: (compact: boolean) => void;
-  setCustomTheme: (theme: Theme | undefined) => void;
-  activeTheme: string;
-  fontFamily: string;
-  translateLanguage: string;
-  extensionLabel: boolean;
-  backgroundImage: BackgroundImages;
-  blur: number;
-  customBackground: string;
-  editorTitle: boolean;
-  scrollbar: Scrollbar;
-  sidebarIcons: boolean;
-  wallpaperBrightness: number;
-  actionbarOpacity: number;
-  sidebarOpacity: number;
-  material: Material;
-  view: string;
-  setView: (view: string) => void;
-}
-
-export interface EditorTypeContext {
-  editor: EditorJS;
-  setEditor: (editor: EditorJS) => void;
-  blocks: any[];
-  setBlocks: (blocks: any[]) => void;
-  time: number;
-  setTime: (time: number) => void;
-  splittedEditor: EditorJS;
-  setSplittedEditor: (editor: EditorJS) => void;
-}
+  | "material"
+  | "sidebar_text_color"
+  | "sidebar_icon_color";
 
 export interface ToDo {
   date: string | null;
   todo: string;
-}
-
-export interface WidgetTypeContext {
-  widgetPanel: boolean;
-  setWidgetPanel: (widgetPanel: boolean) => void;
-  selectedWidgets: WidgetName[];
-  setSelectedWidgets: (selectedWidgets: WidgetName[]) => void;
-  isConnected: boolean;
-  setIsConnected: (connect: boolean) => void;
-  canConnect: () => boolean;
-  selectedDate: Dayjs | undefined;
-  setSelectedDate: (date: Dayjs | undefined) => void;
-  getCompatibleWidget: (widget: WidgetName) => WidgetName | null;
-  showDateViewer: boolean;
-  setShowDateViewer: (show: boolean) => void;
-  todos: ToDo[];
-  setTodos: (todos: ToDo[]) => void;
-  intervalId: NodeJS.Timer | undefined;
-  setIntervalId: (id: NodeJS.Timer) => void;
-}
-
-export interface SlashTypeContext {
-  slashOpen: boolean;
-  setSlashOpen: (open: boolean) => void;
-  position: { x: number; y: number };
-  setPosition: (position: { x: number; y: number }) => void;
 }
 
 export type CanvasTools = "none" | "pencil" | "text";

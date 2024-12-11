@@ -22,6 +22,8 @@ import {
   DEFAULT_UPDATE,
   DEFAULT_WALLPAPER_BRIGHTNESS,
   REQUIRED_SETTINGS_KEYS,
+  DEFAULT_SIDEBAR_TEXT_COLOR,
+  DEFAULT_SIDEBAR_ICON_COLOR,
 } from "../constants";
 
 import languages from "../languages.json";
@@ -218,6 +220,24 @@ const checkMaterial = (material: any): any => {
   return material;
 };
 
+const checkSidebarTextColor = (color: any): any => {
+  if (typeof color === "boolean") {
+    return color;
+  } else if (typeof color === "string") {
+    return color;
+  }
+  return DEFAULT_SIDEBAR_TEXT_COLOR;
+};
+
+const checkSidebarIconColor = (color: any): any => {
+  if (typeof color === "boolean") {
+    return color;
+  } else if (typeof color === "string") {
+    return color;
+  }
+  return DEFAULT_SIDEBAR_ICON_COLOR;
+};
+
 export const ensureKeys = (settings: { [key in any]: any }, keys: any[]) => {
   const filteredObject = Object.fromEntries(
     Object.entries(settings).filter(([key]) => keys.includes(key as Settings)),
@@ -296,6 +316,12 @@ const settingsChecker = (settings: { [key in Settings]: any }): {
         break;
       case "material":
         filledSettings[key] = checkMaterial(value);
+        break;
+      case "sidebar_text_color":
+        filledSettings[key] = checkSidebarTextColor(value);
+        break;
+      case "sidebar_icon_color":
+        filledSettings[key] = checkSidebarIconColor(value);
         break;
       default:
         break;

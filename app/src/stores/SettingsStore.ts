@@ -25,6 +25,7 @@ import {
   DEFAULT_SCROLLBAR,
   DEFAULT_SIDEBAR_ICONS,
   DEFAULT_SIDEBAR_OPACITY,
+  DEFAULT_SIDEBAR_TEXT_COLOR,
   DEFAULT_TRANSLATE_LANGUAGE,
   DEFAULT_UPDATE,
   DEFAULT_WALLPAPER_BRIGHTNESS,
@@ -62,6 +63,8 @@ interface SettingsStore {
   sidebarOpacity: number;
   actionbarOpacity: number;
   material: Material;
+  sidebarTextColor: string | false;
+  sidebarIconColor: string | false;
 
   // Actions
   onOpen: () => void;
@@ -91,6 +94,8 @@ interface SettingsStore {
   setSidebarOpacity: (opacity: number) => void;
   setActionbarOpacity: (opacity: number) => void;
   setMaterial: (material: Material) => void;
+  setSidebarTextColor: (color: string | false) => void;
+  setSidebarIconColor: (color: string | false) => void;
 
   readThemeFile: () => Promise<void>;
   saveThemeToFile: () => Promise<void>;
@@ -139,7 +144,8 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   sidebarOpacity: DEFAULT_SIDEBAR_OPACITY,
   actionbarOpacity: DEFAULT_ACTION_BAR_OPACITY,
   material: DEFAULT_MATERIAL,
-
+  sidebarTextColor: DEFAULT_SIDEBAR_TEXT_COLOR,
+  sidebarIconColor: DEFAULT_SIDEBAR_TEXT_COLOR,
   // Setters
   setView: (view) => set({ view }),
   setThemePath: (path) => set({ themePath: path }),
@@ -167,6 +173,8 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   setSidebarOpacity: (opacity) => set({ sidebarOpacity: opacity }),
   setActionbarOpacity: (opacity) => set({ actionbarOpacity: opacity }),
   setMaterial: (material) => set({ material }),
+  setSidebarTextColor: (color) => set({ sidebarTextColor: color }),
+  setSidebarIconColor: (color) => set({ sidebarIconColor: color }),
 
   // Actions
   onOpen: () => set({ isOpen: true }),
@@ -337,6 +345,8 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       setSidebarOpacity,
       setActionbarOpacity,
       setMaterial,
+      setSidebarTextColor,
+      setSidebarIconColor,
     } = get();
     switch (key) {
       case "check_updates":
@@ -399,6 +409,12 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       case "material":
         setMaterial(value);
         break;
+      case "sidebar_text_color":
+        setSidebarTextColor(value);
+        break;
+      case "sidebar_icon_color":
+        setSidebarIconColor(value);
+        break;
       default:
         break;
     }
@@ -425,6 +441,8 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       sidebarOpacity: settings["sidebar_opacity"],
       actionbarOpacity: settings["action_bar_opacity"],
       material: settings["material"],
+      sidebarTextColor: settings["sidebar_text_color"],
+      sidebarIconColor: settings["sidebar_icon_color"],
     });
   },
   resetCustomTheme: () => {
@@ -436,6 +454,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
     const { setSettings } = get();
     try {
       const workspace_path = localStorage.getItem("workspace_path");
+      console.log(workspace_path, "settings");
       const settingsString = await invoke("file:settings-get", {
         workspace_path,
       });

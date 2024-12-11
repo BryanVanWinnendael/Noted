@@ -40,7 +40,7 @@ const Index = () => {
     };
 
     const switchPane = (event: KeyboardEvent) => {
-      if (event.key === " ") {
+      if (event.key === "Tab") {
         const openFilesStorage = localStorage.getItem("open_files");
         if (openFilesStorage) {
           const files = JSON.parse(openFilesStorage);

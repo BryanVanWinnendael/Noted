@@ -18,11 +18,15 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
     secondaryBackgroundColorDarker,
     getTransparent,
   } = useColors();
-  const { extensionLabel, sidebarIcons } = useSettingsStore();
+  const { extensionLabel, sidebarIcons, sidebarTextColor, sidebarIconColor } =
+    useSettingsStore();
   const { setActiveFolder, activeTab, tabs, openFile } = useWorkspaceStore();
   const isActive = tabs[activeTab]?.path === path;
   const [isOpen, setIsOpen] = useState<boolean | undefined>(false);
   const tab = tabs[activeTab];
+
+  const color = sidebarTextColor ? sidebarTextColor : textColor;
+  const colorIcon = sidebarIconColor ? sidebarIconColor : iconColor;
 
   const handleOpenFile = (filePath: string) => {
     const folderPath = filePath.split("\\");
@@ -44,11 +48,11 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
   const getIcon = () => {
     switch (extension) {
       case "pdf":
-        return <Icon w={4} h={4} as={FaRegFilePdf} color={iconColor} />;
+        return <Icon w={4} h={4} as={FaRegFilePdf} color={colorIcon} />;
       case "excalidraw":
-        return <Icon w={4} h={4} as={MdOutlineDraw} color={iconColor} />;
+        return <Icon w={4} h={4} as={MdOutlineDraw} color={colorIcon} />;
       default:
-        return <Icon w={4} h={4} as={PiNoteDuotone} color={iconColor} />;
+        return <Icon w={4} h={4} as={PiNoteDuotone} color={colorIcon} />;
     }
   };
 
@@ -58,7 +62,7 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
         placement="bottom"
         label={getFileName(name)}
         bg={secondaryBackgroundColorLighter}
-        color={textColor}
+        color={color}
         rounded="md"
       >
         <MenuButton
@@ -66,7 +70,7 @@ const FileButton = ({ path, name }: { path: string; name: string }) => {
           bg={tab?.path === path ? secondaryBackgroundColorDarker : "none"}
           onClick={() => handleOpenFile(path)}
           onContextMenu={() => setIsOpen(true)}
-          color={textColor}
+          color={color}
           _hover={{ bg: secondaryBackgroundColorDarker }}
           rounded="md"
           w="full"

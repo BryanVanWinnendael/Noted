@@ -39,7 +39,7 @@ const TreeView: React.FC<TreeViewProps> = ({ items }) => {
     const isExpanded = expandedItems.includes(item.id);
 
     return (
-      <div key={item.id}>
+      <div key={item.id} onClick={(e) => e.stopPropagation()}>
         {item.type === "folder" ? (
           <FolderButton
             name={item.name}

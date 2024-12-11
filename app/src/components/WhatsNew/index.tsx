@@ -30,7 +30,6 @@ const Index = () => {
   const [isOpen, setIsOpen] = useState(true);
   const pages: Update[] = updates;
   const [page, setPage] = useState(0);
-  setShowConfetti(false);
 
   const handleClose = () => {
     setShowConfetti(true);

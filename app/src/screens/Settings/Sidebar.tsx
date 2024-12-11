@@ -1,8 +1,10 @@
 import { Box, Stack, Text } from "@chakra-ui/react";
 import ActionbarOpacity from "components/ActionbarOpacity";
 import ExtensionLabel from "components/ExtensionLabel";
+import SidebarIconColor from "components/SidebarIconColor";
 import SidebarIcons from "components/SidebarIcons";
 import SidebarOpacity from "components/SidebarOpacity";
+import SidebarTextColor from "components/SidebarTextColor";
 
 const Sidebar = () => {
   return (
@@ -15,6 +17,8 @@ const Sidebar = () => {
         <SidebarIcons />
         <ActionbarOpacity />
         <SidebarOpacity />
+        <SidebarTextColor />
+        <SidebarIconColor />
       </Stack>
     </Box>
   );

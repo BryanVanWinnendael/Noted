@@ -4,6 +4,7 @@ import {
   Box,
   Center,
   Flex,
+  Image,
   Spinner,
   Stack,
   useColorMode,
@@ -50,7 +51,7 @@ const App = () => {
   } = useSettingsStore();
   const {
     workspace,
-    isLoaded,
+    workspaceState,
     showSwitcher,
     newVersion,
     showConfetti,
@@ -65,13 +66,18 @@ const App = () => {
   // Initialization logic
   useEffect(() => {
     const initApp = async () => {
-      await initSettings();
-      initWorkspace();
-      setLoaded(true);
+      if (workspaceState === "opening") {
+        initWorkspace();
+      } else if (workspaceState === "closed" || workspaceState === "opened") {
+        // Load the settings when a workspace has been initialized/opened
+        // or when a workspace is closed so that the settings are set to default
+        initSettings();
+        setLoaded(true);
+      }
     };
 
     initApp();
-  }, [initSettings, initWorkspace]);
+  }, [initSettings, initWorkspace, workspaceState]);
 
   // Set color mode for active theme
   useEffect(() => {
@@ -146,7 +152,7 @@ const App = () => {
   }, [backgroundImage, customBackground, blur, wallpaperBrightness]);
 
   const renderWorkspace = () => {
-    if (!isLoaded) {
+    if (workspaceState === "opening") {
       return (
         <Center w="full" h="full">
           <Spinner color={accentColor} />
@@ -171,15 +177,24 @@ const App = () => {
 
         {newVersion && <WhatsNew />}
 
-        <Box
-          position="absolute"
-          bg={backgroundStyles.background}
-          backgroundSize="cover"
-          backgroundRepeat="no-repeat"
-          w="100vw"
-          h="100vh"
-          style={{ filter: backgroundStyles.filter }}
-        />
+        {backgroundImage === "custom" ||
+        backgroundStyles.background !== "transparent" ? (
+          <Image
+            src={backgroundStyles.background}
+            alt="background"
+            className="absolute w-full h-full object-cover"
+            filter={backgroundStyles.filter}
+          />
+        ) : (
+          <Box
+            position="absolute"
+            bg={backgroundStyles.background}
+            backgroundSize="cover"
+            backgroundRepeat="no-repeat"
+            w="100vw"
+            h="100vh"
+          />
+        )}
 
         <Settings />
         {!compactMode ? <NavBar /> : <Compact />}

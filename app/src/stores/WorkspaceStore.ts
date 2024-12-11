@@ -21,7 +21,7 @@ const invoke = window.electron.invoke;
 
 interface WorkspaceStore {
   workspace: WorkspaceType | undefined;
-  isLoaded: boolean;
+  workspaceState: "opening" | "opened" | "closed";
   tabs: Tab;
   activeTab: number;
   showSidebar: boolean;
@@ -70,11 +70,10 @@ interface WorkspaceStore {
   openFile: (filePath: string) => Promise<void>;
   saveFile: (data: any, path: string) => Promise<void>;
   savePdfFile: (data: any, path: string) => Promise<void>;
-  openFolder: (folderPath: string, reset?: boolean) => Promise<void>;
   importBackground: () => Promise<void>;
   getImportedBackground: () => Promise<void>;
   deleteImportedBackground: (backgroundPath: string) => Promise<void>;
-  handleOpenedWorkspace: () => Promise<void>;
+  refreshWorkspace: () => Promise<void>;
   makeNewFile: (fileName: string, folderPath: string) => Promise<boolean>;
   makeNewFolder: (folderName: string, folderPath: string) => Promise<boolean>;
   resetActiveTab: () => void;
@@ -94,14 +93,17 @@ interface WorkspaceStore {
   handleSignOutUser: () => void;
   initUser: () => void;
   initPlatform: () => Promise<void>;
+  initWorkspaceFolders: () => Promise<void>;
   initWorkspace: () => void;
+  resetWorkspaceSettings: () => Promise<void>;
+  openRecentWorkspace: (workspacePath: string) => void;
 }
 
 // Zustand store implementation
 export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   // State
   workspace: undefined,
-  isLoaded: false,
+  workspaceState: "opening",
   tabs: {} as Tab,
   activeTab: 0,
   showSidebar: true,
@@ -149,6 +151,7 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
       showOpenFileInTab: false,
       activeFolder: undefined,
       showSwitcher: false,
+      workspaceState: "closed",
     });
     localStorage.setItem("active_file", "");
     localStorage.setItem("splitted_active_file", "");
@@ -208,15 +211,18 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     try {
       const openedWorkspace: WorkspaceType = await invoke("folder:open-dialog");
       if (!openedWorkspace) return;
-      get().resetWorkspace();
+
       localStorage.setItem("workspace_path", openedWorkspace.path);
-      set({ workspace: openedWorkspace });
+
+      get().resetWorkspace();
+      set({ workspace: openedWorkspace, workspaceState: "opened" });
       get().addRecentOpenedWorkspace(openedWorkspace.path);
     } catch (err) {
       console.log(err);
     }
   },
   closeWorkspace: () => {
+    localStorage.removeItem("workspace_path");
     get().resetWorkspace();
     localStorage.clear();
   },
@@ -241,12 +247,15 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     set({ tabs: newTabs, activeTab: newTabId });
   },
   removeTab: async (index) => {
-    const { tabs } = get();
+    const { tabs, reconstructTabs } = get();
+
     const newTabs = { ...tabs };
-    const reconstructed_tabs = get().reconstructTabs(newTabs);
     delete newTabs[index];
+
+    const reconstructed_tabs = reconstructTabs(newTabs);
     const newActiveTab =
       index === 0 ? 0 : Object.keys(reconstructed_tabs).length - 1;
+
     set({ tabs: reconstructed_tabs, activeTab: newActiveTab });
     const path = reconstructed_tabs[newActiveTab].path;
     localStorage.setItem("active_file", path);
@@ -281,13 +290,12 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
       console.log(err);
     }
   },
-  openFolder: async (folderPath, reset = false) => {
+  refreshWorkspace: async () => {
     try {
+      const workspacePath = localStorage.getItem("workspace_path");
       const openedWorkspace: WorkspaceType = await invoke("folder:open", {
-        folder_path: folderPath,
+        folder_path: workspacePath,
       });
-      if (reset) get().resetWorkspace();
-      localStorage.setItem("workspace_path", openedWorkspace.path);
       set({ workspace: openedWorkspace });
     } catch (err) {
       console.log(err);
@@ -330,22 +338,12 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     );
     set({ backgrounds: newBackgrounds });
   },
-  handleOpenedWorkspace: async () => {
-    const workspacePath = localStorage.getItem("workspace_path");
-    if (workspacePath) {
-      get().addRecentOpenedWorkspace(workspacePath);
-      get().openFolder(workspacePath);
-    }
-
-    set({ isLoaded: true });
-    get().getImportedBackground();
-  },
   makeNewFile: async (fileName, folderPath) => {
     try {
       let new_folder_path = "";
       const workspacePath = localStorage.getItem("workspace_path");
 
-      const { platform, openFile, handleOpenedWorkspace } = get();
+      const { platform, openFile, refreshWorkspace } = get();
 
       if (!folderPath) new_folder_path = workspacePath || "";
       else new_folder_path = folderPath;
@@ -355,7 +353,7 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
         file_name: fileName,
       });
 
-      handleOpenedWorkspace();
+      refreshWorkspace();
       if (platform === "win32") {
         openFile(`${new_folder_path}\\${fileName}`);
       } else {
@@ -375,14 +373,14 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
       if (!folderPath) new_folder_path = workspacePath || "";
       else new_folder_path = folderPath;
 
-      const { handleOpenedWorkspace, setActiveFolder } = get();
+      const { refreshWorkspace, setActiveFolder } = get();
 
       await invoke("folder:new", {
         folder: new_folder_path,
         folder_name: folderName,
       });
 
-      handleOpenedWorkspace();
+      refreshWorkspace();
       setActiveFolder(`${new_folder_path}\\${folderName}`);
       return true;
     } catch (err) {
@@ -400,11 +398,11 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   },
   deleteFile: async (filePath) => {
     try {
-      const { handleOpenedWorkspace, resetActiveTab } = get();
+      const { refreshWorkspace, resetActiveTab } = get();
       await invoke("file:delete", {
         file_path: filePath,
       });
-      handleOpenedWorkspace();
+      refreshWorkspace();
       const activeFile = localStorage.getItem("active_file");
       if (activeFile === filePath) {
         localStorage.setItem("active_file", "");
@@ -417,11 +415,11 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
   },
   deleteFolder: async (folderPath) => {
     try {
-      const { handleOpenedWorkspace, resetActiveTab, activeFolder } = get();
+      const { refreshWorkspace, resetActiveTab, activeFolder } = get();
       await invoke("folder:delete", {
         folder_path: folderPath,
       });
-      handleOpenedWorkspace();
+      refreshWorkspace();
       if (activeFolder === folderPath) set({ activeFolder: undefined });
       const active_file = localStorage.getItem("active_file");
       if (active_file?.includes(folderPath)) {
@@ -435,15 +433,14 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     }
   },
   rename: async (oldPath, newPath, type) => {
-    const { handleOpenedWorkspace, openFile, setActiveFolder, activeFolder } =
-      get();
+    const { refreshWorkspace, openFile, setActiveFolder, activeFolder } = get();
     if (type === "file") {
       try {
         await invoke("file:rename", {
           old_path: oldPath,
           new_path: newPath,
         });
-        handleOpenedWorkspace();
+        refreshWorkspace();
         const activeFile = localStorage.getItem("active_file");
         if (activeFile === oldPath) {
           openFile(newPath);
@@ -458,7 +455,7 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
           old_path: oldPath,
           new_path: newPath,
         });
-        handleOpenedWorkspace();
+        refreshWorkspace();
         if (activeFolder === oldPath) {
           setActiveFolder(newPath);
         }
@@ -495,6 +492,7 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     }
   },
   openWorkspaceFile: async () => {
+    // Used to open home file of the workspace
     const workspacePath = localStorage.getItem("workspace_path");
     const openedFile = await invoke("file:open-workspace-file", {
       workspace_path: workspacePath,
@@ -557,14 +555,42 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     const platform = await invoke("platform:get");
     set({ platform });
   },
+  initWorkspaceFolders: async () => {
+    // Used for the sidebar
+    try {
+      const workspacePath = localStorage.getItem("workspace_path");
+
+      if (!workspacePath) return;
+      const openedWorkspace: WorkspaceType = await invoke("folder:open", {
+        folder_path: workspacePath,
+      });
+      set({ workspace: openedWorkspace });
+    } catch (err) {
+      console.log(err);
+    }
+  },
   initWorkspace: () => {
-    console.log("Initializing workspace");
-    const { handleOpenedWorkspace, checkVersion, initPlatform, initUser } =
+    const { initWorkspaceFolders, checkVersion, initPlatform, initUser } =
       get();
+
     localStorage.setItem("open_files", JSON.stringify([])); // Used for the file switcher
-    handleOpenedWorkspace();
+    initWorkspaceFolders();
     checkVersion();
     initPlatform();
     initUser();
+    set({ workspaceState: "opened" });
+  },
+  resetWorkspaceSettings: async () => {
+    const workspacePath = localStorage.getItem("workspace_path");
+
+    await invoke("workspace:reset", {
+      workspace_path: workspacePath,
+    });
+
+    set({ workspaceState: "opening" });
+  },
+  openRecentWorkspace: (workspacePath) => {
+    localStorage.setItem("workspace_path", workspacePath);
+    set({ workspaceState: "opening" });
   },
 }));

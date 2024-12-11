@@ -86,6 +86,18 @@ class Folders {
         fs.renameSync(old_path, new_path);
       },
     );
+
+    ipcMain.handle(
+      "workspace:reset",
+      async (_event, params: { workspace_path: string }) => {
+        const workspacePath = params.workspace_path;
+        const settingsPath = path.join(workspacePath, ".noted");
+
+        if (fs.existsSync(settingsPath)) {
+          fs.rmSync(settingsPath, { recursive: true, force: true });
+        }
+      },
+    );
   }
 
   treeToObject = (tree: Tree | FileInfo): any => {

@@ -26,9 +26,13 @@ const FolderButton = ({
     secondaryBackgroundColorLighter,
     secondaryBackgroundColorDarker,
   } = useColors();
-  const { setActiveFolder } = useWorkspaceStore();
-  const { sidebarIcons } = useSettingsStore();
+  const { setActiveFolder, activeFolder } = useWorkspaceStore();
+  const { sidebarIcons, sidebarTextColor, sidebarIconColor } =
+    useSettingsStore();
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const color = sidebarTextColor ? sidebarTextColor : textColor;
+  const colorIcon = sidebarIconColor ? sidebarIconColor : iconColor;
 
   const handleSetActiveFolder = (folderPath: string) => {
     setActiveFolder(folderPath);
@@ -45,7 +49,7 @@ const FolderButton = ({
         placement="bottom"
         label={name}
         bg={secondaryBackgroundColorLighter}
-        color={textColor}
+        color={color}
         rounded="md"
       >
         <MenuButton
@@ -53,10 +57,12 @@ const FolderButton = ({
           h="fit-content"
           onContextMenu={() => setIsOpen(true)}
           onClick={handleClick}
-          color={textColor}
+          color={color}
           _hover={{ bg: secondaryBackgroundColorDarker }}
+          bg={activeFolder === path ? secondaryBackgroundColorDarker : ""}
           rounded="md"
           p={1}
+          mb={0.5}
         >
           <Flex gap={1} alignItems="center">
             {sidebarIcons ? (
@@ -64,14 +70,14 @@ const FolderButton = ({
                 w={4}
                 h={4}
                 as={expanded ? FaRegFolderOpen : FaRegFolder}
-                color={iconColor}
+                color={colorIcon}
               />
             ) : (
               <motion.span
                 animate={{ rotate: expanded ? 90 : 0 }}
                 className="flex justify-center items-center"
               >
-                <Icon as={IoIosArrowForward} color={iconColor} />
+                <Icon as={IoIosArrowForward} color={colorIcon} />
               </motion.span>
             )}
 

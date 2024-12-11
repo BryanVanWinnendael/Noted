@@ -7,6 +7,7 @@ import useColors from "hooks/useColors";
 import { APP_VERSION } from "utils/constants";
 import { useWorkspaceStore } from "stores/WorkspaceStore";
 import useUpdate from "hooks/useUpdate";
+import ResetSettings from "components/ResetSettings";
 
 declare let window: MyWindow;
 
@@ -16,7 +17,7 @@ const General = () => {
   const { handleCheckUpdate, loadingUpdates } = useUpdate();
   const { accentColor, textColor, mutedTextColor } = useColors();
   const { saveSettings, checkUpdates } = useSettingsStore();
-  const { setNewVersion } = useWorkspaceStore();
+  const { setNewVersion, setShowConfetti } = useWorkspaceStore();
 
   const handleLink = (link: string) => {
     invoke("openBrowser", link);
@@ -24,6 +25,11 @@ const General = () => {
 
   const changeCheckUpdates = () => {
     saveSettings("check_updates", !checkUpdates);
+  };
+
+  const handleCheckNewVersion = () => {
+    setShowConfetti(false);
+    setNewVersion(true);
   };
 
   return (
@@ -67,7 +73,7 @@ const General = () => {
 
           <Button
             color={textColor}
-            onClick={() => setNewVersion(true)}
+            onClick={handleCheckNewVersion}
             _hover={{ backgroundColor: accentColor, opacity: 0.8 }}
             h={8}
             bg={accentColor}
@@ -105,6 +111,8 @@ const General = () => {
             Open
           </Button>
         </Flex>
+
+        <ResetSettings />
       </Stack>
     </Box>
   );
