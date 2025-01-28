@@ -21,7 +21,8 @@ const MenuBar = () => {
     backgroundColorDarker,
     getGlassBackground,
   } = useColors();
-  const { openWorkspace, closeWorkspace } = useWorkspaceStore();
+  const { openWorkspace, closeWorkspace, recentWorkspaces } =
+    useWorkspaceStore();
   const { setColorMode } = useColorMode();
   const { onOpen, glassBackground, glassEnabled } = useSettingsStore();
 
@@ -87,7 +88,9 @@ const MenuBar = () => {
           </Text>
         </MenuItem>
 
-        <RecentWorkspaces />
+        {recentWorkspaces.length > 0 && (
+          <RecentWorkspaces recentWorkspaces={recentWorkspaces} />
+        )}
 
         <MenuItem
           display="flex"

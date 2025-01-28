@@ -5,7 +5,11 @@ import useColors from "hooks/useColors";
 import { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 
-const RecentWorkspaces = () => {
+const RecentWorkspaces = ({
+  recentWorkspaces,
+}: {
+  recentWorkspaces: string[];
+}) => {
   const {
     backgroundColor,
     textColor,
@@ -14,7 +18,7 @@ const RecentWorkspaces = () => {
     backgroundColorDarker,
     getGlassBackground,
   } = useColors();
-  const { recentWorkspaces, openRecentWorkspace } = useWorkspaceStore();
+  const { openRecentWorkspace } = useWorkspaceStore();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { glassBackground, glassEnabled } = useSettingsStore();
 

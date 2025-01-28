@@ -1,4 +1,4 @@
-import { Box, Card, Flex, Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, Stack, Text } from "@chakra-ui/react";
 import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import { IoIosCheckmarkCircle } from "react-icons/io";
@@ -22,26 +22,51 @@ const BackgroundCard = ({
 
   return (
     <Stack>
-      <Card
+      <Box
         onClick={handleClick}
         cursor="pointer"
-        backgroundColor={backgroundColor}
         border="1px"
         borderColor={borderColor}
         rounded="md"
         w={200}
         h={100}
         transition="all 0.3s"
-        background={image && `url(${image})`}
-        backgroundRepeat="no-repeat"
-        backgroundSize="cover"
         position="relative"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
+        overflow="hidden"
       >
+        {image ? (
+          <Box
+            as="img"
+            src={image}
+            alt={name}
+            loading="lazy"
+            w="full"
+            h="full"
+            objectFit="cover"
+            position="absolute"
+            top={0}
+            left={0}
+          />
+        ) : (
+          <Box
+            w="full"
+            h="full"
+            bg={backgroundColor}
+            position="absolute"
+            top={0}
+            left={0}
+          />
+        )}
+        
         {selected && (
-          <Flex alignItems="center" gap={1} zIndex={2}>
+          <Flex 
+            alignItems="center" 
+            gap={1} 
+            zIndex={2}
+            position="relative"
+            justifyContent="center"
+            h="full"
+          >
             <IoIosCheckmarkCircle />
             <Text textAlign="center">selected</Text>
           </Flex>
@@ -57,7 +82,7 @@ const BackgroundCard = ({
           bg="black"
           opacity={selected ? 0.3 : 0}
         />
-      </Card>
+      </Box>
       <Text textAlign="center">{name}</Text>
     </Stack>
   );
