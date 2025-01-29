@@ -1,6 +1,6 @@
 import { OutputData } from "@editorjs/editorjs";
 
-export const CreatePublicNote = async (data: OutputData, path: string, style: any): Promise<any | false> => {
+export const CreatePublicNote = async (data: OutputData | string, path: string, style: any, type: "block" | "markdown"): Promise<any | false> => {
   try {
     const token = localStorage.getItem("token") || "";
     const url = import.meta.env.VITE_SERVER_URL + "notes";
@@ -15,6 +15,7 @@ export const CreatePublicNote = async (data: OutputData, path: string, style: an
         data: JSON.stringify(data),
         path,
         style: JSON.stringify(style),
+        type,
       }),
     });
 

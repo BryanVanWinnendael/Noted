@@ -145,3 +145,5 @@ export const DEFAULT_MATERIALS = ["acrylic"];
 export const DEFAULT_SIDEBAR_TEXT_COLOR = false;
 
 export const DEFAULT_SIDEBAR_ICON_COLOR = false;
+
+export const DEFAULT_MARKDOWN = false;

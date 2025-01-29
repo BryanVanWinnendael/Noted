@@ -29,7 +29,7 @@ const SidebarOpacity = () => {
         <Text color={mutedTextColor}>Choose the opacity for the sidebar</Text>
       </Box>
 
-      <Flex w="50%" gap={2} alignItems="center">
+      <Flex w="50%" gap={4} alignItems="center">
         <Slider
           value={opacityValue}
           aria-label="slider-ex-1"

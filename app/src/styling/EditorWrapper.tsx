@@ -1,9 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import { useCallback, useEffect } from "react";
-import BlockStyling from "styling/Block-Styling";
+import BlockStyling from "styling/BlockStyling";
 import useColors from "hooks/useColors";
 import "styling/splitScreen.css";
 import { splitScreen } from "./SplitScreen";
+import MarkdownStyling from "./MarkdownStyling";
 
 const EditorWrapper = ({ children }: { children: JSX.Element }) => {
   const {
@@ -190,7 +191,9 @@ const EditorWrapper = ({ children }: { children: JSX.Element }) => {
         },
       }}
     >
-      <BlockStyling>{children}</BlockStyling>
+      <MarkdownStyling>
+        <BlockStyling>{children}</BlockStyling>
+      </MarkdownStyling>
     </Box>
   );
 };

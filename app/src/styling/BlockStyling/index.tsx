@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { useSettingsStore } from "stores/SettingsStore";
-import { headerStyle } from "styling/Block-Styling/header";
+import { headerStyle } from "styling/BlockStyling/header";
 import { codeStyle } from "./code";
 import { tableStyle } from "./table";
 import useColors from "hooks/useColors";

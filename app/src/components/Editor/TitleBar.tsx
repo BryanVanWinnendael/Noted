@@ -4,17 +4,20 @@ import { useSettingsStore } from "stores/SettingsStore";
 import useColors from "hooks/useColors";
 import EditorJS from "@editorjs/editorjs";
 import { useWorkspaceStore } from "stores/WorkspaceStore";
+import { Editor } from "@tiptap/react";
 
 const TitleBar = ({
   isHomeFile,
   filename,
   editor,
   path,
+  type,
 }: {
   isHomeFile: boolean;
   filename: string;
-  editor: React.MutableRefObject<EditorJS | null>;
+  editor: React.MutableRefObject<EditorJS | null> | Editor | null;
   path: string;
+  type: "block" | "markdown";
 }) => {
   const { editorTitle } = useSettingsStore();
   const { textColor, borderColor } = useColors();
@@ -39,12 +42,12 @@ const TitleBar = ({
         {isHomeFile ? "Home" : filename}
       </Text>
       <Flex alignItems="center" justifyContent="flex-end" mr={2}>
-        {user && <CreateSite editor={editor} path={path} />}
+        {user && <CreateSite editor={editor} path={path} type={type} />}
       </Flex>
     </Grid>
   ) : (
     <Flex alignItems="center" justifyContent="flex-end" m={2}>
-      {user && <CreateSite editor={editor} path={path} />}
+      {user && <CreateSite editor={editor} path={path} type={type} />}
     </Flex>
   );
 };

@@ -9,7 +9,7 @@ const Index = () => {
     accentColor,
     mutedTextColor,
     textColor,
-    secondaryBackgroundColorLighter,
+    secondaryBackgroundColor,
     getTransparent,
   } = useColors();
   const { activeTab, tabs, addTab, handleChangeTab, removeTab, platform } =
@@ -54,7 +54,7 @@ const Index = () => {
               <Tooltip
                 placement="bottom"
                 label={getFileName(tabs[parseInt(key)].path)}
-                bg={secondaryBackgroundColorLighter}
+                bg={secondaryBackgroundColor}
                 color={textColor}
                 rounded="md"
               >
@@ -71,8 +71,8 @@ const Index = () => {
                   opacity={10}
                   bg={
                     index === activeTab
-                      ? getTransparent(100, secondaryBackgroundColorLighter)
-                      : getTransparent(0.5, secondaryBackgroundColorLighter)
+                      ? getTransparent(100, secondaryBackgroundColor)
+                      : getTransparent(0.5, secondaryBackgroundColor)
                   }
                   color={index === activeTab ? accentColor : mutedTextColor}
                 >
@@ -120,7 +120,7 @@ const Index = () => {
         <Tooltip
           placement="bottom"
           label={"Ctrl+T"}
-          bg={secondaryBackgroundColorLighter}
+          bg={secondaryBackgroundColor}
           color={textColor}
           rounded="md"
         >

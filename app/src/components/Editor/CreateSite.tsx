@@ -7,13 +7,16 @@ import SharedModal from "./SharedModal";
 import DeleteSharedSite from "./DeleteSharedSite";
 import { NoteStyle } from "types/index";
 import { useSettingsStore } from "stores/SettingsStore";
+import { Editor } from "@tiptap/react";
 
 const CreateSite = ({
   editor,
   path,
+  type,
 }: {
-  editor: React.MutableRefObject<EditorJS | null>;
+  editor: React.MutableRefObject<EditorJS | null> | Editor | null;
   path: string;
+  type: "block" | "markdown";
 }) => {
   const toast = useToast();
   const { fontFamily, headerColors, headerColorsEnabled } = useSettingsStore();
@@ -48,11 +51,22 @@ const CreateSite = ({
   const isPublic = notes.find((note) => note.path === path);
   const id = notes.find((note) => note.path === path)?.id;
 
+  const getData = async () => {
+    if (type === "block") {
+      const editorBlock = editor as React.MutableRefObject<EditorJS | null>;
+      const data = await editorBlock.current?.save();
+      return data;
+    }
+
+    const editorMarkdown = editor as Editor;
+    return editorMarkdown?.getHTML();
+  };
+
   const handleCreateSite = async () => {
-    const data = await editor.current?.save();
+    const data = await getData();
     if (!data) return;
 
-    const created = await createPublicNote(data, path, style);
+    const created = await createPublicNote(data, path, style, type);
     if (!created)
       return toast({
         title: "Failed to share note",

@@ -65,6 +65,7 @@ interface SettingsStore {
   material: Material;
   sidebarTextColor: string | false;
   sidebarIconColor: string | false;
+  markdown: boolean;
 
   // Actions
   onOpen: () => void;
@@ -96,6 +97,7 @@ interface SettingsStore {
   setMaterial: (material: Material) => void;
   setSidebarTextColor: (color: string | false) => void;
   setSidebarIconColor: (color: string | false) => void;
+  setMarkdown: (markdown: boolean) => void;
 
   readThemeFile: () => Promise<void>;
   saveThemeToFile: () => Promise<void>;
@@ -146,6 +148,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   material: DEFAULT_MATERIAL,
   sidebarTextColor: DEFAULT_SIDEBAR_TEXT_COLOR,
   sidebarIconColor: DEFAULT_SIDEBAR_TEXT_COLOR,
+  markdown: false,
   // Setters
   setView: (view) => set({ view }),
   setThemePath: (path) => set({ themePath: path }),
@@ -175,6 +178,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   setMaterial: (material) => set({ material }),
   setSidebarTextColor: (color) => set({ sidebarTextColor: color }),
   setSidebarIconColor: (color) => set({ sidebarIconColor: color }),
+  setMarkdown: (markdown) => set({ markdown }),
 
   // Actions
   onOpen: () => set({ isOpen: true }),
@@ -349,6 +353,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       setMaterial,
       setSidebarTextColor,
       setSidebarIconColor,
+      setMarkdown,
     } = get();
     switch (key) {
       case "check_updates":
@@ -417,6 +422,9 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       case "sidebar_icon_color":
         setSidebarIconColor(value);
         break;
+      case "markdown":
+        setMarkdown(value);
+        break;
       default:
         break;
     }
@@ -445,6 +453,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       material: settings["material"],
       sidebarTextColor: settings["sidebar_text_color"],
       sidebarIconColor: settings["sidebar_icon_color"],
+      markdown: settings["markdown"],
     });
   },
   resetCustomTheme: () => {

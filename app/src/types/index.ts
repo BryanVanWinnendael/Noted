@@ -127,7 +127,8 @@ export type Settings =
   | "sidebar_opacity"
   | "material"
   | "sidebar_text_color"
-  | "sidebar_icon_color";
+  | "sidebar_icon_color"
+  | "markdown";
 
 export interface ToDo {
   date: string | null;

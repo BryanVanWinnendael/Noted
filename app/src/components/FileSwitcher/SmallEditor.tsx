@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { createReactEditorJS } from "react-editor-js";
-import { EDITOR_JS_TOOLS } from "components/Editor/tools";
+import { EDITOR_JS_TOOLS } from "components/Editor/BlockEditor/tools";
 import EditorWrapper from "styling/EditorWrapper";
 import useColors from "hooks/useColors";
 import { OutputData } from "@editorjs/editorjs";

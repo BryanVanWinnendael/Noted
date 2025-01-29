@@ -86,9 +86,10 @@ interface WorkspaceStore {
   getUserNotes: () => Promise<boolean>;
   deletePublicNote: (id: string) => Promise<boolean>;
   createPublicNote: (
-    data: OutputData,
+    data: string | OutputData,
     path: string,
     style: NoteStyle,
+    type: "block" | "markdown",
   ) => Promise<boolean>;
   handleSignOutUser: () => void;
   initUser: () => void;
@@ -524,8 +525,8 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
 
     return true;
   },
-  createPublicNote: async (data, path, style) => {
-    const { id } = await CreatePublicNote(data, path, style);
+  createPublicNote: async (data, path, style, type) => {
+    const { id } = await CreatePublicNote(data, path, style, type);
     if (!id) return false;
 
     const { user, notes } = get();

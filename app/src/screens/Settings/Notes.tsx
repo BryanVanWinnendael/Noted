@@ -1,9 +1,10 @@
-import { Box, Button, Flex, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Divider, Flex, Stack, Text } from "@chakra-ui/react";
 import useColors from "hooks/useColors";
 import SignIn from "components/Auth/SignIn";
 import { useWorkspaceStore } from "stores/WorkspaceStore";
 import { MyWindow } from "types/index";
 import DeleteSharedSite from "components/Editor/DeleteSharedSite";
+import MarkdownSetting from "components/MarkdownSetting";
 
 declare let window: MyWindow;
 
@@ -24,6 +25,8 @@ const Notes = () => {
         Notes
       </Text>
       <Stack mr={5} gap={3}>
+        <MarkdownSetting />
+
         <Flex alignItems="center" justify="space-between">
           {user ? (
             <>
@@ -43,13 +46,18 @@ const Notes = () => {
           )}
         </Flex>
         {user && (
-          <Stack>
+          <>
             <Flex alignItems="center" justify="space-between">
               <Text fontWeight="semibold"></Text>
               <Button onClick={handleSignOutUser} colorScheme="red">
                 Sign out
               </Button>
             </Flex>
+            <Divider my={4} />
+          </>
+        )}
+        {user && (
+          <Stack>
             {notes.length > 0 ? (
               <Stack>
                 <Text mt={5} fontSize="xl" fontWeight="semibold">

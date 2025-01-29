@@ -238,6 +238,13 @@ const checkSidebarIconColor = (color: any): any => {
   return DEFAULT_SIDEBAR_ICON_COLOR;
 };
 
+const checkMarkdown = (markdown: boolean): any => {
+  if (typeof markdown !== "boolean") {
+    return false;
+  }
+  return markdown;
+};
+
 export const ensureKeys = (settings: { [key in any]: any }, keys: any[]) => {
   const filteredObject = Object.fromEntries(
     Object.entries(settings).filter(([key]) => keys.includes(key as Settings)),
@@ -322,6 +329,9 @@ const settingsChecker = (settings: { [key in Settings]: any }): {
         break;
       case "sidebar_icon_color":
         filledSettings[key] = checkSidebarIconColor(value);
+        break;
+      case "markdown":
+        filledSettings[key] = checkMarkdown(value);
         break;
       default:
         break;

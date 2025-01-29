@@ -31,7 +31,7 @@ const WallpaperBrightness = () => {
         </Text>
       </Box>
 
-      <Flex w="50%" gap={2} alignItems="center">
+      <Flex w="50%" gap={4} alignItems="center">
         <Slider
           value={brightnessValue}
           aria-label="slider-ex-1"
