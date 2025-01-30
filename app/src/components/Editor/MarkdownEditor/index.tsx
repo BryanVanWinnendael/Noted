@@ -60,7 +60,6 @@ const MarkdownEditor = ({ path }: { path: string }) => {
     const loadContent = async () => {
       try {
         const content = await readFile(path);
-        console.log(content);
         if (content && editor) {
           editor.commands.setContent(content);
         }
@@ -79,7 +78,7 @@ const MarkdownEditor = ({ path }: { path: string }) => {
         isHomeFile={isHomeFile}
         filename={filename}
         path={path}
-        type="block"
+        type="markdown"
       />
       <Box height="100%" overflowY="scroll" p={5}>
         <EditorContent editor={editor} />

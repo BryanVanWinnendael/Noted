@@ -1,9 +1,16 @@
 import { OutputData } from "@editorjs/editorjs";
 
-export const CreatePublicNote = async (data: OutputData | string, path: string, style: any, type: "block" | "markdown"): Promise<any | false> => {
+export const CreatePublicNote = async (
+  data: OutputData | string,
+  path: string,
+  style: any,
+  type: "block" | "markdown",
+): Promise<any | false> => {
   try {
     const token = localStorage.getItem("token") || "";
     const url = import.meta.env.VITE_SERVER_URL + "notes";
+
+    const bodyData = type === "markdown" ? data : JSON.stringify(data);
 
     const response = await fetch(url, {
       method: "POST",
@@ -12,7 +19,7 @@ export const CreatePublicNote = async (data: OutputData | string, path: string, 
         Authorization: token,
       },
       body: JSON.stringify({
-        data: JSON.stringify(data),
+        data: bodyData,
         path,
         style: JSON.stringify(style),
         type,
@@ -23,4 +30,4 @@ export const CreatePublicNote = async (data: OutputData | string, path: string, 
   } catch (error) {
     return false;
   }
-}
+};

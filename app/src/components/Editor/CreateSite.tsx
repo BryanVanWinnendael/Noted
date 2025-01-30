@@ -64,6 +64,7 @@ const CreateSite = ({
 
   const handleCreateSite = async () => {
     const data = await getData();
+    console.log(data);
     if (!data) return;
 
     const created = await createPublicNote(data, path, style, type);
