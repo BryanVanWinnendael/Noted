@@ -1,7 +1,7 @@
-export const codeStyle = (background_color: string) => {
+export const codeStyle = (backgroundColor: string) => {
   return `
     .codeBoxTextArea, .dark {
-      background-color: ${background_color} !important;
+      background-color: ${backgroundColor} !important;
     }
     .codeBoxTextArea {
       border-radius: 8px 8px 8px 0 !important;
@@ -12,7 +12,7 @@ export const codeStyle = (background_color: string) => {
     }
     .codeBoxHolder {
       margin-bottom: 10px !important;
-      background-color: ${background_color} !important;
+      background-color: ${backgroundColor} !important;
       border-radius: 8px !important;
     }
   `;

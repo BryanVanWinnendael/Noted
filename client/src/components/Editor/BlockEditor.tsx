@@ -1,9 +1,8 @@
-import EditorWrapper from "@lib/styling/EditorWrapper";
 import { EDITOR_JS_TOOLS } from "@lib/tools";
 import EditorJS from "@editorjs/editorjs";
 import { useEffect } from "react";
 
-const Editor = ({ data, style }: any) => {
+const BlockEditor = ({ data }: any) => {
   useEffect(() => {
     const editor = new EditorJS({
       holder: "noted",
@@ -17,12 +16,8 @@ const Editor = ({ data, style }: any) => {
       });
     };
   }, []);
-
-  return (
-    <EditorWrapper style={JSON.parse(style)}>
-      <div id={"noted"}></div>
-    </EditorWrapper>
-  );
+  console.log(typeof data);
+  return <div id={"noted"}></div>;
 };
 
-export default Editor;
+export default BlockEditor;
