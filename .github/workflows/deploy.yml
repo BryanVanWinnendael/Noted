@@ -24,6 +24,6 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
           cd ~/projects/Noted/server
           git pull origin main
-          docker compose -up --build -d
+          docker compose up --build -d
           docker system prune -af
           EOF
