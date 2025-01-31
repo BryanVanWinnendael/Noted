@@ -15,15 +15,14 @@ jobs:
 
       - name: Set up SSH
         run: |
-          mkdir -p ~/.ssh
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 141.145.200.72 >> ~/.ssh/known_hosts
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
 
       - name: Deploy to Server
         run: |
-          ssh ubuntu@141.145.200.72 << 'EOF'
-            cd  /projects/Noted
+            ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /projects/Noted
             git pull origin main
             docker compose -f docker-compose.yml down
             docker compose -f docker-compose.yml up --build -d
