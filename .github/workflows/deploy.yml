@@ -22,7 +22,7 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-          cd /projects/Noted
+          cd /projects/Noted/server
           git pull origin main
           docker compose -f docker-compose.yml down
           docker compose -f docker-compose.yml up --build -d
