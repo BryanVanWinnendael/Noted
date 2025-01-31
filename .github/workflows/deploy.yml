@@ -22,8 +22,8 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh ubuntu@141.145.200.72 << 'EOF'
-            cd  /projects/noted
+            ssh ubuntu@141.145.200.72 << 'EOF'
+            cd  /projects/Noted
             git pull origin main
             docker compose -f docker-compose.yml down
             docker compose -f docker-compose.yml up --build -d
