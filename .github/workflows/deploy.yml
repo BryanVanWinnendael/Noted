@@ -18,11 +18,11 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_SERVER }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H 141.145.200.72 >> ~/.ssh/known_hosts
 
       - name: Deploy to Server
         run: |
-          ssh ${{ secrets.SSH_SERVER }} << 'EOF'
+          ssh ubuntu@141.145.200.72 << 'EOF'
             cd  /projects/noted
             git pull origin main
             docker compose -f docker-compose.yml down
