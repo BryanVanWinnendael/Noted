@@ -3,7 +3,7 @@ name: Deploy FastAPI App
 on:
   push:
     branches:
-      - test # Runs only when you push to main
+      - test
 
 jobs:
   deploy:
