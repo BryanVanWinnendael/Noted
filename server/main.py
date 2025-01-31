@@ -37,4 +37,4 @@ app.include_router(
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "This is the server of Noted"}
