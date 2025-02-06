@@ -21,8 +21,9 @@ const CompactNavbar = () => {
   };
 
   return (
-    <Flex w="full" gap={2}>
+    <Flex w="full" justifyContent="space-between">
       <MenuBar />
+      <Box className="nav" width="100%"></Box>
       <Flex>
         <Flex
           onClick={clickedMinimize}
