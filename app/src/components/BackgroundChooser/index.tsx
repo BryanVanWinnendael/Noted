@@ -3,7 +3,8 @@ import BackgroundCard from "./BackgroundCard";
 import {
   backgroundColors,
   backgroundCities,
-  backgroundAcrylic,
+  backgroundAbstract,
+  backgroundGradients,
   backgrounds,
 } from "utils/images";
 import ImportBackground from "./ImportBackground";
@@ -32,9 +33,9 @@ const Index = () => {
           <ImportCard key={index} path={path} />
         ))}
       </Flex>
-      <Text>Cities</Text>
+      <Text>Gradient</Text>
       <Flex gap={2} overflowX="scroll" w="full" maxW="100%" pr={3}>
-        {Object.keys(backgroundCities).map((background, index) => (
+        {Object.keys(backgroundGradients).map((background, index) => (
           <BackgroundCard
             key={index}
             select={background}
@@ -45,9 +46,22 @@ const Index = () => {
           />
         ))}
       </Flex>
-      <Text>Acrylic</Text>
+      <Text>Abstract</Text>
       <Flex gap={2} overflowX="scroll" w="full" maxW="100%" pr={3}>
-        {Object.keys(backgroundAcrylic).map((background, index) => (
+        {Object.keys(backgroundAbstract).map((background, index) => (
+          <BackgroundCard
+            key={index}
+            select={background}
+            name={
+              backgrounds[background as keyof typeof backgrounds]?.name || ""
+            }
+            image={backgrounds[background as keyof typeof backgrounds]?.image}
+          />
+        ))}
+      </Flex>
+      <Text>Cities</Text>
+      <Flex gap={2} overflowX="scroll" w="full" maxW="100%" pr={3}>
+        {Object.keys(backgroundCities).map((background, index) => (
           <BackgroundCard
             key={index}
             select={background}

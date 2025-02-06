@@ -80,20 +80,23 @@ export type GlassComponents =
 
 export type BackgroundColors = "default" | "custom";
 
-export type BackgroundAcrylic =
-  | "bubble"
-  | "red"
-  | "blue"
-  | "dark"
-  | "light"
-  | "mist"
-  | "papercut";
+export type BackgroundAbstract =
+  | "crystal"
+  | "pop"
+  | "wave"
+  | "harmony"
+  | "flow"
+  | "glow";
+
 export type BackgroundCities = "jp" | "in" | "ny" | "kr" | "ph";
+
+export type BackgroundGradient = "blue" | "light" | "pink" | "purple";
 
 export type BackgroundImages =
   | BackgroundColors
   | BackgroundCities
-  | BackgroundAcrylic;
+  | BackgroundAbstract
+  | BackgroundGradient;
 
 export type GlassSettings = {
   [key in GlassComponents]: boolean;

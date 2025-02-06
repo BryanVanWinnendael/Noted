@@ -582,14 +582,20 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
     }
   },
   initWorkspace: () => {
-    const { initWorkspaceFolders, checkVersion, initPlatform, initUser } =
-      get();
+    const {
+      initWorkspaceFolders,
+      checkVersion,
+      initPlatform,
+      initUser,
+      getImportedBackground,
+    } = get();
 
     localStorage.setItem("open_files", JSON.stringify([])); // Used for the file switcher
     initWorkspaceFolders();
     checkVersion();
     initPlatform();
     initUser();
+    getImportedBackground();
     set({ workspaceState: "opened" });
   },
   resetWorkspaceSettings: async () => {

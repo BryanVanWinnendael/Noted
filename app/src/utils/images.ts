@@ -6,13 +6,17 @@ import NYBackground from "assets/images/ny.jpg";
 import KRBackground from "assets/images/kr.jpg";
 import PHBackground from "assets/images/ph.jpg";
 
-import MistBackground from "assets/images/mist.png";
-import PapercutBackground from "assets/images/papercut.jpg";
-import BubbleBackground from "assets/images/bubble.jpg";
-import RedBackground from "assets/images/red.jpg";
+import CrystalBackground from "assets/images/crystal.jpg";
+import HarmonyBackground from "assets/images/harmony.jpg";
+import PopBackground from "assets/images/pop.jpg";
+import WavesBackground from "assets/images/waves.jpg";
+import FlowBackground from "assets/images/flow.jpg";
+import GlowBackground from "assets/images/glow.jpg";
+
 import BlueBackground from "assets/images/blue.jpg";
-import DarkBackground from "assets/images/dark.jpg";
 import LightBackground from "assets/images/light.jpg";
+import PinkBackground from "assets/images/pink.jpg";
+import PurpleBackground from "assets/images/purple.png";
 
 type BackgroundImagesObject = {
   [key in BackgroundImages]?: {
@@ -51,39 +55,55 @@ export const backgroundCities: BackgroundImagesObject = {
   },
 };
 
-export const backgroundAcrylic: BackgroundImagesObject = {
-  bubble: {
-    name: "Bubble",
-    image: BubbleBackground,
+export const backgroundAbstract: BackgroundImagesObject = {
+  crystal: {
+    name: "Crystal",
+    image: CrystalBackground,
   },
-  red: {
-    name: "Red",
-    image: RedBackground,
+  harmony: {
+    name: "Harmony",
+    image: HarmonyBackground,
   },
-  blue: {
-    name: "Blue",
-    image: BlueBackground,
+  pop: {
+    name: "Pop",
+    image: PopBackground,
   },
-  dark: {
-    name: "Dark",
-    image: DarkBackground,
+  wave: {
+    name: "Waves",
+    image: WavesBackground,
+  },
+  flow: {
+    name: "Flow",
+    image: FlowBackground,
+  },
+  glow: {
+    name: "Glow",
+    image: GlowBackground,
+  },
+};
+
+export const backgroundGradients: BackgroundImagesObject = {
+  purple: {
+    name: "Purple",
+    image: PurpleBackground,
   },
   light: {
     name: "Light",
     image: LightBackground,
   },
-  mist: {
-    name: "Mist",
-    image: MistBackground,
+  pink: {
+    name: "Pink",
+    image: PinkBackground,
   },
-  papercut: {
-    name: "Papercut",
-    image: PapercutBackground,
+  blue: {
+    name: "Blue",
+    image: BlueBackground,
   },
 };
 
 export const backgrounds = {
   ...backgroundColors,
   ...backgroundCities,
-  ...backgroundAcrylic,
+  ...backgroundAbstract,
+  ...backgroundGradients,
 };

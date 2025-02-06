@@ -68,27 +68,17 @@ const SettingsScreen = () => {
               {workspace && (
                 <>
                   <SettingsNavItem
-                    label="Notes"
-                    view={view}
-                    setView={setView}
-                  />
-                  <SettingsNavItem
-                    label="Actions"
-                    view={view}
-                    setView={setView}
-                  />
-                  <SettingsNavItem
                     label="Appearance"
                     view={view}
                     setView={setView}
                   />
                   <SettingsNavItem
-                    label="Sidebar"
+                    label="Background"
                     view={view}
                     setView={setView}
                   />
                   <SettingsNavItem
-                    label="Background"
+                    label="Sidebar"
                     view={view}
                     setView={setView}
                   />
@@ -99,6 +89,16 @@ const SettingsScreen = () => {
                   />
                   <SettingsNavItem
                     label="Market"
+                    view={view}
+                    setView={setView}
+                  />
+                  <SettingsNavItem
+                    label="Notes"
+                    view={view}
+                    setView={setView}
+                  />
+                  <SettingsNavItem
+                    label="Actions"
                     view={view}
                     setView={setView}
                   />
