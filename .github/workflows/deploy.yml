@@ -22,14 +22,27 @@ jobs:
         run: |
           ls
           touch key.json server/.env
-          echo "${{ fromJSON(secrets.KEY) }}" > key.json
+          cat << EOF > key.json
+          {
+            "type": "service_account",
+            "project_id": "noted-5a4d1",
+            "private_key_id": "${{ secrets.PRIVATE_KEY_ID }}",
+            "private_key": "${{ secrets.PRIVATE_KEY }}",
+            "client_email": "firebase-adminsdk-cayuu@noted-5a4d1.iam.gserviceaccount.com",
+            "client_id": "${{ secrets.CLIENT_ID }}",
+            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+            "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-cayuu%40noted-5a4d1.iam.gserviceaccount.com",
+            "universe_domain": "googleapis.com"
+          }
+          EOF
           echo "${{ secrets.ENV }}" > server/.env
           python -m pip install --upgrade pip
           pip install -r server/requirements.txt
 
       - name: Run tests
         run: |
-          cat key.json
           pytest server/tests/
 
   deploy:
