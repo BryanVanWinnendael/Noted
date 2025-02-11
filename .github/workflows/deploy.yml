@@ -21,8 +21,8 @@ jobs:
       - name: Install dependencies & setup secrets
         run: |
           ls
-          touch server/key.json server/.env
-          echo "${{ secrets.KEY }}" > server/key.json
+          touch server/tests/key.json server/.env
+          echo "${{ secrets.KEY }}" > server/tests/key.json
           echo "${{ secrets.ENV }}" > server/.env
           python -m pip install --upgrade pip
           pip install -r server/requirements.txt
