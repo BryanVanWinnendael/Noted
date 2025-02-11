@@ -508,8 +508,12 @@ export const useWorkspaceStore = create<WorkspaceStore>((set, get) => ({
 
     const tempNotes: UserNote[] = [];
     for (const note of notes) {
-      note.data = JSON.parse(note.data);
-      tempNotes.push(note);
+      try {
+        note.data = JSON.parse(note.data);
+        tempNotes.push(note);
+      } catch (err) {
+        tempNotes.push(note);
+      }
     }
 
     set({ notes: tempNotes });
