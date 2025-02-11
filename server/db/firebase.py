@@ -11,6 +11,7 @@ class Firebase:
 
     def __new__(cls):
         if cls._instance is None:
+            print( os.environ.get("DATABASE_URL"))
             cls._instance = super(Firebase, cls).__new__(cls)
             cred = credentials.Certificate('key.json')
             cls._instance.app = firebase_admin.initialize_app(cred, {
