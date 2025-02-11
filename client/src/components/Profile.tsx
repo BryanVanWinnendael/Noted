@@ -43,20 +43,23 @@ const Profile = () => {
       </button>
       <div
         id="dropdown"
-        class="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-44 bg-[#2c2c2e]"
+        className="z-10 hidden divide-y divide-gray-100 rounded-lg shadow w-44 bg-[#2c2c2e]"
       >
         <ul
-          class="py-2 text-sm text-gray-700 dark:text-gray-200"
+          className="py-2 text-sm text-gray-700 dark:text-gray-200"
           aria-labelledby="dropdownDefaultButton"
         >
           <li>
-            <a href="/user/requests" class="block px-4 py-2 hover:bg-[#343436]">
+            <a
+              href="/user/requests"
+              className="block px-4 py-2 hover:bg-[#343436]"
+            >
               Pending requests
             </a>
           </li>
           <button
             onClick={signout}
-            class="w-full flex justify-start px-4 py-2 hover:bg-[#343436] "
+            className="w-full flex justify-start px-4 py-2 hover:bg-[#343436] "
           >
             <a>Sign out</a>
           </button>

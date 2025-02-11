@@ -6,6 +6,7 @@ import AppLayout from "@layouts/AppLayout.astro";
 
 /* Get session cookie */
 const sessionCookie = Astro.cookies.get("session")?.value;
+console.log(Astro.cookies.get("session"))
 if (!sessionCookie) {
   return Astro.redirect("/signin");
 }

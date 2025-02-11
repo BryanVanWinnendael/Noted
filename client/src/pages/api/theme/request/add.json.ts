@@ -24,5 +24,5 @@ export const POST: APIRoute = async ({ request, redirect, cookies }) => {
       { status: 400 },
     );
   }
-  return redirect("/", 302);
+  return redirect("/themes", 302);
 };

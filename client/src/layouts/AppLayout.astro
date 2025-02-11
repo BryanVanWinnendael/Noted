@@ -8,6 +8,7 @@ if (!sessionCookie) {
   return Astro.redirect("/signin");
 }
 
+
 /* Verify session cookie and get user */
 const user = await getUser(sessionCookie);
 if (!user) {
@@ -19,7 +20,7 @@ if (!user) {
   <div class="p-4 flex justify-between items-center max-w-4xl mx-auto">
     <a
       class="text-lg flex items-center gap-2 font-semibold text-transparent sm:text-zinc-100"
-      href="/"
+      href="/themes"
     >
       <img class="w-8 h-8" src="/favicon.svg" alt="Noted themes" />Noted themes</a
     >
