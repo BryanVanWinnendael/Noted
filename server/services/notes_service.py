@@ -1,4 +1,5 @@
 from uuid import uuid4
+from fastapi import HTTPException
 from firebase_admin import db
 from pydantic import BaseModel
 
@@ -14,7 +15,7 @@ def get_note(id: str):
         ref = db.reference("/notes/" + id)
         return ref.get()
     except Exception as e:
-        return e
+        raise HTTPException(status_code=404, detail='Not Found')
 
 
 def add_note(note: Note, user_email: str):
@@ -30,19 +31,19 @@ def add_note(note: Note, user_email: str):
         })
         return uuid
     except Exception as e:
-        return e
+        raise HTTPException(status_code=500, detail='Internal Server Error')
 
 
 def remove_note(id: str, user_email: str):
     try:
         note = get_note(id)
         if note["user_email"] != user_email:
-            return {"error": "Unauthorized"}
+            raise HTTPException(status_code=403, detail='Unauthorized')
         ref = db.reference("/notes/" + id)
         ref.delete()
         return "success"
     except Exception as e:
-        return e
+        raise HTTPException(status_code=403, detail='Unauthorized')
 
 
 def get_user_notes(user_email: str):
@@ -55,4 +56,4 @@ def get_user_notes(user_email: str):
                 user_notes.append(value)
         return user_notes
     except Exception as e:
-        return e
+        raise HTTPException(status_code=500, detail='Internal Server Error')

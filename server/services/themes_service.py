@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from firebase_admin import db
 from pydantic import BaseModel
 
@@ -15,8 +16,8 @@ def get_theme(theme_name: str):
     try:
         ref = db.reference("/themes/" + theme_name)
         return ref.get()
-    except Exception as e:
-        return e
+    except Exception:
+        raise HTTPException(status_code=500, detail='Internal Server Error')
 
 
 def add_theme(theme: Theme):
@@ -38,16 +39,16 @@ def add_theme(theme: Theme):
             "accentColor": theme.accentColor
         })
         return "success"
-    except Exception as e:
-        return e
+    except Exception:
+        raise HTTPException(status_code=500, detail='Internal Server Error')
 
 
 def get_themes():
     try:
         ref = db.reference("/themes")
         return ref.get()
-    except Exception as e:
-        return e
+    except Exception:
+        raise HTTPException(status_code=500, detail='Internal Server Error')
 
 
 def delete_theme(theme_name: str):
@@ -55,16 +56,16 @@ def delete_theme(theme_name: str):
         ref = db.reference("/themes/" + theme_name)
         ref.delete()
         return "success"
-    except Exception as e:
-        return e
+    except Exception:
+       raise HTTPException(status_code=500, detail='Internal Server Error')
 
 
 def get_requested_theme(theme_name: str):
     try:
         ref = db.reference("/requested_themes/" + theme_name)
         return ref.get()
-    except Exception as e:
-        return e
+    except Exception:
+        raise HTTPException(status_code=500, detail='Internal Server Error')
 
 
 def add_requested_theme(email: str, theme: Theme):
@@ -85,16 +86,16 @@ def add_requested_theme(email: str, theme: Theme):
             "accentColor": theme.accentColor
         })
         return "success"
-    except Exception as e:
-        return e
+    except Exception:
+        raise HTTPException(status_code=500, detail='Internal Server Error')
 
 
 def get_requested_themes():
     try:
         ref = db.reference("/requested_themes")
         return ref.get()
-    except Exception as e:
-        return e
+    except Exception:
+        raise HTTPException(status_code=500, detail='Internal Server Error')
 
 
 def delete_requested_theme(theme_name: str):
@@ -102,8 +103,8 @@ def delete_requested_theme(theme_name: str):
         ref = db.reference("/requested_themes/" + theme_name)
         ref.delete()
         return "success"
-    except Exception as e:
-        return e
+    except Exception:
+        raise HTTPException(status_code=500, detail='Internal Server Error')
 
 
 def get_requested_themes_for_user(email: str):
@@ -118,5 +119,5 @@ def get_requested_themes_for_user(email: str):
                 user_themes[theme] = themes[theme]
 
         return user_themes
-    except Exception as e:
-        return e
+    except Exception:
+        raise HTTPException(status_code=500, detail='Internal Server Error')
