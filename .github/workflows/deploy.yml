@@ -30,6 +30,7 @@ jobs:
       - name: Run tests
         run: |
           ls server
+          cat server/key.json
           pytest server/tests/
 
   deploy:
