@@ -89,7 +89,7 @@ def test_notes(user_token):
     Remove the note.
     """
     response_delete_user = client.delete(f"/api/notes/{note_id}", headers={"Authorization": f"{user_token}"})
-    assert response_delete_user.status_code == 300
+    assert response_delete_user.status_code == 200
 
 
 
