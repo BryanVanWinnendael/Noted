@@ -30,7 +30,7 @@ jobs:
       - name: Run tests
         run: |
           ls
-          pytest server/tests/
+          pytest --rootdir=server server/tests/
 
   deploy:
     runs-on: ubuntu-latest
