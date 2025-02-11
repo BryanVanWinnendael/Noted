@@ -20,8 +20,9 @@ jobs:
 
       - name: Install dependencies & setup secrets
         run: |
-          echo "${{ secrets.KEY }}" > ~/projects/Noted/server/key.json
-          echo "${{ secrets.ENV }}" > ~/projects/Noted/server/.env
+          touch ./server/key.json ./server/.env
+          echo "${{ secrets.KEY }}" > ./server/key.json
+          echo "${{ secrets.ENV }}" > ./server/.env
           python -m pip install --upgrade pip
           pip install -r ./server/requirements.txt
 
