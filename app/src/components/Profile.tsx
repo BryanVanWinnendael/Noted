@@ -1,17 +1,7 @@
-import { Avatar, AvatarBadge, AvatarGroup, Text } from "@chakra-ui/react";
+import { Avatar, Text } from "@chakra-ui/react";
 import { useWorkspaceStore } from "stores/WorkspaceStore";
 
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  Button,
-} from "@chakra-ui/react";
+import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 import useColors from "hooks/useColors";
 
 const Profile = () => {
