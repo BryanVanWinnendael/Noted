@@ -14,7 +14,7 @@ const MarkdownSetting = () => {
   return (
     <Flex justifyContent="space-between" alignItems="center" mr={5} mt={2}>
       <Box>
-        <Text fontWeight="semibold">Markdown editor</Text>
+        <Text fontWeight="semibold">Markdown notes</Text>
         <Text color={mutedTextColor}>Switch to markdown style notes</Text>
       </Box>
       <CustomSwitch

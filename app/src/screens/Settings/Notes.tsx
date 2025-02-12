@@ -5,13 +5,14 @@ import { useWorkspaceStore } from "stores/WorkspaceStore";
 import { MyWindow } from "types/index";
 import DeleteSharedSite from "components/Editor/DeleteSharedSite";
 import MarkdownSetting from "components/MarkdownSetting";
+import Profile from "components/Profile";
 
 declare let window: MyWindow;
 
 const invoke = window.electron.invoke;
 
 const Notes = () => {
-  const { user, handleSignOutUser, notes, platform } = useWorkspaceStore();
+  const { user, notes, platform } = useWorkspaceStore();
   const { textColor, mutedTextColor, accentColor } = useColors();
 
   const handleVisit = (id: string) => {
@@ -21,21 +22,17 @@ const Notes = () => {
 
   return (
     <Box color={textColor}>
-      <Text fontSize="3xl" mb={4}>
-        Notes
-      </Text>
+      <Flex justifyContent="space-between" alignItems="center" mr={5}>
+        <Text fontSize="3xl" mb={4}>
+          Notes
+        </Text>
+        {user && <Profile />}
+      </Flex>
       <Stack mr={5} gap={3}>
         <MarkdownSetting />
 
         <Flex alignItems="center" justify="space-between">
-          {user ? (
-            <>
-              <Text fontWeight="semibold">Signed in as</Text>
-              <Box>
-                <Text fontWeight="semibold">{user.email}</Text>
-              </Box>
-            </>
-          ) : (
+          {!user && (
             <>
               <Box>
                 <Text fontWeight="semibold">Sign in</Text>
@@ -45,17 +42,9 @@ const Notes = () => {
             </>
           )}
         </Flex>
-        {user && (
-          <>
-            <Flex alignItems="center" justify="space-between">
-              <Text fontWeight="semibold"></Text>
-              <Button onClick={handleSignOutUser} colorScheme="red">
-                Sign out
-              </Button>
-            </Flex>
-            <Divider my={4} />
-          </>
-        )}
+
+        <Divider my={4} />
+
         {user && (
           <Stack>
             {notes.length > 0 ? (
