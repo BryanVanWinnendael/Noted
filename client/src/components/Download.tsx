@@ -43,7 +43,7 @@ const Download = ({ nav }: { nav?: boolean }) => {
       onClick={handleDownload}
       className="bg-[#6488ea] hover:bg-[#5c7cd4] text-white p-2 rounded-lg"
     >
-      Download for free
+      Download for {os}
     </button>
   );
 };
