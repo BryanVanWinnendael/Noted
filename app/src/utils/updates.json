@@ -1,18 +1,18 @@
 [
   {
-    "title": "MacOS support",
-    "text": "Noted version 2.2.0 now supports MacOS!"
+    "title": "Markdown support",
+    "text": "Noted version 2.5.0 now supports markdown files!"
   },
   {
-    "title": "Hex input for color pickers",
-    "text": "With version 2.2.0, you can now input hex values for color pickers."
+    "title": "Github integration",
+    "text": "With version 2.5.0, you can now push your workspace to github directly via the app."
   },
   {
-    "title": "More customizations for the sidebar",
-    "text": "With version 2.2.0, you can now customize the sidebar icon and text color."
+    "title": "New backgrounds",
+    "text": "Added new backgrounds for your workspace."
   },
   {
     "title": "Optimization and fixed bugs",
-    "text": "Fixed bugs for file switcher and imporved performance."
+    "text": "Fixed bugs for recent opened workspaces and imporved performance."
   }
 ]

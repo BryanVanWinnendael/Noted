@@ -131,7 +131,8 @@ export type Settings =
   | "material"
   | "sidebar_text_color"
   | "sidebar_icon_color"
-  | "markdown";
+  | "markdown"
+  | "repo";
 
 export interface ToDo {
   date: string | null;

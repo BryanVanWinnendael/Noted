@@ -26,6 +26,7 @@ const Editor = ({
   useEffect(() => {
     const isBlock = async () => {
       const content = await readFile(path);
+      console.log(typeof content === "object");
       if (content) {
         if (typeof content === "object") {
           return setIsBlockFile(true);
@@ -60,7 +61,7 @@ const Editor = ({
       }}
       mb={2}
     >
-      {isBlockFile ? (
+      {isBlockFile && path ? (
         <BlockEditor path={path} splitted={splitted} tabKey={tabKey} />
       ) : (
         <MarkdownEditor path={path} />

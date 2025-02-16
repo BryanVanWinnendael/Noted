@@ -60,7 +60,7 @@ const MarkdownEditor = ({ path }: { path: string }) => {
     const loadContent = async () => {
       try {
         const content = await readFile(path);
-        if (content && editor) {
+        if (editor) {
           editor.commands.setContent(content);
         }
       } catch (e) {

@@ -1,5 +1,6 @@
 import { useSettingsStore } from "stores/SettingsStore";
 import useUpdate from "hooks/useUpdate";
+import { useToast } from "@chakra-ui/react";
 
 export interface CommandSettingsProps {
   openThemeDialog: () => void;
@@ -14,7 +15,9 @@ const useCommandSettings = ({ openThemeDialog }: CommandSettingsProps) => {
     glassEnabled,
     editorTitle,
     compactMode,
+    pushRepo,
   } = useSettingsStore();
+  const toast = useToast();
   const { handleCheckUpdate } = useUpdate();
 
   const openSettings = () => {
@@ -85,6 +88,25 @@ const useCommandSettings = ({ openThemeDialog }: CommandSettingsProps) => {
     saveSettings("compact_mode", !compactMode);
   };
 
+  const handlePushToGithub = async () => {
+    const success = await pushRepo();
+    if (success) {
+      toast({
+        title: "Pushed to github",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Failed to push to github",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  };
+
   return {
     Settings: openSettings,
     "General settings": openGeneral,
@@ -101,6 +123,7 @@ const useCommandSettings = ({ openThemeDialog }: CommandSettingsProps) => {
     "Enable/disable glass background": handleGlassBackground,
     "Enable/disable editor title": handleEditorTitle,
     "Enable/disable compact mode": handleCompactMode,
+    "Push to github": handlePushToGithub,
   };
 };
 

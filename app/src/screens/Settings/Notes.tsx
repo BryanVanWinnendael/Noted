@@ -6,6 +6,7 @@ import { MyWindow } from "types/index";
 import DeleteSharedSite from "components/Editor/DeleteSharedSite";
 import MarkdownSetting from "components/MarkdownSetting";
 import Profile from "components/Profile";
+import Github from "components/Github";
 
 declare let window: MyWindow;
 
@@ -30,7 +31,7 @@ const Notes = () => {
       </Flex>
       <Stack mr={5} gap={3}>
         <MarkdownSetting />
-
+        <Github />
         <Flex alignItems="center" justify="space-between">
           {!user && (
             <>

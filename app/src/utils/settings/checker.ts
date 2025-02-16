@@ -24,6 +24,7 @@ import {
   REQUIRED_SETTINGS_KEYS,
   DEFAULT_SIDEBAR_TEXT_COLOR,
   DEFAULT_SIDEBAR_ICON_COLOR,
+  DEFAULT_REPO,
 } from "../constants";
 
 import languages from "../languages.json";
@@ -245,6 +246,14 @@ const checkMarkdown = (markdown: boolean): any => {
   return markdown;
 };
 
+const checkRepo = (repo: any): any => {
+  console.log(repo);
+  if (typeof repo !== "string") {
+    return DEFAULT_REPO;
+  }
+  return repo;
+};
+
 export const ensureKeys = (settings: { [key in any]: any }, keys: any[]) => {
   const filteredObject = Object.fromEntries(
     Object.entries(settings).filter(([key]) => keys.includes(key as Settings)),
@@ -263,6 +272,7 @@ const settingsChecker = (settings: { [key in Settings]: any }): {
 } => {
   const filledSettings = ensureKeys(settings, REQUIRED_SETTINGS_KEYS);
   for (const [key, value] of Object.entries(filledSettings)) {
+    console.log(key);
     switch (key) {
       case "check_updates":
         filledSettings[key] = update(value);
@@ -332,6 +342,9 @@ const settingsChecker = (settings: { [key in Settings]: any }): {
         break;
       case "markdown":
         filledSettings[key] = checkMarkdown(value);
+        break;
+      case "repo":
+        filledSettings[key] = checkRepo(value);
         break;
       default:
         break;

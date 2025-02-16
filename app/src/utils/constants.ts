@@ -62,6 +62,7 @@ export const REQUIRED_SETTINGS_KEYS: Settings[] = [
   "action_bar_opacity",
   "sidebar_opacity",
   "material",
+  "repo",
 ];
 
 export const DEFAULT_UPDATE = true;
@@ -147,3 +148,5 @@ export const DEFAULT_SIDEBAR_TEXT_COLOR = false;
 export const DEFAULT_SIDEBAR_ICON_COLOR = false;
 
 export const DEFAULT_MARKDOWN = false;
+
+export const DEFAULT_REPO = "";

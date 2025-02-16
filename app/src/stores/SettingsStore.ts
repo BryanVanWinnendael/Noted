@@ -22,6 +22,7 @@ import {
   DEFAULT_GLASS_ENABLED,
   DEFAULT_HEADER_COLORS_ENABLED,
   DEFAULT_MATERIAL,
+  DEFAULT_REPO,
   DEFAULT_SCROLLBAR,
   DEFAULT_SIDEBAR_ICONS,
   DEFAULT_SIDEBAR_OPACITY,
@@ -66,6 +67,7 @@ interface SettingsStore {
   sidebarTextColor: string | false;
   sidebarIconColor: string | false;
   markdown: boolean;
+  repo: string;
 
   // Actions
   onOpen: () => void;
@@ -98,6 +100,7 @@ interface SettingsStore {
   setSidebarTextColor: (color: string | false) => void;
   setSidebarIconColor: (color: string | false) => void;
   setMarkdown: (markdown: boolean) => void;
+  setRepo: (repo: string) => void;
 
   readThemeFile: () => Promise<void>;
   saveThemeToFile: () => Promise<void>;
@@ -115,6 +118,8 @@ interface SettingsStore {
   resetCustomTheme: () => void;
   getSettings: () => Promise<void>;
   setAppMaterial: (material: Material) => Promise<void>;
+  changeRepo: (repo: string) => Promise<void>;
+  pushRepo: () => Promise<boolean>;
   initSettings: () => Promise<void>;
 }
 
@@ -149,6 +154,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   sidebarTextColor: DEFAULT_SIDEBAR_TEXT_COLOR,
   sidebarIconColor: DEFAULT_SIDEBAR_TEXT_COLOR,
   markdown: false,
+  repo: DEFAULT_REPO,
   // Setters
   setView: (view) => set({ view }),
   setThemePath: (path) => set({ themePath: path }),
@@ -179,6 +185,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   setSidebarTextColor: (color) => set({ sidebarTextColor: color }),
   setSidebarIconColor: (color) => set({ sidebarIconColor: color }),
   setMarkdown: (markdown) => set({ markdown }),
+  setRepo: (repo) => set({ repo }),
 
   // Actions
   onOpen: () => set({ isOpen: true }),
@@ -354,6 +361,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       setSidebarTextColor,
       setSidebarIconColor,
       setMarkdown,
+      setRepo,
     } = get();
     switch (key) {
       case "check_updates":
@@ -425,6 +433,9 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       case "markdown":
         setMarkdown(value);
         break;
+      case "repo":
+        setRepo(value);
+        break;
       default:
         break;
     }
@@ -454,6 +465,7 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
       sidebarTextColor: settings["sidebar_text_color"],
       sidebarIconColor: settings["sidebar_icon_color"],
       markdown: settings["markdown"],
+      repo: settings["repo"],
     });
   },
   resetCustomTheme: () => {
@@ -469,7 +481,6 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
         workspace_path,
       });
       const settings = JSON.parse(settingsString);
-
       const cleanedSettings = checker.settingsChecker(settings);
 
       set({
@@ -486,6 +497,25 @@ export const useSettingsStore = create<SettingsStore>((set, get) => ({
   },
   setAppMaterial: async (material) => {
     await invoke("change-material", material);
+  },
+  pushRepo: async () => {
+    const { repo } = get();
+    const workspace_path = localStorage.getItem("workspace_path");
+    const res = await invoke("github:push", {
+      workspacePath: workspace_path,
+      link: repo,
+    });
+    return res;
+  },
+  changeRepo: async (repo: string) => {
+    const { setRepo, saveSettings } = get();
+    setRepo(repo);
+    const workspace_path = localStorage.getItem("workspace_path");
+    await invoke("github:add-repo", {
+      workspacePath: workspace_path,
+      link: repo,
+    });
+    saveSettings("repo", repo);
   },
   initSettings: async () => {
     const {

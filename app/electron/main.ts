@@ -5,6 +5,7 @@ import Files from "./file";
 import Folders from "./folder";
 import Themes from "./theme";
 import { autoUpdater } from "electron-updater";
+import Github from "./github";
 
 autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = false;
@@ -88,6 +89,9 @@ function createWindow() {
 
   const folders = new Folders(win);
   folders.handle();
+
+  const github = new Github(win);
+  github.handle();
 
   ipcMain.handle("platform:get", async () => {
     return process.platform;
