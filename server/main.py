@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .db.firebase import Firebase
-from .routers import themes, notes
+from .routers import themes, notes, downloads
 
 
 load_dotenv()
@@ -32,6 +32,12 @@ app.include_router(
     router=notes.router,
     prefix="/api/notes",
     tags=["notes"],
+)
+
+app.include_router(
+    router=downloads.router,
+    prefix="/api/downloads",
+    tags=["downloads"],
 )
 
 
