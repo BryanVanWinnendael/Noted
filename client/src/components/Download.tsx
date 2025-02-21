@@ -5,6 +5,10 @@ const getOS = async () => {
   return res.json();
 };
 
+const logDownload = async (type: "windows" | "linux" | "macos") => {
+  await fetch("/api/downloads/" + type + ".json");
+};
+
 const Download = ({ nav }: { nav?: boolean }) => {
   const [os, setOS] = useState<"windows" | "linux" | "macos">("windows");
 
@@ -28,6 +32,7 @@ const Download = ({ nav }: { nav?: boolean }) => {
   }, []);
 
   const handleDownload = () => {
+    logDownload(os);
     window.open(url);
   };
 

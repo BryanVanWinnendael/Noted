@@ -1,7 +1,6 @@
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ request }) => {
-  console.log(request.headers.get("User-Agent"));
   let os;
   const userAgent = request.headers.get("User-Agent");
   if (userAgent?.includes("Win")) {
